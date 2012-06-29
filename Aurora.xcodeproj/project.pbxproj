@@ -1,0 +1,208 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C57567F8159E660400570538 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C57567F7159E660400570538 /* main.cpp */; };
+		C57567FA159E660500570538 /* Aurora.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C57567F9159E660500570538 /* Aurora.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C57567F1159E660400570538 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				C57567FA159E660500570538 /* Aurora.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C57567F3159E660400570538 /* Aurora */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Aurora; sourceTree = BUILT_PRODUCTS_DIR; };
+		C57567F7159E660400570538 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		C57567F9159E660500570538 /* Aurora.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Aurora.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C57567F0159E660400570538 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C57567E8159E660400570538 = {
+			isa = PBXGroup;
+			children = (
+				C57567F6159E660400570538 /* Aurora */,
+				C57567F4159E660400570538 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C57567F4159E660400570538 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C57567F3159E660400570538 /* Aurora */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57567F6159E660400570538 /* Aurora */ = {
+			isa = PBXGroup;
+			children = (
+				C57567F7159E660400570538 /* main.cpp */,
+				C57567F9159E660500570538 /* Aurora.1 */,
+			);
+			path = Aurora;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C57567F2159E660400570538 /* Aurora */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C57567FD159E660500570538 /* Build configuration list for PBXNativeTarget "Aurora" */;
+			buildPhases = (
+				C57567EF159E660400570538 /* Sources */,
+				C57567F0159E660400570538 /* Frameworks */,
+				C57567F1159E660400570538 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Aurora;
+			productName = Aurora;
+			productReference = C57567F3159E660400570538 /* Aurora */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C57567EA159E660400570538 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = C57567ED159E660400570538 /* Build configuration list for PBXProject "Aurora" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C57567E8159E660400570538;
+			productRefGroup = C57567F4159E660400570538 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C57567F2159E660400570538 /* Aurora */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C57567EF159E660400570538 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C57567F8159E660400570538 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C57567FB159E660500570538 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C57567FC159E660500570538 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C57567FE159E660500570538 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C57567FF159E660500570538 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C57567ED159E660400570538 /* Build configuration list for PBXProject "Aurora" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C57567FB159E660500570538 /* Debug */,
+				C57567FC159E660500570538 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C57567FD159E660500570538 /* Build configuration list for PBXNativeTarget "Aurora" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C57567FE159E660500570538 /* Debug */,
+				C57567FF159E660500570538 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C57567EA159E660400570538 /* Project object */;
+}
