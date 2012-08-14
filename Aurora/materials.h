@@ -1,0 +1,16 @@
+//
+//  materials.h
+//  Aurora
+//
+//  Created by Espen Nordahl on 30/07/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//
+
+#ifndef Aurora_materials_h
+#define Aurora_materials_h
+
+#include "matteMaterial.h"
+#include "plasticMaterial.h"
+#include "kelemenMaterial.h"
+
+#endif
