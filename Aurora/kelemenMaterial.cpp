@@ -18,7 +18,7 @@
 
 using namespace Aurora;
 
-#define ALBEDO_SAMPLES 10
+#define ALBEDO_SAMPLES 12
 
 KelemenMaterial::KelemenMaterial( Color diffCol, Color specCol, float _exponent, float _reflectance, int numSamples){
 	reflectance = _reflectance;

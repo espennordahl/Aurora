@@ -24,7 +24,7 @@ int main (int argc, const char * argv[])
     argv[1] = "/Users/espennordahl/Documents/Aurora/pyAurora/tmp.asc";
         // insert code here...
     LOG_INFO("Starting Aurora.");
-    LOG_INFO("Checking command line arguments31412");
+    LOG_INFO("Checking command line arguments");
     
     if ( argc != 2 ) // argc should be 2 for correct execution
                      // We print argv[0] assuming it is the program name

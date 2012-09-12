@@ -17,16 +17,30 @@
 #include <string.h>
 
 namespace Aurora {
+    struct PdfSample{
+        float pdf;
+        int x;
+        int y;
+        bool operator<(const PdfSample &s) const{
+                return pdf < s.pdf;
+        }
+    };
     class Texture2D {
+		Imf::Array2D<Imf::Rgba> pixelBuffer;
     public:
         Texture2D(std::string filename);
         
-        Color read(float s, float t, float filterSize);
+		Color read(float s, float t, float filterSize);
+		float pdf(float s, float t, float filterSize);
         
+		void initPdf();
+		void sample(float r, float *x, float *y);
+		
     protected:
-        Imf::Array2D<Imf::Rgba> pixelBuffer;
         int width;
         int height;
+        float pdfNormalization;
+        std::vector<PdfSample> pdfBuffer;
     };
 }
 

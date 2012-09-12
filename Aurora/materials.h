@@ -12,5 +12,7 @@
 #include "matteMaterial.h"
 #include "plasticMaterial.h"
 #include "kelemenMaterial.h"
+#include "transmitMaterial.h"
+#include "glassMaterial.h"
 
 #endif

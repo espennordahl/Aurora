@@ -38,6 +38,74 @@ namespace Aurora {
             LOG_ERROR("Empty material.");
         }
     }
+    
+    inline void parseTransmitMaterial(Json::Value &root, std::map<Option, double> globals, Reference<Material> *material){
+        if( root.size() > 0 ) {
+            Color col;
+            float ior;
+            for( Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {
+                if (itr.key().asString() == "color") {
+                    Json::Value c = *itr;
+                    int i = 0;
+                    for( Json::ValueIterator colItr = c.begin() ; colItr != c.end(); colItr++ ) {
+                        Json::Value v = *colItr;
+                        col[i] = v.asDouble();
+                        i++;
+                    }
+                }
+                if (itr.key().asString() == "ior") {
+                    Json::Value v = *itr;
+                    ior = v.asDouble();
+                }
+            }
+            *material = new TransmitMaterial(col, ior);
+        }
+        else {
+            LOG_ERROR("Empty material.");
+        }
+    }
+
+    inline void parseGlassMaterial(Json::Value &root, std::map<Option, double> globals, Reference<Material> *material){
+        if( root.size() > 0 ) {
+            Color specCol;
+            float ior;
+            Color transmitCol;
+            float reflectance;
+            for( Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {
+                if (itr.key().asString() == "specColor") {
+                    Json::Value c = *itr;
+                    int i = 0;
+                    for( Json::ValueIterator colItr = c.begin() ; colItr != c.end(); colItr++ ) {
+                        Json::Value v = *colItr;
+                        specCol[i] = v.asDouble();
+                        i++;
+                    }
+                }
+                else if (itr.key().asString() == "transmitColor") {
+                    Json::Value c = *itr;
+                    int i = 0;
+                    for( Json::ValueIterator colItr = c.begin() ; colItr != c.end(); colItr++ ) {
+                        Json::Value v = *colItr;
+                        transmitCol[i] = v.asDouble();
+                        i++;
+                    }
+                }
+                else if (itr.key().asString() == "reflectance") {
+                    Json::Value v = *itr;
+                    reflectance = v.asDouble();
+                }
+                else if (itr.key().asString() == "ior") {
+                    Json::Value v = *itr;
+                    ior = v.asDouble();
+                }
+            }
+            *material = new GlassMaterial(specCol, transmitCol, reflectance, ior);
+        }
+        else {
+            LOG_ERROR("Empty material.");
+        }
+    }
+
 
     inline void parseKelemenMaterial(Json::Value &root, std::map<Option, double> globals, Reference<Material> *material){
         if( root.size() > 0 ) {
@@ -81,14 +149,14 @@ namespace Aurora {
     }
 
     
-    inline void parseObject(Json::Value &root, std::vector<Reference<AuroraObject> > &objects, std::vector<Reference<Light> > &lights, Transform camTrans, std::map<Option, double> globals){
+    inline void parseObject(Json::Value &root, std::vector<Reference<AuroraObject> > &objects, std::vector<Reference<Light> > &lights, Transform *camTrans, std::map<Option, double> globals){
         
         
         if( root.size() > 0 ) {
                 // first loop contains only the name
             for( Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {
                 LOG_DEBUG("Found object: " << itr.key().asString());
-                Transform invCam = camTrans.inverse(camTrans);
+                Transform invCam = camTrans->inverse(*camTrans);
                 Transform *transStack = new Transform(invCam);
                 Json::Value obj = *itr;
                 
@@ -131,6 +199,12 @@ namespace Aurora {
                                         }
                                         else if (materialType == "kelemenMaterial") {
                                             parseKelemenMaterial(*objItr, globals, &material);
+                                        }
+                                        else if (materialType == "transmitMaterial") {
+                                            parseTransmitMaterial(*objItr, globals, &material);
+                                        }
+                                        else if (materialType == "glassMaterial") {
+                                            parseGlassMaterial(*objItr, globals, &material);
                                         }
                                         else {
                                             LOG_ERROR("Couldn't find parser for material " << materialType);
@@ -281,13 +355,18 @@ namespace Aurora {
                         }
 
                     }
-                    Transform *tInv = new Transform(transStack->inverse(*transStack));
-                    Reference<Light> sqrLight = new SquareLight(transStack, tInv, exposure, color, xScale, yScale, globals[LightSamples]);
+                    Transform *c2o = new Transform(transStack->inverse(*transStack));
+					Transform *c2w = camTrans;
+					Transform *w2c = new Transform(camTrans->inverse(*camTrans));
+					Transform *o2w = new Transform(*transStack * *c2w);
+					Transform *w2o = new Transform(*w2c * *c2o);
+                    Reference<Light> sqrLight = new SquareLight(transStack, c2o, o2w, w2o, c2w, w2c, exposure, color, xScale, yScale, globals[LightSamples]);
                     lights.push_back(sqrLight);
                 }
                 else if (objType == "envlight" ){
                     float xScale, yScale, exposure;
                     Color color;
+                    std::string envmap = "";
                     for( Json::ValueIterator objItr = obj.begin() ; objItr != obj.end() ; objItr++ ) {
                         Json::Value value = *objItr;
                         if (objItr.key().asString() == "scaleX") {
@@ -310,9 +389,17 @@ namespace Aurora {
                                 i++;
                             }
                         }
+                        
+                        else if (objItr.key().asString() == "envmap") {
+                            envmap = value.asString();
+                        } 
                     }
-                    Transform *t = new Transform();
-                    Reference<Light> envLight = new InfiniteAreaLight(t, t, exposure, color, globals[LightSamples]);
+                    Transform *c2o = new Transform(transStack->inverse(*transStack));
+					Transform *c2w = camTrans;
+					Transform *w2c = new Transform(camTrans->inverse(*camTrans));
+					Transform *o2w = new Transform(*transStack * *c2w);
+					Transform *w2o = new Transform(*w2c * *c2o);
+                    Reference<Light> envLight = new InfiniteAreaLight(transStack, c2o, o2w, w2o, c2w, w2c, exposure, color, envmap, globals[LightSamples]);
                     lights.push_back(envLight);
                 }
             }

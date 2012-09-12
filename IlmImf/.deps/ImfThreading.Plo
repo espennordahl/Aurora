@@ -1,0 +1,4 @@
+ImfThreading.lo ImfThreading.o: ImfThreading.cpp \
+  /usr/local/include/OpenEXR/IlmThreadPool.h
+
+/usr/local/include/OpenEXR/IlmThreadPool.h:

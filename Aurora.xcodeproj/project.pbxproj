@@ -13,6 +13,39 @@
 		232D37CC15C5151600F6853B /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232D37C715C5151600F6853B /* json_value.cpp */; };
 		232D37CD15C5151600F6853B /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232D37C915C5151600F6853B /* json_writer.cpp */; };
 		2365265815D8E973005B7273 /* texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2365265715D8E973005B7273 /* texture2D.cpp */; };
+		2395DF9815F3D78C006E73EF /* specTransmit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DF9715F3D78B006E73EF /* specTransmit.cpp */; };
+		2395DF9B15F3F239006E73EF /* transmitMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DF9A15F3F239006E73EF /* transmitMaterial.cpp */; };
+		2395DF9E15F43546006E73EF /* specMirror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DF9D15F43546006E73EF /* specMirror.cpp */; };
+		2395DFA115F43685006E73EF /* glassMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFA015F43685006E73EF /* glassMaterial.cpp */; };
+		2395E06815F53CAF006E73EF /* embree_filename.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFEB15F53CAF006E73EF /* embree_filename.cpp */; };
+		2395E06915F53CAF006E73EF /* embree_library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFEE15F53CAF006E73EF /* embree_library.cpp */; };
+		2395E06A15F53CAF006E73EF /* embree_platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFF015F53CAF006E73EF /* embree_platform.cpp */; };
+		2395E06B15F53CAF006E73EF /* embree_string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFF515F53CAF006E73EF /* embree_string.cpp */; };
+		2395E06C15F53CAF006E73EF /* embree_condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFFB15F53CAF006E73EF /* embree_condition.cpp */; };
+		2395E06D15F53CAF006E73EF /* embree_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFFD15F53CAF006E73EF /* embree_mutex.cpp */; };
+		2395E06E15F53CAF006E73EF /* embree_sysinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00215F53CAF006E73EF /* embree_sysinfo.cpp */; };
+		2395E06F15F53CAF006E73EF /* embree_taskscheduler_standard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00515F53CAF006E73EF /* embree_taskscheduler_standard.cpp */; };
+		2395E07015F53CAF006E73EF /* embree_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00715F53CAF006E73EF /* embree_thread.cpp */; };
+		2395E07115F53CAF006E73EF /* embree_bvh2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00B15F53CAF006E73EF /* embree_bvh2.cpp */; };
+		2395E07215F53CAF006E73EF /* embree_bvh2_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00D15F53CAF006E73EF /* embree_bvh2_builder.cpp */; };
+		2395E07315F53CAF006E73EF /* embree_bvh2_intersector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00F15F53CAF006E73EF /* embree_bvh2_intersector.cpp */; };
+		2395E07415F53CAF006E73EF /* embree_bvh4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01215F53CAF006E73EF /* embree_bvh4.cpp */; };
+		2395E07515F53CAF006E73EF /* embree_bvh4_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01415F53CAF006E73EF /* embree_bvh4_builder.cpp */; };
+		2395E07615F53CAF006E73EF /* embree_bvh4_intersector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01615F53CAF006E73EF /* embree_bvh4_intersector.cpp */; };
+		2395E07715F53CAF006E73EF /* embree_bvh4mb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01915F53CAF006E73EF /* embree_bvh4mb.cpp */; };
+		2395E07815F53CAF006E73EF /* embree_bvh4mb_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01B15F53CAF006E73EF /* embree_bvh4mb_builder.cpp */; };
+		2395E07915F53CAF006E73EF /* embree_bvh4mb_intersector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01D15F53CAF006E73EF /* embree_bvh4mb_intersector.cpp */; };
+		2395E07A15F53CAF006E73EF /* embree_accel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E02115F53CAF006E73EF /* embree_accel.cpp */; };
+		2395E07B15F53CAF006E73EF /* embree_alloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E02315F53CAF006E73EF /* embree_alloc.cpp */; };
+		2395E07C15F53CAF006E73EF /* embree_heuristic_binning.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E02815F53CAF006E73EF /* embree_heuristic_binning.cpp */; };
+		2395E07D15F53CAF006E73EF /* embree_heuristic_spatial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E02A15F53CAF006E73EF /* embree_heuristic_spatial.cpp */; };
+		2395E07E15F53CAF006E73EF /* embree_primrefgen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E03215F53CAF006E73EF /* embree_primrefgen.cpp */; };
+		2395E07F15F53CAF006E73EF /* embree_splitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E03515F53CAF006E73EF /* embree_splitter.cpp */; };
+		2395E08015F53CAF006E73EF /* embree_splitter_fallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E03715F53CAF006E73EF /* embree_splitter_fallback.cpp */; };
+		2395E08115F53CAF006E73EF /* embree_splitter_parallel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E03915F53CAF006E73EF /* embree_splitter_parallel.cpp */; };
+		2395E08215F53CAF006E73EF /* embree_stat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E03C15F53CAF006E73EF /* embree_stat.cpp */; };
+		2395E08515F54113006E73EF /* embreeAccelerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E08415F54112006E73EF /* embreeAccelerator.cpp */; };
+		23CB6E2115F5E0A900F7FE37 /* embreeMesh.h in Sources */ = {isa = PBXBuildFile; fileRef = 23CB6E1F15F5DBF000F7FE37 /* embreeMesh.h */; };
 		23E7EBF515C85ED10086218D /* parseOptions.h in Sources */ = {isa = PBXBuildFile; fileRef = 23E7EBF315C85E7F0086218D /* parseOptions.h */; };
 		23E7EBF715C870EA0086218D /* parseCamera.h in Sources */ = {isa = PBXBuildFile; fileRef = 23E7EBF415C85E860086218D /* parseCamera.h */; };
 		C50828C815A5A495007312C3 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50828C715A5A495007312C3 /* camera.cpp */; };
@@ -165,7 +198,158 @@
 		232D37D015C5154500F6853B /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
 		2365265315D8E7D2005B7273 /* texture2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture2D.h; sourceTree = "<group>"; };
 		2365265715D8E973005B7273 /* texture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture2D.cpp; sourceTree = "<group>"; };
+		2395DF9515F3D729006E73EF /* specTransmit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = specTransmit.h; sourceTree = "<group>"; };
+		2395DF9715F3D78B006E73EF /* specTransmit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = specTransmit.cpp; sourceTree = "<group>"; };
+		2395DF9915F3F1D8006E73EF /* transmitMaterial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = transmitMaterial.h; sourceTree = "<group>"; };
+		2395DF9A15F3F239006E73EF /* transmitMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transmitMaterial.cpp; sourceTree = "<group>"; };
+		2395DF9C15F43528006E73EF /* specMirror.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = specMirror.h; sourceTree = "<group>"; };
+		2395DF9D15F43546006E73EF /* specMirror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = specMirror.cpp; sourceTree = "<group>"; };
+		2395DF9F15F43633006E73EF /* glassMaterial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glassMaterial.h; sourceTree = "<group>"; };
+		2395DFA015F43685006E73EF /* glassMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = glassMaterial.cpp; sourceTree = "<group>"; };
+		2395DFA415F53CAF006E73EF /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		2395DFA515F53CAF006E73EF /* common.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = common.vcproj; sourceTree = "<group>"; };
+		2395DFA615F53CAF006E73EF /* common.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = common.vcxproj; sourceTree = "<group>"; };
+		2395DFC915F53CAF006E73EF /* embree_affinespace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_affinespace.h; sourceTree = "<group>"; };
+		2395DFCA15F53CAF006E73EF /* embree_bbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_bbox.h; sourceTree = "<group>"; };
+		2395DFCB15F53CAF006E73EF /* embree_col3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_col3.h; sourceTree = "<group>"; };
+		2395DFCC15F53CAF006E73EF /* embree_col3f_sse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_col3f_sse.h; sourceTree = "<group>"; };
+		2395DFCD15F53CAF006E73EF /* embree_linearspace3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_linearspace3.h; sourceTree = "<group>"; };
+		2395DFCE15F53CAF006E73EF /* embree_math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_math.h; sourceTree = "<group>"; };
+		2395DFCF15F53CAF006E73EF /* embree_permutation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_permutation.h; sourceTree = "<group>"; };
+		2395DFD015F53CAF006E73EF /* embree_quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_quaternion.h; sourceTree = "<group>"; };
+		2395DFD115F53CAF006E73EF /* embree_random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_random.h; sourceTree = "<group>"; };
+		2395DFD215F53CAF006E73EF /* embree_vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_vec2.h; sourceTree = "<group>"; };
+		2395DFD315F53CAF006E73EF /* embree_vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_vec3.h; sourceTree = "<group>"; };
+		2395DFD415F53CAF006E73EF /* embree_vec3b_sse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_vec3b_sse.h; sourceTree = "<group>"; };
+		2395DFD515F53CAF006E73EF /* embree_vec3f_sse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_vec3f_sse.h; sourceTree = "<group>"; };
+		2395DFD615F53CAF006E73EF /* embree_vec3i_sse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_vec3i_sse.h; sourceTree = "<group>"; };
+		2395DFD715F53CAF006E73EF /* embree_vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_vec4.h; sourceTree = "<group>"; };
+		2395DFD915F53CAF006E73EF /* embree_avx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_avx.h; sourceTree = "<group>"; };
+		2395DFDA15F53CAF006E73EF /* embree_avxb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_avxb.h; sourceTree = "<group>"; };
+		2395DFDB15F53CAF006E73EF /* embree_avxf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_avxf.h; sourceTree = "<group>"; };
+		2395DFDC15F53CAF006E73EF /* embree_avxi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_avxi.h; sourceTree = "<group>"; };
+		2395DFDD15F53CAF006E73EF /* embree_immintrin_emu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_immintrin_emu.h; sourceTree = "<group>"; };
+		2395DFDE15F53CAF006E73EF /* embree_pairb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_pairb.h; sourceTree = "<group>"; };
+		2395DFDF15F53CAF006E73EF /* embree_pairf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_pairf.h; sourceTree = "<group>"; };
+		2395DFE015F53CAF006E73EF /* embree_pairi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_pairi.h; sourceTree = "<group>"; };
+		2395DFE115F53CAF006E73EF /* embree_simd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_simd.h; sourceTree = "<group>"; };
+		2395DFE215F53CAF006E73EF /* embree_smmintrin_emu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_smmintrin_emu.h; sourceTree = "<group>"; };
+		2395DFE315F53CAF006E73EF /* embree_sse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_sse.h; sourceTree = "<group>"; };
+		2395DFE415F53CAF006E73EF /* embree_sse_special.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_sse_special.h; sourceTree = "<group>"; };
+		2395DFE515F53CAF006E73EF /* embree_sseb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_sseb.h; sourceTree = "<group>"; };
+		2395DFE615F53CAF006E73EF /* embree_ssef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_ssef.h; sourceTree = "<group>"; };
+		2395DFE715F53CAF006E73EF /* embree_ssei.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_ssei.h; sourceTree = "<group>"; };
+		2395DFE915F53CAF006E73EF /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		2395DFEA15F53CAF006E73EF /* embree_constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_constants.h; sourceTree = "<group>"; };
+		2395DFEB15F53CAF006E73EF /* embree_filename.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_filename.cpp; sourceTree = "<group>"; };
+		2395DFEC15F53CAF006E73EF /* embree_filename.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_filename.h; sourceTree = "<group>"; };
+		2395DFED15F53CAF006E73EF /* embree_intrinsics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_intrinsics.h; sourceTree = "<group>"; };
+		2395DFEE15F53CAF006E73EF /* embree_library.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_library.cpp; sourceTree = "<group>"; };
+		2395DFEF15F53CAF006E73EF /* embree_library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_library.h; sourceTree = "<group>"; };
+		2395DFF015F53CAF006E73EF /* embree_platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_platform.cpp; sourceTree = "<group>"; };
+		2395DFF115F53CAF006E73EF /* embree_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_platform.h; sourceTree = "<group>"; };
+		2395DFF215F53CAF006E73EF /* embree_ref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_ref.h; sourceTree = "<group>"; };
+		2395DFF415F53CAF006E73EF /* embree_array2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_array2d.h; sourceTree = "<group>"; };
+		2395DFF515F53CAF006E73EF /* embree_string.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_string.cpp; sourceTree = "<group>"; };
+		2395DFF615F53CAF006E73EF /* embree_string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_string.h; sourceTree = "<group>"; };
+		2395DFF715F53CAF006E73EF /* embree_vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_vector.h; sourceTree = "<group>"; };
+		2395DFF915F53CAF006E73EF /* embree_atomic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_atomic.h; sourceTree = "<group>"; };
+		2395DFFA15F53CAF006E73EF /* embree_barrier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_barrier.h; sourceTree = "<group>"; };
+		2395DFFB15F53CAF006E73EF /* embree_condition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_condition.cpp; sourceTree = "<group>"; };
+		2395DFFC15F53CAF006E73EF /* embree_condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_condition.h; sourceTree = "<group>"; };
+		2395DFFD15F53CAF006E73EF /* embree_mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_mutex.cpp; sourceTree = "<group>"; };
+		2395DFFE15F53CAF006E73EF /* embree_mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_mutex.h; sourceTree = "<group>"; };
+		2395DFFF15F53CAF006E73EF /* sys.icproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sys.icproj; sourceTree = "<group>"; };
+		2395E00015F53CAF006E73EF /* sys.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sys.vcproj; sourceTree = "<group>"; };
+		2395E00115F53CAF006E73EF /* sys.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sys.vcxproj; sourceTree = "<group>"; };
+		2395E00215F53CAF006E73EF /* embree_sysinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_sysinfo.cpp; sourceTree = "<group>"; };
+		2395E00315F53CAF006E73EF /* embree_sysinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_sysinfo.h; sourceTree = "<group>"; };
+		2395E00415F53CAF006E73EF /* embree_taskscheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_taskscheduler.h; sourceTree = "<group>"; };
+		2395E00515F53CAF006E73EF /* embree_taskscheduler_standard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_taskscheduler_standard.cpp; sourceTree = "<group>"; };
+		2395E00615F53CAF006E73EF /* embree_taskscheduler_standard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_taskscheduler_standard.h; sourceTree = "<group>"; };
+		2395E00715F53CAF006E73EF /* embree_thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_thread.cpp; sourceTree = "<group>"; };
+		2395E00815F53CAF006E73EF /* embree_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_thread.h; sourceTree = "<group>"; };
+		2395E00B15F53CAF006E73EF /* embree_bvh2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_bvh2.cpp; sourceTree = "<group>"; };
+		2395E00C15F53CAF006E73EF /* embree_bvh2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_bvh2.h; sourceTree = "<group>"; };
+		2395E00D15F53CAF006E73EF /* embree_bvh2_builder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_bvh2_builder.cpp; sourceTree = "<group>"; };
+		2395E00E15F53CAF006E73EF /* embree_bvh2_builder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_bvh2_builder.h; sourceTree = "<group>"; };
+		2395E00F15F53CAF006E73EF /* embree_bvh2_intersector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_bvh2_intersector.cpp; sourceTree = "<group>"; };
+		2395E01015F53CAF006E73EF /* embree_bvh2_intersector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_bvh2_intersector.h; sourceTree = "<group>"; };
+		2395E01215F53CAF006E73EF /* embree_bvh4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_bvh4.cpp; sourceTree = "<group>"; };
+		2395E01315F53CAF006E73EF /* embree_bvh4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_bvh4.h; sourceTree = "<group>"; };
+		2395E01415F53CAF006E73EF /* embree_bvh4_builder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_bvh4_builder.cpp; sourceTree = "<group>"; };
+		2395E01515F53CAF006E73EF /* embree_bvh4_builder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_bvh4_builder.h; sourceTree = "<group>"; };
+		2395E01615F53CAF006E73EF /* embree_bvh4_intersector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_bvh4_intersector.cpp; sourceTree = "<group>"; };
+		2395E01715F53CAF006E73EF /* embree_bvh4_intersector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_bvh4_intersector.h; sourceTree = "<group>"; };
+		2395E01915F53CAF006E73EF /* embree_bvh4mb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_bvh4mb.cpp; sourceTree = "<group>"; };
+		2395E01A15F53CAF006E73EF /* embree_bvh4mb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_bvh4mb.h; sourceTree = "<group>"; };
+		2395E01B15F53CAF006E73EF /* embree_bvh4mb_builder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_bvh4mb_builder.cpp; sourceTree = "<group>"; };
+		2395E01C15F53CAF006E73EF /* embree_bvh4mb_builder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_bvh4mb_builder.h; sourceTree = "<group>"; };
+		2395E01D15F53CAF006E73EF /* embree_bvh4mb_intersector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_bvh4mb_intersector.cpp; sourceTree = "<group>"; };
+		2395E01E15F53CAF006E73EF /* embree_bvh4mb_intersector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_bvh4mb_intersector.h; sourceTree = "<group>"; };
+		2395E01F15F53CAF006E73EF /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		2395E02115F53CAF006E73EF /* embree_accel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_accel.cpp; sourceTree = "<group>"; };
+		2395E02215F53CAF006E73EF /* embree_accel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_accel.h; sourceTree = "<group>"; };
+		2395E02315F53CAF006E73EF /* embree_alloc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_alloc.cpp; sourceTree = "<group>"; };
+		2395E02415F53CAF006E73EF /* embree_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_alloc.h; sourceTree = "<group>"; };
+		2395E02515F53CAF006E73EF /* embree_atomic_set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_atomic_set.h; sourceTree = "<group>"; };
+		2395E02615F53CAF006E73EF /* embree_basenode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_basenode.h; sourceTree = "<group>"; };
+		2395E02715F53CAF006E73EF /* embree_default.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_default.h; sourceTree = "<group>"; };
+		2395E02815F53CAF006E73EF /* embree_heuristic_binning.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_heuristic_binning.cpp; sourceTree = "<group>"; };
+		2395E02915F53CAF006E73EF /* embree_heuristic_binning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_heuristic_binning.h; sourceTree = "<group>"; };
+		2395E02A15F53CAF006E73EF /* embree_heuristic_spatial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_heuristic_spatial.cpp; sourceTree = "<group>"; };
+		2395E02B15F53CAF006E73EF /* embree_heuristic_spatial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_heuristic_spatial.h; sourceTree = "<group>"; };
+		2395E02C15F53CAF006E73EF /* embree_heuristics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_heuristics.h; sourceTree = "<group>"; };
+		2395E02D15F53CAF006E73EF /* embree_hit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_hit.h; sourceTree = "<group>"; };
+		2395E02E15F53CAF006E73EF /* embree_intersector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_intersector.h; sourceTree = "<group>"; };
+		2395E02F15F53CAF006E73EF /* embree_primref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_primref.h; sourceTree = "<group>"; };
+		2395E03015F53CAF006E73EF /* embree_primrefalloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_primrefalloc.h; sourceTree = "<group>"; };
+		2395E03115F53CAF006E73EF /* embree_primrefblock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_primrefblock.h; sourceTree = "<group>"; };
+		2395E03215F53CAF006E73EF /* embree_primrefgen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_primrefgen.cpp; sourceTree = "<group>"; };
+		2395E03315F53CAF006E73EF /* embree_primrefgen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_primrefgen.h; sourceTree = "<group>"; };
+		2395E03415F53CAF006E73EF /* embree_ray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_ray.h; sourceTree = "<group>"; };
+		2395E03515F53CAF006E73EF /* embree_splitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_splitter.cpp; sourceTree = "<group>"; };
+		2395E03615F53CAF006E73EF /* embree_splitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_splitter.h; sourceTree = "<group>"; };
+		2395E03715F53CAF006E73EF /* embree_splitter_fallback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_splitter_fallback.cpp; sourceTree = "<group>"; };
+		2395E03815F53CAF006E73EF /* embree_splitter_fallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_splitter_fallback.h; sourceTree = "<group>"; };
+		2395E03915F53CAF006E73EF /* embree_splitter_parallel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_splitter_parallel.cpp; sourceTree = "<group>"; };
+		2395E03A15F53CAF006E73EF /* embree_splitter_parallel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_splitter_parallel.h; sourceTree = "<group>"; };
+		2395E03B15F53CAF006E73EF /* embree_stack_item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_stack_item.h; sourceTree = "<group>"; };
+		2395E03C15F53CAF006E73EF /* embree_stat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embree_stat.cpp; sourceTree = "<group>"; };
+		2395E03D15F53CAF006E73EF /* embree_stat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_stat.h; sourceTree = "<group>"; };
+		2395E03E15F53CAF006E73EF /* rtcore.icproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = rtcore.icproj; sourceTree = "<group>"; };
+		2395E03F15F53CAF006E73EF /* rtcore.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = rtcore.vcproj; sourceTree = "<group>"; };
+		2395E04015F53CAF006E73EF /* rtcore.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = rtcore.vcxproj; sourceTree = "<group>"; };
+		2395E04215F53CAF006E73EF /* embree_triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle.h; sourceTree = "<group>"; };
+		2395E04315F53CAF006E73EF /* embree_triangle1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle1.h; sourceTree = "<group>"; };
+		2395E04415F53CAF006E73EF /* embree_triangle1_intersector1_moeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle1_intersector1_moeller.h; sourceTree = "<group>"; };
+		2395E04515F53CAF006E73EF /* embree_triangle1i.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle1i.h; sourceTree = "<group>"; };
+		2395E04615F53CAF006E73EF /* embree_triangle1i_intersector1_moeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle1i_intersector1_moeller.h; sourceTree = "<group>"; };
+		2395E04715F53CAF006E73EF /* embree_triangle1i_intersector1_pluecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle1i_intersector1_pluecker.h; sourceTree = "<group>"; };
+		2395E04815F53CAF006E73EF /* embree_triangle1v.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle1v.h; sourceTree = "<group>"; };
+		2395E04915F53CAF006E73EF /* embree_triangle1v_intersector1_moeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle1v_intersector1_moeller.h; sourceTree = "<group>"; };
+		2395E04A15F53CAF006E73EF /* embree_triangle1v_intersector1_pluecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle1v_intersector1_pluecker.h; sourceTree = "<group>"; };
+		2395E04B15F53CAF006E73EF /* embree_triangle1xfm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle1xfm.h; sourceTree = "<group>"; };
+		2395E04C15F53CAF006E73EF /* embree_triangle1xfm_intersector1_moeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle1xfm_intersector1_moeller.h; sourceTree = "<group>"; };
+		2395E04D15F53CAF006E73EF /* embree_triangle4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4.h; sourceTree = "<group>"; };
+		2395E04E15F53CAF006E73EF /* embree_triangle4_intersector1_moeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4_intersector1_moeller.h; sourceTree = "<group>"; };
+		2395E04F15F53CAF006E73EF /* embree_triangle4i.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4i.h; sourceTree = "<group>"; };
+		2395E05015F53CAF006E73EF /* embree_triangle4i_intersector1_moeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4i_intersector1_moeller.h; sourceTree = "<group>"; };
+		2395E05115F53CAF006E73EF /* embree_triangle4i_intersector1_moeller_mb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4i_intersector1_moeller_mb.h; sourceTree = "<group>"; };
+		2395E05215F53CAF006E73EF /* embree_triangle4i_intersector1_pluecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4i_intersector1_pluecker.h; sourceTree = "<group>"; };
+		2395E05315F53CAF006E73EF /* embree_triangle4i_intersector1_pluecker_mb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4i_intersector1_pluecker_mb.h; sourceTree = "<group>"; };
+		2395E05415F53CAF006E73EF /* embree_triangle4v.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4v.h; sourceTree = "<group>"; };
+		2395E05515F53CAF006E73EF /* embree_triangle4v_intersector1_moeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4v_intersector1_moeller.h; sourceTree = "<group>"; };
+		2395E05615F53CAF006E73EF /* embree_triangle4v_intersector1_pluecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4v_intersector1_pluecker.h; sourceTree = "<group>"; };
+		2395E05715F53CAF006E73EF /* embree_triangle4xfm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4xfm.h; sourceTree = "<group>"; };
+		2395E05815F53CAF006E73EF /* embree_triangle4xfm_intersector1_moeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle4xfm_intersector1_moeller.h; sourceTree = "<group>"; };
+		2395E05915F53CAF006E73EF /* embree_triangle8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle8.h; sourceTree = "<group>"; };
+		2395E05A15F53CAF006E73EF /* embree_triangle8_intersector1_moeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangle8_intersector1_moeller.h; sourceTree = "<group>"; };
+		2395E05B15F53CAF006E73EF /* embree_triangles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embree_triangles.h; sourceTree = "<group>"; };
+		2395E08315F540E0006E73EF /* embreeAccelerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = embreeAccelerator.h; sourceTree = "<group>"; };
+		2395E08415F54112006E73EF /* embreeAccelerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embreeAccelerator.cpp; sourceTree = "<group>"; };
 		23ACD3E915C4914400B78E25 /* bunny.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bunny.cpp; sourceTree = "<group>"; };
+		23CB6E1F15F5DBF000F7FE37 /* embreeMesh.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; path = embreeMesh.h; sourceTree = "<group>"; };
 		23E7EBF115C85E650086218D /* parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parsing.h; sourceTree = "<group>"; };
 		23E7EBF215C85E730086218D /* parseGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseGeometry.h; sourceTree = "<group>"; };
 		23E7EBF315C85E7F0086218D /* parseOptions.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = parseOptions.h; sourceTree = "<group>"; };
@@ -534,6 +718,249 @@
 			path = lib_json;
 			sourceTree = "<group>";
 		};
+		2395DFA215F53C8D006E73EF /* Embree */ = {
+			isa = PBXGroup;
+			children = (
+				2395DFA315F53CAF006E73EF /* common */,
+				2395E00915F53CAF006E73EF /* rtcore */,
+			);
+			name = Embree;
+			sourceTree = "<group>";
+		};
+		2395DFA315F53CAF006E73EF /* common */ = {
+			isa = PBXGroup;
+			children = (
+				2395DFA415F53CAF006E73EF /* CMakeLists.txt */,
+				2395DFA515F53CAF006E73EF /* common.vcproj */,
+				2395DFA615F53CAF006E73EF /* common.vcxproj */,
+				2395DFC815F53CAF006E73EF /* math */,
+				2395DFD815F53CAF006E73EF /* simd */,
+				2395DFE815F53CAF006E73EF /* sys */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		2395DFC815F53CAF006E73EF /* math */ = {
+			isa = PBXGroup;
+			children = (
+				2395DFC915F53CAF006E73EF /* embree_affinespace.h */,
+				2395DFCA15F53CAF006E73EF /* embree_bbox.h */,
+				2395DFCB15F53CAF006E73EF /* embree_col3.h */,
+				2395DFCC15F53CAF006E73EF /* embree_col3f_sse.h */,
+				2395DFCD15F53CAF006E73EF /* embree_linearspace3.h */,
+				2395DFCE15F53CAF006E73EF /* embree_math.h */,
+				2395DFCF15F53CAF006E73EF /* embree_permutation.h */,
+				2395DFD015F53CAF006E73EF /* embree_quaternion.h */,
+				2395DFD115F53CAF006E73EF /* embree_random.h */,
+				2395DFD215F53CAF006E73EF /* embree_vec2.h */,
+				2395DFD315F53CAF006E73EF /* embree_vec3.h */,
+				2395DFD415F53CAF006E73EF /* embree_vec3b_sse.h */,
+				2395DFD515F53CAF006E73EF /* embree_vec3f_sse.h */,
+				2395DFD615F53CAF006E73EF /* embree_vec3i_sse.h */,
+				2395DFD715F53CAF006E73EF /* embree_vec4.h */,
+			);
+			path = math;
+			sourceTree = "<group>";
+		};
+		2395DFD815F53CAF006E73EF /* simd */ = {
+			isa = PBXGroup;
+			children = (
+				2395DFD915F53CAF006E73EF /* embree_avx.h */,
+				2395DFDA15F53CAF006E73EF /* embree_avxb.h */,
+				2395DFDB15F53CAF006E73EF /* embree_avxf.h */,
+				2395DFDC15F53CAF006E73EF /* embree_avxi.h */,
+				2395DFDD15F53CAF006E73EF /* embree_immintrin_emu.h */,
+				2395DFDE15F53CAF006E73EF /* embree_pairb.h */,
+				2395DFDF15F53CAF006E73EF /* embree_pairf.h */,
+				2395DFE015F53CAF006E73EF /* embree_pairi.h */,
+				2395DFE115F53CAF006E73EF /* embree_simd.h */,
+				2395DFE215F53CAF006E73EF /* embree_smmintrin_emu.h */,
+				2395DFE315F53CAF006E73EF /* embree_sse.h */,
+				2395DFE415F53CAF006E73EF /* embree_sse_special.h */,
+				2395DFE515F53CAF006E73EF /* embree_sseb.h */,
+				2395DFE615F53CAF006E73EF /* embree_ssef.h */,
+				2395DFE715F53CAF006E73EF /* embree_ssei.h */,
+			);
+			path = simd;
+			sourceTree = "<group>";
+		};
+		2395DFE815F53CAF006E73EF /* sys */ = {
+			isa = PBXGroup;
+			children = (
+				2395DFE915F53CAF006E73EF /* CMakeLists.txt */,
+				2395DFEA15F53CAF006E73EF /* embree_constants.h */,
+				2395DFEB15F53CAF006E73EF /* embree_filename.cpp */,
+				2395DFEC15F53CAF006E73EF /* embree_filename.h */,
+				2395DFED15F53CAF006E73EF /* embree_intrinsics.h */,
+				2395DFEE15F53CAF006E73EF /* embree_library.cpp */,
+				2395DFEF15F53CAF006E73EF /* embree_library.h */,
+				2395DFF015F53CAF006E73EF /* embree_platform.cpp */,
+				2395DFF115F53CAF006E73EF /* embree_platform.h */,
+				2395DFF215F53CAF006E73EF /* embree_ref.h */,
+				2395DFF315F53CAF006E73EF /* stl */,
+				2395DFF815F53CAF006E73EF /* sync */,
+				2395DFFF15F53CAF006E73EF /* sys.icproj */,
+				2395E00015F53CAF006E73EF /* sys.vcproj */,
+				2395E00115F53CAF006E73EF /* sys.vcxproj */,
+				2395E00215F53CAF006E73EF /* embree_sysinfo.cpp */,
+				2395E00315F53CAF006E73EF /* embree_sysinfo.h */,
+				2395E00415F53CAF006E73EF /* embree_taskscheduler.h */,
+				2395E00515F53CAF006E73EF /* embree_taskscheduler_standard.cpp */,
+				2395E00615F53CAF006E73EF /* embree_taskscheduler_standard.h */,
+				2395E00715F53CAF006E73EF /* embree_thread.cpp */,
+				2395E00815F53CAF006E73EF /* embree_thread.h */,
+			);
+			path = sys;
+			sourceTree = "<group>";
+		};
+		2395DFF315F53CAF006E73EF /* stl */ = {
+			isa = PBXGroup;
+			children = (
+				2395DFF415F53CAF006E73EF /* embree_array2d.h */,
+				2395DFF515F53CAF006E73EF /* embree_string.cpp */,
+				2395DFF615F53CAF006E73EF /* embree_string.h */,
+				2395DFF715F53CAF006E73EF /* embree_vector.h */,
+			);
+			path = stl;
+			sourceTree = "<group>";
+		};
+		2395DFF815F53CAF006E73EF /* sync */ = {
+			isa = PBXGroup;
+			children = (
+				2395DFF915F53CAF006E73EF /* embree_atomic.h */,
+				2395DFFA15F53CAF006E73EF /* embree_barrier.h */,
+				2395DFFB15F53CAF006E73EF /* embree_condition.cpp */,
+				2395DFFC15F53CAF006E73EF /* embree_condition.h */,
+				2395DFFD15F53CAF006E73EF /* embree_mutex.cpp */,
+				2395DFFE15F53CAF006E73EF /* embree_mutex.h */,
+			);
+			path = sync;
+			sourceTree = "<group>";
+		};
+		2395E00915F53CAF006E73EF /* rtcore */ = {
+			isa = PBXGroup;
+			children = (
+				2395E00A15F53CAF006E73EF /* bvh2 */,
+				2395E01115F53CAF006E73EF /* bvh4 */,
+				2395E01815F53CAF006E73EF /* bvh4mb */,
+				2395E01F15F53CAF006E73EF /* CMakeLists.txt */,
+				2395E02015F53CAF006E73EF /* common */,
+				2395E03E15F53CAF006E73EF /* rtcore.icproj */,
+				2395E03F15F53CAF006E73EF /* rtcore.vcproj */,
+				2395E04015F53CAF006E73EF /* rtcore.vcxproj */,
+				2395E04115F53CAF006E73EF /* triangle */,
+			);
+			path = rtcore;
+			sourceTree = "<group>";
+		};
+		2395E00A15F53CAF006E73EF /* bvh2 */ = {
+			isa = PBXGroup;
+			children = (
+				2395E00B15F53CAF006E73EF /* embree_bvh2.cpp */,
+				2395E00C15F53CAF006E73EF /* embree_bvh2.h */,
+				2395E00D15F53CAF006E73EF /* embree_bvh2_builder.cpp */,
+				2395E00E15F53CAF006E73EF /* embree_bvh2_builder.h */,
+				2395E00F15F53CAF006E73EF /* embree_bvh2_intersector.cpp */,
+				2395E01015F53CAF006E73EF /* embree_bvh2_intersector.h */,
+			);
+			path = bvh2;
+			sourceTree = "<group>";
+		};
+		2395E01115F53CAF006E73EF /* bvh4 */ = {
+			isa = PBXGroup;
+			children = (
+				2395E01215F53CAF006E73EF /* embree_bvh4.cpp */,
+				2395E01315F53CAF006E73EF /* embree_bvh4.h */,
+				2395E01415F53CAF006E73EF /* embree_bvh4_builder.cpp */,
+				2395E01515F53CAF006E73EF /* embree_bvh4_builder.h */,
+				2395E01615F53CAF006E73EF /* embree_bvh4_intersector.cpp */,
+				2395E01715F53CAF006E73EF /* embree_bvh4_intersector.h */,
+			);
+			path = bvh4;
+			sourceTree = "<group>";
+		};
+		2395E01815F53CAF006E73EF /* bvh4mb */ = {
+			isa = PBXGroup;
+			children = (
+				2395E01915F53CAF006E73EF /* embree_bvh4mb.cpp */,
+				2395E01A15F53CAF006E73EF /* embree_bvh4mb.h */,
+				2395E01B15F53CAF006E73EF /* embree_bvh4mb_builder.cpp */,
+				2395E01C15F53CAF006E73EF /* embree_bvh4mb_builder.h */,
+				2395E01D15F53CAF006E73EF /* embree_bvh4mb_intersector.cpp */,
+				2395E01E15F53CAF006E73EF /* embree_bvh4mb_intersector.h */,
+			);
+			path = bvh4mb;
+			sourceTree = "<group>";
+		};
+		2395E02015F53CAF006E73EF /* common */ = {
+			isa = PBXGroup;
+			children = (
+				2395E02115F53CAF006E73EF /* embree_accel.cpp */,
+				2395E02215F53CAF006E73EF /* embree_accel.h */,
+				2395E02315F53CAF006E73EF /* embree_alloc.cpp */,
+				2395E02415F53CAF006E73EF /* embree_alloc.h */,
+				2395E02515F53CAF006E73EF /* embree_atomic_set.h */,
+				2395E02615F53CAF006E73EF /* embree_basenode.h */,
+				2395E02715F53CAF006E73EF /* embree_default.h */,
+				2395E02815F53CAF006E73EF /* embree_heuristic_binning.cpp */,
+				2395E02915F53CAF006E73EF /* embree_heuristic_binning.h */,
+				2395E02A15F53CAF006E73EF /* embree_heuristic_spatial.cpp */,
+				2395E02B15F53CAF006E73EF /* embree_heuristic_spatial.h */,
+				2395E02C15F53CAF006E73EF /* embree_heuristics.h */,
+				2395E02D15F53CAF006E73EF /* embree_hit.h */,
+				2395E02E15F53CAF006E73EF /* embree_intersector.h */,
+				2395E02F15F53CAF006E73EF /* embree_primref.h */,
+				2395E03015F53CAF006E73EF /* embree_primrefalloc.h */,
+				2395E03115F53CAF006E73EF /* embree_primrefblock.h */,
+				2395E03215F53CAF006E73EF /* embree_primrefgen.cpp */,
+				2395E03315F53CAF006E73EF /* embree_primrefgen.h */,
+				2395E03415F53CAF006E73EF /* embree_ray.h */,
+				2395E03515F53CAF006E73EF /* embree_splitter.cpp */,
+				2395E03615F53CAF006E73EF /* embree_splitter.h */,
+				2395E03715F53CAF006E73EF /* embree_splitter_fallback.cpp */,
+				2395E03815F53CAF006E73EF /* embree_splitter_fallback.h */,
+				2395E03915F53CAF006E73EF /* embree_splitter_parallel.cpp */,
+				2395E03A15F53CAF006E73EF /* embree_splitter_parallel.h */,
+				2395E03B15F53CAF006E73EF /* embree_stack_item.h */,
+				2395E03C15F53CAF006E73EF /* embree_stat.cpp */,
+				2395E03D15F53CAF006E73EF /* embree_stat.h */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		2395E04115F53CAF006E73EF /* triangle */ = {
+			isa = PBXGroup;
+			children = (
+				2395E04215F53CAF006E73EF /* embree_triangle.h */,
+				2395E04315F53CAF006E73EF /* embree_triangle1.h */,
+				2395E04415F53CAF006E73EF /* embree_triangle1_intersector1_moeller.h */,
+				2395E04515F53CAF006E73EF /* embree_triangle1i.h */,
+				2395E04615F53CAF006E73EF /* embree_triangle1i_intersector1_moeller.h */,
+				2395E04715F53CAF006E73EF /* embree_triangle1i_intersector1_pluecker.h */,
+				2395E04815F53CAF006E73EF /* embree_triangle1v.h */,
+				2395E04915F53CAF006E73EF /* embree_triangle1v_intersector1_moeller.h */,
+				2395E04A15F53CAF006E73EF /* embree_triangle1v_intersector1_pluecker.h */,
+				2395E04B15F53CAF006E73EF /* embree_triangle1xfm.h */,
+				2395E04C15F53CAF006E73EF /* embree_triangle1xfm_intersector1_moeller.h */,
+				2395E04D15F53CAF006E73EF /* embree_triangle4.h */,
+				2395E04E15F53CAF006E73EF /* embree_triangle4_intersector1_moeller.h */,
+				2395E04F15F53CAF006E73EF /* embree_triangle4i.h */,
+				2395E05015F53CAF006E73EF /* embree_triangle4i_intersector1_moeller.h */,
+				2395E05115F53CAF006E73EF /* embree_triangle4i_intersector1_moeller_mb.h */,
+				2395E05215F53CAF006E73EF /* embree_triangle4i_intersector1_pluecker.h */,
+				2395E05315F53CAF006E73EF /* embree_triangle4i_intersector1_pluecker_mb.h */,
+				2395E05415F53CAF006E73EF /* embree_triangle4v.h */,
+				2395E05515F53CAF006E73EF /* embree_triangle4v_intersector1_moeller.h */,
+				2395E05615F53CAF006E73EF /* embree_triangle4v_intersector1_pluecker.h */,
+				2395E05715F53CAF006E73EF /* embree_triangle4xfm.h */,
+				2395E05815F53CAF006E73EF /* embree_triangle4xfm_intersector1_moeller.h */,
+				2395E05915F53CAF006E73EF /* embree_triangle8.h */,
+				2395E05A15F53CAF006E73EF /* embree_triangle8_intersector1_moeller.h */,
+				2395E05B15F53CAF006E73EF /* embree_triangles.h */,
+			);
+			path = triangle;
+			sourceTree = "<group>";
+		};
 		23E7EBEF15C85E480086218D /* Parsing */ = {
 			isa = PBXGroup;
 			children = (
@@ -548,6 +975,7 @@
 		C50828C515A5A482007312C3 /* ExternalLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				2395DFA215F53C8D006E73EF /* Embree */,
 				232D37B515C514F000F6853B /* jsoncpp */,
 				232D37B715C5150200F6853B /* openExr */,
 			);
@@ -566,6 +994,10 @@
 				C53D80FB15AEBB4E00526368 /* blinn.cpp */,
 				23186F6515BC969A008B5AA5 /* cookTorrance.h */,
 				23186F6715BC96D1008B5AA5 /* cookTorrance.cpp */,
+				2395DF9515F3D729006E73EF /* specTransmit.h */,
+				2395DF9715F3D78B006E73EF /* specTransmit.cpp */,
+				2395DF9C15F43528006E73EF /* specMirror.h */,
+				2395DF9D15F43546006E73EF /* specMirror.cpp */,
 			);
 			name = Brdfs;
 			sourceTree = "<group>";
@@ -600,6 +1032,10 @@
 				C53D80FE15B0BC9700526368 /* plasticMaterial.cpp */,
 				23186F6915BC98DE008B5AA5 /* kelemenMaterial.h */,
 				23186F6A15BC991B008B5AA5 /* kelemenMaterial.cpp */,
+				2395DF9915F3F1D8006E73EF /* transmitMaterial.h */,
+				2395DF9A15F3F239006E73EF /* transmitMaterial.cpp */,
+				2395DF9F15F43633006E73EF /* glassMaterial.h */,
+				2395DFA015F43685006E73EF /* glassMaterial.cpp */,
 			);
 			name = Materials;
 			sourceTree = "<group>";
@@ -667,6 +1103,7 @@
 				C5F76AB415A58203008F9DFE /* light.h */,
 				C53D80A115A6137A00526368 /* light.cpp */,
 				C5F76A39159FB321008F9DFE /* geometry.h */,
+				23CB6E1F15F5DBF000F7FE37 /* embreeMesh.h */,
 				C5F76A3A159FB46A008F9DFE /* shape.h */,
 				C5F76A37159FA93C008F9DFE /* material.h */,
 				C53D80A615A6CB7900526368 /* brdf.h */,
@@ -684,8 +1121,8 @@
 			children = (
 				C53D80AD15A78F2700526368 /* renderableGeo */,
 				C5F76A3B159FB5AA008F9DFE /* renderableGeometry.h */,
-				C5F76A3C159FB910008F9DFE /* intersection.h */,
 				C5F76A40159FC009008F9DFE /* accelerationStructure.h */,
+				C5F76A3C159FB910008F9DFE /* intersection.h */,
 				C5F76A41159FC09A008F9DFE /* renderEnvironment.h */,
 				C5F76A42159FC0EC008F9DFE /* attributeState.h */,
 				C5F76A44159FC86C008F9DFE /* dummyAccelerationStructure.h */,
@@ -694,6 +1131,8 @@
 				C53D80E915A832F400526368 /* uniformGridAccelerator.cpp */,
 				C53D810215B1166700526368 /* kdTreeAccelerator.h */,
 				C53D810315B1175E00526368 /* kdTreeAccelerator.cpp */,
+				2395E08315F540E0006E73EF /* embreeAccelerator.h */,
+				2395E08415F54112006E73EF /* embreeAccelerator.cpp */,
 				C53D80E815A831FB00526368 /* voxel.h */,
 			);
 			name = BackEnd;
@@ -1163,6 +1602,39 @@
 				23E7EBF515C85ED10086218D /* parseOptions.h in Sources */,
 				23E7EBF715C870EA0086218D /* parseCamera.h in Sources */,
 				2365265815D8E973005B7273 /* texture2D.cpp in Sources */,
+				2395DF9815F3D78C006E73EF /* specTransmit.cpp in Sources */,
+				2395DF9B15F3F239006E73EF /* transmitMaterial.cpp in Sources */,
+				2395DF9E15F43546006E73EF /* specMirror.cpp in Sources */,
+				2395DFA115F43685006E73EF /* glassMaterial.cpp in Sources */,
+				2395E06815F53CAF006E73EF /* embree_filename.cpp in Sources */,
+				2395E06915F53CAF006E73EF /* embree_library.cpp in Sources */,
+				2395E06A15F53CAF006E73EF /* embree_platform.cpp in Sources */,
+				2395E06B15F53CAF006E73EF /* embree_string.cpp in Sources */,
+				2395E06C15F53CAF006E73EF /* embree_condition.cpp in Sources */,
+				2395E06D15F53CAF006E73EF /* embree_mutex.cpp in Sources */,
+				2395E06E15F53CAF006E73EF /* embree_sysinfo.cpp in Sources */,
+				2395E06F15F53CAF006E73EF /* embree_taskscheduler_standard.cpp in Sources */,
+				2395E07015F53CAF006E73EF /* embree_thread.cpp in Sources */,
+				2395E07115F53CAF006E73EF /* embree_bvh2.cpp in Sources */,
+				2395E07215F53CAF006E73EF /* embree_bvh2_builder.cpp in Sources */,
+				2395E07315F53CAF006E73EF /* embree_bvh2_intersector.cpp in Sources */,
+				2395E07415F53CAF006E73EF /* embree_bvh4.cpp in Sources */,
+				2395E07515F53CAF006E73EF /* embree_bvh4_builder.cpp in Sources */,
+				2395E07615F53CAF006E73EF /* embree_bvh4_intersector.cpp in Sources */,
+				2395E07715F53CAF006E73EF /* embree_bvh4mb.cpp in Sources */,
+				2395E07815F53CAF006E73EF /* embree_bvh4mb_builder.cpp in Sources */,
+				2395E07915F53CAF006E73EF /* embree_bvh4mb_intersector.cpp in Sources */,
+				2395E07A15F53CAF006E73EF /* embree_accel.cpp in Sources */,
+				2395E07B15F53CAF006E73EF /* embree_alloc.cpp in Sources */,
+				2395E07C15F53CAF006E73EF /* embree_heuristic_binning.cpp in Sources */,
+				2395E07D15F53CAF006E73EF /* embree_heuristic_spatial.cpp in Sources */,
+				2395E07E15F53CAF006E73EF /* embree_primrefgen.cpp in Sources */,
+				2395E07F15F53CAF006E73EF /* embree_splitter.cpp in Sources */,
+				2395E08015F53CAF006E73EF /* embree_splitter_fallback.cpp in Sources */,
+				2395E08115F53CAF006E73EF /* embree_splitter_parallel.cpp in Sources */,
+				2395E08215F53CAF006E73EF /* embree_stat.cpp in Sources */,
+				2395E08515F54113006E73EF /* embreeAccelerator.cpp in Sources */,
+				23CB6E2115F5E0A900F7FE37 /* embreeMesh.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1185,6 +1657,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1212,6 +1685,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;

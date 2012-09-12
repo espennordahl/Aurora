@@ -48,6 +48,13 @@ inline void parseGlobals(Json::Value &root, std::map<Option, double> *globals){
             else if (itr.key().asString() == "maxdepth") {
                 (*globals)[MaxDepth] = value.asInt();
             }
+            else if (itr.key().asString() == "useEmbree") {
+                double useEmbree = 0;
+                useEmbree = value.asDouble();
+                if (useEmbree > 0.) {
+                    (*globals)[AccelStructure] = ACCEL_EMBREE;
+                }
+            }
                 // unknown
             else {
                 LOG_WARNING("Unable to parse global attribute: " << itr.key().asString());

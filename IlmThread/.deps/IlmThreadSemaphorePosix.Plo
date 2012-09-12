@@ -1,0 +1,4 @@
+IlmThreadSemaphorePosix.lo IlmThreadSemaphorePosix.o:  \
+ IlmThreadSemaphorePosix.cpp ../config/IlmBaseConfig.h
+
+../config/IlmBaseConfig.h:

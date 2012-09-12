@@ -14,6 +14,8 @@
 using namespace Aurora;
 
 CookTorrance::CookTorrance(Color col, float _exponent, int _numSamples){
+    brdfType = SpecBrdf;
+    integrationDomain = Hemisphere;
 	color = col;
 	exponent = _exponent;
     numSamples = _numSamples;
@@ -22,8 +24,6 @@ CookTorrance::CookTorrance(Color col, float _exponent, int _numSamples){
         generateSampleBuffer(1,t);
         generateSampleBuffer(2,t);
     }
-    brdfType = SpecBrdf;
-
 }
 
 void CookTorrance::generateSampleBuffer(int i, int t){
@@ -57,7 +57,7 @@ Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, int depth, 
         }
         r1 = randomU[thread][depth].back();
         randomU[thread][depth].pop_back();
-        r2 = randomU[thread][depth].back();
+        r2 = randomV[thread][depth].back();
         randomV[thread][depth].pop_back();
 	}
     else {

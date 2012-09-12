@@ -1,0 +1,4 @@
+IlmThreadMutex.lo IlmThreadMutex.o: IlmThreadMutex.cpp \
+  ../config/IlmBaseConfig.h
+
+../config/IlmBaseConfig.h:
