@@ -17,10 +17,17 @@
 
 #include "json.h"
 
+#include <string.h>
+
 namespace Aurora {
-    inline void parseMatteMaterial(Json::Value &root, std::map<Option, double> globals, Reference<Material> *material){
+    
+#pragma mark -
+#pragma mark Materials
+    
+    inline void parseMatteMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals, Reference<Material> *material){
         if( root.size() > 0 ) {
             Color col;
+            std::string name;
             for( Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {
                 if (itr.key().asString() == "color") {
                     Json::Value c = *itr;
@@ -31,18 +38,24 @@ namespace Aurora {
                         i++;
                     }
                 }
+                if (itr.key().asString() == "name") {
+                    Json::Value v = *itr;
+                    name = v.asString();
+                }
+
             }
-            *material = new MatteMaterial(col, globals[LightSamples]);
+            *material = new MatteMaterial(name, col, globals[LightSamples]/2);
         }
         else {
             LOG_ERROR("Empty material.");
         }
     }
     
-    inline void parseTransmitMaterial(Json::Value &root, std::map<Option, double> globals, Reference<Material> *material){
+    inline void parseTransmitMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals, Reference<Material> *material){
         if( root.size() > 0 ) {
             Color col;
             float ior;
+            std::string name;
             for( Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {
                 if (itr.key().asString() == "color") {
                     Json::Value c = *itr;
@@ -53,24 +66,31 @@ namespace Aurora {
                         i++;
                     }
                 }
-                if (itr.key().asString() == "ior") {
+                else if (itr.key().asString() == "ior") {
                     Json::Value v = *itr;
                     ior = v.asDouble();
                 }
+                else if (itr.key().asString() == "name") {
+                    Json::Value v = *itr;
+                    name = v.asString();
+                }
+
+                
             }
-            *material = new TransmitMaterial(col, ior);
+            *material = new TransmitMaterial(name, col, ior);
         }
         else {
             LOG_ERROR("Empty material.");
         }
     }
 
-    inline void parseGlassMaterial(Json::Value &root, std::map<Option, double> globals, Reference<Material> *material){
+    inline void parseGlassMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals, Reference<Material> *material){
         if( root.size() > 0 ) {
             Color specCol;
             float ior;
             Color transmitCol;
             float reflectance;
+            std::string name;
             for( Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {
                 if (itr.key().asString() == "specColor") {
                     Json::Value c = *itr;
@@ -98,8 +118,13 @@ namespace Aurora {
                     Json::Value v = *itr;
                     ior = v.asDouble();
                 }
+                else if (itr.key().asString() == "name") {
+                    Json::Value v = *itr;
+                    name = v.asString();
+                }
+
             }
-            *material = new GlassMaterial(specCol, transmitCol, reflectance, ior);
+            *material = new GlassMaterial(name, specCol, transmitCol, reflectance, ior);
         }
         else {
             LOG_ERROR("Empty material.");
@@ -107,12 +132,22 @@ namespace Aurora {
     }
 
 
-    inline void parseKelemenMaterial(Json::Value &root, std::map<Option, double> globals, Reference<Material> *material){
+    inline void parseKelemenMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals, Reference<Material> *material){
         if( root.size() > 0 ) {
+            std::string name;
             Color diffCol;
             Color specCol;
             float reflectance;
             float exponent;
+            std::string diffTexture = "";
+            bool useNoise; 
+            float noiseFrequency; 
+            int noiseLevels;
+            float noiseAmplitudeMod;
+            float noiseFreqMod;
+            Color noiseColA;
+            Color noiseColB;
+
             for( Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {
                 if (itr.key().asString() == "diffusecolor") {
                     Json::Value c = *itr;
@@ -140,8 +175,64 @@ namespace Aurora {
                     Json::Value v = *itr;
                     exponent = v.asDouble();
                 }
+                else if (itr.key().asString() == "diffuseTexture") {
+                    Json::Value v = *itr;
+                    diffTexture = v.asString();
+                }
+                else if (itr.key().asString() == "useNoise") {
+                    Json::Value v = *itr;
+                    double tmp = v.asDouble();
+                    if (tmp == 1.0){
+                        useNoise = true;
+                    }
+                    else {
+                        useNoise = false;
+                    }
+                }
+                else if (itr.key().asString() == "noiseFrequency") {
+                    Json::Value v = *itr;
+                    noiseFrequency = v.asDouble();
+                }
+                else if (itr.key().asString() == "noiseLevels") {
+                    Json::Value v = *itr;
+                    noiseLevels = floor(v.asDouble());
+                }
+                else if (itr.key().asString() == "noiseAmplitudeMod") {
+                    Json::Value v = *itr;
+                    noiseAmplitudeMod = v.asDouble();
+                }
+                else if (itr.key().asString() == "noiseFreqMod") {
+                    Json::Value v = *itr;
+                    noiseFreqMod = v.asDouble();
+                }
+                else if (itr.key().asString() == "noiseColorA") {
+                    Json::Value c = *itr;
+                    int i = 0;
+                    for( Json::ValueIterator colItr = c.begin() ; colItr != c.end(); colItr++ ) {
+                        Json::Value v = *colItr;
+                        noiseColA[i] = v.asDouble();
+                        i++;
+                    }
+                }
+                else if (itr.key().asString() == "noiseColorB") {
+                    Json::Value c = *itr;
+                    int i = 0;
+                    for( Json::ValueIterator colItr = c.begin() ; colItr != c.end(); colItr++ ) {
+                        Json::Value v = *colItr;
+                        noiseColB[i] = v.asDouble();
+                        i++;
+                    }
+                }
+                else if (itr.key().asString() == "name") {
+                    Json::Value v = *itr;
+                    name = v.asString();
+                }
+
             }
-            *material = new KelemenMaterial(diffCol, specCol, exponent, reflectance, globals[LightSamples]);
+            *material = new KelemenMaterial(name, renderEnv, diffCol, specCol, exponent, reflectance, diffTexture, 
+                                            useNoise, noiseFrequency, noiseLevels, noiseAmplitudeMod, noiseFreqMod,
+                                            noiseColA, noiseColB,
+                                            globals[LightSamples]/2);
         }   
         else {
             LOG_ERROR("Empty material.");
@@ -149,7 +240,7 @@ namespace Aurora {
     }
 
     
-    inline void parseObject(Json::Value &root, std::vector<Reference<AuroraObject> > &objects, std::vector<Reference<Light> > &lights, Transform *camTrans, std::map<Option, double> globals){
+    inline void parseObject(Json::Value &root, RenderEnvironment *renderEnv, std::vector<Reference<AuroraObject> > &objects, std::vector<Reference<Light> > &lights, Transform *camTrans, std::map<Option, double> globals){
         
         
         if( root.size() > 0 ) {
@@ -195,16 +286,16 @@ namespace Aurora {
                                         Json::Value v = *mItr;
                                         std::string materialType = v.asString();
                                         if (materialType == "matteMaterial") {
-                                            parseMatteMaterial(*objItr, globals, &material);
+                                            parseMatteMaterial(*objItr, renderEnv, globals, &material);
                                         }
                                         else if (materialType == "kelemenMaterial") {
-                                            parseKelemenMaterial(*objItr, globals, &material);
+                                            parseKelemenMaterial(*objItr, renderEnv, globals, &material);
                                         }
                                         else if (materialType == "transmitMaterial") {
-                                            parseTransmitMaterial(*objItr, globals, &material);
+                                            parseTransmitMaterial(*objItr, renderEnv, globals, &material);
                                         }
                                         else if (materialType == "glassMaterial") {
-                                            parseGlassMaterial(*objItr, globals, &material);
+                                            parseGlassMaterial(*objItr, renderEnv, globals, &material);
                                         }
                                         else {
                                             LOG_ERROR("Couldn't find parser for material " << materialType);

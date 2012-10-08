@@ -16,9 +16,11 @@
 namespace Aurora {
 	class TransmitMaterial : public Material {
 	public:
-		TransmitMaterial( Color col, float ior );
-		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn ) const;
-		
+		TransmitMaterial(std::string name, Color col, float ior );
+		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread ) ;
+        void frameBegin();
+        void frameEnd();
+
 	private:
 		Reference<Brdf> brdf;
 	};

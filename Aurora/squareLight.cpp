@@ -89,7 +89,12 @@ Sample3D SquareLight::generateSample( const Point &orig, const Vector &Nn, const
         d = 0.f;
     }
     s.color = eval(s, Nn);
-    s.pdf = (dir.length()* dir.length()) / (d * xScale * yScale * 4.);
+    if (d == 0.) {
+        s.pdf = 0.;
+    }
+    else{
+        s.pdf = (dir.length()* dir.length()) / (d * xScale * yScale * 4.);
+    }
 	return s;
 }
 
@@ -153,7 +158,7 @@ void SquareLight::makeRenderable(std::vector<RenderableTriangle> &renderable, At
 	renderable.push_back(tri1);
 	renderable.push_back(tri2);
 	
-	Reference<Material> black = new MatteMaterial(Color(0),4);
+	Reference<Material> black = new MatteMaterial("Not In Use - Should be EDF", Color(0),1);
 	attrs[index].material = black;
 	attrs[index].emmision = color * powf(2,exposure);
 }
@@ -178,10 +183,11 @@ Reference<Shape> SquareLight::shape(){
 		2, 1, 3};   
     
     Vector N[2] = {lightN, lightN};
-
+    uv tmpUV;
+    uv UV[2] = {tmpUV, tmpUV};
     int Nindex[6] = {0, 0, 0, 0, 0, 0};
     
-    Reference<Shape> s = new TriangleMesh(objectToCamera, cameraToObject, 2, 4, 4, Index, Nindex, P, N);
+    Reference<Shape> s = new TriangleMesh(objectToCamera, cameraToObject, 2, 4, 4, Index, Nindex, P, N, UV);
 
     return s;
 }

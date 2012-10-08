@@ -23,15 +23,16 @@ namespace Aurora {
         int *normalIndex;
 		Point *P;
         Vector *N;
+        uv *UV;
 		TriangleMesh( const Transform *o2c, const Transform *c2o, 
-                     int numTris, int numVerts, int numNorms, const int *vertIndex, const int *normIndex, const Point *Pin, const Vector *Nin);
+                     int numTris, int numVerts, int numNorms, const int *vertIndex, const int *normIndex, const Point *Pin, const Vector *Nin, const uv *UVin);
 		
 		BBox objectBound() const;
 		BBox worldBound() const;
 		
 		void dice( std::vector<Reference<Geometry> > &diced) ;
         
-        void makeEmbree(embree::BuildTriangle* triangles, embree::BuildVertex* vertices, std::vector<Vector> &normals, int *currentTri, int *currentVertex, int attributeIndex);
+        void makeEmbree(embree::BuildTriangle* triangles, embree::BuildVertex* vertices, std::vector<Vector> &normals, std::vector< uv > &uvs, int *currentTri, int *currentVertex, AttributeState *attrs, int attributeIndex);
 
         int numTriangles(){ return _numTriangles; };
         int numVertices(){ return _numVertices; };

@@ -15,17 +15,20 @@
 namespace Aurora {
 	class Lambert : public Brdf{
 	public:
-		Lambert(Color col, int numSamples);
+		Lambert(std::string name, Color col, int numSamples);
 		
 		Sample3D getSample(const Vector &Vn, const Vector &Nn, int depth, int thread);
-		Color evalSampleTangent(const Vector &Ln, const Vector &Vn);
-		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn);
+		Color evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread);
+		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread);
 		
-		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const;
-
+        void frameBegin();
+        void frameEnd();
+        
+		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const;
+        void setParameters(brdfParameters *params, int thread);
 
 	private:
-		Color color;
+		Color color[NUM_THREADS];
         std::vector<float> randomU[NUM_THREADS][3];
         std::vector<float> randomV[NUM_THREADS][3];
         int numSamples;

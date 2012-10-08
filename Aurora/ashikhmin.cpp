@@ -16,6 +16,7 @@ Ashikhmin::Ashikhmin(Color col, float exp){
 	color = col;
 	expX = exp;
 	expY = exp;
+    weight = 1;
     integrationDomain = Hemisphere;
     brdfType = SpecBrdf;
 }

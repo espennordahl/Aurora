@@ -15,19 +15,14 @@
 #include "embree_accel.h"
 #include "embree_intersector.h"
 
-namespace Aurora {
-    struct Normals3{
-        Vector n1;
-        Vector n2;
-        Vector n3;
-    };
-    
+namespace Aurora {    
     class EmbreeMesh {
     public:
         
         embree::BuildTriangle* triangles;
         embree::BuildVertex*   vertices;
         std::vector< Vector > normals;
+        std::vector< uv > uvs;
         size_t numTriangles;
         size_t numVertices;
     
@@ -37,7 +32,7 @@ namespace Aurora {
             shapes.push_back(shape);
         }
     
-        void preRender(){
+        void preRender(AttributeState *attrs){
             /* allocate triangle buffers */
             numTriangles = 0;
             numVertices = 0;
@@ -53,7 +48,7 @@ namespace Aurora {
             int currentTri = 0;
             int currentVertex = 0;
             for (int i=0; i < shapes.size(); i++) {
-                shapes[i]->makeEmbree(triangles, vertices, normals, &currentTri, &currentVertex, i);
+                shapes[i]->makeEmbree(triangles, vertices, normals, uvs, &currentTri, &currentVertex, attrs, i);
             }
         }
     };

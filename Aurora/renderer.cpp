@@ -17,6 +17,7 @@
 #include "adaptiveRndSampler2D.h"
 #include "embreeMesh.h"
 #include "lights.h"
+#include "shadingEngine.h"
 #include "parsing.h"
 #include "log.h"
 #define lcontext LOG_Renderer
@@ -49,8 +50,10 @@ void Renderer::parseSceneDescription(){
     LOG_INFO("*************************************");
 	LOG_INFO("Parsing scene description.");
     
+    renderEnv = RenderEnvironment();
+    renderEnv.shadingEngine = new ShadingEngine();
+
         // open file
-    
     
 	Json::Value deserializeRoot;
 	Json::Reader reader;
@@ -107,7 +110,7 @@ void Renderer::parseSceneDescription(){
                 std::string key = itr.key().asString();
                 LOG_DEBUG("Parsing scene key: " << key);
                 if (key == "objects") {
-                    parseObject(*itr, objects, lights, cameraTransform, globals);
+                    parseObject(*itr, &renderEnv, objects, lights, cameraTransform, globals);
                 }
                 else if (key == "options") {
                     ;
@@ -129,7 +132,7 @@ void Renderer::parseSceneDescription(){
 void Renderer::buildRenderEnvironment(){
     LOG_INFO("*************************************");
 	LOG_INFO("Building render environment.");
-    
+        
         // camera
     AdaptiveRndSampler2D *cameraSampler = new AdaptiveRndSampler2D();
     renderCam = Camera(globals[FieldOfView], globals[ResolutionX], globals[ResolutionY], globals[PixelSamples], cameraSampler);
@@ -156,27 +159,28 @@ void Renderer::buildRenderEnvironment(){
         accel = new KdTreeAccelerator(renderable, KD_INTERSECTCOST, KD_TRAVERSECOST, KD_EMPTYBONUS, globals[KD_MaxLeaf], globals[KD_MaxDepth]);
     }
     else {
-        attrs = new AttributeState[objects.size() + lights.size()];
+        int numObjects = (int)objects.size();
+        int numLights = (int)lights.size();
+        attrs = new AttributeState[numObjects + numLights];
         EmbreeMesh mesh;
-        for (int i=0; i < objects.size(); i++) {
+        for (int i=0; i < numObjects; i++) {
             mesh.appendTriangleMesh(objects[i]->shape, i);
             attrs[i].material = objects[i]->material;
             attrs[i].emmision = Color(0.);
         }
-        for (int i=0; i < lights.size(); i++) {
+        for (int i=0; i < numLights; i++) {
             if (lights[i]->lightType != type_envLight) {
-                mesh.appendTriangleMesh(lights[i]->shape(), i + objects.size());
-                Reference<Material> black = new MatteMaterial(Color(0),1);
-                attrs[i + objects.size()].material = black;
-                attrs[i + objects.size()].emmision = lights[i]->emission();
+                mesh.appendTriangleMesh(lights[i]->shape(), i + numObjects);
             }
+            Reference<Material> black = new MatteMaterial("Not in use - Should be EDF", Color(0),1);
+            attrs[i + numObjects].material = black;
+            attrs[i + numObjects].emmision = lights[i]->emission();
         }
-        accel = new EmbreeAccelerator(mesh);
+        accel = new EmbreeAccelerator(mesh, attrs);
     }
     
 
 	
-	renderEnv = RenderEnvironment();
 	renderEnv.accelerationStructure = accel;
 	renderEnv.attributeState = attrs;
 	renderEnv.lights = lights;
@@ -212,7 +216,7 @@ void Renderer::renderImage(){
 	int width = renderCam.getWidthSamples();
 	int height = renderCam.getHeightSamples();
 	int multisamples = renderCam.getPixelSamples();
-	OpenexrDisplay display(width, height, "/Users/espennordahl/aurora1.exr");
+	OpenexrDisplay display(width, height, "/Users/espennordahl/aurora2.exr");
 	
 	
 	// render camera samples
@@ -411,6 +415,8 @@ void *integrateThreaded( void *threadid ){
                 bool caustic = false;
 				for (int bounces = 0; ; ++bounces) {
 					AttributeState *attrs = &renderEnv->attributeState[isect.attributesIndex];
+                    isect.shdGeo.cameraToObject = attrs->cameraToObject;
+                    isect.shdGeo.objectToCamera = attrs->objectToCamera;
 					Vector Vn = normalize(-currentSample.ray.direction);
 					Nn = normalize(isect.hitN);
                     Point orig = isect.hitP;
@@ -419,9 +425,17 @@ void *integrateThreaded( void *threadid ){
 					if (bounces == 0 || caustic == true) {
 						Lo += pathThroughput * attrs->emmision;
 					}
+                    
+                    // with smooth normals there's a change we get normals 
+                    // on the "back side" of the ray. 
+                    if (dot(Vn,Nn) <= 0.) {
+                        // If so we force it to the front.
+                        Vector tmp = cross(Nn, Vn);
+                        Nn = normalize(cross(Vn, tmp));
+                    }
 					
 					// sample lights
-					currentBrdf = attrs->material->getBrdf(Vn, Nn);
+					currentBrdf = attrs->material->getBrdf(Vn, Nn, isect.shdGeo, threadNum);
 					
 					if (bounces < (*renderEnv->globals)[MaxDepth]) {
 						int numLights = (int)renderEnv->lights.size();
@@ -434,12 +448,12 @@ void *integrateThreaded( void *threadid ){
                             Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->integrationDomain, bounces, threadNum);
                             // sample light
                             float costheta = dot(Nn, lightSample.ray.direction);
-                            if (costheta >= 0.) {
+                            if (costheta >= 0. && lightSample.pdf > 0.) {
                                 float li = 1;
                                 if (renderEnv->accelerationStructure->intersectBinary(&lightSample.ray))
                                     li = 0;
                                 Lo += lightSample.color * 
-                                currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn) * li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
+                                currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, threadNum) * li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
                             }
                         }
                         
@@ -450,18 +464,17 @@ void *integrateThreaded( void *threadid ){
                             Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->integrationDomain, bounces, threadNum);
                                 // sample light
                             float costheta = dot(Nn, lightSample.ray.direction);
-                            if (costheta >= 0.) {
-                                float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn);
+                            if (costheta > 0. && lightSample.pdf > 0.) {
+                                float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn, threadNum);
                                 if (brdfPdf > 0.) {
                                     float li = 1;
                                     if (renderEnv->accelerationStructure->intersectBinary(&lightSample.ray))
                                         li = 0;
                                     if (li != 0) {
                                         float weight = PowerHeuristic(1, lightSample.pdf, 1, brdfPdf);
-                                        weight = 1;
-                                        Lo += lightSample.color * Color(1,0,0) *
-                                        currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn) * li *
-                                        costheta * pathThroughput * (float)numLights * weight / lightSample.pdf;
+                                        Lo += lightSample.color * weight *
+                                        currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, threadNum) * li *
+                                        costheta * pathThroughput * (float)numLights / lightSample.pdf;
                                     }
                                 }
                             }
@@ -471,18 +484,17 @@ void *integrateThreaded( void *threadid ){
                             Sample3D brdfSample = currentBrdf->getSample(Vn, Nn, bounces, threadNum);
                             brdfSample.ray.origin = orig;
                             costheta = dot(Nn, brdfSample.ray.direction);
-                            if (costheta >= 0.) {
+                            if (costheta > 0.) {
                                 float lightPdf = currentLight->pdf(&brdfSample, Nn, currentBrdf->integrationDomain);
-                                if (lightPdf > 0.) {
+                                if (lightPdf > 0. && brdfSample.pdf > 0.) {
                                     float li = 1;
                                     if (renderEnv->accelerationStructure->intersectBinary(&brdfSample.ray))
                                         li = 0;
                                     if (li != 0) {
                                         float weight = PowerHeuristic(1, brdfSample.pdf, 1, lightPdf);
-                                        weight = 1;
-                                        Lo += brdfSample.color * Color(0,1,0) * 
-                                        currentLight->eval(brdfSample, Nn) * li *
-                                        costheta * pathThroughput * (float)numLights * weight / brdfSample.pdf;
+                                        Lo += brdfSample.color * weight *
+                                        currentLight->eval(brdfSample, Nn) *
+                                        costheta * pathThroughput * (float)numLights / brdfSample.pdf;
                                     }
                                 }
                             }

@@ -21,6 +21,7 @@ namespace Aurora {
 		
 		virtual bool intersect( Ray *ray, Intersection *intersection) const = 0;
 		virtual bool intersectBinary( Ray *ray ) const = 0;
+        virtual void getShadingTriangles( int triangleIndex, ShadingGeometry *shdGeo ) = 0;
 
 	};
 }

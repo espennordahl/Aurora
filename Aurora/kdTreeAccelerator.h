@@ -102,6 +102,7 @@ namespace Aurora {
 		
 		bool intersect( Ray *ray, Intersection *intersection) const;
 		bool intersectBinary( Ray *ray ) const;
+        void getShadingTriangles( int triangleIndex, ShadingGeometry *shdGeo ){};
 	};
 }
 

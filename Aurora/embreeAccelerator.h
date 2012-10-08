@@ -26,10 +26,11 @@ namespace Aurora {
         EmbreeMesh mesh;
     public:
 		EmbreeAccelerator(){ };
-		EmbreeAccelerator(const EmbreeMesh &mesh);
+		EmbreeAccelerator(const EmbreeMesh &mesh, AttributeState *attrs);
 		
 		bool intersect( Ray *ray, Intersection *intersection) const;
 		bool intersectBinary( Ray *ray ) const;
+        void getShadingTriangles( int triangleIndex, ShadingGeometry *shdGeo );
 	};
 }
 

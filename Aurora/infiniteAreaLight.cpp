@@ -104,7 +104,7 @@ Sample3D InfiniteAreaLight::generateSample( const Point &orig, const Vector &Nn,
             float vz = r * sinf(phi);
             dirW = Vector(vx, vy, vz);
             dirW = (*worldToCamera)(dirW);
-            pdf = envMap->pdf(x, y, 1.);
+            pdf = envMap->pdf(x, y, 0.);
         }
         else{
             dirT = SampleHemisphereUniform(x, y);
@@ -135,8 +135,8 @@ Color InfiniteAreaLight::eval( const Sample3D &sample, const Vector &Nn ) {
             u += 1.f;
         }
         
-        Color c = envMap->read(u, v, 1.f);
-            
+        Color c = envMap->read(u, v, 0.f);
+        assert(c.hasNaNs() == false);
         return c * pow(2, exposure);
     }
     else {

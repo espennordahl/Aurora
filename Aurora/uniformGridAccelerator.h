@@ -29,11 +29,12 @@ namespace Aurora {
 		float voxelToPos(int p, int axis) const;
 		
 		int offset(int x, int y, int z) const;
-		
+        
 	public:
 		UniformGridAccelerator(){ };
 		UniformGridAccelerator(const std::vector<RenderableTriangle> &objects);
-		
+        
+        void getShadingTriangles( int triangleIndex, ShadingGeometry *shdGeo ){};
 		bool intersect( Ray *ray, Intersection *intersection) const;
 		bool intersectBinary( Ray *ray ) const;
 	};

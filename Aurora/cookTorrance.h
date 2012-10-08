@@ -11,23 +11,34 @@
 
 #include "core.h"
 #include "brdf.h"
+#include "texture2D.h"
+#include "openexrDisplay.h"
 
 namespace Aurora {
 	class CookTorrance : public Brdf{
 	public:
-		CookTorrance(Color col, float exponent, int numSamples);
+		CookTorrance(std::string name, Color col, float exponent, float reflectance, int numSamples);
 		
 		Sample3D getSample(const Vector &Vn, const Vector &Nn, int depth, int thread);
-		Color evalSampleTangent(const Vector &Ln, const Vector &Vn);
-		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn);
-		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const;
+		Color evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread);
+		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread);
+		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const;
+        void setParameters(brdfParameters *params, int thread){};
+        
+        void frameBegin();
+        void frameEnd();
+
         
 	private:
         void generateSampleBuffer(int i, int t);
+        void preCalcNormTable();
+        float getNormWeight(float costheta);
         std::vector<float> randomU[NUM_THREADS][3];
         std::vector<float> randomV[NUM_THREADS][3];
+        Texture2D *normTable;
 		Color color;
 		float exponent;
+        float reflectance;
         int numSamples;
 	};
 }

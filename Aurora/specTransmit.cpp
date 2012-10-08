@@ -12,11 +12,26 @@
 
 using namespace Aurora;
 
-SpecTransmit::SpecTransmit(Color _col, float _ior):
+SpecTransmit::SpecTransmit(std::string name, Color _col, float _ior):
+Brdf(name),
 color(_col), ior(_ior)
 {
+    weight = 1;
     brdfType = MirrorBrdf;
 }
+
+#pragma mark -
+#pragma mark Pipeline
+
+void SpecTransmit::frameBegin(){
+    
+}
+
+void SpecTransmit::frameEnd(){
+    
+}
+
+
 
 Sample3D SpecTransmit::getSample(const Vector &Vn, const Vector &Nn, int depth, int thread){
     float costheta = dot(Nn, Vn);
@@ -46,14 +61,14 @@ Sample3D SpecTransmit::getSample(const Vector &Vn, const Vector &Nn, int depth, 
     return Sample3D(Ray(normalize(T), Point(0.), RAY_BIAS, 10000000.f), 1., color);
 }
 
-Color SpecTransmit::evalSampleTangent(const Vector &Ln, const Vector &Vn){
+Color SpecTransmit::evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread){
     return Color(0.);
 }
 
-Color SpecTransmit::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn){
+Color SpecTransmit::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread){
     return Color(0.);
 }
 
-float SpecTransmit::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const{
+float SpecTransmit::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const{
     return 0;
 }

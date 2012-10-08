@@ -10,14 +10,20 @@
 #define Aurora_renderEnvironment_h
 
 #include "core.h"
-#include "accelerationStructure.h"
-#include "attributeState.h"
 #include "light.h"
-#include "infiniteAreaLight.h"
 #include "options.h"
 
 #include <vector>
 #include <map>
+
+    // forward declaration
+namespace Aurora {
+    class ShadingEngine;
+    class Camera;
+    class InfiniteAreaLight;
+    class AttributeState;
+    class AccelerationStructure;
+}
 
 namespace Aurora {
 	struct RenderEnvironment{
@@ -26,6 +32,7 @@ namespace Aurora {
 		AttributeState *attributeState;
         std::map<Option, double> *globals;
 		InfiniteAreaLight *envLight;
+        ShadingEngine *shadingEngine;
 		Camera *renderCam;
 	};
 }

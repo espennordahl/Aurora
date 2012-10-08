@@ -117,6 +117,7 @@ bool RenderableTriangle::intersect( Ray *ray, Intersection *intersection ) const
 	intersection->hitN = normalize(norm);
 	intersection->hitP = hitp;
 	intersection->attributesIndex = attributes;
+    intersection->shdGeo.barCoords = Point(b0,b1,b2);
 		
 	return true;
 }

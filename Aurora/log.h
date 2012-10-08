@@ -38,6 +38,10 @@ struct lc{
 #define LOG_Lights              lc(Log::Info,	"Lights")
 #define LOG_Matrix              lc(Log::Info,	"Matrix")
 #define LOG_Texture2D           lc(Log::Info,	"Texture2D")
+#define LOG_Lambert             lc(Log::Info,	"Lambert")
+#define LOG_ObjMesh             lc(Log::Info,	"ObjMesh")
+#define LOG_KelemenShader       lc(Log::Info,   "KelemenShader")
+#define LOG_ShaderCache         lc(Log::Debug,   "ShaderCache")
 
 class Log
 {

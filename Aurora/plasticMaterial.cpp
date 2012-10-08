@@ -21,7 +21,7 @@ PlasticMaterial::PlasticMaterial( const Color &col, float exponent, float _refle
 	diffBrdf = new Lambert(col, numSamples);
 }
 
-Reference<Brdf> PlasticMaterial::getBrdf( const Vector &Vn, const Vector &Nn ) const{
+Reference<Brdf> PlasticMaterial::getBrdf( const Vector &Vn, const Vector &Nn, int thread ) {
 	// compute fresnel
 	Vector R = (Vn*-1.f) + (Nn * 2.f * dot(Vn, Nn));
 	float VdotH = dot(Vn, normalize(R));

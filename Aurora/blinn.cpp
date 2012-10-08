@@ -18,6 +18,7 @@ Blinn::Blinn(Color col, float _exponent, int _numSamples){
     brdfType = SpecBrdf;
 	exponent = _exponent;
     numSamples = _numSamples;
+    weight = 1;
     for (int t=0; t < NUM_THREADS; t++) {
         generateSampleBuffer(0,t);
         generateSampleBuffer(1,t);
@@ -70,10 +71,10 @@ Sample3D Blinn::getSample(const Vector &Vn, const Vector &Nn, int depth, int thr
 	                       (2.f * M_PI * 4.f * dot(Vn, wh));
 	if (dot(Vn, wh) <= 0.f) blinn_pdf = 0.f;
 
-	return Sample3D(Ray(normalize(R), Point(0.), RAY_BIAS, 100000.f), blinn_pdf, evalSampleWorld(normalize(R), Vn, Nn));
+	return Sample3D(Ray(normalize(R), Point(0.), RAY_BIAS, 100000.f), blinn_pdf, evalSampleWorld(normalize(R), Vn, Nn, thread));
 }
 
-float Blinn::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const{
+float Blinn::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const{
 	Vector wh = normalize(Vn + Ln);
 	float costheta = dot(wh,Nn);
 	// Compute PDF for $\wi$ from Blinn distribution
@@ -84,7 +85,7 @@ float Blinn::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const{
 }
 
 
-Color Blinn::evalSampleTangent(const Vector &Ln, const Vector &Vn){
+Color Blinn::evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread){
 	float cosThetaO = Vn.z;
 	float cosThetaI = Ln.z;
 	if (cosThetaI == 0.f || cosThetaO == 0.f) return Color(0.f);
@@ -105,7 +106,7 @@ Color Blinn::evalSampleTangent(const Vector &Ln, const Vector &Vn){
 	(4.f * cosThetaI * cosThetaO);
 }
 
-Color Blinn::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn){
+Color Blinn::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread){
 	float cosThetaO = dot(Vn,Nn);
 	float cosThetaI = dot(Ln,Nn);
 	if (cosThetaI == 0.f || cosThetaO == 0.f) return Color(0.f);

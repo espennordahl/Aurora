@@ -19,7 +19,8 @@ namespace Aurora {
 		
 		bool intersect( Ray *ray, Intersection *intersection) const;
 		bool intersectBinary( Ray *ray ) const;
-	
+        void getShadingTriangles( int triangleIndex, ShadingGeometry *shdGeo ){};
+        
 	protected:
 		std::vector<RenderableTriangle> geometry;
 		long numGeo;

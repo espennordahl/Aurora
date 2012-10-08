@@ -21,20 +21,25 @@ using namespace Aurora;
 
 Color::Color(){
 	r=0; g=0; b=0;
+    assert(!hasNaNs());
 }
 Color::Color(float _r, float _g, float _b){
 	r=_r; g=_g; b=_b;
+    assert(!hasNaNs());
 }
 Color::Color(float c){
 	r=c; g=c; b=c;
+    assert(!hasNaNs());
 }
 
 Color::Color(const Vector &v){
 	r = v.x, g = v.y, b = v.z;
+    assert(!hasNaNs());
 }
 
 Color::Color(const Point &p){
 	r = p.x, g = p.y, b = p.z;
+    assert(!hasNaNs());
 }
 
 #pragma mark -

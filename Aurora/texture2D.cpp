@@ -54,18 +54,40 @@ Color Texture2D::read(float s, float t, float filterSize){
 //	assert(x < width && x >= 0);
 //	assert(y < height && y >= 0);
 	if(x > width || x < 0){
-        LOG_WARNING("Texture call outside of 0-1 range");
+//        LOG_WARNING("Texture call outside of 0-1 range");
         x = min(x,width);
         x = max(x,0);
     }
 	if(y > height || y < 0){
-        LOG_WARNING("Texture call outside of 0-1 range");
+//        LOG_WARNING("Texture call outside of 0-1 range");
         y = min(y,height);
         y = max(y,0);
     }
-    Imf::Rgba &p = pixelBuffer[y][x];
-
-    return Color(p.r, p.g, p.b);
+    if (filterSize == 0.) {
+        Imf::Rgba &p = pixelBuffer[y][x];
+        return Color(p.r, p.g, p.b);
+    }
+    else {
+            // assume filter size is 1 for now
+        float offsetX = (s*width) - x;
+        float offsetY = (t*height) - y;
+        float area1 = (1.-offsetX) * (1.-offsetY);
+        float area2 = offsetX * (1.-offsetY);
+        float area3 = (1-offsetX) * offsetY;
+        float area4 = offsetX * offsetY;
+        assert(softCompare(area1+area2+area3+area4, 1.));
+        Color result = Color(0.f);
+        Imf::Rgba &p = pixelBuffer[y][x];
+        result += Color(p.r, p.g, p.b) * area1;
+        p = pixelBuffer[y][x+1];
+        result += Color(p.r, p.g, p.b) * area2;
+        p = pixelBuffer[y+1][x];
+        result += Color(p.r, p.g, p.b) * area3;
+        p = pixelBuffer[y+1][x+1];
+        result += Color(p.r, p.g, p.b) * area4;
+        
+        return result;
+    }
 }
 
 float Texture2D::pdf(float s, float t, float filterSize){

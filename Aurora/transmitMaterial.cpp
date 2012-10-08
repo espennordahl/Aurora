@@ -12,10 +12,18 @@
 
 using namespace Aurora;
 
-TransmitMaterial::TransmitMaterial( Color col, float ior ){
-    brdf = new SpecTransmit(col, ior);
+TransmitMaterial::TransmitMaterial( std::string name, Color col, float ior ){
+    brdf = new SpecTransmit(name + ":SpecTransmit", col, ior);
 }
 
-Reference<Brdf> TransmitMaterial::getBrdf( const Vector &Vn, const Vector &Nn ) const{
+void TransmitMaterial::frameBegin(){
+    
+}
+
+void TransmitMaterial::frameEnd(){
+    
+}
+
+Reference<Brdf> TransmitMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread ) {
     return brdf;
 }

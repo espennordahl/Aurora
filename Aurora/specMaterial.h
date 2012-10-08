@@ -16,8 +16,10 @@ namespace Aurora {
 	class SpecMaterial : public Material {
 	public:
 		SpecMaterial( const Color &col, float exponent, int numSamples);
-		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn ) const;
+		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, int thread ) ;
 		
+        
+        
 	private:
 		Color color;
 		Reference<Brdf> brdf;

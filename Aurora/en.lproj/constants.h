@@ -16,7 +16,7 @@
 #define DRAW_DELAY 10
 
 // ray tracing
-#define RAY_BIAS 0.0001
+#define RAY_BIAS 0.0005
 
 #define MIN_ROULETTE 0.85
 #define MAX_ROULETTE 0.9
@@ -29,5 +29,9 @@
 #define KD_INTERSECTCOST 1
 #define KD_TRAVERSECOST 1
 #define KD_EMPTYBONUS 1
+
+// shader cache
+#define NUM_SHADING_POINTS 2
+
 
 #endif

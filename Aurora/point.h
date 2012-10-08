@@ -26,6 +26,7 @@ namespace Aurora{
 		Point(float f);
 		Point();
 			
+        bool hasNaNs();
 		Point operator+(const Vector &v);
 		Vector operator+(const Point &p) const;
 		

@@ -18,6 +18,6 @@ SpecMaterial::SpecMaterial( const Color &col, float exponent, int numSamples){
 	brdf = new Blinn(color, exponent, numSamples);
 }
 
-Reference<Brdf> SpecMaterial::getBrdf( const Vector &Vn, const Vector &Nn ) const{
+Reference<Brdf> SpecMaterial::getBrdf( const Vector &Vn, const Vector &Nn, int thread ) {
 	return brdf;
 }

@@ -21,6 +21,7 @@
 #include "transform.h"
 #include "bbox.h"
 #include "matrix4x4.h"
+#include "uv.h"
 
 // 2D
 

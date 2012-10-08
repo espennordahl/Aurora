@@ -12,10 +12,25 @@
 
 using namespace Aurora;
 
-SpecMirror::SpecMirror(Color col):
+SpecMirror::SpecMirror( std::string name, Color col):
+Brdf(name),
 color(col){
+    weight = 1;
     brdfType = MirrorBrdf;
 }
+
+#pragma mark -
+#pragma mark Pipeline
+
+void SpecMirror::frameBegin(){
+    
+}
+
+void SpecMirror::frameEnd(){
+    
+}
+
+
 
 Sample3D SpecMirror::getSample(const Vector &Vn, const Vector &Nn, int depth, int thread){
     Vector Vt = worldToTangent(Vn, Nn);
@@ -24,14 +39,14 @@ Sample3D SpecMirror::getSample(const Vector &Vn, const Vector &Nn, int depth, in
     return Sample3D(Ray(normalize(R), Point(0.), RAY_BIAS, 100000000.f), 1.f, color);
 }
 
-Color SpecMirror::evalSampleTangent(const Vector &Ln, const Vector &Vn){
+Color SpecMirror::evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread){
     return Color(0.f);
 }
 
-Color SpecMirror::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn){
+Color SpecMirror::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread){
     return Color(0.f);
 }
 
-float SpecMirror::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const{
+float SpecMirror::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const{
     return 0.f;
 }

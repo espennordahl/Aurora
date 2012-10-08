@@ -12,15 +12,21 @@
 #include "core.h"
 #include "brdf.h"
 
+
 namespace Aurora {
 	class SpecTransmit : public Brdf{
 	public:
-		SpecTransmit(Color col, float ior);
+		SpecTransmit(std::string name, Color col, float ior);
 		
 		Sample3D getSample(const Vector &Vn, const Vector &Nn, int depth, int thread);
-		Color evalSampleTangent(const Vector &Ln, const Vector &Vn);
-		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn);
-		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const;
+		Color evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread);
+		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread);
+		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const;
+        void setParameters(brdfParameters *params, int thread){};
+
+        void frameBegin();
+        void frameEnd();
+
         
 	private:
 		Color color;

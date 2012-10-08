@@ -15,12 +15,16 @@
 namespace Aurora {
 	class SpecMirror : public Brdf{
 	public:
-		SpecMirror(Color col);
+		SpecMirror(std::string name, Color col);
 		
 		Sample3D getSample(const Vector &Vn, const Vector &Nn, int depth, int thread);
-		Color evalSampleTangent(const Vector &Ln, const Vector &Vn);
-		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn);
-		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const;
+		Color evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread);
+		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread);
+		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const;
+        void setParameters(brdfParameters *params, int thread){};
+
+        void frameBegin();
+        void frameEnd();
         
 	private:
 		Color color;

@@ -14,17 +14,19 @@
 using namespace Aurora;
 
 
-EmbreeAccelerator::EmbreeAccelerator(const EmbreeMesh &_mesh){
+EmbreeAccelerator::EmbreeAccelerator(const EmbreeMesh &_mesh, AttributeState *attrs){
     
     mesh = _mesh;
-    mesh.preRender();
+    mesh.preRender(attrs);
     embree::Ref<embree::Accel> accel;
     accel = embree::rtcCreateAccel("bvh4.spatialsplit",             //!< type of acceleration structure to use
                                    "triangle4",                     //!< type of triangle representation to use
                                    mesh.triangles,  //!< array of triangles
                                    mesh.numTriangles,             //!< number of triangles in array
                                    mesh.vertices,     //!< array of vertices, has to be aligned to 16 bytes
-                                   mesh.numVertices);             //!< number of vertices in array
+                                   mesh.numVertices,
+                                   embree::BBox3f(),
+                                   false);             //!< number of vertices in array
 //  const BBox3f& bounds = empty,    //!< optional approximate bounding box of the geometry
 //  bool freeArrays = true);         //!< if true, triangle and vertex arrays are freed when no 
     
@@ -58,14 +60,28 @@ bool EmbreeAccelerator::intersect( Ray *ray, Intersection *intersection) const{
                      w * n1[0] + u * n2[0] + v * n3[0],
                      w * n1[1] + u * n2[1] + v * n3[1],
                      w * n1[2] + u * n2[2] + v * n3[2]);
-            //	if (dot(norm, ray->direction) > 0.) {
-            //		norm *= -1;
-            //	}
+            	if (dot(norm, ray->direction) > 0.) {
+            		norm *= -1;
+            	}
         
         intersection->hitN = normalize(norm);
         intersection->hitP = hitp;
         intersection->attributesIndex = isect.id0;
         
+            // st coords
+        uv uv1 = mesh.uvs[isect.id1*3];
+        uv uv2 = mesh.uvs[isect.id1*3+1];
+        uv uv3 = mesh.uvs[isect.id1*3+2];
+        float _s =   w * uv1.u + u * uv2.u + v * uv3.u;
+        float _t =   w * uv1.v + u * uv2.v + v * uv3.v;
+        uv st;
+        st.u = _s;
+        st.v = _t;
+        intersection->shdGeo.P = hitp;
+        intersection->shdGeo.Ns = normalize(norm);
+        intersection->shdGeo.st = st;
+        intersection->shdGeo.triangleIndex = isect.id1;
+        intersection->shdGeo.barCoords = Point(u,v,w);
     }
     return hit;
 }
@@ -74,4 +90,27 @@ bool EmbreeAccelerator::intersectBinary( Ray *ray ) const{
     embree::Ray r = embree::Ray(embree::Vec3f(ray->origin.x, ray->origin.y, ray->origin.z), embree::Vec3f(ray->direction.x, ray->direction.y, ray->direction.z), ray->mint, ray->maxt);
 
     return intersector->occluded(r);
+}
+
+void EmbreeAccelerator::getShadingTriangles( int triangleIndex, ShadingGeometry *shdGeo ){
+    embree::BuildTriangle tri = mesh.triangles[triangleIndex];
+    Point Ptmp  = Point(mesh.vertices[tri.v0].x, 
+                        mesh.vertices[tri.v0].y, 
+                        mesh.vertices[tri.v0].z);
+    shdGeo[0].P = Ptmp;
+    Ptmp  =       Point(mesh.vertices[tri.v1].x, 
+                        mesh.vertices[tri.v1].y, 
+                        mesh.vertices[tri.v1].z);
+    shdGeo[1].P = Ptmp;
+    Ptmp  =       Point(mesh.vertices[tri.v2].x, 
+                        mesh.vertices[tri.v2].y, 
+                        mesh.vertices[tri.v2].z);
+    shdGeo[2].P = Ptmp;
+    
+    for (int i=0; i < 3; i++) {
+        shdGeo[i].st = mesh.uvs[triangleIndex*3+i];
+        shdGeo[i].Ng = mesh.normals[triangleIndex*3+i];
+        shdGeo[i].Ns = mesh.normals[triangleIndex*3+i];
+        shdGeo[i].triangleIndex = triangleIndex;
+    }
 }

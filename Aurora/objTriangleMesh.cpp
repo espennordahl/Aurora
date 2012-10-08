@@ -14,10 +14,14 @@
 
 #include "objTriangleMesh.h"
 
+#include "log.h"
+#define lcontext LOG_ObjMesh
+
+
 using namespace Aurora;
 using namespace std;
 
-bool ObjTriangleMesh::parseObjLine(const std::string &line, std::vector<Point> &points, std::vector<Vector> &normals, std::vector<int> &vertIndex, std::vector<int> &normIndex){
+bool ObjTriangleMesh::parseObjLine(const std::string &line, std::vector<Point> &points, std::vector<Vector> &normals, std::vector<uv> &uvs, std::vector<int> &vertIndex, std::vector<int> &normIndex, std::vector<int> &uvIndex){
 	
 	if (line.empty()){
 		return true;
@@ -42,6 +46,16 @@ bool ObjTriangleMesh::parseObjLine(const std::string &line, std::vector<Point> &
 		float x, y, z;
 		ss >> x >> y >> z;
 		normals.push_back(Vector(x, y, z));
+	}
+    // UVs
+    // normals
+    else if( oper.compare("vt") == 0){
+		float u, v;
+		ss >> u >> v;
+        uv myUVs;
+        myUVs.u = u;
+        myUVs.v = v;
+		uvs.push_back(myUVs);
 	}
 
 	// edges
@@ -82,8 +96,54 @@ bool ObjTriangleMesh::parseObjLine(const std::string &line, std::vector<Point> &
 			}
 		}
 		vertIndex.push_back(atoi(buffer.c_str()));
+    
+        // uv
+        bool begin = false;
+        buffer = "";
+		for (int i=0; i < edge1.length(); i++) {
+			if (begin == true) {
+                if (edge1[i] == *"/") {
+                    break;
+                }
+                buffer = buffer + edge1[i];
+            }
+            else if (edge1[i] == *"/") {
+                begin = true;
+            }
+        }
+        uvIndex.push_back(atoi(buffer.c_str()));
+        begin = false;
+        buffer = "";
         
-        // norm
+        for (int i=0; i < edge2.length(); i++) {
+			if (begin == true) {
+                if (edge2[i] == *"/") {
+                    break;
+                }
+                buffer = buffer + edge2[i];
+            }
+            else if (edge2[i] == *"/") {
+                begin = true;
+            }
+        }
+        uvIndex.push_back(atoi(buffer.c_str()));
+        begin = false;
+        buffer = "";
+		for (int i=0; i < edge3.length(); i++) {
+			if (begin == true) {
+                if (edge3[i] == *"/") {
+                    break;
+                }
+                buffer = buffer + edge3[i];
+            }
+            else if (edge3[i] == *"/") {
+                begin = true;
+            }
+        }
+        uvIndex.push_back(atoi(buffer.c_str()));
+
+        
+            // norm
         size_t found = edge1.find_last_of("/");
         edge1 = edge1.substr(found+1);
         normIndex.push_back(atoi(edge1.c_str()));
@@ -95,7 +155,7 @@ bool ObjTriangleMesh::parseObjLine(const std::string &line, std::vector<Point> &
         found = edge3.find_last_of("/");
         edge3 = edge3.substr(found+1);
         normIndex.push_back(atoi(edge3.c_str()));
-    
+
     }
     
 	return true;
@@ -109,11 +169,13 @@ ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, co
 	}
 	std::vector<Point> points;
     std::vector<Vector> normals;
+    std::vector<uv> uvs;
 	std::vector<int> vertIndex;
     std::vector<int> nIndex;
+    std::vector<int> uvIndex;
 	while (inFile.good()) {
 		inFile.getline(line, 1023);
-		if (!parseObjLine(string(line), points, normals, vertIndex, nIndex)) {
+		if (!parseObjLine(string(line), points, normals, uvs, vertIndex, nIndex, uvIndex)) {
 		}
 		i++;
 	}
@@ -138,17 +200,26 @@ ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, co
 	}
 	
 	Point *P = new Point[ numVertices ];
+    uv *UV = new uv[ numTriangles * 3 ];
     Vector *N = new Vector[ numNorms ];
 	for (uint32_t i = 0; i < numVertices; i++) {
 		P[i] = points[i];
 	}
 	for (uint32_t i = 0; i < numNorms; i++) {
+        if (normals[i].x == 0. && normals[i].y == 0. && normals[i].z == 0.) {
+            LOG_WARNING("Found empty normal. Setting to 0,1,0");
+            normals[i] = Vector(0,1,0);
+        }
         N[i] = normals[i];
     }
-
-	shape = new TriangleMesh(o2c, c2o, numTriangles, numVertices, numNorms, vertexIndex, normalIndex, P, N);
+    for (uint32_t i = 0; i < numTriangles*3; i++) {
+        UV[i] = uvs[uvIndex[i]-1];
+    }
+    
+	shape = new TriangleMesh(o2c, c2o, numTriangles, numVertices, numNorms, vertexIndex, normalIndex, P, N, UV);
 	free(P);
 	free(N);
+    free(UV);
 }
 
 BBox ObjTriangleMesh::objectBound() const{

@@ -22,15 +22,34 @@ namespace Aurora {
 	public:	
 		AuroraObject(){ };
 		AuroraObject( Reference<Shape> shape, Reference<Material> material );
-		
+
+            // Calls the childrens methods of the same name
 		BBox worldBound();
 		BBox objectBound();
-		
+        
+		    // FrameBegin and FrameEnd are pipeline methods for doing
+            // any kind of pre and post rendering work. This method
+            // is ran on all front end objects recursively before and
+            // after rendering
+        void frameBegin();
+        void frameEnd();
+
+            // Splits the shape into triangles.
 		void dice( std::vector<Reference<Geometry> > &diced);
+        
+            // Called once all objects have been parsed, and 
+            // is responsible for initializing the correct AttributeState for the object
+            // and convert all geometry to renderable triangles and add them to the 
+            // passed vector.
 		void makeRenderable(std::vector<RenderableTriangle> &renderable, AttributeState *attrs, int index);
                 
+            // The surface material to be used during light transport.
+            // Only one can be used per object, but you can combine multiple
+            // materials through the MaterialMixer material.
 		Reference <Material> material;
+            // Potentially un diced/-renderable geometry.
 		Reference <Shape> shape;
+            // Attribute state.
 		Reference <Attributes> attributes;
 	};
 }

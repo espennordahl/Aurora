@@ -14,13 +14,21 @@
 
 using namespace Aurora;
 
-GlassMaterial::GlassMaterial( const Color &specCol, const Color &transCol, float _reflectance, float ior ):
+GlassMaterial::GlassMaterial( std::string name, const Color &specCol, const Color &transCol, float _reflectance, float ior ):
 reflectance(_reflectance) {
-    refBrdf = new SpecMirror(specCol);
-    transmitBrdf = new SpecTransmit(transCol, ior);
+    refBrdf = new SpecMirror(name + ":specMirror", specCol);
+    transmitBrdf = new SpecTransmit(name + ":specTransmit", transCol, ior);
 }
 
-Reference<Brdf> GlassMaterial::getBrdf( const Vector &Vn, const Vector &Nn ) const{
+void GlassMaterial::frameBegin(){
+    
+}
+
+void GlassMaterial::frameEnd(){
+    
+}
+
+Reference<Brdf> GlassMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread) {
     if (reflectance == 1.f) return refBrdf;
         // compute fresnel
     float costheta = dot(Vn,Nn) * 0.5;

@@ -20,10 +20,12 @@ using namespace Aurora;
 
 Point::Point(float _x, float _y, float _z){
 	x = _x; y = _y; z = _z;
+    assert(!hasNaNs());
 }
 
 Point::Point( float f ){
 	Point( f, f, f);
+    assert(!hasNaNs());
 }
 
 Point::Point(){
@@ -33,7 +35,13 @@ Point::Point(){
 Point::Point(const Vector &v){
 	LOG_DEBUG("Converting Vector to Point.");
 	x = v.x; y = v.y; z = v.z;
+    assert(!hasNaNs());
 }
+
+bool Point::hasNaNs(){
+	return (isnan(x) || isnan(y) || isnan(z));
+}
+
 
 #pragma mark -
 #pragma mark Symbol Overloading

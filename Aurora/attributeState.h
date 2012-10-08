@@ -17,6 +17,12 @@ namespace Aurora {
 	public:
 		Color emmision;
 		Reference<Material> material;
+//        const Transform *cameraToWorld;
+//        const Transform *worldToCamera;
+//        const Transform *objectToWorld;
+//        const Transform *worldToObject;
+        const Transform *cameraToObject;
+        const Transform *objectToCamera;
 	};
 }
 

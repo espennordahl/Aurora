@@ -17,7 +17,7 @@ namespace Aurora {
 	class ObjTriangleMesh : public Shape{
 	protected:
 		Reference<Shape> shape;
-		bool parseObjLine(const std::string &line, std::vector<Point> &points, std::vector<Vector> &normals, std::vector<int> &vertIndex, std::vector<int> &normIndex);
+		bool parseObjLine(const std::string &line, std::vector<Point> &points, std::vector<Vector> &normals, std::vector<uv> &uvs, std::vector<int> &vertIndex, std::vector<int> &normIndex, std::vector<int> &uvIndex);
 	public:		
 		ObjTriangleMesh( const Transform *o2c, const Transform *c2o, const std::string &objfile );
 
@@ -26,8 +26,8 @@ namespace Aurora {
 		
 		void dice( std::vector<Reference<Geometry> > &diced) ;
         
-        void makeEmbree(embree::BuildTriangle* triangles, embree::BuildVertex* vertices, std::vector<Vector> &normals, int *currentTri, int *currentVertex, int attributeIndex){
-            shape->makeEmbree(triangles, vertices, normals, currentTri, currentVertex, attributeIndex);
+        void makeEmbree(embree::BuildTriangle* triangles, embree::BuildVertex* vertices, std::vector<Vector> &normals, std::vector< uv > &uvs, int *currentTri, int *currentVertex, AttributeState *attrs, int attributeIndex){
+            shape->makeEmbree(triangles, vertices, normals, uvs, currentTri, currentVertex, attrs, attributeIndex);
         };
         
         int numTriangles(){ return shape->numTriangles(); };

@@ -17,6 +17,8 @@
 
 using namespace Aurora;
 
+#define EPSILON_LENGTH 0.00001
+
 #pragma mark -
 #pragma mark Constructors
 
@@ -24,11 +26,12 @@ using namespace Aurora;
 Vector::Vector(float _x, float _y, float _z):
 x(_x), y(_y), z(_z) {
 	// check for NaNs
-//	assert(!hasNaNs());
+	assert(!hasNaNs());
 }
 
 Vector::Vector( float f ){
 	Vector(f, f, f);
+    assert(!hasNaNs());
 }
 
 Vector::Vector(){
@@ -48,7 +51,16 @@ float Vector::lengthSquared() const{
 }
 
 float Vector::length() const{
-	return sqrtf(lengthSquared());
+    float l = sqrtf(lengthSquared());
+    if (l == 0.) {
+        if (x == 0. && y == 0. && z == 0.) {
+            LOG_ERROR("Error: Vector 0 has no length");
+        }
+        else {
+            return EPSILON_LENGTH;
+        }
+    }
+	return l;
 }
 
 #pragma mark -

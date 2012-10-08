@@ -9,23 +9,46 @@
 #include <iostream>
 
 #include "lambert.h"
+#include "shader.h"
+#include "log.h"
+#define lcontext LOG_Lambert
 
 using namespace Aurora;
 
-Lambert::Lambert(Color col, int _numSamples) : color(col), numSamples(_numSamples){
+Lambert::Lambert(std::string name, Color col, int _numSamples) : Brdf(name), numSamples(_numSamples){
     brdfType = MatteBrdf;
     integrationDomain = Hemisphere;
+    weight = 1;
     for (int t=0; t < NUM_THREADS; t++) {
         generateSampleBuffer(0,t);
         generateSampleBuffer(1,t);
         generateSampleBuffer(2,t);
+        color[t] = col;
     }
 }
 
+#pragma mark -
+#pragma mark Pipeline
+
+void Lambert::frameBegin(){
+    
+}
+
+void Lambert::frameEnd(){
+    
+}
+
+
+void Lambert::setParameters(brdfParameters *params, int thread){
+    lambertParameters *newParams = (lambertParameters *) params;
+    Color tmpCol = newParams->albedo;
+    color[thread] = tmpCol;
+}
+
 void Lambert::generateSampleBuffer(int i, int t){
-    float offsetX = (float) rand()/RAND_MAX;
-    float offsetY = (float) rand()/RAND_MAX;
     for (int j=0; j < numSamples; j++) {
+        float offsetX = (float) rand()/RAND_MAX;
+        float offsetY = (float) rand()/RAND_MAX;
         randomU[t][i].push_back((offsetX + (float)j)/numSamples);
         randomV[t][i].push_back((offsetY + (float)j)/numSamples);
     }
@@ -59,23 +82,23 @@ Sample3D Lambert::getSample(const Vector &Vn, const Vector &Nn, int depth, int t
     }
     
     Vector dir = SampleHemisphereUniform(r1, r2);
-    return Sample3D(Ray(normalize(tangentToWorld(dir, Nn)), Point(0), RAY_BIAS, 1000000.f), M_PI_INV * 0.5, color * M_PI_INV);
+    return Sample3D(Ray(normalize(tangentToWorld(dir, Nn)), Point(0), RAY_BIAS, 1000000.f), M_PI_INV * 0.5, color[thread] * weight * M_PI_INV);
 }
 
-Color Lambert::evalSampleTangent(const Vector &Ln, const Vector &Vn){
-	return color * M_PI_INV;
+Color Lambert::evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread){
+	return color[thread] * weight * M_PI_INV;
 }
 
-Color Lambert::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn){
+Color Lambert::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread){
 	float d = dot(Ln, Nn);
 	if (d > 0.) {
-		return color * M_PI_INV;
+		return color[thread] * weight * M_PI_INV ;
 	}
 	else{
 		return Color(0);
 	}
 }
 
-float Lambert::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const{
+float Lambert::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const{
 	return M_PI_INV * 0.5;
 }

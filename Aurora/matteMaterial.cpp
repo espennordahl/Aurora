@@ -12,11 +12,20 @@
 
 using namespace Aurora;
 
-MatteMaterial::MatteMaterial( const Color &col, int numSamples){
+MatteMaterial::MatteMaterial( std::string name, const Color &col, int numSamples){
 	color = col;
-	brdf = new Lambert(color, numSamples);
+	brdf = new Lambert(name + ":lambert", color, numSamples);
 }
 
-Reference<Brdf> MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn ) const{
+Reference<Brdf> MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread ) {
 	return brdf;
+}
+
+
+void MatteMaterial::frameBegin(){
+    brdf->frameBegin();
+}
+
+void MatteMaterial::frameEnd(){
+    brdf->frameEnd();
 }

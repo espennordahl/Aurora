@@ -15,7 +15,7 @@ namespace Aurora {
 	class PlasticMaterial : public Material {
 	public:
 		PlasticMaterial( const Color &col, float exponent, float reflectance, float _topLayerThickness, int numSamples);
-		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn ) const;
+		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, int thread ) ;
 		
 	private:
 		Reference<Brdf> diffBrdf;
