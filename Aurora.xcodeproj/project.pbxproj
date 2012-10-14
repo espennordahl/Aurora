@@ -184,6 +184,7 @@
 		23226495162132B500389141 /* shadingEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shadingEngine.h; sourceTree = "<group>"; };
 		23226497162133EA00389141 /* frontEndObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = frontEndObject.h; sourceTree = "<group>"; };
 		2322649816213CA400389141 /* shadingEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shadingEngine.cpp; sourceTree = "<group>"; };
+		2327DDFB162A6DAA00163E02 /* UI.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = UI.py; path = PyAurora/UI.py; sourceTree = "<group>"; };
 		232D37BA15C5151600F6853B /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
 		232D37BB15C5151600F6853B /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		232D37BC15C5151600F6853B /* features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = features.h; sourceTree = "<group>"; };
@@ -361,6 +362,12 @@
 		2395E08415F54112006E73EF /* embreeAccelerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = embreeAccelerator.cpp; sourceTree = "<group>"; };
 		23ACD3E915C4914400B78E25 /* bunny.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bunny.cpp; sourceTree = "<group>"; };
 		23CB6E1F15F5DBF000F7FE37 /* embreeMesh.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; path = embreeMesh.h; sourceTree = "<group>"; };
+		23CDCD53162A606100ABC551 /* core.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = core.py; path = PyAurora/core.py; sourceTree = "<group>"; };
+		23CDCD55162A606100ABC551 /* example.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = example.py; path = PyAurora/example.py; sourceTree = "<group>"; };
+		23CDCD57162A606100ABC551 /* geometry.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = geometry.py; path = PyAurora/geometry.py; sourceTree = "<group>"; };
+		23CDCD59162A606100ABC551 /* lights.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = lights.py; path = PyAurora/lights.py; sourceTree = "<group>"; };
+		23CDCD5B162A606100ABC551 /* MtoAur.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = MtoAur.py; path = PyAurora/MtoAur.py; sourceTree = "<group>"; };
+		23CDCD5D162A606100ABC551 /* shaders.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = shaders.py; path = PyAurora/shaders.py; sourceTree = "<group>"; };
 		23E7EBF115C85E650086218D /* parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parsing.h; sourceTree = "<group>"; };
 		23E7EBF215C85E730086218D /* parseGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseGeometry.h; sourceTree = "<group>"; };
 		23E7EBF315C85E7F0086218D /* parseOptions.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = parseOptions.h; sourceTree = "<group>"; };
@@ -973,6 +980,20 @@
 			path = triangle;
 			sourceTree = "<group>";
 		};
+		23CDCD51162A604200ABC551 /* PyAurora */ = {
+			isa = PBXGroup;
+			children = (
+				23CDCD53162A606100ABC551 /* core.py */,
+				23CDCD55162A606100ABC551 /* example.py */,
+				23CDCD57162A606100ABC551 /* geometry.py */,
+				23CDCD59162A606100ABC551 /* lights.py */,
+				23CDCD5B162A606100ABC551 /* MtoAur.py */,
+				23CDCD5D162A606100ABC551 /* shaders.py */,
+				2327DDFB162A6DAA00163E02 /* UI.py */,
+			);
+			name = PyAurora;
+			sourceTree = "<group>";
+		};
 		23E7EBEF15C85E480086218D /* Parsing */ = {
 			isa = PBXGroup;
 			children = (
@@ -1056,6 +1077,7 @@
 		C57567E8159E660400570538 = {
 			isa = PBXGroup;
 			children = (
+				23CDCD51162A604200ABC551 /* PyAurora */,
 				C50828C515A5A482007312C3 /* ExternalLibraries */,
 				C57567F6159E660400570538 /* Aurora */,
 				C57567F4159E660400570538 /* Products */,

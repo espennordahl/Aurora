@@ -16,7 +16,7 @@ namespace Aurora {
 	class MatteMaterial : public Material {
 	public:
 		MatteMaterial( std::string name, const Color &col, int numSamples);
-		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread ) ;
+		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
 		
         void frameBegin();
         void frameEnd();

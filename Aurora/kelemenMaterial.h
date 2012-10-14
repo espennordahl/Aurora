@@ -20,11 +20,8 @@ namespace Aurora {
 	class KelemenMaterial : public Material {
 	public:
 		KelemenMaterial( std::string name, RenderEnvironment *renderEnv, Color diffCol, Color specCol, 
-                        float exponent, float reflectance, std::string diffTexture, 
-                        bool useNoise, float noiseFrequency, int noiseLevels, float noiseAmplitudeMod, float noiseFreqMod,
-                        const Color &noiseColA, const Color &noiseColB,
-                        int numSamples);
-		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread ) ;
+                        float exponent, float reflectance, int numSamples);
+		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
 		
         void frameBegin();
         void frameEnd();

@@ -22,7 +22,7 @@ namespace Aurora {
 	class Material : public ReferenceCounted {
 	public:
             // Returns a brdf to run during light transport.
-		virtual Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread ) = 0;
+		virtual Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) = 0;
 
             // FrameBegin and FrameEnd are pipeline methods for doing
             // any kind of pre and post rendering work. This method

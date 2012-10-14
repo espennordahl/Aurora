@@ -139,14 +139,6 @@ namespace Aurora {
             Color specCol;
             float reflectance;
             float exponent;
-            std::string diffTexture = "";
-            bool useNoise; 
-            float noiseFrequency; 
-            int noiseLevels;
-            float noiseAmplitudeMod;
-            float noiseFreqMod;
-            Color noiseColA;
-            Color noiseColB;
 
             for( Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {
                 if (itr.key().asString() == "diffusecolor") {
@@ -175,64 +167,13 @@ namespace Aurora {
                     Json::Value v = *itr;
                     exponent = v.asDouble();
                 }
-                else if (itr.key().asString() == "diffuseTexture") {
-                    Json::Value v = *itr;
-                    diffTexture = v.asString();
-                }
-                else if (itr.key().asString() == "useNoise") {
-                    Json::Value v = *itr;
-                    double tmp = v.asDouble();
-                    if (tmp == 1.0){
-                        useNoise = true;
-                    }
-                    else {
-                        useNoise = false;
-                    }
-                }
-                else if (itr.key().asString() == "noiseFrequency") {
-                    Json::Value v = *itr;
-                    noiseFrequency = v.asDouble();
-                }
-                else if (itr.key().asString() == "noiseLevels") {
-                    Json::Value v = *itr;
-                    noiseLevels = floor(v.asDouble());
-                }
-                else if (itr.key().asString() == "noiseAmplitudeMod") {
-                    Json::Value v = *itr;
-                    noiseAmplitudeMod = v.asDouble();
-                }
-                else if (itr.key().asString() == "noiseFreqMod") {
-                    Json::Value v = *itr;
-                    noiseFreqMod = v.asDouble();
-                }
-                else if (itr.key().asString() == "noiseColorA") {
-                    Json::Value c = *itr;
-                    int i = 0;
-                    for( Json::ValueIterator colItr = c.begin() ; colItr != c.end(); colItr++ ) {
-                        Json::Value v = *colItr;
-                        noiseColA[i] = v.asDouble();
-                        i++;
-                    }
-                }
-                else if (itr.key().asString() == "noiseColorB") {
-                    Json::Value c = *itr;
-                    int i = 0;
-                    for( Json::ValueIterator colItr = c.begin() ; colItr != c.end(); colItr++ ) {
-                        Json::Value v = *colItr;
-                        noiseColB[i] = v.asDouble();
-                        i++;
-                    }
-                }
                 else if (itr.key().asString() == "name") {
                     Json::Value v = *itr;
                     name = v.asString();
                 }
 
             }
-            *material = new KelemenMaterial(name, renderEnv, diffCol, specCol, exponent, reflectance, diffTexture, 
-                                            useNoise, noiseFrequency, noiseLevels, noiseAmplitudeMod, noiseFreqMod,
-                                            noiseColA, noiseColB,
-                                            globals[LightSamples]/2);
+            *material = new KelemenMaterial(name, renderEnv, diffCol, specCol, exponent, reflectance, globals[LightSamples]/2);
         }   
         else {
             LOG_ERROR("Empty material.");

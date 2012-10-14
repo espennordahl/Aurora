@@ -25,7 +25,7 @@ Brdf(name)
     reflectance = _reflectance;
     integrationDomain = Hemisphere;
 	color = col;
-	exponent = clamp(_exponent, 0.01f, 0.95);
+	baseRoughness = clamp(_exponent, 0.01f, 0.95);
     numSamples = _numSamples;
     weight = 1;
     for (int t=0; t < NUM_THREADS; t++) {
@@ -49,7 +49,14 @@ void CookTorrance::frameEnd(){
     
 }
 
-
+void CookTorrance::initRoughness(bool mattePath, int thread){
+    if (mattePath) {
+        roughness[thread] = baseRoughness/2 + 0.5;
+    }
+    else {
+        roughness[thread] = baseRoughness;
+    }
+}
 
 void CookTorrance::preCalcNormTable(){
 	OpenexrDisplay exrDisplay(NORM_ENTRIES, NORM_ENTRIES, "/Users/espennordahl/Documents/Aurora/cache/exrNormTable_v03.exr");
@@ -95,10 +102,10 @@ void CookTorrance::preCalcNormTable(){
     exrDisplay.draw(NORM_ENTRIES);
 }
 
-float CookTorrance::getNormWeight(float costheta){
+float CookTorrance::getNormWeight(float costheta, float roughness){
     float r = (float)random() / RAND_MAX;
     float y = clamp(floor((costheta * NORM_ENTRIES) + (r-0.5)), 0., NORM_ENTRIES-1);
-    float x = floorf(exponent * NORM_ENTRIES);
+    float x = floorf(roughness * NORM_ENTRIES);
     float valueA = normTable->read((float)x/NORM_ENTRIES, (float)y/NORM_ENTRIES, 0.).r;
     float y2 = std::min(y + 1., NORM_ENTRIES-1.);
     float valueB = normTable->read((float)x/NORM_ENTRIES, (float)y2/NORM_ENTRIES, 0.).r;
@@ -149,7 +156,7 @@ Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, int depth, 
         r2 = (float) rand()/RAND_MAX;
     }
     
-    float z = cosf(atanf(exponent * sqrtf(-log(1.-r1))));
+    float z = cosf(atanf(roughness[thread] * sqrtf(-log(1.-r1))));
     float r = sqrtf(fmax(0.f, 1.f - z*z));
     float phi = M_PI * 2 * r2;
     float x = r * cosf(phi);
@@ -182,9 +189,9 @@ Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, int depth, 
     float pdf = 1.f;
 
     if (vdoth > 0.001 && ldotn > 0.001 && vdotn > 0.001) {
-        float D = (1.f / (exponent * exponent * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (exponent * exponent)) ;
+        float D = (1.f / (roughness[thread] * roughness[thread] * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (roughness[thread] * roughness[thread])) ;
         
-        float normalization = getNormWeight(dot(Nn, Vn));
+        float normalization = getNormWeight(dot(Nn, Vn), roughness[thread]);
         pdf = D / ( 4 * vdoth );        
         if (isnan(D)) { // TODO: Make sure we don't get NaNs ahead of time.
             result = Color(0.);
@@ -213,7 +220,7 @@ float CookTorrance::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int
         return 0;
     }    
     
-    float D = (1.f / (exponent * exponent * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (exponent * exponent)) ;
+    float D = (1.f / (roughness[thread] * roughness[thread] * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (roughness[thread] * roughness[thread])) ;
     if (isnan(D)) {
         D = 0.f;
     }
@@ -236,12 +243,12 @@ Color CookTorrance::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Ve
     float ldotn = dot(Ln, Nn);
 //    float ldoth = dot(Ln, Hn);
     
-    float D = (1.f / (exponent * exponent * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (exponent * exponent)) ;
+    float D = (1.f / (roughness[thread] * roughness[thread] * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (roughness[thread] * roughness[thread])) ;
     
     if (vdoth <= 0.001 || ldotn <= 0.001 || vdotn <= 0.001 || isnan(D)) {
         return Color(0.f);
     }
-    float normalization = getNormWeight(dot(Nn, Vn));
+    float normalization = getNormWeight(dot(Nn, Vn), roughness[thread]);
     Color result = color * normalization * D / ( 4. * vdoth * vdoth );
     assert(result.lum() >= 0.);
     return result;

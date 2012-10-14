@@ -32,10 +32,8 @@ namespace Aurora {
 		virtual Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread) = 0;
 		virtual float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const = 0;
         virtual void setParameters(brdfParameters *params, int thread) = 0;
-        
-        virtual void frameBegin() = 0;
-        virtual void frameEnd() = 0;
-        
+        virtual void initRoughness(bool mattePath, int thread) = 0;
+                
         BrdfType brdfType;
         IntegrationDomain integrationDomain;
         float weight;

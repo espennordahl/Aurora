@@ -17,7 +17,7 @@ MatteMaterial::MatteMaterial( std::string name, const Color &col, int numSamples
 	brdf = new Lambert(name + ":lambert", color, numSamples);
 }
 
-Reference<Brdf> MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread ) {
+Reference<Brdf> MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
 	return brdf;
 }
 

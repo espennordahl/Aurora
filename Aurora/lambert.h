@@ -23,7 +23,7 @@ namespace Aurora {
 		
         void frameBegin();
         void frameEnd();
-        
+        void initRoughness(bool mattePath, int thread){};
 		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const;
         void setParameters(brdfParameters *params, int thread);
 

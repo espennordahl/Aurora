@@ -411,8 +411,10 @@ void *integrateThreaded( void *threadid ){
 				Color pathThroughput = Color(1.f);
 				Reference<Brdf> currentBrdf;	
 				Vector Nn = Vector(0, 0, 1);
+                bool mattePath = false;
+                RayType rayType = CameraRay;
+                
 				int trueBounces = 0;
-                bool caustic = false;
 				for (int bounces = 0; ; ++bounces) {
 					AttributeState *attrs = &renderEnv->attributeState[isect.attributesIndex];
                     isect.shdGeo.cameraToObject = attrs->cameraToObject;
@@ -420,9 +422,13 @@ void *integrateThreaded( void *threadid ){
 					Vector Vn = normalize(-currentSample.ray.direction);
 					Nn = normalize(isect.hitN);
                     Point orig = isect.hitP;
+                    if (rayType == DiffuseRay) {
+                        mattePath = true;
+                    }
+                    
 
 					// emmision
-					if (bounces == 0 || caustic == true) {
+					if (rayType == CameraRay || rayType == MirrorRay) {
 						Lo += pathThroughput * attrs->emmision;
 					}
                     
@@ -435,7 +441,7 @@ void *integrateThreaded( void *threadid ){
                     }
 					
 					// sample lights
-					currentBrdf = attrs->material->getBrdf(Vn, Nn, isect.shdGeo, threadNum);
+					currentBrdf = attrs->material->getBrdf(Vn, Nn, isect.shdGeo, mattePath, threadNum);
 					
 					if (bounces < (*renderEnv->globals)[MaxDepth]) {
 						int numLights = (int)renderEnv->lights.size();
@@ -508,18 +514,23 @@ void *integrateThreaded( void *threadid ){
 					}
                     if (currentBrdf->brdfType != MirrorBrdf) {
                         pathThroughput *= currentSample.color * dot(Nn, currentSample.ray.direction) / currentSample.pdf;
-                        caustic = false;
                         if (pathThroughput.isBlack()) {
                             break;
+                        }
+                        if (currentBrdf->brdfType == SpecBrdf) {
+                            rayType = SpecularRay;
+                        }
+                        else {
+                            rayType = DiffuseRay;
                         }
                     }
                     else {
                         pathThroughput *= currentSample.color;
-                        caustic = true;
+                        rayType = MirrorRay;
                     }
 					// possibly terminate path here
 					if (bounces > (*renderEnv->globals)[MinDepth]) {
-						float continueProbability = min(clamp(renderProgress, MIN_ROULETTE, MAX_ROULETTE), pathThroughput.lum()*3);
+						float continueProbability = min((float)MAX_ROULETTE, pathThroughput.lum()*10);
 						if ((float) rand()/RAND_MAX > continueProbability) {
 							break;
 						}

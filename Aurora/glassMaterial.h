@@ -17,7 +17,7 @@ namespace Aurora {
 	class GlassMaterial : public Material {
 	public:
 		GlassMaterial( std::string name, const Color &specCol, const Color &transCol, float reflectance, float ior );
-		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread ) ;
+		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
         void frameBegin();
         void frameEnd();
 

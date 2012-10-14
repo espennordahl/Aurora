@@ -28,7 +28,7 @@ void GlassMaterial::frameEnd(){
     
 }
 
-Reference<Brdf> GlassMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread) {
+Reference<Brdf> GlassMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread) {
     if (reflectance == 1.f) return refBrdf;
         // compute fresnel
     float costheta = dot(Vn,Nn) * 0.5;

@@ -13,6 +13,15 @@
 #include "point.h"
 
 namespace Aurora {
+    
+    enum RayType{
+        CameraRay,
+        DiffuseRay,
+        SpecularRay,
+        MirrorRay,
+        ShadowRay
+    };
+    
 	class Ray{
 	public:
 		Vector direction;

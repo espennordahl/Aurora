@@ -23,7 +23,8 @@ namespace Aurora {
 		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread);
 		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const;
         void setParameters(brdfParameters *params, int thread){};
-
+        void initRoughness(bool mattePath, int thread){};
+        
         void frameBegin();
         void frameEnd();
 

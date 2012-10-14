@@ -23,15 +23,12 @@ using namespace Aurora;
 #define SPECALBEDO_ENTRIES 128
 
 KelemenMaterial::KelemenMaterial( std::string name, RenderEnvironment *renderEnv, Color diffCol, Color specCol, 
-                                 float _exponent, float _reflectance, std::string diffTexture,
-                                 bool useNoise, float noiseFrequency, int noiseLevels, float noiseAmplitudeMod, float noiseFreqMod,
-                                 const Color &noiseColA, const Color &noiseColB,
-                                 int numSamples):
+                                 float _exponent, float _reflectance, int numSamples):
 reflectance(_reflectance),
 exponent(_exponent),
 specGain(specCol.lum()), // TODO: I think this isn't used anymore
 
-shader(KelemenShader(name + ":Shader", renderEnv, diffTexture, "", diffCol, specCol, _exponent, _reflectance, useNoise, noiseFrequency, noiseLevels, noiseAmplitudeMod, noiseFreqMod, noiseColA, noiseColB))
+shader(KelemenShader(name + ":Shader", renderEnv, "", "", diffCol, specCol, _exponent, _reflectance, false, 0, 0, 0, 0, 0, 0))
 {
         // settings
 
@@ -117,7 +114,7 @@ float KelemenMaterial::getAlbedo(float costheta){
     return result;
 }
 
-Reference<Brdf> KelemenMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, int thread ) {
+Reference<Brdf> KelemenMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
     if (reflectance == 1.f) { // exception to get specular response only (for debug purposes)
         specBrdf->setWeight(1.f);
         return specBrdf;   
@@ -138,6 +135,7 @@ Reference<Brdf> KelemenMaterial::getBrdf( const Vector &Vn, const Vector &Nn, co
 		return diffBrdf;
 	}
 	else{
+        specBrdf->initRoughness(mattePath, thread); // TODO: specParams
 		return specBrdf;
 	}
 }
