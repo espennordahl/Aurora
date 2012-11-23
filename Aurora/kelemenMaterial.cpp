@@ -10,6 +10,7 @@
 
 #include "kelemenMaterial.h"
 #include "cookTorrance.h"
+#include "shaders.h"
 #include "lambert.h"
 #include "log.h"
 #define lcontext LOG_KelemenMaterial
@@ -22,26 +23,28 @@ using namespace Aurora;
 #define SPECALBEDO_SAMPLES 50000
 #define SPECALBEDO_ENTRIES 128
 
-KelemenMaterial::KelemenMaterial( std::string name, RenderEnvironment *renderEnv, Color diffCol, Color specCol, 
-                                 float _exponent, float _reflectance, int numSamples):
+KelemenMaterial::KelemenMaterial( std::string name, RenderEnvironment *renderEnv,
+                                 int _diffColIndex, int _specColIndex,
+                                 float _exponent, float _reflectance,
+                                 int numSamples):
+Material(name, renderEnv),
 reflectance(_reflectance),
 exponent(_exponent),
-specGain(specCol.lum()), // TODO: I think this isn't used anymore
-
-shader(KelemenShader(name + ":Shader", renderEnv, "", "", diffCol, specCol, _exponent, _reflectance, false, 0, 0, 0, 0, 0, 0))
+specColorIndex(_specColIndex),
+diffColorIndex(_diffColIndex)
 {
         // settings
 
         // lobes
-    specBrdf = new CookTorrance( name + ":CookTorrance", specCol, exponent, reflectance, std::max(numSamples, 32));
-	diffBrdf = new Lambert( name + ":Lambert", diffCol, std::max(numSamples, 32));
+    specBrdf = new CookTorrance( name + ":CookTorrance", Color(1), exponent, reflectance, std::max(numSamples, 32), renderEnv);
+	diffBrdf = new Lambert( name + ":Lambert", Color(1), std::max(numSamples, 32), renderEnv);
     
-        // shading
-        // TODO : shdEngine should be initialized in frameBegin
-    shdEngine = renderEnv->shadingEngine;
-    shdEngine->registerShader(diffBrdf->name, &shader);	
-
-
+        // shaders
+    ConstantShader<float> *refShd = new ConstantShader<float>(reflectance);
+    reflectanceIndex = renderEnv->shadingEngine->registerShaderFloat(name + ":specReflectance", refShd);
+    ConstantShader<float> *roughShd = new ConstantShader<float>(exponent);
+    roughnessIndex = renderEnv->shadingEngine->registerShaderFloat(name + ":specRoughness", roughShd);
+    
         // albedo
     preCalcAlbedo();
 }
@@ -50,6 +53,7 @@ shader(KelemenShader(name + ":Shader", renderEnv, "", "", diffCol, specCol, _exp
 #pragma mark pipeline
 
 void KelemenMaterial::frameBegin(){
+    LOG_DEBUG("FrameBegin!");
     specBrdf->frameBegin();
     diffBrdf->frameBegin();
 }
@@ -116,26 +120,30 @@ float KelemenMaterial::getAlbedo(float costheta){
 
 Reference<Brdf> KelemenMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
     if (reflectance == 1.f) { // exception to get specular response only (for debug purposes)
-        specBrdf->setWeight(1.f);
         return specBrdf;   
     }
     
         // get albedo
     float albedo = getAlbedo(clamp(dot(Nn, Vn), 0., 1.)); // TODO: should't need to clamp here
-    if(albedo < 0.f && albedo > 1.f){
-        LOG_ERROR("invalid albedo - outside of 0-1 range");
-    }
+
         // importance sample brdfs
 	float r = (float) rand()/RAND_MAX;
 	if (r > albedo) {
-        brdfParameters *params = shdEngine->getBrdfParameters(diffBrdf->name, shdGeo, thread);
-        diffBrdf->setParameters(params, thread);
+        lambertParameters params = {
+        renderEnv->shadingEngine->getColor(diffColorIndex, shdGeo)
+        };
+        diffBrdf->setParameters(&params, thread);
             // TODO: probably shouldn't free these here...
-        free(params);
 		return diffBrdf;
 	}
 	else{
-        specBrdf->initRoughness(mattePath, thread); // TODO: specParams
+        cookTorranceParameters params = {
+            renderEnv->shadingEngine->getColor(specColorIndex, shdGeo),
+            renderEnv->shadingEngine->getFloat(roughnessIndex, shdGeo),
+            renderEnv->shadingEngine->getFloat(reflectanceIndex, shdGeo)
+        };
+        specBrdf->initRoughness(mattePath, thread);
+        specBrdf->setParameters(&params, thread);
 		return specBrdf;
 	}
 }

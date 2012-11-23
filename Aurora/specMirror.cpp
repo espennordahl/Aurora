@@ -12,10 +12,9 @@
 
 using namespace Aurora;
 
-SpecMirror::SpecMirror( std::string name, Color col):
-Brdf(name),
+SpecMirror::SpecMirror( std::string name, Color col, RenderEnvironment *renderEnv):
+Brdf(name, renderEnv),
 color(col){
-    weight = 1;
     brdfType = MirrorBrdf;
 }
 

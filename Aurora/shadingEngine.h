@@ -13,19 +13,33 @@
 #include "brdf.h"
 #include "shader.h"
 #include "shaderCache.h"
+#include "material.h"
 
-#include <map>
+#include <tr1/unordered_map>
 
 namespace Aurora {
     class ShadingEngine{
     public:
         ShadingEngine();
         
-        void registerShader(std::string brdfName, Shader *shader);
-        brdfParameters *getBrdfParameters(std::string brdfName, const ShadingGeometry &shdGeo, int thread);
+        void registerMaterial(std::string materialName, Reference<Material> material);
+        Reference<Material> getMaterial(std::string materialName);
         
-        std::map<std::string, Shader *> shaderRegister;
-        ShaderCache cache;
+        int registerShaderColor(const std::string &shdName, Shader<Color> *shader);
+        int registerShaderFloat(const std::string &shdName, Shader<float> *shader);
+        int getShaderIndex(const std::string &shdName);
+//        int registerConstantColor(std::string attrName, Color c);
+//        int registerConstantFloat(std::string attrName, float f);
+        Color getColor(int index, const ShadingGeometry &shdGeo);
+        float getFloat(int index, const ShadingGeometry &shdGeo);
+        
+        
+        std::tr1::unordered_map<std::string, Reference<Material> > materialReg;
+        std::tr1::unordered_map<std::string, int > indexMap;
+        std::vector<Shader<Color> *> shdRegColor;
+        std::vector<Shader<float> *> shdRegFloat;
+//        std::vector<Color> colorCache;
+//        std::vector<float> floatCache;
     };
 }
 

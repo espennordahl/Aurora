@@ -10,6 +10,7 @@
 #define core_h
 
 #include "constants.h"
+#include "shaderAttribute.h"
 
 // 3D
 
@@ -22,6 +23,7 @@
 #include "bbox.h"
 #include "matrix4x4.h"
 #include "uv.h"
+#include "shadingGeometry.h"
 
 // 2D
 

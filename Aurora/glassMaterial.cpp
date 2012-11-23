@@ -14,10 +14,11 @@
 
 using namespace Aurora;
 
-GlassMaterial::GlassMaterial( std::string name, const Color &specCol, const Color &transCol, float _reflectance, float ior ):
+GlassMaterial::GlassMaterial( std::string name, const Color &specCol, const Color &transCol, float _reflectance, float ior, RenderEnvironment *renderEnv ):
+Material(name, renderEnv),
 reflectance(_reflectance) {
-    refBrdf = new SpecMirror(name + ":specMirror", specCol);
-    transmitBrdf = new SpecTransmit(name + ":specTransmit", transCol, ior);
+    refBrdf = new SpecMirror(name + ":specMirror", specCol, renderEnv);
+    transmitBrdf = new SpecTransmit(name + ":specTransmit", transCol, ior, renderEnv);
 }
 
 void GlassMaterial::frameBegin(){

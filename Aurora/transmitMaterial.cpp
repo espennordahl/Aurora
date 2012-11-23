@@ -12,8 +12,10 @@
 
 using namespace Aurora;
 
-TransmitMaterial::TransmitMaterial( std::string name, Color col, float ior ){
-    brdf = new SpecTransmit(name + ":SpecTransmit", col, ior);
+TransmitMaterial::TransmitMaterial( std::string name, Color col, float ior, RenderEnvironment *renderEnv ):
+Material(name, renderEnv)
+{
+    brdf = new SpecTransmit(name + ":SpecTransmit", col, ior, renderEnv);
 }
 
 void TransmitMaterial::frameBegin(){

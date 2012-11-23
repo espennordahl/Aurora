@@ -82,8 +82,8 @@ void AdaptiveRndSampler2D::initRegionBuffer(){
 	int regionHeight = min(height, regionNumber * regionNumber);
 	int regionWidth = ceil(regionHeight * aspectRatio);
 	regionBuffer.clear();
-	LOG_DEBUG("Generating region buffer numer " << regionNumber << ", containing "
-			  << regionHeight*regionWidth << " regions.");
+//	LOG_DEBUG("Generating region buffer numer " << regionNumber << ", containing "
+//			  << regionHeight*regionWidth << " regions.");
 	for (int i=0; i < regionWidth; i++) {
 		for (int j=0; j < regionHeight; j++) {
 			PixelRegion region;
@@ -150,7 +150,6 @@ bool AdaptiveRndSampler2D::nextSample( Sample2D *sample ){
 #endif
 		}
 		if (foundSample == true) {
-			LOG_DEBUG("Found sample.");
 			// we found a sample. Break out of the loop and return
 			regionBuffer.pop_back();
 			return true;
@@ -158,7 +157,6 @@ bool AdaptiveRndSampler2D::nextSample( Sample2D *sample ){
 		else{
 			// If we reach the end of the loop, all the samples in the region
 			// is already evaluated, so we keep going.
-			LOG_DEBUG("Didn't find any samples.");
 			regionBuffer.pop_back();
 		}
 	}

@@ -17,20 +17,12 @@
 
 namespace Aurora {
     
-    struct cacheNode{
-        int numEntries;
-        std::vector<std::map<std::string, Color> > values;
-    };
-    
     class ShaderCache {
     public:
         ShaderCache();
         
-        bool getShaderAttribute(int triangleIndex, Point barCoords, std::string brdfName, brdfParameters *params);
-        void setShaderAttribute(int triangleIndex, std::string attrName, std::vector<brdfParameters> inputParams);
 
     private:
-        std::map<int, cacheNode> cache;
     };
 }
 

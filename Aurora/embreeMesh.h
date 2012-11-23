@@ -16,6 +16,8 @@
 #include "embree_intersector.h"
 
 namespace Aurora {    
+    
+        // TODO: Clean up this messy class. 
     class EmbreeMesh {
     public:
         

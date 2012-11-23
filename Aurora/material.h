@@ -19,8 +19,9 @@ namespace Aurora {
 }
 
 namespace Aurora {
-	class Material : public ReferenceCounted {
+	class Material : public ReferenceCounted, public FrontEndObject {
 	public:
+        Material(std::string name, RenderEnvironment *renderEnv): FrontEndObject(name, renderEnv){};
             // Returns a brdf to run during light transport.
 		virtual Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) = 0;
 

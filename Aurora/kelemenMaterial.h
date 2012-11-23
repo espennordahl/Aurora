@@ -10,7 +10,7 @@
 #define Aurora_kelemenMaterial_h
 
 #include "material.h"
-#include "kelemenShader.h"
+#include "shader.h"
 
 namespace Aurora {
     
@@ -19,8 +19,10 @@ namespace Aurora {
     
 	class KelemenMaterial : public Material {
 	public:
-		KelemenMaterial( std::string name, RenderEnvironment *renderEnv, Color diffCol, Color specCol, 
-                        float exponent, float reflectance, int numSamples);
+		KelemenMaterial( std::string name, RenderEnvironment *renderEnv,
+                        int diffColIndex, int specColIndex,
+                        float exponent, float reflectance,
+                        int numSamples);
 		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
 		
         void frameBegin();
@@ -33,12 +35,16 @@ namespace Aurora {
 		Reference<Brdf> diffBrdf;
 		Reference<Brdf> specBrdf;
         std::vector<float> albedoTable;
-        KelemenShader shader;
-		float reflectance;
+        float reflectance;
         float exponent;
         float specGain;
         float diffGain;
         float avg;
+        
+        int roughnessIndex;
+        int diffColorIndex;
+        int specColorIndex;
+        int reflectanceIndex;
 	};
 }
 

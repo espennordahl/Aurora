@@ -28,6 +28,7 @@ namespace Aurora{
 		virtual void setPixel(int width, int height, const Color &color, float alpha) = 0;
 		
 		virtual void clear() = 0;
+        virtual ~Display(){};
 	};
 }
 

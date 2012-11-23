@@ -15,15 +15,23 @@
 #include "openexrDisplay.h"
 
 namespace Aurora {
+    
+    struct cookTorranceParameters{
+        Color specColor;
+        float roughness;
+        float reflectance;
+    };
+
+    
 	class CookTorrance : public Brdf{
 	public:
-		CookTorrance(std::string name, Color col, float exponent, float reflectance, int numSamples);
+		CookTorrance(std::string name, Color col, float exponent, float reflectance, int numSamples, RenderEnvironment *renderEnv);
 		
 		Sample3D getSample(const Vector &Vn, const Vector &Nn, int depth, int thread);
 		Color evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread);
 		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread);
 		float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const;
-        void setParameters(brdfParameters *params, int thread){};
+        void setParameters(void *params, int thread);
         void initRoughness(bool mattePath, int thread);
         
         void frameBegin();
@@ -37,10 +45,10 @@ namespace Aurora {
         std::vector<float> randomU[NUM_THREADS][3];
         std::vector<float> randomV[NUM_THREADS][3];
         Texture2D *normTable;
-		Color color;
+		Color color[NUM_THREADS];
 		float roughness[NUM_THREADS];
-        float baseRoughness;
-        float reflectance;
+        float baseRoughness[NUM_THREADS];
+        float reflectance[NUM_THREADS];
         int numSamples;
 	};
 }

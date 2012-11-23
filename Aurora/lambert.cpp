@@ -15,10 +15,9 @@
 
 using namespace Aurora;
 
-Lambert::Lambert(std::string name, Color col, int _numSamples) : Brdf(name), numSamples(_numSamples){
+Lambert::Lambert(std::string name, Color col, int _numSamples, RenderEnvironment *renderEnv) : Brdf(name, renderEnv), numSamples(_numSamples){
     brdfType = MatteBrdf;
     integrationDomain = Hemisphere;
-    weight = 1;
     for (int t=0; t < NUM_THREADS; t++) {
         generateSampleBuffer(0,t);
         generateSampleBuffer(1,t);
@@ -39,7 +38,7 @@ void Lambert::frameEnd(){
 }
 
 
-void Lambert::setParameters(brdfParameters *params, int thread){
+void Lambert::setParameters(void *params, int thread){
     lambertParameters *newParams = (lambertParameters *) params;
     Color tmpCol = newParams->albedo;
     color[thread] = tmpCol;
@@ -82,17 +81,17 @@ Sample3D Lambert::getSample(const Vector &Vn, const Vector &Nn, int depth, int t
     }
     
     Vector dir = SampleHemisphereUniform(r1, r2);
-    return Sample3D(Ray(normalize(tangentToWorld(dir, Nn)), Point(0), RAY_BIAS, 1000000.f), M_PI_INV * 0.5, color[thread] * weight * M_PI_INV);
+    return Sample3D(Ray(normalize(tangentToWorld(dir, Nn)), Point(0), RAY_BIAS, 1000000.f), M_PI_INV * 0.5, color[thread] * M_PI_INV);
 }
 
 Color Lambert::evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread){
-	return color[thread] * weight * M_PI_INV;
+	return color[thread] * M_PI_INV;
 }
 
 Color Lambert::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread){
 	float d = dot(Ln, Nn);
 	if (d > 0.) {
-		return color[thread] * weight * M_PI_INV ;
+		return color[thread] * M_PI_INV ;
 	}
 	else{
 		return Color(0);

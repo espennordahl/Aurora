@@ -13,23 +13,6 @@
 
 namespace Aurora {
     
-    struct ShadingGeometry{
-        Point P;
-        Vector Ns;
-        Vector Ng;
-        Vector dPdu;
-        Vector dPdv;
-            //        const Transform *cameraToWorld;
-            //        const Transform *worldToCamera;
-            //        const Transform *objectToWorld;
-            //        const Transform *worldToObject;
-        const Transform *cameraToObject;
-        const Transform *objectToCamera;
-        uv st;
-        Point barCoords;
-        int triangleIndex;
-    };
-
 	struct Intersection{
         ShadingGeometry shdGeo;
 		Vector hitN;

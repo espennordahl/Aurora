@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "cookTorrance.h"
+#include "shader.h"
 #include "math.h"
 
 #include <assert.h>
@@ -18,20 +19,19 @@ using namespace Aurora;
 #define NORM_SAMPLES 100000
 #define NORM_ENTRIES 128
 
-CookTorrance::CookTorrance(std::string name, Color col, float _exponent, float _reflectance, int _numSamples):
-Brdf(name)
+CookTorrance::CookTorrance(std::string name, Color col, float _exponent, float _reflectance, int _numSamples, RenderEnvironment *renderEnv):
+Brdf(name, renderEnv)
 {
     brdfType = SpecBrdf;
-    reflectance = _reflectance;
     integrationDomain = Hemisphere;
-	color = col;
-	baseRoughness = clamp(_exponent, 0.01f, 0.95);
     numSamples = _numSamples;
-    weight = 1;
     for (int t=0; t < NUM_THREADS; t++) {
         generateSampleBuffer(0,t);
         generateSampleBuffer(1,t);
         generateSampleBuffer(2,t);
+        reflectance[t] = _reflectance;
+        color[t] = col;
+        baseRoughness[t] = _exponent;
     }
 //      Comment out to re bake
 //    preCalcNormTable(); 
@@ -49,12 +49,20 @@ void CookTorrance::frameEnd(){
     
 }
 
+void CookTorrance::setParameters(void *params, int thread){
+    cookTorranceParameters *newParams = (cookTorranceParameters *) params;
+    baseRoughness[thread] = newParams->roughness;
+    reflectance[thread] = newParams->reflectance;
+    color[thread] = newParams->specColor;
+}
+
+
 void CookTorrance::initRoughness(bool mattePath, int thread){
     if (mattePath) {
-        roughness[thread] = baseRoughness/2 + 0.5;
+        roughness[thread] = baseRoughness[thread]/2 + 0.5;
     }
     else {
-        roughness[thread] = baseRoughness;
+        roughness[thread] = baseRoughness[thread];
     }
 }
 
@@ -137,7 +145,10 @@ void CookTorrance::generateSampleBuffer(int i, int t){
     }
 }
 
-
+inline float ctD(float roughness, float cosalpha, float tanalpha){
+    float rough2 = roughness * roughness;
+    return (1.f / (rough2 * M_PI * powf(cosalpha, 3.f))) * expf( -(tanalpha * tanalpha) / (rough2)) ;
+}
 
 Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, int depth, int thread){
     
@@ -189,8 +200,8 @@ Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, int depth, 
     float pdf = 1.f;
 
     if (vdoth > 0.001 && ldotn > 0.001 && vdotn > 0.001) {
-        float D = (1.f / (roughness[thread] * roughness[thread] * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (roughness[thread] * roughness[thread])) ;
-        
+            //float D = (1.f / (roughness[thread] * roughness[thread] * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (roughness[thread] * roughness[thread])) ;
+        float D = ctD(roughness[thread], ndoth, tanf(acosf(ndoth)));
         float normalization = getNormWeight(dot(Nn, Vn), roughness[thread]);
         pdf = D / ( 4 * vdoth );        
         if (isnan(D)) { // TODO: Make sure we don't get NaNs ahead of time.
@@ -198,7 +209,7 @@ Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, int depth, 
             pdf = 0.f;
         }
         else {
-            result =  color * normalization * D / ( 4 * vdoth * vdoth);
+            result =  color[thread] * normalization * D / ( 4 * vdoth * vdoth);
         }
         assert(result.lum() >= 0.);
         assert(pdf >= 0.);
@@ -220,7 +231,9 @@ float CookTorrance::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int
         return 0;
     }    
     
-    float D = (1.f / (roughness[thread] * roughness[thread] * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (roughness[thread] * roughness[thread])) ;
+//    float D = (1.f / (roughness[thread] * roughness[thread] * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (roughness[thread] * roughness[thread])) ;
+    float D = ctD(roughness[thread], ndoth, tanf(acosf(ndoth)));
+
     if (isnan(D)) {
         D = 0.f;
     }
@@ -249,7 +262,7 @@ Color CookTorrance::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Ve
         return Color(0.f);
     }
     float normalization = getNormWeight(dot(Nn, Vn), roughness[thread]);
-    Color result = color * normalization * D / ( 4. * vdoth * vdoth );
+    Color result = color[thread] * normalization * D / ( 4. * vdoth * vdoth );
     assert(result.lum() >= 0.);
     return result;
 }

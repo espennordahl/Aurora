@@ -9,12 +9,16 @@
 #include <iostream>
 
 #include "matteMaterial.h"
+#include "log.h"
+#define lcontext LOG_MatteMaterial
 
 using namespace Aurora;
 
-MatteMaterial::MatteMaterial( std::string name, const Color &col, int numSamples){
+MatteMaterial::MatteMaterial( std::string name, const Color &col, int numSamples, RenderEnvironment *renderEnv):
+Material(name, renderEnv)
+{
 	color = col;
-	brdf = new Lambert(name + ":lambert", color, numSamples);
+	brdf = new Lambert(name + ":lambert", color, numSamples, renderEnv);
 }
 
 Reference<Brdf> MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
@@ -23,6 +27,7 @@ Reference<Brdf> MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, cons
 
 
 void MatteMaterial::frameBegin(){
+    LOG_DEBUG("FrameBegin!");
     brdf->frameBegin();
 }
 

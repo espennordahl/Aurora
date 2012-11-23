@@ -12,11 +12,10 @@
 
 using namespace Aurora;
 
-SpecTransmit::SpecTransmit(std::string name, Color _col, float _ior):
-Brdf(name),
+SpecTransmit::SpecTransmit(std::string name, Color _col, float _ior, RenderEnvironment *renderEnv):
+Brdf(name, renderEnv),
 color(_col), ior(_ior)
 {
-    weight = 1;
     brdfType = MirrorBrdf;
 }
 

@@ -9,20 +9,24 @@
 #ifndef Aurora_frontEndObject_h
 #define Aurora_frontEndObject_h
 
+#include "renderEnvironment.h"
 #include <string.h>
 
 namespace Aurora {
     
     class FrontEndObject{
     public:
-        FrontEndObject(std::string objName){
-            name = objName;
-        }
-        
+        FrontEndObject(std::string objName, RenderEnvironment *_renderEnv):
+        renderEnv(_renderEnv),
+        name(objName)
+        {};
+        virtual ~FrontEndObject(){};
+
         virtual void frameBegin() = 0;
         virtual void frameEnd() = 0;
         
         std::string name;
+        RenderEnvironment *renderEnv;
     };
 }
 

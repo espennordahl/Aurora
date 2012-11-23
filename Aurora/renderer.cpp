@@ -18,22 +18,20 @@
 #include "embreeMesh.h"
 #include "lights.h"
 #include "shadingEngine.h"
-#include "parsing.h"
+
 #include "log.h"
 #define lcontext LOG_Renderer
 
 #include <iostream>
-#include <fstream>
 #include <pthread.h>
 #include <math.h>
 
-#include "json.h"
+#include "jsonParser.h"
 
 using namespace Aurora;
 
 Renderer::Renderer( char *file ){
     filename = std::string(file);
-    setDefaultOptions(&globals);
 }
 
 void Renderer::render(){
@@ -52,78 +50,14 @@ void Renderer::parseSceneDescription(){
     
     renderEnv = RenderEnvironment();
     renderEnv.shadingEngine = new ShadingEngine();
+    renderEnv.globals =  new std::map<Option, double>;
+    setDefaultOptions(renderEnv.globals);
 
         // open file
-    
-	Json::Value deserializeRoot;
-	Json::Reader reader;
-    ifstream sceneDescription( filename.c_str() );
-	if ( !reader.parse(sceneDescription, deserializeRoot) )
-		LOG_ERROR("Couldn't parse file: " << filename);
-	else{
-        LOG_INFO("Parsing json file: " << filename);
-        
-            // get globals first, then camera, then objects
-        if( deserializeRoot.size() > 0 ) {
-                // Options
-            for( Json::ValueIterator itr = deserializeRoot.begin() ; itr != deserializeRoot.end() ; itr++ ) {
-                std::string key = itr.key().asString();
-                LOG_DEBUG("Parsing scene key: " << key);
-                if (key == "objects") {
-                    ;
-                }
-                else if (key == "options") {
-                    parseGlobals(*itr, &globals);
-                }
-                else if (key == "renderCam"){
-                    ;
-                }
-                else {
-                    LOG_WARNING("Unable to parse Scene attribute: " << key);
-                }
-            }
-        }
-        cameraTransform = new Transform();
-        if( deserializeRoot.size() > 0 ) {
-                // Camera
-            for( Json::ValueIterator itr = deserializeRoot.begin() ; itr != deserializeRoot.end() ; itr++ ) {
-                std::string key = itr.key().asString();
-                LOG_DEBUG("Parsing scene key: " << key);
-                if (key == "objects") {
-                    ;
-                }
-                else if (key == "options") {
-                    ;
-                }
-                else if (key == "renderCam"){
-                    parseCamera(*itr, &globals, cameraTransform);
-                }
-                else {
-                    LOG_WARNING("Unable to parse Scene attribute: " << key);
-                }
-            }
-        }
-        
-        if( deserializeRoot.size() > 0 ) {
-                // Objects
-            for( Json::ValueIterator itr = deserializeRoot.begin() ; itr != deserializeRoot.end() ; itr++ ) {
-                std::string key = itr.key().asString();
-                LOG_DEBUG("Parsing scene key: " << key);
-                if (key == "objects") {
-                    parseObject(*itr, &renderEnv, objects, lights, cameraTransform, globals);
-                }
-                else if (key == "options") {
-                    ;
-                }
-                else if (key == "renderCam"){
-                    ;
-                }
-                else {
-                    LOG_WARNING("Unable to parse Scene attribute: " << key);
-                }
-            }
-        }
-	}
+    JsonParser parser = JsonParser(filename, &renderEnv);
+    parser.parseScene(NULL);
+    objects = parser.getObjects();
+    lights = parser.getLights();
     
 	LOG_INFO("Done parsing scene description.");	
     LOG_INFO("*************************************\n");
@@ -132,10 +66,15 @@ void Renderer::parseSceneDescription(){
 void Renderer::buildRenderEnvironment(){
     LOG_INFO("*************************************");
 	LOG_INFO("Building render environment.");
-        
+    
+        // preFrame
+    for (u_int32_t i=0; i < objects.size(); i++) {
+        objects[i]->frameBegin();
+    }
+    
         // camera
     AdaptiveRndSampler2D *cameraSampler = new AdaptiveRndSampler2D();
-    renderCam = Camera(globals[FieldOfView], globals[ResolutionX], globals[ResolutionY], globals[PixelSamples], cameraSampler);
+    renderCam = Camera((*renderEnv.globals)[FieldOfView], (*renderEnv.globals)[ResolutionX], (*renderEnv.globals)[ResolutionY], (*renderEnv.globals)[PixelSamples], cameraSampler);
     
 	if (!objects.size()) {
 		LOG_ERROR("No objects found.");
@@ -143,7 +82,7 @@ void Renderer::buildRenderEnvironment(){
 	
     AccelerationStructure *accel;
     
-    if (globals[AccelStructure] != ACCEL_EMBREE) {
+    if ((*renderEnv.globals)[AccelStructure] != ACCEL_EMBREE) {
         int numObjects = (int)objects.size();
         attrs = new AttributeState[numObjects + lights.size()];
         std::vector<RenderableTriangle> renderable;
@@ -156,7 +95,7 @@ void Renderer::buildRenderEnvironment(){
         
     //	AccelerationStructure *accel = new DummyAccelerationStructure(renderable);
     //	AccelerationStructure *accel = new UniformGridAccelerator(renderable);
-        accel = new KdTreeAccelerator(renderable, KD_INTERSECTCOST, KD_TRAVERSECOST, KD_EMPTYBONUS, globals[KD_MaxLeaf], globals[KD_MaxDepth]);
+        accel = new KdTreeAccelerator(renderable, KD_INTERSECTCOST, KD_TRAVERSECOST, KD_EMPTYBONUS, (*renderEnv.globals)[KD_MaxLeaf], (*renderEnv.globals)[KD_MaxDepth]);
     }
     else {
         int numObjects = (int)objects.size();
@@ -172,7 +111,7 @@ void Renderer::buildRenderEnvironment(){
             if (lights[i]->lightType != type_envLight) {
                 mesh.appendTriangleMesh(lights[i]->shape(), i + numObjects);
             }
-            Reference<Material> black = new MatteMaterial("Not in use - Should be EDF", Color(0),1);
+            Reference<Material> black = new MatteMaterial("Not in use - Should be EDF", Color(0),1, NULL);
             attrs[i + numObjects].material = black;
             attrs[i + numObjects].emmision = lights[i]->emission();
         }
@@ -186,7 +125,6 @@ void Renderer::buildRenderEnvironment(){
 	renderEnv.lights = lights;
 	renderEnv.envLight = envLight;
 	renderEnv.renderCam = &renderCam;
-    renderEnv.globals = &globals;
 	
 	LOG_INFO("Done building render environment.");
     LOG_INFO("*************************************\n");
@@ -198,7 +136,6 @@ struct threadargs{
 	Sample2D *sampleBuffer;
 	int numSamples;
     int threadNum;
-	float renderProgress;
 };
 
 void *integrateThreaded( void *threadid );
@@ -216,7 +153,7 @@ void Renderer::renderImage(){
 	int width = renderCam.getWidthSamples();
 	int height = renderCam.getHeightSamples();
 	int multisamples = renderCam.getPixelSamples();
-	OpenexrDisplay display(width, height, "/Users/espennordahl/aurora2.exr");
+	OpenexrDisplay display(width, height, "/Users/espennordahl/aurora1.exr");
 	
 	
 	// render camera samples
@@ -266,7 +203,6 @@ void Renderer::renderImage(){
 			if (accumulatedSamples == SAMPLES_PER_THREAD) {
 				// spawn new thread
 				td[threadsSpawned].renderEnv = &renderEnv;
-				td[threadsSpawned].renderProgress = renderProgress;
 				Sample2D *tmpBuffer;
 				tmpBuffer = new Sample2D[SAMPLES_PER_THREAD];
 				memcpy(tmpBuffer, sampleBuffer, SAMPLES_PER_THREAD * sizeof(Sample2D));
@@ -294,7 +230,6 @@ void Renderer::renderImage(){
 		if (finalSamples) {
 			
 			td[threadsSpawned].renderEnv = &renderEnv;
-			td[threadsSpawned].renderProgress = renderProgress;
 			td[threadsSpawned].numSamples = accumulatedSamples;
 			Sample2D *tmpBuffer;
 			tmpBuffer = new Sample2D[SAMPLES_PER_THREAD];
@@ -387,7 +322,6 @@ void *integrateThreaded( void *threadid ){
 	struct threadargs *args;
 	
 	args = (struct threadargs*) threadid;
-	float renderProgress = args->renderProgress;
 	RenderEnvironment *renderEnv = args->renderEnv;
 	Sample2D *samples = args->sampleBuffer;
 	int numCameraSamples = args->numSamples;
@@ -448,7 +382,7 @@ void *integrateThreaded( void *threadid ){
 						Reference<Light> currentLight = renderEnv->lights[rand() % numLights];
                         
                         
-                            // For diffuse samples we don't to MIS
+                            // For diffuse samples we don't need MIS
                         if (currentBrdf->brdfType == MatteBrdf) {
 
                             Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->integrationDomain, bounces, threadNum);

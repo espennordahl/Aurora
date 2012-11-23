@@ -8,17 +8,29 @@
 
 #include "auroraObject.h"
 #include "renderableGeometry.h"
+#include "shadingEngine.h"
+#include "log.h"
+#define lcontext LOG_AuroraObj
 
 #include <iostream>
 
 using namespace Aurora;
 
-AuroraObject::AuroraObject( Reference<Shape> _shape, Reference<Material> _material ) :
+AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, Reference<Shape> _shape, Reference<Material> _material ) :
+FrontEndObject(name, renderEnv), 
 shape(_shape), material(_material) {
 	
 }
 
+AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, Reference<Shape> _shape, std::string _matName ):
+FrontEndObject(name, renderEnv),
+shape(_shape), matName(_matName)
+{
+    
+}
 void AuroraObject::frameBegin(){
+    LOG_DEBUG("Assigning material " << matName << " for object: " << name);
+    material = renderEnv->shadingEngine->getMaterial(matName);
     material->frameBegin();
 }
 

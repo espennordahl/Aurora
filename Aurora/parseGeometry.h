@@ -24,7 +24,8 @@ namespace Aurora {
 #pragma mark -
 #pragma mark Materials
     
-    inline void parseMatteMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals, Reference<Material> *material){
+    
+    inline void parseMatteMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals){
         if( root.size() > 0 ) {
             Color col;
             std::string name;
@@ -44,14 +45,14 @@ namespace Aurora {
                 }
 
             }
-            *material = new MatteMaterial(name, col, globals[LightSamples]/2);
+//            *material = new MatteMaterial(name, col, globals[LightSamples]/2);
         }
         else {
             LOG_ERROR("Empty material.");
         }
     }
     
-    inline void parseTransmitMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals, Reference<Material> *material){
+    inline void parseTransmitMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals){
         if( root.size() > 0 ) {
             Color col;
             float ior;
@@ -77,14 +78,14 @@ namespace Aurora {
 
                 
             }
-            *material = new TransmitMaterial(name, col, ior);
+//            *material = new TransmitMaterial(name, col, ior);
         }
         else {
             LOG_ERROR("Empty material.");
         }
     }
 
-    inline void parseGlassMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals, Reference<Material> *material){
+    inline void parseGlassMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals){
         if( root.size() > 0 ) {
             Color specCol;
             float ior;
@@ -124,7 +125,7 @@ namespace Aurora {
                 }
 
             }
-            *material = new GlassMaterial(name, specCol, transmitCol, reflectance, ior);
+//            *material = new GlassMaterial(name, specCol, transmitCol, reflectance, ior);
         }
         else {
             LOG_ERROR("Empty material.");
@@ -132,7 +133,7 @@ namespace Aurora {
     }
 
 
-    inline void parseKelemenMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals, Reference<Material> *material){
+    inline void parseKelemenMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals){
         if( root.size() > 0 ) {
             std::string name;
             Color diffCol;
@@ -173,14 +174,42 @@ namespace Aurora {
                 }
 
             }
-            *material = new KelemenMaterial(name, renderEnv, diffCol, specCol, exponent, reflectance, globals[LightSamples]/2);
+//            *material = new KelemenMaterial(name, renderEnv, diffCol, specCol, exponent, reflectance, globals[LightSamples]/2);
         }   
         else {
             LOG_ERROR("Empty material.");
         }
     }
 
-    
+    inline void parseShader(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals){
+        if( root.size() > 0 ) {
+            Color col;
+            std::string name;
+            for( Json::ValueIterator mItr = root.begin() ; mItr != root.end() ; mItr++ ) {
+                    // we find the type and pass the task on
+                if (mItr.key().asString() == "type") {
+                    Json::Value v = *mItr;
+                    std::string materialType = v.asString();
+                    if (materialType == "matteMaterial") {
+                        parseMatteMaterial(root, renderEnv, globals);
+                    }
+                    else if (materialType == "kelemenMaterial") {
+                        parseKelemenMaterial(root, renderEnv, globals);
+                    }
+                    else if (materialType == "transmitMaterial") {
+                        parseTransmitMaterial(root, renderEnv, globals);
+                    }
+                    else if (materialType == "glassMaterial") {
+                        parseGlassMaterial(root, renderEnv, globals);
+                    }
+                    else {
+                        LOG_ERROR("Couldn't find parser for material " << materialType);
+                    }
+                }
+            }
+        }
+    }
+ 
     inline void parseObject(Json::Value &root, RenderEnvironment *renderEnv, std::vector<Reference<AuroraObject> > &objects, std::vector<Reference<Light> > &lights, Transform *camTrans, std::map<Option, double> globals){
         
         
@@ -206,6 +235,7 @@ namespace Aurora {
                 
                 if (objType == "geometry"){
                     string objPath = "";
+                    string shdName = "";
                     Reference<Material> material;
 
                     for( Json::ValueIterator objItr = obj.begin() ; objItr != obj.end() ; objItr++ ) {
@@ -220,31 +250,8 @@ namespace Aurora {
                         }
                             // material                        
                         else if (objItr.key().asString() == "material") {
-                            if (value.size() > 0) {
-                                for( Json::ValueIterator mItr = value.begin() ; mItr != value.end() ; mItr++ ) {
-                                        // we find the type and pass the task on
-                                    if (mItr.key().asString() == "type") {
-                                        Json::Value v = *mItr;
-                                        std::string materialType = v.asString();
-                                        if (materialType == "matteMaterial") {
-                                            parseMatteMaterial(*objItr, renderEnv, globals, &material);
-                                        }
-                                        else if (materialType == "kelemenMaterial") {
-                                            parseKelemenMaterial(*objItr, renderEnv, globals, &material);
-                                        }
-                                        else if (materialType == "transmitMaterial") {
-                                            parseTransmitMaterial(*objItr, renderEnv, globals, &material);
-                                        }
-                                        else if (materialType == "glassMaterial") {
-                                            parseGlassMaterial(*objItr, renderEnv, globals, &material);
-                                        }
-                                        else {
-                                            LOG_ERROR("Couldn't find parser for material " << materialType);
-                                        }
-                                    }
-                                }
-                            }
-                        } 
+                            shdName = value.asString();
+                        }
                             // transforms
                         else if (objItr.key().asString() == "transforms"){
                             if (value.size() > 0) {

@@ -10,7 +10,6 @@
 #define Aurora_renderEnvironment_h
 
 #include "core.h"
-#include "light.h"
 #include "options.h"
 
 #include <vector>
@@ -18,6 +17,7 @@
 
     // forward declaration
 namespace Aurora {
+    class Light;
     class ShadingEngine;
     class Camera;
     class InfiniteAreaLight;
