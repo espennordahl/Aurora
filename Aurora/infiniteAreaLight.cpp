@@ -18,7 +18,7 @@
 
 using namespace Aurora;
 
-InfiniteAreaLight::InfiniteAreaLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float _exposure, Color color, std::string envmap, int _numSamples ) : Light(o2c, c2o, o2w, w2o, c2w, w2c, _exposure, color, _numSamples) {
+InfiniteAreaLight::InfiniteAreaLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float _exposure, Color color, std::string envmap, int _numSamples, std::string name, RenderEnvironment *renderEnv) : Light(o2c, c2o, o2w, w2o, c2w, w2c, _exposure, color, _numSamples, name, renderEnv) {
 
     lightType = type_envLight;
     

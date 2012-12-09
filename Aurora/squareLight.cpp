@@ -15,7 +15,7 @@
 
 using namespace Aurora;
 
-SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, float sizeX, float sizeY, int _numSamples ) : Light(o2c, c2o, o2w, w2o, c2w, w2c, exposure, color, _numSamples) {
+SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, float sizeX, float sizeY, int _numSamples, std::string name, RenderEnvironment *renderEnv) : Light(o2c, c2o, o2w, w2o, c2w, w2c, exposure, color, _numSamples, name, renderEnv) {
 	
     lightType = type_areaLight;
     
@@ -160,7 +160,7 @@ void SquareLight::makeRenderable(std::vector<RenderableTriangle> &renderable, At
 	renderable.push_back(tri1);
 	renderable.push_back(tri2);
 	
-	Reference<Material> black = new MatteMaterial("Not In Use - Should be EDF", Color(0),1, NULL);
+	Reference<Material> black = new MatteMaterial("Not In Use - Should be EDF", 0, 1, renderEnv);
 	attrs[index].material = black;
 	attrs[index].emmision = color * powf(2,exposure);
 }

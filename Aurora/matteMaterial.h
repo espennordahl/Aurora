@@ -15,15 +15,15 @@
 namespace Aurora {
 	class MatteMaterial : public Material {
 	public:
-		MatteMaterial( std::string name, const Color &col, int numSamples, RenderEnvironment *renderEnv);
+		MatteMaterial( std::string name, int diffColorIndex, int numSamples, RenderEnvironment *renderEnv);
 		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
 		
         void frameBegin();
         void frameEnd();
         
 	private:
-		Color color;
 		Reference<Brdf> brdf;
+        int colorIndex;
 	};
 }
 

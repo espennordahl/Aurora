@@ -18,7 +18,7 @@
 namespace Aurora {
     class InfiniteAreaLight : public Light {
 	public:
-		InfiniteAreaLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, std::string envmap, int numSamples );
+		InfiniteAreaLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, std::string envmap, int numSamples, std::string name, RenderEnvironment *renderEnv);
 		
 		Sample3D generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain, int depth, int thread );
 		
@@ -33,6 +33,10 @@ namespace Aurora {
         Color emission(){return Color(1);};
         
         Reference<Shape> shape() { return NULL; };
+        
+        void frameBegin(){};
+        void frameEnd(){};
+
         
 	private:
 		Texture2D *envMap;

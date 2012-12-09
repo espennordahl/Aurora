@@ -212,8 +212,21 @@ ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, co
         }
         N[i] = normals[i];
     }
+    bool hasUVs = true;
+    if (uvs.size() == 0) {
+        hasUVs = false;
+        LOG_WARNING("Mesh has no UVs in file. Adding garbage UVs");
+    }
     for (uint32_t i = 0; i < numTriangles*3; i++) {
-        UV[i] = uvs[uvIndex[i]-1];
+        if (hasUVs) {
+            UV[i] = uvs[uvIndex[i]-1];
+        }
+        else{
+            uv myUV;
+            myUV.u = 0;
+            myUV.v = 0;
+            UV[i] = myUV;
+        }
     }
     
 	shape = new TriangleMesh(o2c, c2o, numTriangles, numVertices, numNorms, vertexIndex, normalIndex, P, N, UV);

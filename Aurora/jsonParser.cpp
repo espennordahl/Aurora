@@ -48,8 +48,8 @@ bool JsonParser::parseScene(std::string *error){
             
             parseOptions(deserializeRoot);
             parseCamera(deserializeRoot);
-            parseMaterials(deserializeRoot);
             parseShaders(deserializeRoot);
+            parseMaterials(deserializeRoot);
             parseGeometry(deserializeRoot);
         
         }
@@ -239,7 +239,7 @@ inline Reference<AuroraObject> getGeometry(Transform cameraTransform, Json::Valu
     return aurObj;
 }
 
-inline Reference<Light> getLight(Transform cameraTransform, Json::Value &root, int lightSamples){
+inline Reference<Light> getLight(Transform cameraTransform, Json::Value &root, int lightSamples, RenderEnvironment *renderEnv){
     Transform invCam = cameraTransform.inverse(cameraTransform);
         // read all standard data
         // TODO:    std::string name        = getStringAttr("name", root);
@@ -248,6 +248,7 @@ inline Reference<Light> getLight(Transform cameraTransform, Json::Value &root, i
     double yScale           = getDoubleAttr("scaleY", root);
     double exposure         = getDoubleAttr("exposure", root);    
     Color color             = getColorAttr("color", root);
+    std::string name        = getStringAttr("name", root);
 
         // construct transforms
     Transform *c2o = new Transform(objTransform->inverse(*objTransform));
@@ -255,18 +256,19 @@ inline Reference<Light> getLight(Transform cameraTransform, Json::Value &root, i
     Transform *w2c = new Transform(cameraTransform.inverse(cameraTransform));
     Transform *o2w = new Transform(*objTransform * *c2w);
     Transform *w2o = new Transform(*w2c * *c2o);
-    Reference<Light> sqrLight = new SquareLight(objTransform, c2o, o2w, w2o, c2w, w2c, exposure, color, xScale, yScale, lightSamples);
+    Reference<Light> sqrLight = new SquareLight(objTransform, c2o, o2w, w2o, c2w, w2c, exposure, color, xScale, yScale, lightSamples, name, renderEnv);
     
     return sqrLight;
 }
 
-inline Reference<Light> getEnvLight(Transform cameraTransform, Json::Value &root, int lightSamples){
+inline Reference<Light> getEnvLight(Transform cameraTransform, Json::Value &root, int lightSamples, RenderEnvironment *renderEnv){
         // read all standard data
         // TODO:    std::string name        = getStringAttr("name", root);
     Transform *objTransform  = new Transform(getTransformAttr("transforms", root));    
     double exposure         = getDoubleAttr("exposure", root);    
     Color color             = getColorAttr("color", root);
     std::string envmap      = getStringAttr("envmap", root);
+    std::string name        = getStringAttr("name", root);
     
         // construct transforms
     Transform *c2o = new Transform(objTransform->inverse(*objTransform));
@@ -274,7 +276,7 @@ inline Reference<Light> getEnvLight(Transform cameraTransform, Json::Value &root
     Transform *w2c = new Transform(cameraTransform.inverse(cameraTransform));
     Transform *o2w = new Transform(*objTransform * *c2w);
     Transform *w2o = new Transform(*w2c * *c2o);
-    Reference<Light> envLight = new InfiniteAreaLight(objTransform, c2o, o2w, w2o, c2w, w2c, exposure, color, envmap, lightSamples);
+    Reference<Light> envLight = new InfiniteAreaLight(objTransform, c2o, o2w, w2o, c2w, w2c, exposure, color, envmap, lightSamples, name, renderEnv);
     return envLight;
 }
 
@@ -291,6 +293,7 @@ inline int initShader(const std::string &name, const ShaderAttribute &attr, cons
                 return renderEnv->shadingEngine->registerShaderFloat(name, shd);
             }
             case stringAttr:{
+                LOG_DEBUG("Assigning shader " << attr.getString() << " to requested " << name);
                 return renderEnv->shadingEngine->getShaderIndex(attr.getString());
             }
             default:{
@@ -327,8 +330,9 @@ inline Reference<Material> getMaterial(std::string type, std::string name, Json:
                                   (*renderEnv->globals)[LightSamples]);
     }
     else if (type == "matteMaterial") {
-        Color col           = getColorAttr("color", root);
-        mat = new MatteMaterial(name, col, (*renderEnv->globals)[LightSamples] ,renderEnv);
+        ShaderAttribute col = getShaderAttr(colorAttr, "color", root);
+        int colorIndex = initShader(name + ":diffColor", col, colorAttr, renderEnv);
+        mat = new MatteMaterial(name, colorIndex, (*renderEnv->globals)[LightSamples] ,renderEnv);
     }
     else {
         LOG_ERROR("Unknown material: " << type);
@@ -468,18 +472,19 @@ void JsonParser::parseShaders(Json::Value &root){
             Json::Value objRoot = *itr;
             for( Json::ValueIterator objItr = objRoot.begin() ; objItr != objRoot.end() ; objItr++ ) {
                 std::string shdName = objItr.key().asString();
-                
+                LOG_DEBUG("Found shader: " << shdName);
+
                     // find attribute type
                 std::string attributeType = getStringAttr("attributetype", *objItr);
                 
                 if (attributeType == "color"){
                     Shader<Color> *newShd = getColorShader(shdName, *objItr);
+                    renderEnv->shadingEngine->registerShaderColor(shdName, newShd);
                 }
                 else{
                     LOG_ERROR("Unable to parse shader for attribute type: " << attributeType);
                 }
                 
-                LOG_DEBUG("Found shader: " << shdName);
 
             }
             LOG_DEBUG("Done parsing shaders.\n");
@@ -512,11 +517,11 @@ void JsonParser::parseGeometry(Json::Value &root){
                     objects.push_back(geo);
                 }
                 else if (objType == "light"){
-                    Reference<Light> light = getLight(*cameraTransform, *objItr, (*renderEnv->globals)[LightSamples]);
+                    Reference<Light> light = getLight(*cameraTransform, *objItr, (*renderEnv->globals)[LightSamples], renderEnv);
                     lights.push_back(light);
                 }
                 else if (objType == "envlight"){
-                    Reference<Light> light = getEnvLight(*cameraTransform, *objItr, (*renderEnv->globals)[LightSamples]);
+                    Reference<Light> light = getEnvLight(*cameraTransform, *objItr, (*renderEnv->globals)[LightSamples], renderEnv);
                     lights.push_back(light);
                 }                
                 else {

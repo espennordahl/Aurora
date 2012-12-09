@@ -20,17 +20,19 @@
 
 namespace Aurora {
 	class OpenexrDisplay : public Display {
-		Imf::Array2D<Imf::Rgba> pixelBuffer;
-		std::string fileName;
 	public:	
 		OpenexrDisplay(int _width, int _height, std::string file);
 		
 		void setPixel(int _width, int _height, const Color &col, float alpha);
+        void appendValue(int _width, int _height, const Color &col, float alpha);
 		void getPixel(int _width, int _height, Color *col, float *alpha);
 		void draw(int numLines);		
 		void clear(){}; // TODO: implement
 
 	private:
+        Imf::Array2D<Imf::Rgba> pixelBuffer;
+        std::vector<std::vector < int > > multisampleBuffer;
+		std::string fileName;
 	};
 }
 

@@ -35,6 +35,9 @@ namespace Aurora {
         
 		void initPdf();
 		void sample(float r, float *x, float *y);
+        
+        int getWidth(){ return width; };
+        int getHeight(){ return height; };
 		
     protected:
         int width;

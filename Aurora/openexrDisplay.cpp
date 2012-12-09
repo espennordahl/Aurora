@@ -21,13 +21,16 @@ using namespace Aurora;
 OpenexrDisplay::OpenexrDisplay(int _width, int _height, std::string file) : Display::Display(_width, _height){
 	fileName = file;
 	pixelBuffer.resizeErase(height, width);
+    multisampleBuffer.resize(height);
 	for (int i=0; i<height; i++) {
+        multisampleBuffer[i].resize(width);
 		for (int j=0; j<width; j++) {
 			Imf::Rgba &p = pixelBuffer[i][j];
 			p.r = 0.f;
 			p.g = 0.f;
 			p.b = 0.f;
 			p.a = 0.f;
+            multisampleBuffer[i][j] = 0;
 		}
 	}
 }
@@ -38,6 +41,18 @@ void OpenexrDisplay::setPixel(int _width, int _height, const Color &col, float a
 	p.g = col.g;
 	p.b = col.b;
 	p.a = alpha;
+}
+
+void OpenexrDisplay::appendValue(int _width, int _height, const Color &col, float alpha){
+    Color oldCol;
+    float oldAlpha;
+    getPixel(_width, _height, &oldCol, &oldAlpha);
+    float sampleNum = multisampleBuffer[_width][_height];
+    float weight = 1.f/sampleNum;
+    Color newCol = col;
+    setPixel(_width, _height, oldCol*(1-weight) + newCol * weight,
+                     oldAlpha*(1-weight) + alpha*weight);
+
 }
 
 void OpenexrDisplay::getPixel(int _width, int _height, Color *col, float *alpha){

@@ -133,7 +133,6 @@ Reference<Brdf> KelemenMaterial::getBrdf( const Vector &Vn, const Vector &Nn, co
         renderEnv->shadingEngine->getColor(diffColorIndex, shdGeo)
         };
         diffBrdf->setParameters(&params, thread);
-            // TODO: probably shouldn't free these here...
 		return diffBrdf;
 	}
 	else{

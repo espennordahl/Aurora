@@ -1,29 +1,35 @@
-    //
-    //  main.cpp
-    //  Aurora
-    //
-    //  Created by Espen Nordahl on 30/06/2012.
-    //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-    //
+//
+//  main.cpp
+//  Aurora
+//
+//  Created by Espen Nordahl on 30/06/2012.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//
 
 #include <iostream>
 #include <fstream>
+#include <string.h>
 
 #include "renderer.h"
-using namespace std;
 
 #include "log.h"
 #define lcontext LOG_Main
 
+#include "catch.hpp"
 
 using namespace Aurora;
 
-int main (int argc, const char * argv[])
+int main (int argc, char* const argv[])
 {
-	argc = 2;
-    argv[1] = "/Users/espennordahl/Documents/Aurora/pyAurora/tmp.asc";
-        // insert code here...
     LOG_INFO("Starting Aurora.");
+
+        // unit tests
+        //    #ifndef NDEBUG
+        Renderer ren = Renderer((char *)"/Users/espennordahl/Documents/Aurora/pyAurora/tmp.asc");
+        ren.render();
+    return 0;
+        // #endif
+
     LOG_INFO("Checking command line arguments");
     
     if ( argc != 2 ) // argc should be 2 for correct execution
@@ -32,7 +38,7 @@ int main (int argc, const char * argv[])
     else {
             // We assume argv[1] is a filename to open
         ifstream the_file ( argv[1] );
-            // Always check to see if file opening succeeded
+            // check to see if file opening succeeded
         if ( !the_file.is_open() )
             LOG_ERROR("Could not open file " << argv[1] << ".");
         else {

@@ -16,7 +16,7 @@
 namespace Aurora {
 	class SquareLight : public Light {
 	public:
-		SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, float sizeX, float sizeY, int numSamples );
+		SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, float sizeX, float sizeY, int numSamples, std::string name, RenderEnvironment *renderEnv);
 		
 		Sample3D generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain, int depth, int thread );
 		
@@ -31,6 +31,9 @@ namespace Aurora {
         Color emission();
         
         Reference<Shape> shape();
+        
+        void frameBegin(){};
+        void frameEnd(){};
         
 	private:
 		float xScale;

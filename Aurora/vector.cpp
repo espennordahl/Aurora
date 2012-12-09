@@ -136,3 +136,12 @@ const float& Vector::operator[](int index) const{
 	LOG_ERROR("Operator access out of range");
 	return x;
 }
+
+// comparison
+bool Vector::operator==(const Vector &v){
+    return v.x == x && v.y == y && v.z == z;
+}
+
+bool Vector::operator!=(const Vector &v){
+    return v.x != x || v.y == y || v.z == z;
+}

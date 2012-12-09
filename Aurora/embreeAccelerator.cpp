@@ -60,6 +60,8 @@ bool EmbreeAccelerator::intersect( Ray *ray, Intersection *intersection) const{
                      w * n1[0] + u * n2[0] + v * n3[0],
                      w * n1[1] + u * n2[1] + v * n3[1],
                      w * n1[2] + u * n2[2] + v * n3[2]);
+        
+            // faceforward
             	if (dot(norm, ray->direction) > 0.) {
             		norm *= -1;
             	}

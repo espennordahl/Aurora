@@ -20,9 +20,9 @@ namespace Aurora {
         type_areaLight
     };
     
-	class Light : public ReferenceCounted {
+	class Light : public ReferenceCounted, public FrontEndObject {
 	public:
-		Light( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, int numSamples);
+		Light( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, int numSamples, std::string name, RenderEnvironment *renderEnv);
 		
             // Generates a sample on the light to be used during light transport.
 		virtual Sample3D generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain, int depth, int thread ) = 0;

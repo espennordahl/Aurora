@@ -41,6 +41,10 @@ namespace Aurora{
 		float& operator[](int index);
 		const float& operator[](int index) const;
 		
+        bool operator==(const Vector &v);
+        
+        bool operator!=(const Vector &v);
+        
 		float lengthSquared() const;
 		float length() const;
 		

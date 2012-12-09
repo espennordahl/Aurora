@@ -111,7 +111,7 @@ void Renderer::buildRenderEnvironment(){
             if (lights[i]->lightType != type_envLight) {
                 mesh.appendTriangleMesh(lights[i]->shape(), i + numObjects);
             }
-            Reference<Material> black = new MatteMaterial("Not in use - Should be EDF", Color(0),1, NULL);
+            Reference<Material> black = new MatteMaterial("Not in use - Should be EDF", 0, 1, &renderEnv);
             attrs[i + numObjects].material = black;
             attrs[i + numObjects].emmision = lights[i]->emission();
         }

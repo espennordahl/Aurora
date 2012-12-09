@@ -18,7 +18,8 @@
 
 using namespace Aurora;
 
-Light::Light( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float _exposure, Color _color, int _numSamples) : 
+Light::Light( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float _exposure, Color _color, int _numSamples, std::string name, RenderEnvironment *renderEnv) :
+    FrontEndObject(name, renderEnv),
 	objectToCamera(o2c), 
 	cameraToObject(c2o),
 	worldToObject(w2o),
