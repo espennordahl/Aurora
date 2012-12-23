@@ -55,10 +55,10 @@ Sample3D Ashikhmin::getSample(const Vector &Vn){
 	float hdotu = dot(H,u);
 	float hdotv = dot(H,Vn);
 		
-	float exponent = (expX*hdotu*hdotu + expY*hdotv*hdotv)/(1-hdotn*hdotn);
+	float roughness = (expX*hdotu*hdotu + expY*hdotv*hdotv)/(1-hdotn*hdotn);
 		 
 	float pdfh = sqrt((expX + 1) * (expY + 1))/(2*M_PI);
-	pdfh *= pow(hdotn, exponent);
+	pdfh *= pow(hdotn, roughness);
 		
 	return Sample3D(Ray(H, Point(0), RAY_BIAS, 1000000.f), pdfh, evalSampleTangent(H, Vn));
 }
@@ -90,9 +90,9 @@ Color Ashikhmin::evalSampleTangent(const Vector &Ln, const Vector &Vn){
 	float ndotv = dot(Nn,Vn);
 	float ndotl = dot(Nn,Ln);
 	
-	float exponent = (expX*hdotu*hdotu + expY*hdotv*hdotv)/(1-hdotn*hdotn);
+	float roughness = (expX*hdotu*hdotu + expY*hdotv*hdotv)/(1-hdotn*hdotn);
 	
-	return color * (pow(hdotn,exponent)/(hdotl*fmax(ndotl, ndotv)));
+	return color * (pow(hdotn,roughness)/(hdotl*fmax(ndotl, ndotv)));
 }
 
 
@@ -113,11 +113,11 @@ Color Ashikhmin::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vecto
 	float ndotv = dot(Nn,Vn);
 	float ndotl = dot(Nn,Ln);
 	
-	float exponent = (expX*hdotu*hdotu + expY*hdotv*hdotv)/(1-hdotn*hdotn);
+	float roughness = (expX*hdotu*hdotu + expY*hdotv*hdotv)/(1-hdotn*hdotn);
 	 
 	float c = sqrt((expX + 1) * (expY + 1))/(8*M_PI);
 
 	
-	return color * c * (pow(hdotn,exponent)/(hdotl*fmax(ndotl, ndotv)));
+	return color * c * (pow(hdotn,roughness)/(hdotl*fmax(ndotl, ndotv)));
 
 }

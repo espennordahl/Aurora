@@ -14,10 +14,10 @@
 
 using namespace Aurora;
 
-PlasticMaterial::PlasticMaterial( const Color &col, float exponent, float _reflectance, float _topLayerThickness, int numSamples){
+PlasticMaterial::PlasticMaterial( const Color &col, float roughness, float _reflectance, float _topLayerThickness, int numSamples){
 	reflectance = _reflectance;
 	specGain = _topLayerThickness;
-	specBrdf = new Blinn(Color(1), exponent, numSamples);
+	specBrdf = new Blinn(Color(1), roughness, numSamples);
 	diffBrdf = new Lambert(col, numSamples);
 }
 

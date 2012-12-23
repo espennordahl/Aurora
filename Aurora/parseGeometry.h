@@ -139,7 +139,7 @@ namespace Aurora {
             Color diffCol;
             Color specCol;
             float reflectance;
-            float exponent;
+            float roughness;
 
             for( Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {
                 if (itr.key().asString() == "diffusecolor") {
@@ -164,9 +164,9 @@ namespace Aurora {
                     Json::Value v = *itr;
                     reflectance = v.asDouble();
                 }
-                else if (itr.key().asString() == "exponent") {
+                else if (itr.key().asString() == "roughness") {
                     Json::Value v = *itr;
-                    exponent = v.asDouble();
+                    roughness = v.asDouble();
                 }
                 else if (itr.key().asString() == "name") {
                     Json::Value v = *itr;
@@ -174,7 +174,7 @@ namespace Aurora {
                 }
 
             }
-//            *material = new KelemenMaterial(name, renderEnv, diffCol, specCol, exponent, reflectance, globals[LightSamples]/2);
+//            *material = new KelemenMaterial(name, renderEnv, diffCol, specCol, roughness, reflectance, globals[LightSamples]/2);
         }   
         else {
             LOG_ERROR("Empty material.");

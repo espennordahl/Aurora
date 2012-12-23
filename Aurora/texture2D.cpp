@@ -19,9 +19,11 @@
 
 using namespace Aurora;
 
-Texture2D::Texture2D(std::string filename){
+Texture2D::Texture2D(std::string filename):
+texname(filename)
+{
     
-    Imf::RgbaInputFile file (filename.c_str());
+    Imf::RgbaInputFile file (texname.c_str());
     Imath::Box2i dw = file.dataWindow();
     
     width = dw.max.x - dw.min.x + 1;

@@ -47,6 +47,7 @@ struct lc{
 #define LOG_AuroraObj           lc(Log::Debug,  "AuroraObject")
 #define LOG_Texture2DShd        lc(Log::Debug, "Texture2dShader")
 #define LOG_ShaderAttr          lc(Log::Debug, "ShaderAttribute")
+#define LOG_ExrDisplay          lc(Log::Debug, "ExrDisplay")
 
 
 class Log

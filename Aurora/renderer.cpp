@@ -80,6 +80,7 @@ void Renderer::buildRenderEnvironment(){
 		LOG_ERROR("No objects found.");
 	}
 	
+        // acceleration structure
     AccelerationStructure *accel;
     
     if ((*renderEnv.globals)[AccelStructure] != ACCEL_EMBREE) {
@@ -153,7 +154,7 @@ void Renderer::renderImage(){
 	int width = renderCam.getWidthSamples();
 	int height = renderCam.getHeightSamples();
 	int multisamples = renderCam.getPixelSamples();
-	OpenexrDisplay display(width, height, "/Users/espennordahl/aurora1.exr");
+	OpenexrDisplay display(width, height, "/Users/espennordahl/aurora2.exr");
 	
 	
 	// render camera samples

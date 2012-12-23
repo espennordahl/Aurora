@@ -19,7 +19,7 @@ using namespace Aurora;
 #define NORM_SAMPLES 100000
 #define NORM_ENTRIES 128
 
-CookTorrance::CookTorrance(std::string name, Color col, float _exponent, float _reflectance, int _numSamples, RenderEnvironment *renderEnv):
+CookTorrance::CookTorrance(std::string name, Color col, float _roughness, float _reflectance, int _numSamples, RenderEnvironment *renderEnv):
 Brdf(name, renderEnv)
 {
     brdfType = SpecBrdf;
@@ -31,7 +31,7 @@ Brdf(name, renderEnv)
         generateSampleBuffer(2,t);
         reflectance[t] = _reflectance;
         color[t] = col;
-        baseRoughness[t] = _exponent;
+        baseRoughness[t] = _roughness;
     }
 //      Comment out to re bake
 //    preCalcNormTable(); 
@@ -201,7 +201,7 @@ Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, int depth, 
 
     if (vdoth > 0.001 && ldotn > 0.001 && vdotn > 0.001) {
             //float D = (1.f / (roughness[thread] * roughness[thread] * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (roughness[thread] * roughness[thread])) ;
-        float D = ctD(roughness[thread], ndoth, tanf(acosf(ndoth)));
+        float D = ctD(roughness[thread], ndoth, tanf(acosf(std::min(ndoth,0.99f))));
         float normalization = getNormWeight(dot(Nn, Vn), roughness[thread]);
         pdf = D / ( 4 * vdoth );        
         if (isnan(D)) { // TODO: Make sure we don't get NaNs ahead of time.
@@ -213,6 +213,7 @@ Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, int depth, 
         }
         assert(result.lum() >= 0.);
         assert(pdf >= 0.);
+        assert(pdf < 10000);
     }
     
     return Sample3D(Ray(Ln, Point(0.f), RAY_BIAS, 10000000.f), pdf, result);

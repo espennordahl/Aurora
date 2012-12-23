@@ -314,25 +314,76 @@ inline Reference<Material> getMaterial(std::string type, std::string name, Json:
     Reference<Material> mat;
 
     if (type == "kelemenMaterial") {
+            // diff color
         ShaderAttribute diffCol       = getShaderAttr(colorAttr, "diffusecolor", root);
-        ShaderAttribute specCol       = getShaderAttr(colorAttr, "speccolor", root);
-        ShaderAttribute reflectance   = getShaderAttr(floatAttr, "reflectance", root);
-        ShaderAttribute exponent      = getShaderAttr(floatAttr, "exponent", root);
-
         int diffColIndex = initShader(name + ":diffuseAlbedo", diffCol, colorAttr, renderEnv);
+            // spec color
+        ShaderAttribute specCol       = getShaderAttr(colorAttr, "speccolor", root);
         int specColIndex = initShader(name + ":specularColor", specCol, colorAttr, renderEnv);
-            //initShader(name + ":specReflectance", reflectance, floatAttr, renderEnv);
-            //initShader(name + ":specRoughness", exponent, floatAttr, renderEnv);
-        
+            // reflectance
+        ShaderAttribute reflectance   = getShaderAttr(floatAttr, "reflectance", root);
+        //initShader(name + ":specReflectance", reflectance, floatAttr, renderEnv); TODO: Varying reflectance
+            // roughness
+        ShaderAttribute roughness      = getShaderAttr(floatAttr, "roughness", root);
+        int roughnessIndex = initShader(name + ":specRoughness", roughness, floatAttr, renderEnv);
+
         mat = new KelemenMaterial(name, renderEnv,
                                   diffColIndex, specColIndex,
-                                  exponent.getFloat(), reflectance.getFloat(), //TODO: Shader implementation
+                                  roughnessIndex, reflectance.getFloat(), //TODO: Shader implementation
                                   (*renderEnv->globals)[LightSamples]);
     }
     else if (type == "matteMaterial") {
         ShaderAttribute col = getShaderAttr(colorAttr, "color", root);
         int colorIndex = initShader(name + ":diffColor", col, colorAttr, renderEnv);
         mat = new MatteMaterial(name, colorIndex, (*renderEnv->globals)[LightSamples] ,renderEnv);
+    }
+    else if (type == "carMaterial"){
+            // base diffuse
+        ShaderAttribute diffCol = getShaderAttr(colorAttr, "diffusecolor", root);
+        int diffuseColIndex = initShader(name + ":diffuseAlbedo", diffCol, colorAttr, renderEnv);
+
+            // base spec bottom
+        ShaderAttribute baseSpecBottomReflectance = getShaderAttr(floatAttr, "basespecbottomreflectance", root);
+
+        ShaderAttribute baseSpecBottomRoughness = getShaderAttr(floatAttr, "basespecbottomroughness", root);
+        int baseSpecBottomRoughIndex = initShader(name + ":baseSpecBottomRoughness", baseSpecBottomRoughness, floatAttr, renderEnv);
+        
+            // base paint
+        ShaderAttribute basePaintColor = getShaderAttr(colorAttr, "bottompaintcolor", root);
+        int basePaintColIndex = initShader(name + ":bottomPaintColor", basePaintColor, colorAttr, renderEnv);
+        int basePaintThicknessIndex = 0; // TODO: Make a shader attr
+
+            // base spec top
+        ShaderAttribute baseSpecTopReflectance = getShaderAttr(floatAttr, "basespectopreflectance", root);
+        
+        ShaderAttribute baseSpecTopRoughness = getShaderAttr(floatAttr, "basespectoproughness", root);
+        int baseSpecTopRoughIndex = initShader(name + ":baseSpecTopRoughness", baseSpecTopRoughness, floatAttr, renderEnv);
+        
+            // top paint
+        ShaderAttribute topPaintColor = getShaderAttr(colorAttr, "toppaintcolor", root);
+        int topPaintColIndex = initShader(name + ":topPaintColor", topPaintColor, colorAttr, renderEnv);
+        int topPaintThicknessIndex = 0; // TODO: Make a shader attr
+        
+            // clearcoat
+        ShaderAttribute clearcoatReflectance = getShaderAttr(floatAttr, "clearcoatreflectance", root);
+        
+        ShaderAttribute clearcoatRoughness = getShaderAttr(floatAttr, "clearcoatroughness", root);
+        int clearcoatRoughnessIndex = initShader(name + ":clearcoatroughness", clearcoatRoughness, floatAttr, renderEnv);
+        
+        mat = new CarMaterial(name, renderEnv,
+                    diffuseColIndex,
+                    baseSpecBottomReflectance.getFloat(),
+                    baseSpecBottomRoughIndex,
+                    basePaintColIndex,
+                    basePaintThicknessIndex,
+                    baseSpecTopReflectance.getFloat(),
+                    baseSpecTopRoughIndex,
+                    topPaintColIndex,
+                    topPaintThicknessIndex,
+                    clearcoatReflectance.getFloat(),
+                    clearcoatRoughnessIndex,
+                    (*renderEnv->globals)[LightSamples]);
+
     }
     else {
         LOG_ERROR("Unknown material: " << type);
@@ -457,7 +508,9 @@ inline Shader<Color>* getColorShader(const std::string &name, Json::Value &root)
         std::string texturePath = getStringAttr("texturename", root);
         newShd = new Texture2DShader<Color>(texturePath);
     }
-    
+    else{
+        LOG_ERROR("Unknown color shader type: " << shdType);
+    }
     return newShd;
 }
 

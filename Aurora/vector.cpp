@@ -29,8 +29,9 @@ x(_x), y(_y), z(_z) {
 	assert(!hasNaNs());
 }
 
-Vector::Vector( float f ){
-	Vector(f, f, f);
+Vector::Vector( float f ):
+x(f), y(f), z(f)
+{
     assert(!hasNaNs());
 }
 

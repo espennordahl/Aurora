@@ -44,6 +44,7 @@ namespace Aurora {
         int height;
         float pdfNormalization;
         std::vector<PdfSample> pdfBuffer;
+        std::string texname;
     };
 }
 

@@ -18,13 +18,19 @@ using namespace Aurora;
 #pragma mark -
 #pragma mark Initialization
 
-Point::Point(float _x, float _y, float _z){
-	x = _x; y = _y; z = _z;
+Point::Point(float _x, float _y, float _z):
+x(_x),
+y(_y),
+z(_z)
+{
     assert(!hasNaNs());
 }
 
-Point::Point( float f ){
-	Point( f, f, f);
+Point::Point( float f ):
+x(f),
+y(f),
+z(f)
+{
     assert(!hasNaNs());
 }
 
@@ -32,9 +38,11 @@ Point::Point(){
 	Point(0,1,0);
 }
 
-Point::Point(const Vector &v){
-	LOG_DEBUG("Converting Vector to Point.");
-	x = v.x; y = v.y; z = v.z;
+Point::Point(const Vector &v):
+x(v.x),
+y(v.y),
+z(v.z)
+{
     assert(!hasNaNs());
 }
 

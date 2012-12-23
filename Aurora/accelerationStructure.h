@@ -17,6 +17,7 @@ namespace Aurora {
 	class AccelerationStructure{
 	public:
 		AccelerationStructure(){};
+        virtual ~AccelerationStructure(){};
 		AccelerationStructure(const std::vector<RenderableTriangle> geometry);
 		
 		virtual bool intersect( Ray *ray, Intersection *intersection) const = 0;

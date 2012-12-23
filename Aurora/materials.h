@@ -14,5 +14,6 @@
 #include "kelemenMaterial.h"
 #include "transmitMaterial.h"
 #include "glassMaterial.h"
+#include "carMaterial.h"
 
 #endif

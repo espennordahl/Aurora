@@ -12,11 +12,11 @@
 
 using namespace Aurora;
 
-Blinn::Blinn(Color col, float _exponent, int _numSamples){
+Blinn::Blinn(Color col, float _roughness, int _numSamples){
 	color = col;
     integrationDomain = Hemisphere;
     brdfType = SpecBrdf;
-	exponent = _exponent;
+	roughness = _roughness;
     numSamples = _numSamples;
     weight = 1;
     for (int t=0; t < NUM_THREADS; t++) {
@@ -57,7 +57,7 @@ Sample3D Blinn::getSample(const Vector &Vn, const Vector &Nn, int depth, int thr
         u1 = (float) rand()/RAND_MAX;
         u2 = (float) rand()/RAND_MAX;
     }
-	float costheta = powf(u1, 1.f / (exponent+1));
+	float costheta = powf(u1, 1.f / (roughness+1));
 	float sintheta = sqrtf(fmax(0.f, 1.f - costheta*costheta));
 	float phi = u2 * 2.f * M_PI;
 	Vector wh = tangentToWorld(SphericalDirection(sintheta, costheta, phi), Nn);
@@ -67,7 +67,7 @@ Sample3D Blinn::getSample(const Vector &Vn, const Vector &Nn, int depth, int thr
 	Vector R = (Vn*-1.f) + (wh * 2.f * dot(Vn, wh));
 	 
 	// Compute PDF for $\wi$ from Blinn distribution
-	float blinn_pdf = ((exponent + 1.f) * powf(costheta, exponent)) /
+	float blinn_pdf = ((roughness + 1.f) * powf(costheta, roughness)) /
 	                       (2.f * M_PI * 4.f * dot(Vn, wh));
 	if (dot(Vn, wh) <= 0.f) blinn_pdf = 0.f;
 
@@ -78,7 +78,7 @@ float Blinn::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread
 	Vector wh = normalize(Vn + Ln);
 	float costheta = dot(wh,Nn);
 	// Compute PDF for $\wi$ from Blinn distribution
-	float blinn_pdf = ((exponent + 1.f) * powf(costheta, exponent)) /
+	float blinn_pdf = ((roughness + 1.f) * powf(costheta, roughness)) /
 	                       (2.f * M_PI * 4.f * dot(Vn, wh));
 	if (dot(Vn, wh) <= 0.f) blinn_pdf = 0.f;
 		return blinn_pdf;
@@ -100,7 +100,7 @@ Color Blinn::evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread){
 	float WOdotWh = absDot(Vn, wh);
 	float G = fmin(1.f, fmin((2.f * NdotWh * NdotWo / WOdotWh), (2.f * NdotWh * NdotWi / WOdotWh)));
 	
-	float D = (exponent+2) * INV_TWOPI * powf(cosThetaH, exponent);
+	float D = (roughness+2) * INV_TWOPI * powf(cosThetaH, roughness);
 	
 	return color * D * G /
 	(4.f * cosThetaI * cosThetaO);
@@ -122,7 +122,7 @@ Color Blinn::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &N
 	
 	float G = fmin(1.f, fmin((2.f * NdotWh * NdotWo / WOdotWh), (2.f * NdotWh * NdotWi / WOdotWh)));
 	
-	float D = (exponent+2) * INV_TWOPI * powf(NdotWh, exponent);
+	float D = (roughness+2) * INV_TWOPI * powf(NdotWh, roughness);
 	
 	return color * D * G /
 	(4.f * cosThetaI * cosThetaO);

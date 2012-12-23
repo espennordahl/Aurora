@@ -16,6 +16,9 @@
 
 #include "OpenexrDisplay.h"
 
+#include "log.h"
+#define lcontext LOG_ExrDisplay
+
 using namespace Aurora;
 
 OpenexrDisplay::OpenexrDisplay(int _width, int _height, std::string file) : Display::Display(_width, _height){
@@ -82,5 +85,8 @@ void OpenexrDisplay::draw(int numLines){
 	// write
 	file.writePixels (numLines);
 	int result;
-	result= rename( tmpfile.c_str() ,fileName.c_str() );
+	result = rename( tmpfile.c_str() ,fileName.c_str() );
+    if (result != 0) {
+        LOG_ERROR("File rename for '" << tmpfile << "' to '" << fileName << "' was unsuccessfull. Error: " << result);
+    }
 }

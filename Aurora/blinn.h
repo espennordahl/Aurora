@@ -15,7 +15,7 @@
 namespace Aurora {
 	class Blinn : public Brdf{
 	public:
-		Blinn(Color col, float exponent, int numSamples);
+		Blinn(Color col, float roughness, int numSamples);
 		
 		Sample3D getSample(const Vector &Vn, const Vector &Nn, int depth, int thread);
 		Color evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread);
@@ -28,7 +28,7 @@ namespace Aurora {
         void generateSampleBuffer(int i, int t);
         std::vector<float> randomU[NUM_THREADS][3];
         std::vector<float> randomV[NUM_THREADS][3];
-        float exponent;
+        float roughness;
         int numSamples;
 	};
 }

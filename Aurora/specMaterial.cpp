@@ -13,9 +13,9 @@
 
 using namespace Aurora;
 
-SpecMaterial::SpecMaterial( const Color &col, float exponent, int numSamples){
+SpecMaterial::SpecMaterial( const Color &col, float roughness, int numSamples){
 	color = col;
-	brdf = new Blinn(color, exponent, numSamples);
+	brdf = new Blinn(color, roughness, numSamples);
 }
 
 Reference<Brdf> SpecMaterial::getBrdf( const Vector &Vn, const Vector &Nn, int thread ) {

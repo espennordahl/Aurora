@@ -22,7 +22,7 @@ namespace Aurora {
 	public:
 		Shape( const Transform *o2c, const Transform *c2o ) : objectToCamera(o2c), cameraToObject(c2o) { };
 		
-		
+		virtual ~Shape(){};
             // Splits the geometry into triangles
 		virtual void dice( std::vector<Reference<Geometry> > &diced) = 0;
         

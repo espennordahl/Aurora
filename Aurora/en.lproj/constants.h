@@ -33,5 +33,11 @@
 // shader cache
 #define NUM_SHADING_POINTS 2
 
+// kelemen albedo cache settings
+#define SPECALBEDO_SAMPLES 250000
+#define SPECALBEDO_COSTHETA_ENTRIES 64
+#define SPECALBEDO_ROUGHNESSS_ENTRIES 32
+#define SPECALBEDO_REFLECTANCE_ENTRIES 21
+
 
 #endif

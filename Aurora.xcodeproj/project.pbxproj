@@ -14,10 +14,11 @@
 		2327DE0D16324BF000163E02 /* jsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2327DE0C16324BF000163E02 /* jsonParser.cpp */; };
 		232D37CB15C5151600F6853B /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232D37C615C5151600F6853B /* json_reader.cpp */; };
 		232D37CC15C5151600F6853B /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232D37C715C5151600F6853B /* json_value.cpp */; };
-		232D37CD15C5151600F6853B /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232D37C915C5151600F6853B /* json_writer.cpp */; };
+		232D37CD15C5151600F6853B /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232D37C915C5151600F6853B /* json_writer.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		23611EEB1610EEBF00EE787B /* noise3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23611EEA1610EEBF00EE787B /* noise3D.cpp */; };
 		23611EEE1615297300EE787B /* shaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23611EED1615297200EE787B /* shaderCache.cpp */; };
 		2365265815D8E973005B7273 /* texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2365265715D8E973005B7273 /* texture2D.cpp */; };
+		237B49C11685918E0082C6DA /* carMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 237B49C01685918E0082C6DA /* carMaterial.cpp */; };
 		2395DF9815F3D78C006E73EF /* specTransmit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DF9715F3D78B006E73EF /* specTransmit.cpp */; };
 		2395DF9B15F3F239006E73EF /* transmitMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DF9A15F3F239006E73EF /* transmitMaterial.cpp */; };
 		2395DF9E15F43546006E73EF /* specMirror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DF9D15F43546006E73EF /* specMirror.cpp */; };
@@ -25,12 +26,12 @@
 		2395E06815F53CAF006E73EF /* embree_filename.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFEB15F53CAF006E73EF /* embree_filename.cpp */; };
 		2395E06915F53CAF006E73EF /* embree_library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFEE15F53CAF006E73EF /* embree_library.cpp */; };
 		2395E06A15F53CAF006E73EF /* embree_platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFF015F53CAF006E73EF /* embree_platform.cpp */; };
-		2395E06B15F53CAF006E73EF /* embree_string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFF515F53CAF006E73EF /* embree_string.cpp */; };
+		2395E06B15F53CAF006E73EF /* embree_string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFF515F53CAF006E73EF /* embree_string.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		2395E06C15F53CAF006E73EF /* embree_condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFFB15F53CAF006E73EF /* embree_condition.cpp */; };
 		2395E06D15F53CAF006E73EF /* embree_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFFD15F53CAF006E73EF /* embree_mutex.cpp */; };
 		2395E06E15F53CAF006E73EF /* embree_sysinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00215F53CAF006E73EF /* embree_sysinfo.cpp */; };
 		2395E06F15F53CAF006E73EF /* embree_taskscheduler_standard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00515F53CAF006E73EF /* embree_taskscheduler_standard.cpp */; };
-		2395E07015F53CAF006E73EF /* embree_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00715F53CAF006E73EF /* embree_thread.cpp */; };
+		2395E07015F53CAF006E73EF /* embree_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00715F53CAF006E73EF /* embree_thread.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		2395E07115F53CAF006E73EF /* embree_bvh2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00B15F53CAF006E73EF /* embree_bvh2.cpp */; };
 		2395E07215F53CAF006E73EF /* embree_bvh2_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00D15F53CAF006E73EF /* embree_bvh2_builder.cpp */; };
 		2395E07315F53CAF006E73EF /* embree_bvh2_intersector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00F15F53CAF006E73EF /* embree_bvh2_intersector.cpp */; };
@@ -366,12 +367,14 @@
 		233C4F0D16404F91001066AE /* constantShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constantShader.h; sourceTree = "<group>"; };
 		234552BE160BA6E300EB9C16 /* shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 		234552C4160D9C4D00EB9C16 /* uv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uv.h; sourceTree = "<group>"; };
+		234ED5CF16858AB900594698 /* carMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carMaterial.h; sourceTree = "<group>"; };
 		23611EE81610EE5E00EE787B /* noise3D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = noise3D.h; sourceTree = "<group>"; };
 		23611EEA1610EEBF00EE787B /* noise3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = noise3D.cpp; sourceTree = "<group>"; };
 		23611EEC1615285000EE787B /* shaderCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shaderCache.h; sourceTree = "<group>"; };
 		23611EED1615297200EE787B /* shaderCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shaderCache.cpp; path = ../shaderCache.cpp; sourceTree = "<group>"; };
 		2365265315D8E7D2005B7273 /* texture2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture2D.h; sourceTree = "<group>"; };
 		2365265715D8E973005B7273 /* texture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture2D.cpp; sourceTree = "<group>"; };
+		237B49C01685918E0082C6DA /* carMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = carMaterial.cpp; sourceTree = "<group>"; };
 		2395DF9515F3D729006E73EF /* specTransmit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = specTransmit.h; sourceTree = "<group>"; };
 		2395DF9715F3D78B006E73EF /* specTransmit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = specTransmit.cpp; sourceTree = "<group>"; };
 		2395DF9915F3F1D8006E73EF /* transmitMaterial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = transmitMaterial.h; sourceTree = "<group>"; };
@@ -1283,6 +1286,8 @@
 				2395DF9A15F3F239006E73EF /* transmitMaterial.cpp */,
 				2395DF9F15F43633006E73EF /* glassMaterial.h */,
 				2395DFA015F43685006E73EF /* glassMaterial.cpp */,
+				234ED5CF16858AB900594698 /* carMaterial.h */,
+				237B49C01685918E0082C6DA /* carMaterial.cpp */,
 			);
 			name = Materials;
 			sourceTree = "<group>";
@@ -2045,6 +2050,7 @@
 				2322649916213CA500389141 /* shadingEngine.cpp in Sources */,
 				2327DE0D16324BF000163E02 /* jsonParser.cpp in Sources */,
 				230385EB164841E0004EC737 /* shaderAttribute.cpp in Sources */,
+				237B49C11685918E0082C6DA /* carMaterial.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2183,6 +2189,7 @@
 				23A9C7371660497E00D225BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C57567ED159E660400570538 /* Build configuration list for PBXProject "Aurora" */ = {
 			isa = XCConfigurationList;

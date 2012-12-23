@@ -11,6 +11,7 @@
 
 #include "material.h"
 #include "shader.h"
+#include "texture2D.h"
 
 namespace Aurora {
     
@@ -21,7 +22,7 @@ namespace Aurora {
 	public:
 		KelemenMaterial( std::string name, RenderEnvironment *renderEnv,
                         int diffColIndex, int specColIndex,
-                        float exponent, float reflectance,
+                        int roughnessIndex, float reflectance,
                         int numSamples);
 		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
 		
@@ -31,12 +32,14 @@ namespace Aurora {
         
 	private:
         void preCalcAlbedo();
-        float getAlbedo(float costheta);
+        float getAlbedo(float costheta, float roughness);
+        
+        
 		Reference<Brdf> diffBrdf;
 		Reference<Brdf> specBrdf;
-        std::vector<float> albedoTable;
+        std::vector<std::vector<float> > albedoTable;
+        Texture2D *albedoTexture;
         float reflectance;
-        float exponent;
         float specGain;
         float diffGain;
         float avg;

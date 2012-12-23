@@ -17,7 +17,7 @@ namespace Aurora {
 	class Geometry : public ReferenceCounted {
 	public:
 		Geometry( const Transform *o2c, const Transform *c2o ) : objectToCamera(o2c), cameraToObject(c2o) { };
-		
+		virtual ~Geometry(){};
 		virtual void makeRenderable( std::vector<RenderableTriangle> &renderable, int attributeIndex) = 0;
 		
 		virtual BBox objectBound() const = 0;

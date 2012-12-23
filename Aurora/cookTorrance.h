@@ -25,7 +25,7 @@ namespace Aurora {
     
 	class CookTorrance : public Brdf{
 	public:
-		CookTorrance(std::string name, Color col, float exponent, float reflectance, int numSamples, RenderEnvironment *renderEnv);
+		CookTorrance(std::string name, Color col, float roughness, float reflectance, int numSamples, RenderEnvironment *renderEnv);
 		
 		Sample3D getSample(const Vector &Vn, const Vector &Nn, int depth, int thread);
 		Color evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread);
