@@ -25,7 +25,7 @@ namespace Aurora {
 #pragma mark Materials
     
     
-    inline void parseMatteMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals){
+    inline void parseMatteMaterial(Json::Value &root, RenderEnvironment *renderEnv, AuroraGlobals globals){
         if( root.size() > 0 ) {
             Color col;
             std::string name;
@@ -52,7 +52,7 @@ namespace Aurora {
         }
     }
     
-    inline void parseTransmitMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals){
+    inline void parseTransmitMaterial(Json::Value &root, RenderEnvironment *renderEnv, AuroraGlobals globals){
         if( root.size() > 0 ) {
             Color col;
             float ior;
@@ -85,7 +85,7 @@ namespace Aurora {
         }
     }
 
-    inline void parseGlassMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals){
+    inline void parseGlassMaterial(Json::Value &root, RenderEnvironment *renderEnv, AuroraGlobals globals){
         if( root.size() > 0 ) {
             Color specCol;
             float ior;
@@ -133,7 +133,7 @@ namespace Aurora {
     }
 
 
-    inline void parseKelemenMaterial(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals){
+    inline void parseKelemenMaterial(Json::Value &root, RenderEnvironment *renderEnv, AuroraGlobals globals){
         if( root.size() > 0 ) {
             std::string name;
             Color diffCol;
@@ -181,7 +181,7 @@ namespace Aurora {
         }
     }
 
-    inline void parseShader(Json::Value &root, RenderEnvironment *renderEnv, std::map<Option, double> globals){
+    inline void parseShader(Json::Value &root, RenderEnvironment *renderEnv, AuroraGlobals globals){
         if( root.size() > 0 ) {
             Color col;
             std::string name;
@@ -210,7 +210,7 @@ namespace Aurora {
         }
     }
  
-    inline void parseObject(Json::Value &root, RenderEnvironment *renderEnv, std::vector<Reference<AuroraObject> > &objects, std::vector<Reference<Light> > &lights, Transform *camTrans, std::map<Option, double> globals){
+    inline void parseObject(Json::Value &root, RenderEnvironment *renderEnv, std::vector<Reference<AuroraObject> > &objects, std::vector<Reference<Light> > &lights, Transform *camTrans, AuroraGlobals globals){
         
         
         if( root.size() > 0 ) {

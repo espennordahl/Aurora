@@ -11,23 +11,27 @@
 
 #include <vector>
 #include "Color.h"
+#include "frontEndObject.h"
 
 namespace Aurora{
 	
-	class Display {
+	class Display : FrontEndObject{
 	protected:
 		std::vector <std::vector<Color> >		cPixels;
 		std::vector<std::vector<float> >		aPixels;
-		int height;
+		int m_height;
 		int width;
 	public:
-		Display(int _width, int _height);
-		Display(const std::vector<std::vector<Color> > &colors, const std::vector<std::vector<float> > &alpha);
-		Display(const std::vector<std::vector<Color> > &colors);
+		Display(int _width, int _height, std::string name, RenderEnvironment *renderEnv);
+		Display(const std::vector<std::vector<Color> > &colors, const std::vector<std::vector<float> > &alpha, std::string name, RenderEnvironment *renderEnv);
+		Display(const std::vector<std::vector<Color> > &colors, std::string name, RenderEnvironment *renderEnv);
 		
 		virtual void setPixel(int width, int height, const Color &color, float alpha) = 0;
 		
 		virtual void clear() = 0;
+        
+        int height(){ return m_height; }
+        
         virtual ~Display(){};
 	};
 }

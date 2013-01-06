@@ -158,7 +158,6 @@ class Array2D
 
 
   private:
-
     Array2D (const Array2D &);			// Copying and assignment
     Array2D & operator = (const Array2D &);	// are not implemented
 

@@ -14,7 +14,7 @@
 
 #include <vector>
 #include <map>
-
+#include <tr1/unordered_map>
     // forward declaration
 namespace Aurora {
     class Light;
@@ -30,7 +30,8 @@ namespace Aurora {
 		std::vector<Reference<Light> > lights;
 		AccelerationStructure *accelerationStructure;
 		AttributeState *attributeState;
-        std::map<Option, double> *globals;
+        AuroraGlobals *globals;
+        StringMap *stringGlobals;
 		InfiniteAreaLight *envLight;
         ShadingEngine *shadingEngine;
 		Camera *renderCam;

@@ -385,6 +385,12 @@ inline Reference<Material> getMaterial(std::string type, std::string name, Json:
                     (*renderEnv->globals)[LightSamples]);
 
     }
+    else if (type == "glassMaterial") {
+        ShaderAttribute specCol       = getShaderAttr(colorAttr, "specColor", root);
+        ShaderAttribute reflectance   = getShaderAttr(floatAttr, "reflectance", root);
+        ShaderAttribute ior      = getShaderAttr(floatAttr, "ior", root);
+        mat = new GlassMaterial(name, specCol.getColor(), Color(1.), reflectance.getFloat(), ior.getFloat(), renderEnv);
+    }
     else {
         LOG_ERROR("Unknown material: " << type);
     }
@@ -407,6 +413,8 @@ void JsonParser::parseOptions(Json::Value &root){
             int r_maxdepth =       getIntAttr("maxdepth", *itr);
             int r_useEmbree =      getIntAttr("useEmbree", *itr);
             int r_resolution[2];   getIntArrayAttr("resolution", *itr, 2, r_resolution);
+            std::string r_fileName = getStringAttr("filename", *itr);
+            r_fileName = stringTemplate(r_fileName);
                 // TODO: check for any ones we've skipped and warn the user
             
                 // TODO: handle errors gracefully
@@ -427,6 +435,8 @@ void JsonParser::parseOptions(Json::Value &root){
             LOG_DEBUG("Setting resolution to: " << r_resolution[0] << " * " << r_resolution[1]);
             (*renderEnv->globals)[ResolutionX] = r_resolution[0];
             (*renderEnv->globals)[ResolutionY] = r_resolution[1];
+            LOG_DEBUG("Setting file output to: " << r_fileName);
+            (*renderEnv->stringGlobals)["fileName"] = r_fileName;
             
             // We're done, so we exit out of root iterator loop
             LOG_DEBUG("Done parsing Options.\n");
@@ -576,7 +586,7 @@ void JsonParser::parseGeometry(Json::Value &root){
                 else if (objType == "envlight"){
                     Reference<Light> light = getEnvLight(*cameraTransform, *objItr, (*renderEnv->globals)[LightSamples], renderEnv);
                     lights.push_back(light);
-                }                
+                }
                 else {
                     LOG_WARNING("Unknown object type found: " << objType);
                 }

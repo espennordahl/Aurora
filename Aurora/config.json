@@ -1,0 +1,7 @@
+{
+    "basepath":     "/Users/espennordahl/Documents/Aurora/",
+    "cachepath":    "$BASE/cache/",
+    "renderpath":   "$BASE/data/render/",
+    "texturepath":  "$BASE/textures",
+    "hdripath":     "$BASE/hdri"
+}

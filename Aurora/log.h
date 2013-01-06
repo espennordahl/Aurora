@@ -45,10 +45,10 @@ struct lc{
 #define LOG_ShaderCache         lc(Log::Debug,  "ShaderCache")
 #define LOG_JsonParser          lc(Log::Debug,  "JsonParser")
 #define LOG_AuroraObj           lc(Log::Debug,  "AuroraObject")
-#define LOG_Texture2DShd        lc(Log::Debug, "Texture2dShader")
-#define LOG_ShaderAttr          lc(Log::Debug, "ShaderAttribute")
-#define LOG_ExrDisplay          lc(Log::Debug, "ExrDisplay")
-
+#define LOG_Texture2DShd        lc(Log::Debug,  "Texture2dShader")
+#define LOG_ShaderAttr          lc(Log::Debug,  "ShaderAttribute")
+#define LOG_ExrDisplay          lc(Log::Debug,  "ExrDisplay")
+#define LOG_StringUtils         lc(Log::Debug,  "StringUtils")
 
 class Log
 {

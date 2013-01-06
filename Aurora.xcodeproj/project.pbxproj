@@ -15,10 +15,46 @@
 		232D37CB15C5151600F6853B /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232D37C615C5151600F6853B /* json_reader.cpp */; };
 		232D37CC15C5151600F6853B /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232D37C715C5151600F6853B /* json_value.cpp */; };
 		232D37CD15C5151600F6853B /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232D37C915C5151600F6853B /* json_writer.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		235AF7A41689A7C10063C688 /* stringUtils.h in Sources */ = {isa = PBXBuildFile; fileRef = 235AF7A116894D8D0063C688 /* stringUtils.h */; };
+		235AF7A51689A7C30063C688 /* stringUtils.h in Sources */ = {isa = PBXBuildFile; fileRef = 235AF7A116894D8D0063C688 /* stringUtils.h */; };
+		235AF7A61689AC9B0063C688 /* carMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 237B49C01685918E0082C6DA /* carMaterial.cpp */; };
+		235AF83D1689ADD50063C688 /* embree_bvh4_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01415F53CAF006E73EF /* embree_bvh4_builder.cpp */; };
+		235AF83E1689ADD80063C688 /* embree_bvh4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01215F53CAF006E73EF /* embree_bvh4.cpp */; };
+		235AF83F1689ADDA0063C688 /* embree_bvh4_intersector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01615F53CAF006E73EF /* embree_bvh4_intersector.cpp */; };
+		235AF8401689ADE00063C688 /* embree_bvh4mb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01915F53CAF006E73EF /* embree_bvh4mb.cpp */; };
+		235AF8411689ADE30063C688 /* embree_bvh4mb_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01B15F53CAF006E73EF /* embree_bvh4mb_builder.cpp */; };
+		235AF8421689ADE50063C688 /* embree_bvh4mb_intersector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E01D15F53CAF006E73EF /* embree_bvh4mb_intersector.cpp */; };
+		235AF8431689ADE90063C688 /* embree_accel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E02115F53CAF006E73EF /* embree_accel.cpp */; };
+		235AF8441689ADED0063C688 /* embree_alloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E02315F53CAF006E73EF /* embree_alloc.cpp */; };
+		235AF8451689ADF40063C688 /* embree_heuristic_binning.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E02815F53CAF006E73EF /* embree_heuristic_binning.cpp */; };
+		235AF8461689ADF60063C688 /* embree_heuristic_spatial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E02A15F53CAF006E73EF /* embree_heuristic_spatial.cpp */; };
+		235AF8471689ADF90063C688 /* embree_primrefgen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E03215F53CAF006E73EF /* embree_primrefgen.cpp */; };
+		235AF8481689ADFE0063C688 /* embree_splitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E03515F53CAF006E73EF /* embree_splitter.cpp */; };
+		235AF8491689AE000063C688 /* embree_splitter_fallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E03715F53CAF006E73EF /* embree_splitter_fallback.cpp */; };
+		235AF84A1689AE030063C688 /* embree_splitter_parallel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E03915F53CAF006E73EF /* embree_splitter_parallel.cpp */; };
+		235AF84B1689AE070063C688 /* embree_stat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E03C15F53CAF006E73EF /* embree_stat.cpp */; };
+		235AF84C1689AE0C0063C688 /* embree_bvh2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00B15F53CAF006E73EF /* embree_bvh2.cpp */; };
+		235AF84D1689AE0F0063C688 /* embree_bvh2_builder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00D15F53CAF006E73EF /* embree_bvh2_builder.cpp */; };
+		235AF84E1689AE110063C688 /* embree_bvh2_intersector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00F15F53CAF006E73EF /* embree_bvh2_intersector.cpp */; };
+		235AF84F1689AE190063C688 /* embree_filename.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFEB15F53CAF006E73EF /* embree_filename.cpp */; };
+		235AF8501689AE1C0063C688 /* embree_library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFEE15F53CAF006E73EF /* embree_library.cpp */; };
+		235AF8511689AE1E0063C688 /* embree_platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFF015F53CAF006E73EF /* embree_platform.cpp */; };
+		235AF8521689AE2B0063C688 /* embree_string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFF515F53CAF006E73EF /* embree_string.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		235AF8531689AE460063C688 /* embree_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00715F53CAF006E73EF /* embree_thread.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		235AF8541689AE4A0063C688 /* embree_sysinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00215F53CAF006E73EF /* embree_sysinfo.cpp */; };
+		235AF8561689AE730063C688 /* embree_taskscheduler_standard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395E00515F53CAF006E73EF /* embree_taskscheduler_standard.cpp */; };
+		235AF8571689AF080063C688 /* embree_condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFFB15F53CAF006E73EF /* embree_condition.cpp */; };
+		235AF8581689AF0B0063C688 /* embree_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DFFD15F53CAF006E73EF /* embree_mutex.cpp */; };
 		23611EEB1610EEBF00EE787B /* noise3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23611EEA1610EEBF00EE787B /* noise3D.cpp */; };
 		23611EEE1615297300EE787B /* shaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23611EED1615297200EE787B /* shaderCache.cpp */; };
 		2365265815D8E973005B7273 /* texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2365265715D8E973005B7273 /* texture2D.cpp */; };
 		237B49C11685918E0082C6DA /* carMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 237B49C01685918E0082C6DA /* carMaterial.cpp */; };
+		237B4EBC168A817800586640 /* constant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 237B4EBB168A817800586640 /* constant.cpp */; };
+		237B4EBF168A830000586640 /* constantMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 237B4EBE168A82FF00586640 /* constantMaterial.cpp */; };
+		237B4EC0168A836600586640 /* constantMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 237B4EBE168A82FF00586640 /* constantMaterial.cpp */; };
+		237B4EC1168A837500586640 /* constant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 237B4EBB168A817800586640 /* constant.cpp */; };
+		237B4EC4168ACDFE00586640 /* objParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 237B4EC3168ACDFD00586640 /* objParser.cpp */; };
+		237B4EC5168ADE0300586640 /* objParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 237B4EC3168ACDFD00586640 /* objParser.cpp */; };
 		2395DF9815F3D78C006E73EF /* specTransmit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DF9715F3D78B006E73EF /* specTransmit.cpp */; };
 		2395DF9B15F3F239006E73EF /* transmitMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DF9A15F3F239006E73EF /* transmitMaterial.cpp */; };
 		2395DF9E15F43546006E73EF /* specMirror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395DF9D15F43546006E73EF /* specMirror.cpp */; };
@@ -368,6 +404,8 @@
 		234552BE160BA6E300EB9C16 /* shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 		234552C4160D9C4D00EB9C16 /* uv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uv.h; sourceTree = "<group>"; };
 		234ED5CF16858AB900594698 /* carMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carMaterial.h; sourceTree = "<group>"; };
+		235AF7A116894D8D0063C688 /* stringUtils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = stringUtils.h; sourceTree = "<group>"; };
+		235AF7A316894E760063C688 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		23611EE81610EE5E00EE787B /* noise3D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = noise3D.h; sourceTree = "<group>"; };
 		23611EEA1610EEBF00EE787B /* noise3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = noise3D.cpp; sourceTree = "<group>"; };
 		23611EEC1615285000EE787B /* shaderCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shaderCache.h; sourceTree = "<group>"; };
@@ -375,6 +413,13 @@
 		2365265315D8E7D2005B7273 /* texture2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture2D.h; sourceTree = "<group>"; };
 		2365265715D8E973005B7273 /* texture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture2D.cpp; sourceTree = "<group>"; };
 		237B49C01685918E0082C6DA /* carMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = carMaterial.cpp; sourceTree = "<group>"; };
+		237B4EB9168A7BE700586640 /* typedefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = typedefs.h; sourceTree = "<group>"; };
+		237B4EBA168A811F00586640 /* constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constant.h; sourceTree = "<group>"; };
+		237B4EBB168A817800586640 /* constant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constant.cpp; sourceTree = "<group>"; };
+		237B4EBD168A82BF00586640 /* constantMaterial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constantMaterial.h; sourceTree = "<group>"; };
+		237B4EBE168A82FF00586640 /* constantMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constantMaterial.cpp; sourceTree = "<group>"; };
+		237B4EC2168ACB9A00586640 /* objParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = objParser.h; sourceTree = "<group>"; };
+		237B4EC3168ACDFD00586640 /* objParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = objParser.cpp; sourceTree = "<group>"; };
 		2395DF9515F3D729006E73EF /* specTransmit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = specTransmit.h; sourceTree = "<group>"; };
 		2395DF9715F3D78B006E73EF /* specTransmit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = specTransmit.cpp; sourceTree = "<group>"; };
 		2395DF9915F3F1D8006E73EF /* transmitMaterial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = transmitMaterial.h; sourceTree = "<group>"; };
@@ -1224,6 +1269,8 @@
 			children = (
 				2327DE0B16324B6300163E02 /* jsonParser.h */,
 				2327DE0C16324BF000163E02 /* jsonParser.cpp */,
+				237B4EC2168ACB9A00586640 /* objParser.h */,
+				237B4EC3168ACDFD00586640 /* objParser.cpp */,
 			);
 			name = Parsing;
 			sourceTree = "<group>";
@@ -1252,6 +1299,8 @@
 				2395DF9715F3D78B006E73EF /* specTransmit.cpp */,
 				2395DF9C15F43528006E73EF /* specMirror.h */,
 				2395DF9D15F43546006E73EF /* specMirror.cpp */,
+				237B4EBA168A811F00586640 /* constant.h */,
+				237B4EBB168A817800586640 /* constant.cpp */,
 			);
 			name = Brdfs;
 			sourceTree = "<group>";
@@ -1288,6 +1337,8 @@
 				2395DFA015F43685006E73EF /* glassMaterial.cpp */,
 				234ED5CF16858AB900594698 /* carMaterial.h */,
 				237B49C01685918E0082C6DA /* carMaterial.cpp */,
+				237B4EBD168A82BF00586640 /* constantMaterial.h */,
+				237B4EBE168A82FF00586640 /* constantMaterial.cpp */,
 			);
 			name = Materials;
 			sourceTree = "<group>";
@@ -1327,6 +1378,7 @@
 				23A9C72216603B7B00D225BB /* testCore.h */,
 				23A9C74016633F9400D225BB /* testLights.h */,
 				23A9C7DF16634B8E00D225BB /* testBackEnd.h */,
+				235AF7A316894E760063C688 /* config.json */,
 				C5756802159E667C00570538 /* Core */,
 				C5756801159E663200570538 /* BackEnd */,
 				C5756800159E662800570538 /* FrontEnd */,
@@ -1438,6 +1490,8 @@
 				C575683B159E696D00570538 /* vector.cpp */,
 				230385E81646D85D004EC737 /* shaderAttribute.h */,
 				230385EA164841E0004EC737 /* shaderAttribute.cpp */,
+				235AF7A116894D8D0063C688 /* stringUtils.h */,
+				237B4EB9168A7BE700586640 /* typedefs.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1893,6 +1947,38 @@
 				23A9C74E1663412600D225BB /* texture2D.cpp in Sources */,
 				23A9C7DE16634B2000D225BB /* testLights.h in Sources */,
 				23A9C7E016634B9600D225BB /* testBackEnd.h in Sources */,
+				235AF7A51689A7C30063C688 /* stringUtils.h in Sources */,
+				235AF7A61689AC9B0063C688 /* carMaterial.cpp in Sources */,
+				235AF83D1689ADD50063C688 /* embree_bvh4_builder.cpp in Sources */,
+				235AF83E1689ADD80063C688 /* embree_bvh4.cpp in Sources */,
+				235AF83F1689ADDA0063C688 /* embree_bvh4_intersector.cpp in Sources */,
+				235AF8401689ADE00063C688 /* embree_bvh4mb.cpp in Sources */,
+				235AF8411689ADE30063C688 /* embree_bvh4mb_builder.cpp in Sources */,
+				235AF8421689ADE50063C688 /* embree_bvh4mb_intersector.cpp in Sources */,
+				235AF8431689ADE90063C688 /* embree_accel.cpp in Sources */,
+				235AF8441689ADED0063C688 /* embree_alloc.cpp in Sources */,
+				235AF8451689ADF40063C688 /* embree_heuristic_binning.cpp in Sources */,
+				235AF8461689ADF60063C688 /* embree_heuristic_spatial.cpp in Sources */,
+				235AF8471689ADF90063C688 /* embree_primrefgen.cpp in Sources */,
+				235AF8481689ADFE0063C688 /* embree_splitter.cpp in Sources */,
+				235AF8491689AE000063C688 /* embree_splitter_fallback.cpp in Sources */,
+				235AF84A1689AE030063C688 /* embree_splitter_parallel.cpp in Sources */,
+				235AF84B1689AE070063C688 /* embree_stat.cpp in Sources */,
+				235AF84C1689AE0C0063C688 /* embree_bvh2.cpp in Sources */,
+				235AF84D1689AE0F0063C688 /* embree_bvh2_builder.cpp in Sources */,
+				235AF84E1689AE110063C688 /* embree_bvh2_intersector.cpp in Sources */,
+				235AF84F1689AE190063C688 /* embree_filename.cpp in Sources */,
+				235AF8501689AE1C0063C688 /* embree_library.cpp in Sources */,
+				235AF8511689AE1E0063C688 /* embree_platform.cpp in Sources */,
+				235AF8521689AE2B0063C688 /* embree_string.cpp in Sources */,
+				235AF8531689AE460063C688 /* embree_thread.cpp in Sources */,
+				235AF8541689AE4A0063C688 /* embree_sysinfo.cpp in Sources */,
+				235AF8561689AE730063C688 /* embree_taskscheduler_standard.cpp in Sources */,
+				235AF8571689AF080063C688 /* embree_condition.cpp in Sources */,
+				235AF8581689AF0B0063C688 /* embree_mutex.cpp in Sources */,
+				237B4EC0168A836600586640 /* constantMaterial.cpp in Sources */,
+				237B4EC1168A837500586640 /* constant.cpp in Sources */,
+				237B4EC5168ADE0300586640 /* objParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2051,6 +2137,10 @@
 				2327DE0D16324BF000163E02 /* jsonParser.cpp in Sources */,
 				230385EB164841E0004EC737 /* shaderAttribute.cpp in Sources */,
 				237B49C11685918E0082C6DA /* carMaterial.cpp in Sources */,
+				235AF7A41689A7C10063C688 /* stringUtils.h in Sources */,
+				237B4EBC168A817800586640 /* constant.cpp in Sources */,
+				237B4EBF168A830000586640 /* constantMaterial.cpp in Sources */,
+				237B4EC4168ACDFE00586640 /* objParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2084,7 +2174,12 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"NO_LOG=1",
+					"DEBUG=1",
+				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				LLVM_LTO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"VALID_ARCHS[sdk=*]" = "i386 x86_64";
 			};
@@ -2098,7 +2193,12 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"NO_LOG=1",
+					"NDEBUG=1",
+				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				LLVM_LTO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2167,6 +2267,7 @@
 				GCC_UNROLL_LOOPS = NO;
 				LLVM_LTO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_AFTER_BUILD = NO;
 				"VALID_ARCHS[sdk=*]" = "i386 x86_64";
 			};
 			name = Debug;
@@ -2176,6 +2277,7 @@
 			buildSettings = {
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_AFTER_BUILD = NO;
 			};
 			name = Release;
 		};

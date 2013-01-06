@@ -39,5 +39,9 @@
 #define SPECALBEDO_ROUGHNESSS_ENTRIES 32
 #define SPECALBEDO_REFLECTANCE_ENTRIES 21
 
+#define VERSION "0.1"
+
+// base paths
+#define CONFIGPATH "/Users/espennordahl/Documents/Aurora/XCode/Aurora/Aurora/config.json"
 
 #endif

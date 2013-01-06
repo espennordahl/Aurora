@@ -58,7 +58,7 @@ void CookTorrance::setParameters(void *params, int thread){
 
 
 void CookTorrance::initRoughness(bool mattePath, int thread){
-    if (mattePath) {
+    if (mattePath == true && (*renderEnv->globals)[Caustics] == false) {
         roughness[thread] = baseRoughness[thread]/2 + 0.5;
     }
     else {
@@ -67,7 +67,7 @@ void CookTorrance::initRoughness(bool mattePath, int thread){
 }
 
 void CookTorrance::preCalcNormTable(){
-	OpenexrDisplay exrDisplay(NORM_ENTRIES, NORM_ENTRIES, "/Users/espennordahl/Documents/Aurora/cache/exrNormTable_v03.exr");
+	OpenexrDisplay exrDisplay(NORM_ENTRIES, NORM_ENTRIES, "/Users/espennordahl/Documents/Aurora/cache/exrNormTable_v03.exr", renderEnv);
     for (int x = 0; x < NORM_ENTRIES; x++) {
         float roughness = clamp((float)x/NORM_ENTRIES, 0.01, 0.99);
         for (int y=0; y < NORM_ENTRIES; y++) {
@@ -201,9 +201,9 @@ Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, int depth, 
 
     if (vdoth > 0.001 && ldotn > 0.001 && vdotn > 0.001) {
             //float D = (1.f / (roughness[thread] * roughness[thread] * M_PI * powf(ndoth, 3.f))) * expf( -(tanf(acosf(ndoth)) * tanf(acosf(ndoth))) / (roughness[thread] * roughness[thread])) ;
-        float D = ctD(roughness[thread], ndoth, tanf(acosf(std::min(ndoth,0.99f))));
+        float D = ctD(roughness[thread], ndoth, tanf(acosf(ndoth)));
         float normalization = getNormWeight(dot(Nn, Vn), roughness[thread]);
-        pdf = D / ( 4 * vdoth );        
+        pdf = D / ( 4 * vdoth );
         if (isnan(D)) { // TODO: Make sure we don't get NaNs ahead of time.
             result = Color(0.);
             pdf = 0.f;
@@ -213,7 +213,11 @@ Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, int depth, 
         }
         assert(result.lum() >= 0.);
         assert(pdf >= 0.);
-        assert(pdf < 10000);
+        if (pdf > 100000) {
+            pdf *= 0.1f;
+            result *= 0.1f;
+        }
+        assert(pdf < 100000);
     }
     
     return Sample3D(Ray(Ln, Point(0.f), RAY_BIAS, 10000000.f), pdf, result);

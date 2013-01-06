@@ -50,7 +50,8 @@ void Renderer::parseSceneDescription(){
     
     renderEnv = RenderEnvironment();
     renderEnv.shadingEngine = new ShadingEngine();
-    renderEnv.globals =  new std::map<Option, double>;
+    renderEnv.globals =  new AuroraGlobals;
+    renderEnv.stringGlobals = new StringMap;
     setDefaultOptions(renderEnv.globals);
 
         // open file
@@ -112,7 +113,7 @@ void Renderer::buildRenderEnvironment(){
             if (lights[i]->lightType != type_envLight) {
                 mesh.appendTriangleMesh(lights[i]->shape(), i + numObjects);
             }
-            Reference<Material> black = new MatteMaterial("Not in use - Should be EDF", 0, 1, &renderEnv);
+            Reference<Material> black = new ConstantMaterial("Not in use - lightsource", Color(0.f), &renderEnv);
             attrs[i + numObjects].material = black;
             attrs[i + numObjects].emmision = lights[i]->emission();
         }
@@ -126,7 +127,7 @@ void Renderer::buildRenderEnvironment(){
 	renderEnv.lights = lights;
 	renderEnv.envLight = envLight;
 	renderEnv.renderCam = &renderCam;
-	
+    	
 	LOG_INFO("Done building render environment.");
     LOG_INFO("*************************************\n");
 }
@@ -139,7 +140,23 @@ struct threadargs{
     int threadNum;
 };
 
+struct accumulationargs{
+    OpenexrDisplay *display;
+    int multisamples;
+    int height;
+    int width;
+    time_t *beginDraw;
+    time_t *endDraw;
+    int *nRenderedSamples;
+    float *renderProgress;
+    std::vector<Sample2D> *renderedSamples;
+    std::vector<std::vector < int > > *multisampleBuffer;
+    bool finalSamples;
+};
+
 void *integrateThreaded( void *threadid );
+
+void *accumulate( void * threaddata );
 
 void Renderer::renderImage(){
     LOG_INFO("*************************************");
@@ -150,14 +167,16 @@ void Renderer::renderImage(){
 	time(&renderBegin);
 	
 	// set up buffer and sampler
-	// TODO: This might be better if it was done at parsing time	
 	int width = renderCam.getWidthSamples();
 	int height = renderCam.getHeightSamples();
 	int multisamples = renderCam.getPixelSamples();
-	OpenexrDisplay display(width, height, "/Users/espennordahl/aurora2.exr");
-	
-	
-	// render camera samples
+    std::string fn = (*renderEnv.stringGlobals)["fileName"];
+    if(fn == ""){
+        LOG_ERROR("Render output filename is blank");
+    }
+    displayDriver = new OpenexrDisplay(width, height, fn, &renderEnv);
+
+        // render camera samples
 	Sample2D currentSample;
 	PixelRegion region;
 	
@@ -168,7 +187,7 @@ void Renderer::renderImage(){
 	time(&beginDraw);
 	time(&renderTime);
 	renderProgress = 0.f;
-	
+	 
 	std::vector<std::vector < int > > multisampleBuffer;
 	multisampleBuffer.resize(width);
 	for (int i=0; i < width; i++) {
@@ -262,55 +281,71 @@ void Renderer::renderImage(){
 			free(td[i].sampleBuffer);
 		}
 
-//		renderedSamples.push_back(Sample2D());
 		
 		// STORE SAMPLES
-		for (int nSample = 0; nSample < renderedSamples.size(); nSample++){
-			//Sample2D drawingSample = renderedSamples[nSample];
-			Sample2D drawingSample = renderedSamples[nSample];
-			region = drawingSample.region;
-            if (drawingSample.col.hasNaNs()) {
-                drawingSample.col = Color(0.f);
-            }
-			// each sample is potentially stored in multiple pixels
-			for (int i=region.xMin; i < region.xMax; i++) {
-				for (int j=region.yMin; j < region.yMax; j++) {
-					if (multisampleBuffer[i][j] == 1) {
-						display.setPixel(i, j, drawingSample.col, drawingSample.alpha);					
-					}
-					else{
-						Color oldCol;
-						float oldAlpha;
-						display.getPixel(i, j, &oldCol, &oldAlpha);
-						float sampleNum = multisampleBuffer[i][j];
-						float weight = 1.f/sampleNum;
-						display.setPixel(i, j, oldCol*(1-weight) + drawingSample.col*weight, 
-								   oldAlpha*(1-weight) + drawingSample.alpha*weight);
-					}
-				}
-			}
-			
-			multisampleBuffer[drawingSample.x][drawingSample.y]++;
-			time(&endDraw);
-			if (difftime(endDraw, beginDraw) > DRAW_DELAY){
-				renderProgress = (float)nRenderedSamples/(width*height*multisamples);
-				LOG_INFO("Rendering : " << renderProgress * 100.f << "% complete.");
-				time(&beginDraw);
-				display.draw(height);
-			}
-			nRenderedSamples++;
-		}
-		if (finalSamples) {
-			break;
-		}
-
+        accumulationargs accumArgs = {
+            displayDriver,
+            multisamples,
+            height,
+            width,
+            &beginDraw,
+            &endDraw,
+            &nRenderedSamples,
+            &renderProgress,
+            &renderedSamples,
+            &multisampleBuffer,
+            finalSamples
+        };
+        accumulate((void *)&accumArgs);
+        if (finalSamples) {
+            break;
+        }
 	}
-	
-	display.draw(height);
-
+        // post frame
 	
 	LOG_INFO("Done rendering image.");
     LOG_INFO("*************************************\n");
+}
+
+void *accumulate( void * threaddata ){
+    
+    accumulationargs *data = (accumulationargs *)threaddata;
+    
+    for (int nSample = 0; nSample < data->renderedSamples->size(); nSample++){
+            //Sample2D drawingSample = renderedSamples[nSample];
+        Sample2D drawingSample = (*data->renderedSamples)[nSample];
+        PixelRegion region = drawingSample.region;
+        if (drawingSample.col.hasNaNs()) {
+            drawingSample.col = Color(0.f);
+        }
+            // each sample is potentially stored in multiple pixels
+        for (int i=region.xMin; i < region.xMax; i++) {
+            for (int j=region.yMin; j < region.yMax; j++) {
+                if ((*data->multisampleBuffer)[i][j] == 1) {
+                    data->display->setPixel(i, j, drawingSample.col, drawingSample.alpha);
+                }
+                else{
+                    Color oldCol;
+                    float oldAlpha;
+                    data->display->getPixel(i, j, &oldCol, &oldAlpha);
+                    float sampleNum = (*data->multisampleBuffer)[i][j];
+                    float weight = 1.f/sampleNum;
+                    data->display->setPixel(i, j, oldCol*(1-weight) + drawingSample.col*weight,
+                                     oldAlpha*(1-weight) + drawingSample.alpha*weight);
+                }
+            }
+        }
+        
+        (*data->multisampleBuffer)[drawingSample.x][drawingSample.y]++;
+        time(data->endDraw);
+        if (difftime(*data->endDraw, *data->beginDraw) > DRAW_DELAY){
+            *data->renderProgress = float(*data->nRenderedSamples)/(data->width * data->height * data->multisamples);
+            LOG_INFO("Rendering : " << *data->renderProgress * 100.f << "% complete.");
+            time(data->beginDraw);
+            data->display->draw(data->height);
+        }
+        *data->nRenderedSamples += 1;
+    }
 }
 
 inline float PowerHeuristic(int nf, float fPdf, int ng, float gPdf) {
@@ -486,12 +521,29 @@ void *integrateThreaded( void *threadid ){
                     trueBounces++;
 					// find next vertex
 					if (!renderEnv->accelerationStructure->intersect(&currentSample.ray, &isect)) {
-						// exit.
+                        if (rayType == MirrorRay) {
+                            for (int i=0; i < renderEnv->lights.size(); i++) {
+                                Reference<Light> light = renderEnv->lights[i];
+                                if (light->lightType == type_envLight) {
+                                    Lo += light->eval(sample, sample.ray.direction) * pathThroughput;
+                                }
+                            }
+                        }
+                        // exit.
 						break;
 					}
 				}
 			}
 		}
+        else{ // camera ray miss
+            for (int i=0; i < renderEnv->lights.size(); i++) {
+                Reference<Light> light = renderEnv->lights[i];
+                if (light->lightType == type_envLight) {
+                    Lo += light->eval(sample, sample.ray.direction) * (*renderEnv->globals)[LightSamples];
+                    alpha = 1.;
+                }
+            }
+        }
 		samples[nSample].col = Lo/(*renderEnv->globals)[LightSamples];
 		samples[nSample].alpha = alpha;
 	}
@@ -503,15 +555,23 @@ void Renderer::outputStats(){
     LOG_INFO("*************************************");
 	LOG_INFO("Outputting statistics.");
 	
+    LOG_INFO("Renderer version: Aurora v" << VERSION);
+    
 	// Time
 	time_t renderEnd;
 	time(&renderEnd);
 	int totalTime = difftime(renderEnd, renderTime);
+    
 	LOG_INFO("Total render time: " 
              << floor(totalTime/60/60) << " h " 
              << floor((totalTime/60) % 60) << " min " 
              << totalTime % 60 << " sec.");
-	
+    std::string stringTime =    intToString(floor(totalTime/60/60)) + " h " +
+                                intToString(floor((totalTime/60) % 60)) + " min "+
+                                intToString(totalTime % 60) + " sec.";
+    displayDriver->addMetadata(std::string("renderTime"), stringTime);
+    displayDriver->draw(displayDriver->height());
+
 	LOG_INFO("Done outputting statistics.");
     LOG_INFO("*************************************\n");
 }

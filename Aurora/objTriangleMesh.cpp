@@ -7,12 +7,13 @@
 //
 
 
+#include "objTriangleMesh.h"
+#include "objParser.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <assert.h>
-
-#include "objTriangleMesh.h"
 
 #include "log.h"
 #define lcontext LOG_ObjMesh
@@ -162,23 +163,26 @@ bool ObjTriangleMesh::parseObjLine(const std::string &line, std::vector<Point> &
 }
 
 ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, const std::string &objfile ): Shape(o2c, c2o) {
-	int i = 1;
-	char line[1024];
-	ifstream inFile(objfile.c_str(), ifstream::in);
-	if (!inFile) {
-	}
 	std::vector<Point> points;
     std::vector<Vector> normals;
     std::vector<uv> uvs;
 	std::vector<int> vertIndex;
     std::vector<int> nIndex;
     std::vector<int> uvIndex;
-	while (inFile.good()) {
-		inFile.getline(line, 1023);
-		if (!parseObjLine(string(line), points, normals, uvs, vertIndex, nIndex, uvIndex)) {
-		}
-		i++;
-	}
+//    int i = 1;
+//	char line[1024];
+//	ifstream inFile(objfile.c_str(), ifstream::in);
+//	if (!inFile) {
+//	}
+//	while (inFile.good()) {
+//		inFile.getline(line, 1023);
+//		if (!parseObjLine(string(line), points, normals, uvs, vertIndex, nIndex, uvIndex)) {
+//		}
+//		i++;
+//	}
+    ObjParser parser = ObjParser(objfile, &points, &normals, &uvs, &vertIndex, &nIndex, &uvIndex);
+    bool success = parser.parseFile();
+	assert(success);
 	
 //	uint32_t tmp = vertIndex.size();
 	
@@ -204,6 +208,7 @@ ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, co
     Vector *N = new Vector[ numNorms ];
 	for (uint32_t i = 0; i < numVertices; i++) {
 		P[i] = points[i];
+//        LOG_DEBUG(P[i]);
 	}
 	for (uint32_t i = 0; i < numNorms; i++) {
         if (normals[i].x == 0. && normals[i].y == 0. && normals[i].z == 0.) {

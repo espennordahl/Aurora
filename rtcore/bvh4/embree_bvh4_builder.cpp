@@ -176,10 +176,12 @@ namespace embree
   {
      /*! compute leaf and split cost */
     const float leafSAH  = parent->trity.intCost*pinfo.sah();
-    const float splitSAH = BVH4::travCost*halfArea(pinfo.geomBounds)+parent->trity.intCost*split.sah();
+      float a = halfArea(pinfo.geomBounds);
+      float b = parent->trity.intCost;
+      float c = split.sah();
+    const float splitSAH = BVH4::travCost*a+b*c;
     assert(atomic_set<PrimRefBlock>::block_iterator_unsafe(prims).size() == pinfo.size());
     assert(leafSAH >= 0 && splitSAH >= 0);
-
     /*! create a leaf node when threshold reached or SAH tells us to stop */
     if (pinfo.size() <= 1 || depth > BVH4::maxDepth || (pinfo.size() <= parent->bvh->maxLeafTris && leafSAH <= splitSAH)) {
       dst = parent->createLeaf(thread,prims,pinfo); delete this; return;

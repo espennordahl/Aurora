@@ -15,5 +15,6 @@
 #include "transmitMaterial.h"
 #include "glassMaterial.h"
 #include "carMaterial.h"
+#include "constantMaterial.h"
 
 #endif

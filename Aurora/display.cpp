@@ -13,8 +13,9 @@
 
 using namespace Aurora;
 
-Display::Display(int _width, int _height):
-height(_height), width(_width)
+Display::Display(int _width, int _height, std::string name, RenderEnvironment *renderEnv):
+FrontEndObject(name, renderEnv),
+m_height(_height), width(_width)
 {	
 	// set up buffer size
 	cPixels.reserve(width);
@@ -26,7 +27,7 @@ height(_height), width(_width)
 	
 	// initialize to black
 	for (int i=0; i<width; i++) {
-		for (int j=0; j<height; j++) {
+		for (int j=0; j<m_height; j++) {
 			//		cPixels[i][j] = Color(0.f);
 			//		aPixels[i][j] = 0.f; // TODO: Fix this
 		}
@@ -35,27 +36,29 @@ height(_height), width(_width)
 }
 
 Display::Display(const std::vector<std::vector<Color> > &colors, 
-					 const std::vector<std::vector<float> > &alpha):
+					 const std::vector<std::vector<float> > &alpha, std::string name, RenderEnvironment *renderEnv):
+FrontEndObject(name, renderEnv),
 cPixels(colors), aPixels(alpha)
 {
 	width = short(aPixels.size());
-	height = short(aPixels[0].size());
+	m_height = short(aPixels[0].size());
 }
 
-Display::Display(const std::vector<std::vector<Color> > &colors):
+Display::Display(const std::vector<std::vector<Color> > &colors, std::string name, RenderEnvironment *renderEnv):
+FrontEndObject(name, renderEnv),
 cPixels(colors)
 {
 	width = short(aPixels.size());
-	height = short(aPixels[0].size());
+	m_height = short(aPixels[0].size());
 	
 	aPixels.reserve(width);
 	for (int i=0; i<width; i++) {
-		aPixels[i].reserve(height);
+		aPixels[i].reserve(m_height);
 	}
 	
 	// initialize alpha to white
 	for (int i=0; i<width; i++) {
-		for (int j=0; j<height; j++) {
+		for (int j=0; j<m_height; j++) {
 			aPixels[i][j] = 1.f;
 		}
 	}
@@ -71,7 +74,7 @@ void Display::setPixel(int _width, int _height, const Color &color, float alpha)
 // Resets all pixel values to black
 void Display::clear(){
 	for (int i=0; i<width; i++) {
-		for (int j=0; j<height; j++) {
+		for (int j=0; j<m_height; j++) {
 			cPixels[i][j] = Color(0.f);
 			aPixels[i][j] = 0.f;
 		}

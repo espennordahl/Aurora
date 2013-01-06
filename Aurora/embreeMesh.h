@@ -30,6 +30,8 @@ namespace Aurora {
     
         std::vector<Reference<Shape> > shapes;
         
+        EmbreeMesh(){numTriangles = 0; numVertices = 0;};
+        
         void appendTriangleMesh(Reference<Shape> shape, int index){
             shapes.push_back(shape);
         }

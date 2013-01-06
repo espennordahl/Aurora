@@ -17,7 +17,7 @@
 #include "json.h"
 
 namespace Aurora {
-    inline void parseCamera(Json::Value &root, std::map<Option, double> *globals, Transform *transStack){
+    inline void parseCamera(Json::Value &root, AuroraGlobals *globals, Transform *transStack){
         if( root.size() > 0 ) {
                 // Loop through options
             for( Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {

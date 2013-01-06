@@ -30,7 +30,10 @@ namespace Aurora {
         
             // kd tree
         KD_MaxLeaf,
-        KD_MaxDepth
+        KD_MaxDepth,
+        
+            // bias
+        Caustics
     };
 
     enum AccelStructType{
@@ -41,7 +44,9 @@ namespace Aurora {
     #define ACCEL_KDTREE 0
     #define ACCEL_EMBREE 1
 
-    inline void setDefaultOptions( std::map<Option, double> *globals ){
+    typedef std::map<Option, double> AuroraGlobals;
+
+    inline void setDefaultOptions( AuroraGlobals *globals ){
         globals->insert(std::make_pair(ResolutionX,     512));
         globals->insert(std::make_pair(ResolutionY,     512));
         globals->insert(std::make_pair(FieldOfView,     M_PI/4));
@@ -52,6 +57,7 @@ namespace Aurora {
         globals->insert(std::make_pair(KD_MaxLeaf,      8));
         globals->insert(std::make_pair(KD_MaxDepth,     25));
         globals->insert(std::make_pair(AccelStructure, ACCEL_KDTREE));
+        globals->insert(std::make_pair(Caustics,        false));
     }
 }
 

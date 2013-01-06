@@ -24,12 +24,11 @@ EmbreeAccelerator::EmbreeAccelerator(const EmbreeMesh &_mesh, AttributeState *at
                                    mesh.triangles,  //!< array of triangles
                                    mesh.numTriangles,             //!< number of triangles in array
                                    mesh.vertices,     //!< array of vertices, has to be aligned to 16 bytes
-                                   mesh.numVertices,
-                                   embree::BBox3f(),
-                                   false);             //!< number of vertices in array
+                                   mesh.numVertices);
+        //                                   embree::BBox3f(),
+        //                         false);             //!< number of vertices in array
 //  const BBox3f& bounds = empty,    //!< optional approximate bounding box of the geometry
 //  bool freeArrays = true);         //!< if true, triangle and vertex arrays are freed when no 
-    
     intersector = accel->queryInterface<embree::Intersector> ();
 }
 

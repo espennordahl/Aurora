@@ -11,5 +11,8 @@
 
 #include "lambert.h"
 #include "cookTorrance.h"
+#include "constant.h"
+#include "specTransmit.h"
+#include "specMirror.h"
 
 #endif

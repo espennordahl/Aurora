@@ -68,14 +68,14 @@ namespace {
         static int WIDTH = 512;
         static int HEIGHT = 256;
         static float meanImgBrightness = 0.14502;
-        OpenexrDisplay fileOut(WIDTH, HEIGHT, "/Users/espennordahl/Documents/Aurora/tests/sampling.exr");
+        OpenexrDisplay fileOut(WIDTH, HEIGHT, "/Users/espennordahl/Documents/Aurora/tests/sampling.exr", NULL);
 
         for (int i=0; i < TEXTURE_SAMPLES; i++) {
             float r = (float)rand()/RAND_MAX;
             float u, v;
             texture->sample(r, &u, &v);
-            int x = floor(u*WIDTH);
-            int y = floor(v*HEIGHT);
+            int x = floorf(u*WIDTH);
+            int y = floorf(v*HEIGHT);
             Color value; float tmp;
             fileOut.getPixel(x, y, &value, &tmp);
             value += (HEIGHT*WIDTH*meanImgBrightness)/(float)TEXTURE_SAMPLES;

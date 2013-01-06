@@ -182,7 +182,7 @@ Reference<Brdf> CarMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const 
             m_clearcoatReflectance
         };
         m_clearcoatSpecBrdf->setParameters(&params, thread);
-        m_clearcoatSpecBrdf->initRoughness(false, thread);
+        m_clearcoatSpecBrdf->initRoughness(mattePath, thread);
 		return m_clearcoatSpecBrdf;
     }
     
@@ -202,7 +202,7 @@ Reference<Brdf> CarMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const 
             m_baseSpecTopReflectance
         };
         m_topBaseSpecBrdf->setParameters(&params, thread);
-        m_topBaseSpecBrdf->initRoughness(false, thread);
+        m_topBaseSpecBrdf->initRoughness(mattePath, thread);
         return m_topBaseSpecBrdf;
     }
 
@@ -222,7 +222,7 @@ Reference<Brdf> CarMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const 
             m_baseSpecBottomReflectance
         };
         m_bottomBaseSpecBrdf->setParameters(&params, thread);
-        m_bottomBaseSpecBrdf->initRoughness(false, thread);
+        m_bottomBaseSpecBrdf->initRoughness(mattePath, thread);
         return m_bottomBaseSpecBrdf;
     }
     

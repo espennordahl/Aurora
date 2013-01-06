@@ -41,7 +41,7 @@ diffColorIndex(_diffColIndex)
     
         // Load albedo cache
         // TODO: Lerp between for specAlbedo
-    stringstream ss;//create a stringstream
+    stringstream ss;
     float modrefl = roundf(reflectance * (SPECALBEDO_REFLECTANCE_ENTRIES-1))/(SPECALBEDO_REFLECTANCE_ENTRIES-1.f);
     ss << modrefl;//add number to the stream
     std::string texName = "/Users/espennordahl/Documents/Aurora/cache/exrBeckmanAlbedoTable_" + ss.str() + "_v02.exr";
@@ -135,7 +135,7 @@ void KelemenMaterial::preCalcAlbedo(){
     stringstream ss;//create a stringstream
     ss << reflectance;//add number to the stream
     std::string texName = "/Users/espennordahl/Documents/Aurora/cache/exrBeckmanAlbedoTable_" + ss.str() + "_v02.exr";
-    OpenexrDisplay exrDisplay(SPECALBEDO_COSTHETA_ENTRIES, SPECALBEDO_ROUGHNESSS_ENTRIES, texName);
+    OpenexrDisplay exrDisplay(SPECALBEDO_COSTHETA_ENTRIES, SPECALBEDO_ROUGHNESSS_ENTRIES, texName, renderEnv);
     for (int x=0; x < SPECALBEDO_COSTHETA_ENTRIES; x++) {
         for (int y=0; y < SPECALBEDO_ROUGHNESSS_ENTRIES; y++) {
             exrDisplay.setPixel(x, y, Color(albedoTable[y][x]), 1.);

@@ -44,13 +44,14 @@ namespace Aurora {
 		time_t renderTime;
 		float renderProgress;
         std::string filename;
-//        std::map<Option, double> globals;
+//        AuroraGlobals globals;
 		Transform *cameraTransform;
 		
 		bool integrateSampleSINGLE(Sample3D *sample, float importance);
 		bool integrateSampleMULTI(Sample3D *sample, float importance);
-		
-		OpenexrDisplay initDisplay();
+		OpenexrDisplay *displayDriver;
+        
+        pthread_t accumThread;
 	};
 }
 

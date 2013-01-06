@@ -16,23 +16,29 @@
 #include "ImfRgba.h"
 
 #include <string.h>
-
+#include <pthread.h>
 
 namespace Aurora {
 	class OpenexrDisplay : public Display {
 	public:	
-		OpenexrDisplay(int _width, int _height, std::string file);
+		OpenexrDisplay(int _width, int _height, std::string file, RenderEnvironment * renderEnv);
 		
 		void setPixel(int _width, int _height, const Color &col, float alpha);
         void appendValue(int _width, int _height, const Color &col, float alpha);
 		void getPixel(int _width, int _height, Color *col, float *alpha);
 		void draw(int numLines);		
 		void clear(){}; // TODO: implement
+        void addMetadata(const std::string &key, const std::string &value);
+        
+        void frameBegin();
+        void frameEnd();
 
 	private:
         Imf::Array2D<Imf::Rgba> pixelBuffer;
         std::vector<std::vector < int > > multisampleBuffer;
+        StringMap metadata;
 		std::string fileName;
+        pthread_t thread;
 	};
 }
 

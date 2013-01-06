@@ -9,8 +9,6 @@
 #ifndef core_h
 #define core_h
 
-#include "constants.h"
-#include "shaderAttribute.h"
 
 // 3D
 
@@ -37,5 +35,11 @@
 #include "pbrtParalallel.h"
 #include "reference.h"
 #include "referenceCounted.h"
+
+// Util
+#include "stringUtils.h"
+#include "typedefs.h"
+#include "constants.h"
+#include "shaderAttribute.h"
 
 #endif

@@ -130,7 +130,9 @@ namespace embree
  
     /*! add element to front of list */
     __forceinline item* insert(item* ptr) {
-      while (!try_insert(ptr)); return ptr;
+      while (!try_insert(ptr))
+        ;
+        return ptr;
     }
 
     /*! remove element from front of list */

@@ -183,11 +183,11 @@ void Texture2D::sample(float r, float *x, float *y){
         ++depth;
         float tmp = pdfBuffer[currentIndex-1].pdf;
         if (r < tmp) {
-            currentIndex -= floor(pdfBuffer.size()/(pow(2,depth)));
+            currentIndex -= floor(pdfBuffer.size()/(powf(2,depth)));
         }
         else {
             if (r > pdfBuffer[currentIndex].pdf) {
-                currentIndex += floor(pdfBuffer.size()/(pow(2, depth)));
+                currentIndex += floor(pdfBuffer.size()/(powf(2, depth)));
             }
             else {
                 *x = (pdfBuffer[currentIndex].x + offsetX)/width;
