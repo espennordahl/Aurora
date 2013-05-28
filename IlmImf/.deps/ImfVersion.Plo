@@ -1,3 +1,0 @@
-ImfVersion.lo ImfVersion.o: ImfVersion.cpp ImfVersion.h
-
-ImfVersion.h:

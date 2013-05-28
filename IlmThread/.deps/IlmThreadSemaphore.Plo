@@ -1,4 +1,0 @@
-IlmThreadSemaphore.lo IlmThreadSemaphore.o: IlmThreadSemaphore.cpp \
-  ../config/IlmBaseConfig.h
-
-../config/IlmBaseConfig.h:
