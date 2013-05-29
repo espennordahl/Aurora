@@ -26,6 +26,8 @@
 #include <pthread.h>
 #include <math.h>
 
+#include <tbb/parallel_for.h>
+
 #include "jsonParser.h"
 
 using namespace Aurora;
@@ -132,6 +134,23 @@ void Renderer::buildRenderEnvironment(){
     LOG_INFO("*************************************\n");
 }
 
+class IntegrateParallel {
+public:
+    IntegrateParallel(int x, int y, int num_samples):
+    m_x(x), m_y(y), m_num_samples(num_samples)
+    {}
+    
+    void operator()(const tbb::blocked_range<size_t>& r) const{
+        for(size_t i=r.begin(); i!=r.end(); ++i){
+            
+        }
+    }
+private:
+    int m_x;
+    int m_y;
+    int m_num_samples;
+};
+
 
 struct threadargs{
 	RenderEnvironment *renderEnv;
@@ -157,6 +176,10 @@ struct accumulationargs{
 void *integrateThreaded( void *threadid );
 
 void *accumulate( void * threaddata );
+
+void Renderer::renderImageTBB(){
+    tbb::parallel_for( tbb::blocked_range<size_t>(0,100), IntegrateParallel(1,2,3));
+}
 
 void Renderer::renderImage(){
     LOG_INFO("*************************************");

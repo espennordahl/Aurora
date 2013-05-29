@@ -39,6 +39,7 @@ namespace Aurora {
 		void parseSceneDescription();
 		void buildRenderEnvironment();
 		void renderImage();
+		void renderImageTBB();
 		void outputStats();
 		
 		time_t renderTime;

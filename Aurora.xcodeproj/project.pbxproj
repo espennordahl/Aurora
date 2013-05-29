@@ -650,6 +650,7 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
+					/base/sw/intel/tbb41_20130314oss/lib/libtbb.dylib,
 				);
 				SDKROOT = macosx;
 			};
@@ -708,6 +709,7 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
+					/base/sw/intel/tbb41_20130314oss/lib/libtbb.dylib,
 				);
 				SDKROOT = macosx;
 			};
@@ -739,8 +741,12 @@
 					"/base/sw/embree/common/sys\n/base/sw/embree/common/**",
 					/base/sw/embree/common/,
 					/usr/local/Cellar/ilmbase/1.0.2/include/OpenEXR/,
+					"/base/sw/intel/tbb41_20130314oss/include/**",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/base/sw/intel/tbb41_20130314oss/lib/,
+				);
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				LLVM_LTO = NO;
 				OTHER_LDFLAGS = (
@@ -758,8 +764,9 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
-					/usr/local/Cellar/szip/2.1/lib/libsz.a,
+					/base/sw/intel/tbb41_20130314oss/lib/libtbb.dylib,
 				);
+	
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -790,8 +797,12 @@
 					"/base/sw/embree/common/sys\n/base/sw/embree/common/**",
 					/base/sw/embree/common/,
 					/usr/local/Cellar/ilmbase/1.0.2/include/OpenEXR/,
+					"/base/sw/intel/tbb41_20130314oss/include/**",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/base/sw/intel/tbb41_20130314oss/lib/,
+				);
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				LLVM_LTO = NO;
 				OTHER_LDFLAGS = (
@@ -809,6 +820,7 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
+					/base/sw/intel/tbb41_20130314oss/lib/libtbb.dylib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
