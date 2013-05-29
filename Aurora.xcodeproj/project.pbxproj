@@ -650,7 +650,8 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
-					/base/sw/intel/tbb41_20130314oss/lib/libtbb.dylib,
+					-L/base/sw/intel/tbb41_20130314oss/lib/,
+					-ltbb
 				);
 				SDKROOT = macosx;
 			};
@@ -709,7 +710,8 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
-					/base/sw/intel/tbb41_20130314oss/lib/libtbb.dylib,
+					-L/base/sw/intel/tbb41_20130314oss/lib/,
+					-ltbb	
 				);
 				SDKROOT = macosx;
 			};
@@ -764,8 +766,9 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
-					/base/sw/intel/tbb41_20130314oss/lib/libtbb.dylib,
-				);
+					-L/base/sw/intel/tbb41_20130314oss/lib/,
+					-ltbb
+					);
 	
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -820,8 +823,9 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
-					/base/sw/intel/tbb41_20130314oss/lib/libtbb.dylib,
-				);
+					-L/base/sw/intel/tbb41_20130314oss/lib/,
+					-ltbb
+					);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
