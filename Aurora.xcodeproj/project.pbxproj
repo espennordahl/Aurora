@@ -206,18 +206,12 @@
 		2389C21A17549C93004F1F7F /* parseGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseGeometry.h; sourceTree = "<group>"; };
 		2389C21B17549C93004F1F7F /* parseOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseOptions.h; sourceTree = "<group>"; };
 		2389C21D17549C93004F1F7F /* core.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = core.py; sourceTree = "<group>"; };
-		2389C21E17549C93004F1F7F /* core.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = core.pyc; sourceTree = "<group>"; };
 		2389C21F17549C93004F1F7F /* example.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = example.py; sourceTree = "<group>"; };
 		2389C22017549C93004F1F7F /* geometry.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = geometry.py; sourceTree = "<group>"; };
-		2389C22117549C93004F1F7F /* geometry.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = geometry.pyc; sourceTree = "<group>"; };
 		2389C22217549C93004F1F7F /* lights.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = lights.py; sourceTree = "<group>"; };
-		2389C22317549C93004F1F7F /* lights.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = lights.pyc; sourceTree = "<group>"; };
 		2389C22417549C93004F1F7F /* MtoAur.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = MtoAur.py; sourceTree = "<group>"; };
-		2389C22517549C93004F1F7F /* MtoAur.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = MtoAur.pyc; sourceTree = "<group>"; };
 		2389C22617549C93004F1F7F /* shaders.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = shaders.py; sourceTree = "<group>"; };
-		2389C22717549C93004F1F7F /* shaders.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = shaders.pyc; sourceTree = "<group>"; };
 		2389C22817549C93004F1F7F /* UI.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = UI.py; sourceTree = "<group>"; };
-		2389C22917549C93004F1F7F /* UI.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = UI.pyc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -480,18 +474,12 @@
 			isa = PBXGroup;
 			children = (
 				2389C21D17549C93004F1F7F /* core.py */,
-				2389C21E17549C93004F1F7F /* core.pyc */,
 				2389C21F17549C93004F1F7F /* example.py */,
 				2389C22017549C93004F1F7F /* geometry.py */,
-				2389C22117549C93004F1F7F /* geometry.pyc */,
 				2389C22217549C93004F1F7F /* lights.py */,
-				2389C22317549C93004F1F7F /* lights.pyc */,
 				2389C22417549C93004F1F7F /* MtoAur.py */,
-				2389C22517549C93004F1F7F /* MtoAur.pyc */,
 				2389C22617549C93004F1F7F /* shaders.py */,
-				2389C22717549C93004F1F7F /* shaders.pyc */,
 				2389C22817549C93004F1F7F /* UI.py */,
-				2389C22917549C93004F1F7F /* UI.pyc */,
 			);
 			path = PyAurora;
 			sourceTree = "<group>";
@@ -648,7 +636,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
-					/base/sw/zlib-1.2.8/libz.a,
+					"/base/sw/zlib-1.2.8/libz.a",
 					"/base/sw/jsoncpp-src-0.5.0/libs/linux-gcc-4.2.1/libjson_linux-gcc-4.2.1_libmt.a",
 					/usr/local/Cellar/szip/2.1/lib/libsz.a,
 					/usr/local/Cellar/ilmbase/1.0.2/lib/libHalf.a,
@@ -706,7 +694,7 @@
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = (
-					/base/sw/zlib-1.2.8/libz.a,
+					"/base/sw/zlib-1.2.8/libz.a",
 					"/base/sw/jsoncpp-src-0.5.0/libs/linux-gcc-4.2.1/libjson_linux-gcc-4.2.1_libmt.a",
 					/usr/local/Cellar/szip/2.1/lib/libsz.a,
 					/usr/local/Cellar/ilmbase/1.0.2/lib/libHalf.a,
@@ -756,7 +744,7 @@
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				LLVM_LTO = NO;
 				OTHER_LDFLAGS = (
-					/base/sw/zlib-1.2.8/libz.a,
+					"/base/sw/zlib-1.2.8/libz.a",
 					"/base/sw/jsoncpp-src-0.5.0/libs/linux-gcc-4.2.1/libjson_linux-gcc-4.2.1_libmt.a",
 					/usr/local/Cellar/szip/2.1/lib/libsz.a,
 					/usr/local/Cellar/ilmbase/1.0.2/lib/libHalf.a,
@@ -807,7 +795,7 @@
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				LLVM_LTO = NO;
 				OTHER_LDFLAGS = (
-					/base/sw/zlib-1.2.8/libz.a,
+					"/base/sw/zlib-1.2.8/libz.a",
 					"/base/sw/jsoncpp-src-0.5.0/libs/linux-gcc-4.2.1/libjson_linux-gcc-4.2.1_libmt.a",
 					/usr/local/Cellar/szip/2.1/lib/libsz.a,
 					/usr/local/Cellar/ilmbase/1.0.2/lib/libHalf.a,

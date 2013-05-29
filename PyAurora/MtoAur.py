@@ -140,7 +140,7 @@ def parseLight(light):
     return liObj
 
 def parseMesh(mesh, lazy):
-    path = "/Users/espennordahl/Downloads/"
+    path = "/Users/espennordahl/Documents/Aurora/data/geo/"
 
     # select mesh
     cmds.select(mesh.name())
