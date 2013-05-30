@@ -21,24 +21,24 @@
 
 using namespace Aurora;
 
-OpenexrDisplay::OpenexrDisplay(int _width, int _height, std::string file, RenderEnvironment * renderEnv) :
-Display::Display(_width, _height, "openExrDisplay:" + file, renderEnv){
-	fileName = file;
-	pixelBuffer.resizeErase(width, m_height);
-    multisampleBuffer.resize(m_height);
+OpenexrDisplay::OpenexrDisplay(int width, int height, std::string file, RenderEnvironment * renderEnv) :
+Display::Display(width, height, "openExrDisplay:" + file, renderEnv){
+	m_filename = file;
+	m_pixel_buffer.resizeErase(width, m_height);
+    m_multisample_buffer.resize(m_height);
 	for (int i=0; i<m_height; i++) {
-//        pixelBuffer[i].resize(width);
-        multisampleBuffer[i].resize(width);
+//        m_pixel_buffer[i].resize(width);
+        m_multisample_buffer[i].resize(width);
 		for (int j=0; j<width; j++) {
-			Imf::Rgba &p = pixelBuffer[i][j];
+			Imf::Rgba &p = m_pixel_buffer[i][j];
 			p.r = 0.f;
 			p.g = 0.f;
 			p.b = 0.f;
 			p.a = 0.f;
-            multisampleBuffer[i][j] = 0;
+            m_multisample_buffer[i][j] = 0;
 		}
 	}
-    metadata["renderer"] = std::string("Aurora v") + VERSION;
+    m_metadata["renderer"] = std::string("Aurora v") + VERSION;
 }
 
 #pragma mark -
@@ -54,7 +54,7 @@ void OpenexrDisplay::frameEnd(){
 
 
 void OpenexrDisplay::setPixel(int _width, int _height, const Color &col, float alpha){
-	Imf::Rgba &p = pixelBuffer[_height][_width];
+	Imf::Rgba &p = m_pixel_buffer[_height][_width];
 	p.r = col.r;
 	p.g = col.g;
 	p.b = col.b;
@@ -65,7 +65,7 @@ void OpenexrDisplay::appendValue(int _width, int _height, const Color &col, floa
     Color oldCol;
     float oldAlpha;
     getPixel(_width, _height, &oldCol, &oldAlpha);
-    float sampleNum = multisampleBuffer[_width][_height];
+    float sampleNum = ++m_multisample_buffer[_width][_height];
     float weight = 1.f/sampleNum;
     Color newCol = col;
     setPixel(_width, _height, oldCol*(1-weight) + newCol * weight,
@@ -74,15 +74,15 @@ void OpenexrDisplay::appendValue(int _width, int _height, const Color &col, floa
 }
 
 void OpenexrDisplay::getPixel(int _width, int _height, Color *col, float *alpha){
-	col->r = pixelBuffer[_height][_width].r;
-	col->g = pixelBuffer[_height][_width].g;
-	col->b = pixelBuffer[_height][_width].b;
-	*alpha = (float)pixelBuffer[_height][_width].a;
+	col->r = m_pixel_buffer[_height][_width].r;
+	col->g = m_pixel_buffer[_height][_width].g;
+	col->b = m_pixel_buffer[_height][_width].b;
+	*alpha = (float)m_pixel_buffer[_height][_width].a;
 }
 
 
 void OpenexrDisplay::draw(int numLines){
-    std::string tmpfile = fileName + "_tmp";
+    std::string tmpfile = m_filename + "_tmp";
     
     Imf::Header header(width,
             m_height,
@@ -93,7 +93,7 @@ void OpenexrDisplay::draw(int numLines){
             Imf::ZIP_COMPRESSION // compression
             );
 
-    for (StringMap::iterator it = metadata.begin(); it != metadata.end(); ++it){
+    for (StringMap::iterator it = m_metadata.begin(); it != m_metadata.end(); ++it){
 //        LOG_DEBUG("Inserting exr metatada: " << it->first << " : " << it->second);
         header.insert(it->first.c_str(), Imf::StringAttribute(it->second));
     }
@@ -104,18 +104,18 @@ void OpenexrDisplay::draw(int numLines){
                                 Imf::globalThreadCount());
 	
         // init buffer
-    file.setFrameBuffer (&pixelBuffer[0][0], 1, width);
+    file.setFrameBuffer (&m_pixel_buffer[0][0], 1, width);
     
         // write
 	file.writePixels (numLines);
 	int writeResult;
-	writeResult = rename( tmpfile.c_str() , fileName.c_str() );
+	writeResult = rename( tmpfile.c_str() , m_filename.c_str() );
     if (writeResult != 0) {
-        LOG_ERROR("File rename for '" << tmpfile << "' to '" << fileName << "' was unsuccessfull. Error: " << writeResult);
+        LOG_ERROR("File rename for '" << tmpfile << "' to '" << m_filename << "' was unsuccessfull. Error: " << writeResult);
     }
 
 }
 
 void OpenexrDisplay::addMetadata(const std::string &key, const std::string &value){
-    metadata[key] = value;
+    m_metadata[key] = value;
 }

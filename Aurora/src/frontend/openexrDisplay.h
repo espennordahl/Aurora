@@ -34,11 +34,10 @@ namespace Aurora {
         void frameEnd();
 
 	private:
-        Imf::Array2D<Imf::Rgba> pixelBuffer;
-        std::vector<std::vector < int > > multisampleBuffer;
-        StringMap metadata;
-		std::string fileName;
-        pthread_t thread;
+        Imf::Array2D<Imf::Rgba> m_pixel_buffer;
+        std::vector<std::vector < int > > m_multisample_buffer;
+        StringMap m_metadata;
+		std::string m_filename;
 	};
 }
 
