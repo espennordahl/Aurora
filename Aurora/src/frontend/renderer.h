@@ -30,7 +30,7 @@ namespace Aurora {
 		void render();		
 		Camera *renderCam;
 		std::vector<Reference<AuroraObject> > objects;
-		std::vector<Reference<Light> > lights;
+		std::vector<Light* > lights;
 		InfiniteAreaLight *envLight;
 		RenderEnvironment renderEnv;
 		AttributeState *attrs;

@@ -115,7 +115,7 @@ void Renderer::buildRenderEnvironment(){
             if (lights[i]->lightType != type_envLight) {
                 mesh.appendTriangleMesh(lights[i]->shape(), i + numObjects);
             }
-            Reference<Material> black = new ConstantMaterial("Not in use - lightsource", Color(0.f), &renderEnv);
+            Material * black = new ConstantMaterial("Not in use - lightsource", Color(0.f), &renderEnv);
             attrs[i + numObjects].material = black;
             attrs[i + numObjects].emmision = lights[i]->emission();
         }
@@ -171,7 +171,7 @@ public:
                     Sample3D currentSample = sample;
                     Intersection isect = firstIsect;
                     Color pathThroughput = Color(1.f);
-                    Reference<Brdf> currentBrdf;
+                    Brdf *currentBrdf;
                     Vector Nn = Vector(0, 0, 1);
                     bool mattePath = false;
                     RayType rayType = CameraRay;
@@ -188,7 +188,6 @@ public:
                             mattePath = true;
                         }
                         
-                        
                             // emmision
                         if (rayType == CameraRay || rayType == MirrorRay) {
                             Lo += pathThroughput * attrs->emmision;
@@ -203,18 +202,17 @@ public:
                         }
                         
                             // sample lights
-                        int threadNum = 0; // TODO get rid of thread number
                         currentBrdf = attrs->material->getBrdf(Vn, Nn, isect.shdGeo );
                         
                         if (bounces < (*m_render_environment->globals)[MaxDepth]) {
                             int numLights = (int)m_render_environment->lights.size();
-                            Reference<Light> currentLight = m_render_environment->lights[rand() % numLights];
+                            Light* currentLight = m_render_environment->lights[rand() % numLights];
                             
                             
                                 // For diffuse samples we don't need MIS
                             if (currentBrdf->brdfType == MatteBrdf) {
                                 
-                                Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->integrationDomain, bounces, threadNum);
+                                Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->integrationDomain);
                                     // sample light
                                 float costheta = dot(Nn, lightSample.ray.direction);
                                 if (costheta >= 0. && lightSample.pdf > 0.) {
@@ -230,7 +228,7 @@ public:
                             else {
                                 
                                     // light sample
-                                Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->integrationDomain, bounces, threadNum);
+                                Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->integrationDomain);
                                     // sample light
                                 float costheta = dot(Nn, lightSample.ray.direction);
                                 if (costheta > 0. && lightSample.pdf > 0.) {
@@ -316,7 +314,7 @@ public:
                         if (!m_render_environment->accelerationStructure->intersect(&currentSample.ray, &isect)) {
                             if (rayType == MirrorRay) {
                                 for (int i=0; i < m_render_environment->lights.size(); i++) {
-                                    Reference<Light> light = m_render_environment->lights[i];
+                                    Light* light = m_render_environment->lights[i];
                                     if (light->lightType == type_envLight) {
                                         Lo += light->eval(sample, sample.ray.direction) * pathThroughput;
                                     }
@@ -330,7 +328,7 @@ public:
                 
             } else { // camera ray miss
                 for (int i=0; i < m_render_environment->lights.size(); i++) {
-                    Reference<Light> light = m_render_environment->lights[i];
+                    Light* light = m_render_environment->lights[i];
                     if (light->lightType == type_envLight) {
                         // multiplier is a hack to counter the div below
                         Lo += light->eval(sample, sample.ray.direction) * (float)m_num_samples;

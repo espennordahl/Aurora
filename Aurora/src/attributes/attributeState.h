@@ -16,7 +16,7 @@ namespace Aurora {
 	struct AttributeState{
 	public:
 		Color emmision;
-		Reference<Material> material;
+		Material * material;
 //        const Transform *cameraToWorld;
 //        const Transform *worldToCamera;
 //        const Transform *objectToWorld;

@@ -28,7 +28,7 @@ namespace Aurora {
 
 namespace Aurora {
 	struct RenderEnvironment{
-		std::vector<Reference<Light> > lights;
+		std::vector<Light* > lights;
 		AccelerationStructure *accelerationStructure;
 		AttributeState *attributeState;
         AuroraGlobals *globals;

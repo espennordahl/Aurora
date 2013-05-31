@@ -210,7 +210,7 @@ namespace Aurora {
         }
     }
  
-    inline void parseObject(Json::Value &root, RenderEnvironment *renderEnv, std::vector<Reference<AuroraObject> > &objects, std::vector<Reference<Light> > &lights, Transform *camTrans, AuroraGlobals globals){
+    inline void parseObject(Json::Value &root, RenderEnvironment *renderEnv, std::vector<Reference<AuroraObject> > &objects, std::vector<Light* > &lights, Transform *camTrans, AuroraGlobals globals){
         
         
         if( root.size() > 0 ) {
@@ -236,7 +236,7 @@ namespace Aurora {
                 if (objType == "geometry"){
                     string objPath = "";
                     string shdName = "";
-                    Reference<Material> material;
+                    Material * material;
 
                     for( Json::ValueIterator objItr = obj.begin() ; objItr != obj.end() ; objItr++ ) {
                         Json::Value value = *objItr;
@@ -399,7 +399,7 @@ namespace Aurora {
 					Transform *w2c = new Transform(camTrans->inverse(*camTrans));
 					Transform *o2w = new Transform(*transStack * *c2w);
 					Transform *w2o = new Transform(*w2c * *c2o);
-                    Reference<Light> sqrLight = new SquareLight(transStack, c2o, o2w, w2o, c2w, w2c, exposure, color, xScale, yScale, globals[LightSamples]);
+                    Light* sqrLight = new SquareLight(transStack, c2o, o2w, w2o, c2w, w2c, exposure, color, xScale, yScale, globals[LightSamples]);
                     lights.push_back(sqrLight);
                 }
                 else if (objType == "envlight" ){
@@ -438,7 +438,7 @@ namespace Aurora {
 					Transform *w2c = new Transform(camTrans->inverse(*camTrans));
 					Transform *o2w = new Transform(*transStack * *c2w);
 					Transform *w2o = new Transform(*w2c * *c2o);
-                    Reference<Light> envLight = new InfiniteAreaLight(transStack, c2o, o2w, w2o, c2w, w2c, exposure, color, envmap, globals[LightSamples]);
+                    Light* envLight = new InfiniteAreaLight(transStack, c2o, o2w, w2o, c2w, w2c, exposure, color, envmap, globals[LightSamples]);
                     lights.push_back(envLight);
                 }
             }

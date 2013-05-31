@@ -189,7 +189,7 @@
 //    return (1.-roughnessMix) * resultRoughnessA + roughnessMix * resultRoughnessB;
 //}
 //
-//Reference<Brdf> KelemenMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
+//Brdf * KelemenMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
 //    if (reflectance == 1.f) { // exception to get specular response only (for debug purposes)
 //        return specBrdf;   
 //    }

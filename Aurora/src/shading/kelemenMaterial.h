@@ -24,7 +24,7 @@
 //                        int diffColIndex, int specColIndex,
 //                        int roughnessIndex, float reflectance,
 //                        int numSamples);
-//		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
+//		Brdf * getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
 //		
 //        void frameBegin();
 //        void frameEnd();
@@ -35,8 +35,8 @@
 //        float getAlbedo(float costheta, float roughness);
 //        
 //        
-//		Reference<Brdf> diffBrdf;
-//		Reference<Brdf> specBrdf;
+//		Brdf * diffBrdf;
+//		Brdf * specBrdf;
 //        std::vector<std::vector<float> > albedoTable;
 //        Texture2D *albedoTexture;
 //        float reflectance;

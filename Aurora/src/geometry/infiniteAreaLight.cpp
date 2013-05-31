@@ -18,7 +18,7 @@
 
 using namespace Aurora;
 
-InfiniteAreaLight::InfiniteAreaLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float _exposure, Color color, std::string envmap, int _numSamples, std::string name, RenderEnvironment *renderEnv) : Light(o2c, c2o, o2w, w2o, c2w, w2c, _exposure, color, _numSamples, name, renderEnv) {
+InfiniteAreaLight::InfiniteAreaLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float _exposure, Color color, std::string envmap, std::string name, RenderEnvironment *renderEnv) : Light(o2c, c2o, o2w, w2o, c2w, w2c, _exposure, color, name, renderEnv) {
 
     lightType = type_envLight;
     
@@ -29,92 +29,25 @@ InfiniteAreaLight::InfiniteAreaLight( Transform *o2c, Transform *c2o, Transform 
         usingMap = true;
 	}
     
-    
-    for (int t=0; t < NUM_THREADS; t++) {
-        generateSampleBuffer(0,t);
-        generateSampleBuffer(1,t);
-        generateSampleBuffer(2,t);
-    }
-	
-}
-
-void InfiniteAreaLight::generateSampleBuffer(int i, int t){
-    float offset = (float) rand()/RAND_MAX;
-    
-    if (usingMap) {
-        float r[numSamples];
-        for (int j=0; j < numSamples; j++) {
-            r[j] = (offset + (float)j)/numSamples;
-        }
-        for (int j=0; j < numSamples; j++) {
-            int x = rand() % numSamples;
-            float tmp = r[j];
-            r[j] = r[x];
-            r[x] = tmp;
-        }        
-        for (int j=0; j < numSamples; j++) {
-            float x, y;        
-            envMap->sample(r[j], &x, &y);
-            assert(x >= 0.f && x <= 1.f);
-            assert(y >= 0.f && x <= 1.f);
-            randomU[t][i].push_back(x);
-            randomV[t][i].push_back(y);
-        }
-    }
-    else{
-        float offsetY = (float) rand()/RAND_MAX;
-        for (int j=0; j < numSamples; j++) {
-            randomU[t][i].push_back((offset + (float)j)/numSamples);
-            randomV[t][i].push_back((offsetY + (float)j)/numSamples);
-        }
-        for (int j=0; j < numSamples; j++) {
-            int x = rand() % numSamples;
-            float tmp = randomU[t][i][j];
-            randomU[t][i][j] = randomU[t][i][x];
-            randomU[t][i][x] = tmp;
-            
-            x = rand() % numSamples;
-            tmp = randomV[t][i][j];
-            randomV[t][i][j] = randomV[t][i][x];
-            randomV[t][i][x] = tmp;
-        }
-    }
 }
 
 
-Sample3D InfiniteAreaLight::generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain, int depth, int thread ){
-    float x, y;
+Sample3D InfiniteAreaLight::generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain ){
+    float x = (float) rand()/RAND_MAX;
+    float y = (float) rand()/RAND_MAX;
 	Vector dirT;
 	Vector dirW;
 	float pdf = 1.f;
-    if (depth < 3) {
-        if (randomU[thread][depth].size() == 0) {
-            generateSampleBuffer(depth, thread);
-        }
-        x = randomU[thread][depth].back();
-        randomU[thread][depth].pop_back();
-        y = randomV[thread][depth].back();
-        randomV[thread][depth].pop_back();
-
-        if (usingMap) {
-            float vy = 1.f - 2.f * y;
-            float r = sqrtf(std::max(0.f, 1.f - vy*vy));
-            float phi = 2.f * M_PI * x;
-            float vx = r * cosf(phi);
-            float vz = r * sinf(phi);
-            dirW = Vector(vx, vy, vz);
-            dirW = (*worldToCamera)(dirW);
-            pdf = envMap->pdf(x, y, 0.);
-        }
-        else{
-            dirT = SampleHemisphereUniform(x, y);
-            dirW = tangentToWorld(dirT, Nn);
-            pdf = 2.f;
-        }
-    }
-    else {
-        x = (float) rand()/RAND_MAX;
-        y = (float) rand()/RAND_MAX;
+    if (usingMap) {
+        float vy = 1.f - 2.f * y;
+        float r = sqrtf(std::max(0.f, 1.f - vy*vy));
+        float phi = 2.f * M_PI * x;
+        float vx = r * cosf(phi);
+        float vz = r * sinf(phi);
+        dirW = Vector(vx, vy, vz);
+        dirW = (*worldToCamera)(dirW);
+        pdf = envMap->pdf(x, y, 0.);
+    } else {
         pdf = 2.f;
         dirT = SampleHemisphereUniform(x, y);
         dirW = tangentToWorld(dirT, Nn);

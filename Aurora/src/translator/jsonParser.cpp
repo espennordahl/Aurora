@@ -239,7 +239,7 @@ inline Reference<AuroraObject> getGeometry(Transform cameraTransform, Json::Valu
     return aurObj;
 }
 
-inline Reference<Light> getLight(Transform cameraTransform, Json::Value &root, int lightSamples, RenderEnvironment *renderEnv){
+inline Light* getLight(Transform cameraTransform, Json::Value &root, int lightSamples, RenderEnvironment *renderEnv){
     Transform invCam = cameraTransform.inverse(cameraTransform);
         // read all standard data
         // TODO:    std::string name        = getStringAttr("name", root);
@@ -256,12 +256,12 @@ inline Reference<Light> getLight(Transform cameraTransform, Json::Value &root, i
     Transform *w2c = new Transform(cameraTransform.inverse(cameraTransform));
     Transform *o2w = new Transform(*objTransform * *c2w);
     Transform *w2o = new Transform(*w2c * *c2o);
-    Reference<Light> sqrLight = new SquareLight(objTransform, c2o, o2w, w2o, c2w, w2c, exposure, color, xScale, yScale, lightSamples, name, renderEnv);
+    Light* sqrLight = new SquareLight(objTransform, c2o, o2w, w2o, c2w, w2c, exposure, color, xScale, yScale, name, renderEnv);
     
     return sqrLight;
 }
 
-inline Reference<Light> getEnvLight(Transform cameraTransform, Json::Value &root, int lightSamples, RenderEnvironment *renderEnv){
+inline Light* getEnvLight(Transform cameraTransform, Json::Value &root, int lightSamples, RenderEnvironment *renderEnv){
         // read all standard data
         // TODO:    std::string name        = getStringAttr("name", root);
     Transform *objTransform  = new Transform(getTransformAttr("transforms", root));    
@@ -276,7 +276,7 @@ inline Reference<Light> getEnvLight(Transform cameraTransform, Json::Value &root
     Transform *w2c = new Transform(cameraTransform.inverse(cameraTransform));
     Transform *o2w = new Transform(*objTransform * *c2w);
     Transform *w2o = new Transform(*w2c * *c2o);
-    Reference<Light> envLight = new InfiniteAreaLight(objTransform, c2o, o2w, w2o, c2w, w2c, exposure, color, envmap, lightSamples, name, renderEnv);
+    Light* envLight = new InfiniteAreaLight(objTransform, c2o, o2w, w2o, c2w, w2c, exposure, color, envmap, name, renderEnv);
     return envLight;
 }
 
@@ -309,9 +309,9 @@ inline int initShader(const std::string &name, const ShaderAttribute &attr, cons
     return -1;
 }
 
-inline Reference<Material> getMaterial(std::string type, std::string name, Json::Value &root, RenderEnvironment *renderEnv){
+inline Material * getMaterial(std::string type, std::string name, Json::Value &root, RenderEnvironment *renderEnv){
     
-    Reference<Material> mat;
+    Material * mat;
 
     if (type == "kelemenMaterial") {
 //            // diff color
@@ -494,7 +494,7 @@ void JsonParser::parseMaterials(Json::Value &root){
                 
                     // we first check if we're dealing with a light or mesh
                 std::string matType = getStringAttr("type", *objItr);
-                Reference<Material> mat = getMaterial(matType, matName, *objItr, renderEnv); 
+                Material * mat = getMaterial(matType, matName, *objItr, renderEnv); 
             
                     // add to shading engine
                 renderEnv->shadingEngine->registerMaterial(matName, mat);
@@ -580,11 +580,11 @@ void JsonParser::parseGeometry(Json::Value &root){
                     objects.push_back(geo);
                 }
                 else if (objType == "light"){
-                    Reference<Light> light = getLight(*cameraTransform, *objItr, (*renderEnv->globals)[LightSamples], renderEnv);
+                    Light* light = getLight(*cameraTransform, *objItr, (*renderEnv->globals)[LightSamples], renderEnv);
                     lights.push_back(light);
                 }
                 else if (objType == "envlight"){
-                    Reference<Light> light = getEnvLight(*cameraTransform, *objItr, (*renderEnv->globals)[LightSamples], renderEnv);
+                    Light* light = getEnvLight(*cameraTransform, *objItr, (*renderEnv->globals)[LightSamples], renderEnv);
                     lights.push_back(light);
                 }
                 else {

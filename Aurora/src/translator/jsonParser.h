@@ -25,7 +25,7 @@ namespace Aurora {
         JsonParser(std::string filename, RenderEnvironment *_renderEnv);
             
         std::vector<Reference<AuroraObject> >   getObjects() { return objects; };
-        std::vector<Reference<Light> >          getLights()  { return lights;  };
+        std::vector<Light* >          getLights()  { return lights;  };
 
         
             // parses the entire scene description.
@@ -58,7 +58,7 @@ namespace Aurora {
             // TODO: Better way to do this than class variable?
         Transform *cameraTransform;
         std::vector<Reference<AuroraObject> > objects;
-        std::vector<Reference<Light> > lights;
+        std::vector<Light* > lights;
     };
 }
 

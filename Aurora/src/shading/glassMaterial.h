@@ -17,13 +17,13 @@
 //	class GlassMaterial : public Material {
 //	public:
 //		GlassMaterial( std::string name, const Color &specCol, const Color &transCol, float reflectance, float ior, RenderEnvironment *renderEnv );
-//		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
+//		Brdf * getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
 //        void frameBegin();
 //        void frameEnd();
 //
 //	private:
-//		Reference<Brdf> refBrdf;
-//        Reference<Brdf> transmitBrdf;
+//		Brdf * refBrdf;
+//        Brdf * transmitBrdf;
 //        float reflectance;
 //	};
 //}

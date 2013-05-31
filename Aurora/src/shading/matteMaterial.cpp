@@ -23,7 +23,7 @@ colorIndex(diffColorIndex)
 	brdf = new Lambert(name + ":lambert", Color(0.5), renderEnv);
 }
 
-Reference<Brdf> MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo ) {
+Brdf * MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo ) {
 	return brdf;
 }
 

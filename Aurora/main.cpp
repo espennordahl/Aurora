@@ -23,8 +23,8 @@ using namespace Aurora;
 
 int main (int argc, char* const argv[])
 {
-    tbb::task_scheduler_init init(1);
-        //    tbb::task_scheduler_init init(tbb::task_scheduler_init::automatic);
+//    tbb::task_scheduler_init init(1);
+    tbb::task_scheduler_init init(tbb::task_scheduler_init::automatic);
     LOG_INFO("Starting Aurora.");
 
         // unit tests

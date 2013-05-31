@@ -22,8 +22,8 @@ namespace Aurora {
     public:
         ShadingEngine();
         
-        void registerMaterial(std::string materialName, Reference<Material> material);
-        Reference<Material> getMaterial(std::string materialName);
+        void registerMaterial(std::string materialName, Material * material);
+        Material * getMaterial(std::string materialName);
         
         int registerShaderColor(const std::string &shdName, Shader<Color> *shader);
         int registerShaderFloat(const std::string &shdName, Shader<float> *shader);
@@ -34,7 +34,7 @@ namespace Aurora {
         float getFloat(int index, const ShadingGeometry &shdGeo);
         
         
-        std::tr1::unordered_map<std::string, Reference<Material> > materialReg;
+        std::tr1::unordered_map<std::string, Material * > materialReg;
         std::tr1::unordered_map<std::string, int > indexMap;
         std::vector<Shader<Color> *> shdRegColor;
         std::vector<Shader<float> *> shdRegFloat;

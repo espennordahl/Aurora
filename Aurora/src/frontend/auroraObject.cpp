@@ -16,7 +16,7 @@
 
 using namespace Aurora;
 
-AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, Reference<Shape> _shape, Reference<Material> _material ) :
+AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, Reference<Shape> _shape, Material * _material ) :
 FrontEndObject(name, renderEnv), 
 shape(_shape), material(_material) {
 	

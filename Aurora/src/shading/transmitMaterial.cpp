@@ -26,6 +26,6 @@
 //    
 //}
 //
-//Reference<Brdf> TransmitMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
+//Brdf * TransmitMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
 //    return brdf;
 //}

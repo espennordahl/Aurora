@@ -41,7 +41,7 @@
 //
 //                        int numSamples);
 //
-//		Reference<Brdf> getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
+//		Brdf * getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) ;
 //		
 //        void frameBegin();
 //        void frameEnd();
@@ -52,10 +52,10 @@
 //        float getClearcoatAlbedo(float costheta, float roughness);
 //        
 //            // brdfs
-//        Reference<Brdf> m_diffBrdf;
-//        Reference<Brdf> m_bottomBaseSpecBrdf;
-//        Reference<Brdf> m_topBaseSpecBrdf;
-//        Reference<Brdf> m_clearcoatSpecBrdf;
+//        Brdf * m_diffBrdf;
+//        Brdf * m_bottomBaseSpecBrdf;
+//        Brdf * m_topBaseSpecBrdf;
+//        Brdf * m_clearcoatSpecBrdf;
 //
 //            // albedo caches
 //        Texture2D *m_bottomBaseSpecAlbedoTexture;

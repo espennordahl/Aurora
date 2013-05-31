@@ -18,12 +18,12 @@ ShadingEngine::ShadingEngine()
 {
 }
 
-void ShadingEngine::registerMaterial(std::string materialName, Reference<Material> material){
+void ShadingEngine::registerMaterial(std::string materialName, Material * material){
     LOG_DEBUG("Registering material: " << materialName);
     materialReg[materialName] = material;
 }
 
-Reference<Material> ShadingEngine::getMaterial(std::string materialName){
+Material * ShadingEngine::getMaterial(std::string materialName){
     return materialReg[materialName];
 }
 

@@ -15,7 +15,7 @@
 
 using namespace Aurora;
 
-SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, float sizeX, float sizeY, int _numSamples, std::string name, RenderEnvironment *renderEnv) : Light(o2c, c2o, o2w, w2o, c2w, w2c, exposure, color, _numSamples, name, renderEnv) {
+SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, float sizeX, float sizeY, std::string name, RenderEnvironment *renderEnv) : Light(o2c, c2o, o2w, w2o, c2w, w2c, exposure, color, name, renderEnv) {
 	
     lightType = type_areaLight;
     
@@ -33,50 +33,11 @@ SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transf
     Vector v2 = p2 - p3;
     
     lightN = normalize(cross(v1, v2));
-
-    numSamples = std::max(numSamples, 64);
-    for (int t=0; t < NUM_THREADS; t++) {
-        generateSampleBuffer(0,t);
-        generateSampleBuffer(1,t);
-        generateSampleBuffer(2,t);
-    }
 }
 
-void SquareLight::generateSampleBuffer(int i, int t){
-    float offsetX = (float) rand()/RAND_MAX;
-    float offsetY = (float) rand()/RAND_MAX;
-    for (int j=0; j < numSamples; j++) {
-        randomU[t][i].push_back((offsetX + (float)j)/numSamples);
-        randomV[t][i].push_back((offsetY + (float)j)/numSamples);
-    }
-    for (int j=0; j < numSamples; j++) {
-        int x = rand() % numSamples;
-        float tmp = randomU[t][i][j];
-        randomU[t][i][j] = randomU[t][i][x];
-        randomU[t][i][x] = tmp;
-        
-        x = rand() % numSamples;
-        tmp = randomV[t][i][j];
-        randomV[t][i][j] = randomV[t][i][x];
-        randomV[t][i][x] = tmp;
-    }
-}
-
-Sample3D SquareLight::generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain, int depth, int thread){
-    float x, y;
-    if (depth < 3) {
-        if (randomU[thread][depth].size() == 0) {
-            generateSampleBuffer(depth, thread);
-        }
-        x = randomU[thread][depth].back();
-        randomU[thread][depth].pop_back();
-        y = randomV[thread][depth].back();
-        randomV[thread][depth].pop_back();
-	}
-    else {
-        x = (float) rand()/RAND_MAX;
-        y = (float) rand()/RAND_MAX;
-    }
+Sample3D SquareLight::generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain){
+    float x = (float) rand()/RAND_MAX;
+    float y = (float) rand()/RAND_MAX;
 	Point lightP = Point((x-0.5) * xScale * 2, (y-0.5) * yScale * 2, 0.f);
 	lightP = (*objectToCamera)(lightP);
 	Vector dir = lightP - orig;
@@ -160,7 +121,7 @@ void SquareLight::makeRenderable(std::vector<RenderableTriangle> &renderable, At
 	renderable.push_back(tri1);
 	renderable.push_back(tri2);
 	
-	Reference<Material> black = new MatteMaterial("Not In Use - Should be EDF", 0, 1, renderEnv);
+	Material * black = new MatteMaterial("Not In Use - Should be EDF", 0, 1, renderEnv);
 	attrs[index].material = black;
 	attrs[index].emmision = color * powf(2,exposure);
 }

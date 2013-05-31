@@ -20,7 +20,7 @@ namespace Aurora {
         MirrorBrdf
     };
     
-	class Brdf : public ReferenceCounted, public FrontEndObject {
+	class Brdf : public FrontEndObject {
 	public:
         Brdf(std::string objName, RenderEnvironment *renderEnv):FrontEndObject(objName, renderEnv){};
         

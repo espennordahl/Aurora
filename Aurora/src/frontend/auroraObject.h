@@ -20,7 +20,7 @@ namespace Aurora {
 	class AuroraObject : public FrontEndObject, public ReferenceCounted {
 	public:	
 		AuroraObject(std::string name, RenderEnvironment *renderEnv): FrontEndObject(name, renderEnv) { };
-		AuroraObject( std::string name, RenderEnvironment *renderEnv, Reference<Shape> shape, Reference<Material> material );
+		AuroraObject( std::string name, RenderEnvironment *renderEnv, Reference<Shape> shape, Material * material );
 		AuroraObject( std::string name, RenderEnvironment *renderEnv, Reference<Shape> shape, std::string matName );
 
             // Calls the childrens methods of the same name
@@ -48,7 +48,7 @@ namespace Aurora {
             // The surface material to be used during light transport.
             // Only one can be used per object, but you can combine multiple
             // materials through the MaterialMixer material.
-		Reference <Material> material;
+		Material *material;
             // Potentially un diced/-renderable geometry.
 		Reference <Shape> shape;
 	};

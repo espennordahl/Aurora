@@ -18,9 +18,9 @@
 namespace Aurora {
     class InfiniteAreaLight : public Light {
 	public:
-		InfiniteAreaLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, std::string envmap, int numSamples, std::string name, RenderEnvironment *renderEnv);
+		InfiniteAreaLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, std::string envmap, std::string name, RenderEnvironment *renderEnv);
 		
-		Sample3D generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain, int depth, int thread );
+		Sample3D generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain );
 		
 		Color eval( const Sample3D &sample, const Vector &Nn ) ;
 		
@@ -40,9 +40,6 @@ namespace Aurora {
         
 	private:
 		Texture2D *envMap;
-        void generateSampleBuffer(int i, int t);
-        std::vector<float> randomU[NUM_THREADS][3];
-        std::vector<float> randomV[NUM_THREADS][3];
         bool usingMap;
 	};
 }

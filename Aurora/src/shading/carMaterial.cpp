@@ -168,7 +168,7 @@
 //#pragma mark -
 //#pragma mark importance sampling
 //
-//Reference<Brdf> CarMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
+//Brdf * CarMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
 //    
 //        // Clearcoat layer
 //    
