@@ -24,26 +24,26 @@ namespace Aurora {
 		Color(const Vector &v);
 		Color(const Point &p);
 		
-		Color operator+(const Color &col);
+		const Color operator+(const Color &col)const;
 		Color &operator+=(const Color &col);
-		Color operator+(float f);
+		const Color operator+(float f) const;
 		Color &operator+=(float f);
 		
-		Color operator-(const Color &col);
+		const Color operator-(const Color &col)const;
 		Color &operator-=(const Color &col);
-		Color operator-(float f);
+		const Color operator-(float f)const;
 		Color &operator-=(float f);
 		
-		Color operator*(const Color &col);
+		const Color operator*(const Color &col) const;
 		Color &operator*=(const Color &col);
-		Color operator*(float f);
+		const Color operator*(float f) const;
 		Color &operator*=(float f);
-		Color operator*(double d);
+		const Color operator*(double d) const;
 		Color &operator*=(double d);
 		
-		Color operator/(const Color &col);
+		const Color operator/(const Color &col)const;
 		Color &operator/=(const Color &col);
-		Color operator/(float f);
+		const Color operator/(float f) const;
 		Color &operator/=(float f);
 		
         float &operator[](int index);

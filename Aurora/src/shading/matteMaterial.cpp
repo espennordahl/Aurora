@@ -20,15 +20,18 @@ MatteMaterial::MatteMaterial( std::string name, int diffColorIndex, int numSampl
 Material(name, renderEnv),
 colorIndex(diffColorIndex)
 {
-	brdf = new Lambert(name + ":lambert", Color(1,0,1), numSamples, renderEnv);
+	brdf = new Lambert(name + ":lambert", Color(0.5), renderEnv);
 }
 
-Reference<Brdf> MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ) {
-    lambertParameters params = {
-        renderEnv->shadingEngine->getColor(colorIndex, shdGeo)
-    };
-    brdf->setParameters(&params, thread);
+Reference<Brdf> MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo ) {
 	return brdf;
+}
+
+LambertParameters MatteMaterial::getBrdfParameters(const ShadingGeometry &shdGeo) {
+LambertParameters params = {
+    renderEnv->shadingEngine->getColor(colorIndex, shdGeo)
+};
+    return params;
 }
 
 

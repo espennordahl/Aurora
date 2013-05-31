@@ -18,15 +18,13 @@ namespace Aurora {
 	public:
 		Constant(std::string name, Color col, RenderEnvironment *renderEnv);
 		
-		Sample3D getSample(const Vector &Vn, const Vector &Nn, int depth, int thread);
-		Color evalSampleTangent(const Vector &Ln, const Vector &Vn, int thread);
-		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, int thread);
+		Sample3D getSample(const Vector &Vn, const Vector &Nn) const;
+		Color evalSampleTangent(const Vector &Ln, const Vector &Vn) const;
+		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn)const;
 		
         void frameBegin();
         void frameEnd();
-        float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, int thread) const;
-        void setParameters(void *params, int thread){};
-        void initRoughness(bool mattePath, int thread){};
+        float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const;
 
     private:
         Color col;

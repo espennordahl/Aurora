@@ -16,7 +16,7 @@ Material(name, renderEnv)
     brdf = new Constant(name, col, renderEnv);
 }
 
-Reference<Brdf> ConstantMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath, int thread ){
+Reference<Brdf> ConstantMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo){
     return brdf;
 }
 

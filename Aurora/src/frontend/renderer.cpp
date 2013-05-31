@@ -204,7 +204,7 @@ public:
                         
                             // sample lights
                         int threadNum = 0; // TODO get rid of thread number
-                        currentBrdf = attrs->material->getBrdf(Vn, Nn, isect.shdGeo, mattePath, threadNum);
+                        currentBrdf = attrs->material->getBrdf(Vn, Nn, isect.shdGeo );
                         
                         if (bounces < (*m_render_environment->globals)[MaxDepth]) {
                             int numLights = (int)m_render_environment->lights.size();
@@ -222,7 +222,7 @@ public:
                                     if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
                                         li = 0;
                                     Lo += lightSample.color *
-                                    currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, threadNum) * li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
+                                    currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn) * li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
                                 }
                             }
                             
@@ -234,7 +234,7 @@ public:
                                     // sample light
                                 float costheta = dot(Nn, lightSample.ray.direction);
                                 if (costheta > 0. && lightSample.pdf > 0.) {
-                                    float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn, 0); // TODO tid
+                                    float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn);
                                     if (brdfPdf > 0.) {
                                         float li = 1;
                                         if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
@@ -242,7 +242,7 @@ public:
                                         if (li != 0) {
                                             float weight = PowerHeuristic(1, lightSample.pdf, 1, brdfPdf);
                                             Lo += lightSample.color * weight *
-                                            currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, threadNum) * li *
+                                            currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn) * li *
                                             costheta * pathThroughput * (float)numLights / lightSample.pdf;
                                         }
                                     }
@@ -250,7 +250,7 @@ public:
                                 
                                 
                                     // brdf sample
-                                Sample3D brdfSample = currentBrdf->getSample(Vn, Nn, bounces, threadNum);
+                                Sample3D brdfSample = currentBrdf->getSample(Vn, Nn);
                                 brdfSample.ray.origin = orig;
                                 costheta = dot(Nn, brdfSample.ray.direction);
                                 if (costheta > 0.) {
@@ -271,7 +271,7 @@ public:
                             
                         }
                             // sample brdf
-                        currentSample = currentBrdf->getSample(Vn, Nn, bounces, threadNum);
+                        currentSample = currentBrdf->getSample(Vn, Nn);
                         if ( currentSample.pdf <= 0.f ) {
                             break;
                         }

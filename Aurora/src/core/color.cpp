@@ -50,14 +50,14 @@ r(p.x),g(p.y),b(p.z)
 #pragma mark Operators
 
 // Addition
-Color Color::operator+(const Color &col){
+const Color Color::operator+(const Color &col)const{
 	return Color(r+col.r, g+col.g, b+col.b);
 }
 Color &Color::operator+=(const Color &col){
 	r += col.r; g += col.g; b += col.b;
 	return *this;
 }
-Color Color::operator+(float f){
+const Color Color::operator+(float f)const{
 	return Color(r+f, g+f, b+f);
 }
 Color &Color::operator+=(float f){
@@ -66,14 +66,14 @@ Color &Color::operator+=(float f){
 }
 
 // Subtraction
-Color Color::operator-(const Color &col){
+const Color Color::operator-(const Color &col)const{
 	return Color(r+col.r, g+col.g, b+col.b);
 }
 Color &Color::operator-=(const Color &col){
 	r -= col.r; g -= col.g; b -= col.b;
 	return *this;
 }
-Color Color::operator-(float f){
+const Color Color::operator-(float f)const{
 	return Color(r-f, g-f, b-f);
 }
 Color &Color::operator-=(float f){
@@ -82,21 +82,21 @@ Color &Color::operator-=(float f){
 }
 
 // Multiplication
-Color Color::operator*(const Color &col){
+const Color Color::operator*(const Color &col) const{
 	return Color(r*col.r, g*col.g, b*col.b);
 }
 Color &Color::operator*=(const Color &col){
 	r *= col.r; g *= col.g; b *= col.b;
 	return *this;
 }
-Color Color::operator*(float f){
+const Color Color::operator*(float f) const{
 	return Color(r*f, g*f, b*f);
 }
 Color &Color::operator*=(float f){
 	r *= f; g *= f; b *= f;
 	return *this;
 }
-Color Color::operator*(double d){
+const Color Color::operator*(double d) const{
 	return Color(r*d, g*d, b*d);
 }
 Color &Color::operator*=(double d){
@@ -105,14 +105,14 @@ Color &Color::operator*=(double d){
 }
 
 // Division
-Color Color::operator/(const Color &col){
+const Color Color::operator/(const Color &col)const{
 	return Color(r/col.r, g/col.g, b/col.b);
 }
 Color &Color::operator/=(const Color &col){
 	r /= col.r; g /= col.g; b /= col.b;
 	return *this;
 }
-Color Color::operator/(float f){
+const Color Color::operator/(float f)const{
 	float d = 1/f;
 	return Color(r*d, g*d, b*d);
 }
