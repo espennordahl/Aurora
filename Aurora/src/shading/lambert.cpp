@@ -40,8 +40,8 @@ void Lambert::frameEnd(){
 Sample3D Lambert::getSample(const Vector &Vn, const Vector &Nn) const{
 #ifdef USE_HALTON
     const int i = m_halton_index.fetch_and_increment();
-    float r1 = m_sampler.sample(0, i);
-    float r2 = m_sampler.sample(1, i);
+    float r1 = m_sampler.sample(SURFACE_DOMAIN_X, i);
+    float r2 = m_sampler.sample(SURFACE_DOMAIN_Y, i);
 #else
     float r1 = (float) rand()/RAND_MAX;
     float r2 = (float) rand()/RAND_MAX;

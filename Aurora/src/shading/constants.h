@@ -39,7 +39,17 @@
 #define SPECALBEDO_ROUGHNESSS_ENTRIES 32
 #define SPECALBEDO_REFLECTANCE_ENTRIES 21
 
-#define USE_HALTON
+    // quasi monte carlo
+    //#define USE_HALTON
+
+#define CAMERA_DOMAIN_X 0
+#define CAMERA_DOMAIN_Y 1
+
+#define SURFACE_DOMAIN_X 2
+#define SURFACE_DOMAIN_Y 3
+
+#define LIGHT_DOMAIN_X 4
+#define LIGHT_DOMAIN_Y 5
 
 #define VERSION "0.2"
 

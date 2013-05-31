@@ -42,8 +42,8 @@ SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transf
 Sample3D SquareLight::generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain){
 #ifdef USE_HALTON
     const int i = m_halton_index.fetch_and_increment();
-    float x = m_sampler.sample(2, i);
-    float y = m_sampler.sample(3, i);
+    float x = m_sampler.sample(LIGHT_DOMAIN_X, i);
+    float y = m_sampler.sample(LIGHT_DOMAIN_Y, i);
 #else
     float x = (float) rand()/RAND_MAX;
     float y = (float) rand()/RAND_MAX;

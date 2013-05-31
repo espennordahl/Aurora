@@ -145,9 +145,10 @@ public:
     IntegrateParallel(int width,
                       int height,
                       int num_samples,
+                      int sample_index,
                       RenderEnvironment *render_environment,
                       OpenexrDisplay *display):
-    m_width(width), m_height(height), m_num_samples(num_samples),
+    m_width(width), m_height(height), m_num_samples(num_samples), m_sample_index(sample_index),
     m_render_environment(render_environment), m_display(display)
     {}
     
@@ -157,7 +158,7 @@ public:
             int x = i % m_width;
             Sample2D current_sample_2d = Sample2D(x, y);
             
-            Sample3D sample = m_render_environment->renderCam->convertSample(current_sample_2d);
+            Sample3D sample = m_render_environment->renderCam->convertSample(current_sample_2d, m_sample_index);
             Color Lo = Color(0.f);
             float alpha = 0.f;
             Intersection firstIsect;
@@ -345,6 +346,7 @@ private:
     int m_width;
     int m_height;
     int m_num_samples;
+    int m_sample_index;
     RenderEnvironment *m_render_environment;
     OpenexrDisplay *m_display;
 };
@@ -397,6 +399,7 @@ void Renderer::renderImageTBB(){
                           IntegrateParallel(width,
                                             height,
                                             (*renderEnv.globals)[LightSamples],
+                                            i,
                                             &renderEnv,
                                             displayDriver
                                             )
