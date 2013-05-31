@@ -15,12 +15,15 @@
 
 using namespace Aurora;
 
+tbb::atomic<int> Lambert::m_halton_index = tbb::atomic<int>();
+
 Lambert::Lambert(std::string name, Color col, RenderEnvironment *renderEnv) :
 Brdf(name, renderEnv),
 color(col)
 {
     brdfType = MatteBrdf;
     integrationDomain = Hemisphere;
+    m_sampler.init_faure();
 }
 
 #pragma mark -
@@ -35,8 +38,16 @@ void Lambert::frameEnd(){
 }
 
 Sample3D Lambert::getSample(const Vector &Vn, const Vector &Nn) const{
+#ifdef USE_HALTON
+    const int i = m_halton_index.fetch_and_increment();
+    float r1 = m_sampler.sample(0, i);
+    float r2 = m_sampler.sample(1, i);
+#else
     float r1 = (float) rand()/RAND_MAX;
     float r2 = (float) rand()/RAND_MAX;
+#endif
+    assert(r1 >= 0. && r1 <= 1.f);
+    assert(r2 >= 0. && r2 <= 1.f);
     
     Vector dir = SampleHemisphereUniform(r1, r2);
     return Sample3D(Ray(normalize(tangentToWorld(dir, Nn)), Point(0), RAY_BIAS, 1000000.f), M_PI_INV * 0.5, color * M_PI_INV);

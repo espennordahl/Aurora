@@ -401,7 +401,9 @@ void Renderer::renderImageTBB(){
                                             displayDriver
                                             )
                           );
-        displayDriver->draw(height);
+        if(i % 5 == 0){
+            displayDriver->draw(height);
+        }
         LOG_INFO("Render progress: " << 100 * (i+1)/(float)multisamples << "%");
     }
 }

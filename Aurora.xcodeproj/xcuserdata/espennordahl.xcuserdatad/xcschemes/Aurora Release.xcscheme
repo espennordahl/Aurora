@@ -57,6 +57,13 @@
             ReferencedContainer = "container:Aurora.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "DYLD_LIBRARY_PATH"
+            value = "/base/sw/ocio/lib:/base/sw/oiio/dist/macosx/lib:/base/sw/intel/tbb41_20130314oss/lib"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

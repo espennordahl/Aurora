@@ -15,6 +15,8 @@
 
 using namespace Aurora;
 
+tbb::atomic<int> SquareLight::m_halton_index = tbb::atomic<int>();
+
 SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, float sizeX, float sizeY, std::string name, RenderEnvironment *renderEnv) : Light(o2c, c2o, o2w, w2o, c2w, w2c, exposure, color, name, renderEnv) {
 	
     lightType = type_areaLight;
@@ -33,11 +35,19 @@ SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transf
     Vector v2 = p2 - p3;
     
     lightN = normalize(cross(v1, v2));
+    
+    m_sampler.init_faure();
 }
 
 Sample3D SquareLight::generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain){
+#ifdef USE_HALTON
+    const int i = m_halton_index.fetch_and_increment();
+    float x = m_sampler.sample(2, i);
+    float y = m_sampler.sample(3, i);
+#else
     float x = (float) rand()/RAND_MAX;
     float y = (float) rand()/RAND_MAX;
+#endif
 	Point lightP = Point((x-0.5) * xScale * 2, (y-0.5) * yScale * 2, 0.f);
 	lightP = (*objectToCamera)(lightP);
 	Vector dir = lightP - orig;

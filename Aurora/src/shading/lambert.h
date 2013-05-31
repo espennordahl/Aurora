@@ -9,8 +9,11 @@
 #ifndef Aurora_lambert_h
 #define Aurora_lambert_h
 
+#include <tbb/atomic.h>
+
 #include "core.h"
 #include "brdf.h"
+#include "halton_sampler.h"
 
 namespace Aurora {
     
@@ -28,6 +31,9 @@ namespace Aurora {
 
 	private:
         Color color;
+        Halton_sampler m_sampler;
+        
+        static tbb::atomic<int> m_halton_index;
 	};
 }
 

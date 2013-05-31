@@ -9,6 +9,9 @@
 #ifndef Aurora_squareLight_h
 #define Aurora_squareLight_h
 
+#include <tbb/atomic.h>
+
+#include "halton_sampler.h"
 #include "core.h"
 #include "light.h"
 #include "attributeState.h"
@@ -39,6 +42,10 @@ namespace Aurora {
 		float xScale;
 		float yScale;
         Vector lightN;
+        Halton_sampler m_sampler;
+        
+        static tbb::atomic<int> m_halton_index;
+
 	};
 }
 

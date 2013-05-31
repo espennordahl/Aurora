@@ -212,6 +212,9 @@
 		2389C22417549C93004F1F7F /* MtoAur.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = MtoAur.py; sourceTree = "<group>"; };
 		2389C22617549C93004F1F7F /* shaders.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = shaders.py; sourceTree = "<group>"; };
 		2389C22817549C93004F1F7F /* UI.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = UI.py; sourceTree = "<group>"; };
+		23B1685C17589E7D00E81FBD /* halton_enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halton_enum.h; sourceTree = "<group>"; };
+		23B1685D17589E7D00E81FBD /* halton_gen.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = halton_gen.py; sourceTree = "<group>"; };
+		23B1685E17589E7D00E81FBD /* halton_sampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halton_sampler.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +260,7 @@
 		2389C0F517549C93004F1F7F /* external */ = {
 			isa = PBXGroup;
 			children = (
+				23B1685B17589E7D00E81FBD /* halton */,
 				2389C0F617549C93004F1F7F /* catch */,
 			);
 			path = external;
@@ -484,6 +488,16 @@
 			path = PyAurora;
 			sourceTree = "<group>";
 		};
+		23B1685B17589E7D00E81FBD /* halton */ = {
+			isa = PBXGroup;
+			children = (
+				23B1685C17589E7D00E81FBD /* halton_enum.h */,
+				23B1685D17589E7D00E81FBD /* halton_gen.py */,
+				23B1685E17589E7D00E81FBD /* halton_sampler.h */,
+			);
+			path = halton;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -650,8 +664,8 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
-					-L/base/sw/intel/tbb41_20130314oss/lib/,
-					-ltbb
+					"-L/base/sw/intel/tbb41_20130314oss/lib/",
+					"-ltbb",
 				);
 				SDKROOT = macosx;
 			};
@@ -675,6 +689,7 @@
 				GCC_CW_ASM_SYNTAX = YES;
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_SHORT_ENUMS = NO;
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -695,6 +710,7 @@
 				LD_GENERATE_MAP_FILE = NO;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"/base/sw/zlib-1.2.8/libz.a",
 					"/base/sw/jsoncpp-src-0.5.0/libs/linux-gcc-4.2.1/libjson_linux-gcc-4.2.1_libmt.a",
@@ -710,8 +726,8 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
-					-L/base/sw/intel/tbb41_20130314oss/lib/,
-					-ltbb	
+					"-L/base/sw/intel/tbb41_20130314oss/lib/",
+					"-ltbb",
 				);
 				SDKROOT = macosx;
 			};
@@ -723,6 +739,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_X86_VECTOR_INSTRUCTIONS = default;
+				CURRENT_PROJECT_VERSION = 0.2;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_KERNEL_DEVELOPMENT = NO;
 				GCC_FAST_MATH = NO;
@@ -733,6 +750,7 @@
 				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = YES;
+				GCC_UNROLL_LOOPS = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					/usr/local/Cellar/szip/2.1/include,
@@ -766,10 +784,9 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
-					-L/base/sw/intel/tbb41_20130314oss/lib/,
-					-ltbb
-					);
-	
+					"-L/base/sw/intel/tbb41_20130314oss/lib/",
+					"-ltbb",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -780,6 +797,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_X86_VECTOR_INSTRUCTIONS = default;
+				CURRENT_PROJECT_VERSION = 0.2;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_KERNEL_DEVELOPMENT = NO;
 				GCC_FAST_MATH = NO;
@@ -788,8 +806,10 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = NO;
 				GCC_NO_COMMON_BLOCKS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = YES;
+				GCC_UNROLL_LOOPS = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					/usr/local/Cellar/szip/2.1/include,
@@ -823,9 +843,9 @@
 					/base/sw/embree/build/librenderer.a,
 					/base/sw/embree/build/librtcore.a,
 					/base/sw/embree/build/libsys.a,
-					-L/base/sw/intel/tbb41_20130314oss/lib/,
-					-ltbb
-					);
+					"-L/base/sw/intel/tbb41_20130314oss/lib/",
+					"-ltbb",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
