@@ -17,12 +17,12 @@ namespace Aurora{
 	
 	class Display : FrontEndObject{
 	protected:
-		std::vector <std::vector<Color> >		cPixels;
-		std::vector<std::vector<float> >		aPixels;
+		std::vector <std::vector<Color> >		m_cPixels;
+		std::vector<std::vector<float> >		m_aPixels;
 		int m_height;
-		int width;
+		int m_width;
 	public:
-		Display(int _width, int _height, std::string name, RenderEnvironment *renderEnv);
+		Display(int width, int height, std::string name, RenderEnvironment *renderEnv);
 		Display(const std::vector<std::vector<Color> > &colors, const std::vector<std::vector<float> > &alpha, std::string name, RenderEnvironment *renderEnv);
 		Display(const std::vector<std::vector<Color> > &colors, std::string name, RenderEnvironment *renderEnv);
 		

@@ -28,18 +28,14 @@ namespace Aurora {
         int registerShaderColor(const std::string &shdName, Shader<Color> *shader);
         int registerShaderFloat(const std::string &shdName, Shader<float> *shader);
         int getShaderIndex(const std::string &shdName);
-//        int registerConstantColor(std::string attrName, Color c);
-//        int registerConstantFloat(std::string attrName, float f);
         Color getColor(int index, const ShadingGeometry &shdGeo);
         float getFloat(int index, const ShadingGeometry &shdGeo);
         
         
-        std::tr1::unordered_map<std::string, Material * > materialReg;
-        std::tr1::unordered_map<std::string, int > indexMap;
-        std::vector<Shader<Color> *> shdRegColor;
-        std::vector<Shader<float> *> shdRegFloat;
-//        std::vector<Color> colorCache;
-//        std::vector<float> floatCache;
+        std::tr1::unordered_map<std::string, Material * > m_material_map;
+        std::tr1::unordered_map<std::string, int > m_index_map;
+        std::vector<Shader<Color> *> m_shd_map_color;
+        std::vector<Shader<float> *> m_shd_map_float;
     };
 }
 

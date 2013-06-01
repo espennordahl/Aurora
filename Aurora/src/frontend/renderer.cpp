@@ -106,8 +106,8 @@ void Renderer::buildRenderEnvironment(){
         attrs = new AttributeState[numObjects + numLights];
         EmbreeMesh mesh;
         for (int i=0; i < numObjects; i++) {
-            mesh.appendTriangleMesh(objects[i]->shape, i);
-            attrs[i].material = objects[i]->material;
+            mesh.appendTriangleMesh(objects[i]->m_shape, i);
+            attrs[i].material = objects[i]->m_material;
             attrs[i].emmision = Color(0.);
         }
         for (int i=0; i < numLights; i++) {
@@ -211,9 +211,9 @@ public:
                             
                             
                                 // For diffuse samples we don't need MIS
-                            if (currentBrdf->brdfType == MatteBrdf) {
+                            if (currentBrdf->m_brdfType == MatteBrdf) {
                                 
-                                Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->integrationDomain);
+                                Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
                                     // sample light
                                 float costheta = dot(Nn, lightSample.ray.direction);
                                 if (costheta >= 0. && lightSample.pdf > 0.) {
@@ -230,7 +230,7 @@ public:
                             else {
                                 
                                     // light sample
-                                Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->integrationDomain);
+                                Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
                                     // sample light
                                 float costheta = dot(Nn, lightSample.ray.direction);
                                 if (costheta > 0. && lightSample.pdf > 0.) {
@@ -254,7 +254,7 @@ public:
                                 brdfSample.ray.origin = orig;
                                 costheta = dot(Nn, brdfSample.ray.direction);
                                 if (costheta > 0.) {
-                                    float lightPdf = currentLight->pdf(&brdfSample, Nn, currentBrdf->integrationDomain);
+                                    float lightPdf = currentLight->pdf(&brdfSample, Nn, currentBrdf->m_integrationDomain);
                                     if (lightPdf > 0. && brdfSample.pdf > 0.) {
                                         float li = 1;
                                         if (m_render_environment->accelerationStructure->intersectBinary(&brdfSample.ray))
@@ -275,12 +275,12 @@ public:
                         if ( currentSample.pdf <= 0.f ) {
                             break;
                         }
-                        if (currentBrdf->brdfType != MirrorBrdf) {
+                        if (currentBrdf->m_brdfType != MirrorBrdf) {
                             pathThroughput *= currentSample.color * dot(Nn, currentSample.ray.direction) / currentSample.pdf;
                             if (pathThroughput.isBlack()) {
                                 break;
                             }
-                            if (currentBrdf->brdfType == SpecBrdf) {
+                            if (currentBrdf->m_brdfType == SpecBrdf) {
                                 rayType = SpecularRay;
                             }
                             else {
@@ -308,7 +308,7 @@ public:
                         currentSample.ray.origin = orig;
                         
                             // if we're a mirror, we don't increment the bounce
-                        if (currentBrdf->brdfType == MirrorBrdf) {
+                        if (currentBrdf->m_brdfType == MirrorBrdf) {
                             --bounces;
                         }
                         trueBounces++;

@@ -16,38 +16,38 @@
 
 using namespace Aurora;
 
-AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, std::tr1::shared_ptr<Shape> _shape, Material * _material ) :
+AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, std::tr1::shared_ptr<Shape> shape, Material * material ) :
 FrontEndObject(name, renderEnv), 
-shape(_shape), material(_material) {
+m_shape(shape), m_material(material) {
 	
 }
 
-AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, std::tr1::shared_ptr<Shape> _shape, std::string _matName ):
+AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, std::tr1::shared_ptr<Shape> shape, std::string matName ):
 FrontEndObject(name, renderEnv),
-shape(_shape), matName(_matName)
+m_shape(shape), m_matName(matName)
 {
     
 }
 void AuroraObject::frameBegin(){
-    LOG_DEBUG("Assigning material " << matName << " for object: " << name);
-    material = renderEnv->shadingEngine->getMaterial(matName);
-    material->frameBegin();
+    LOG_DEBUG("Assigning material " << m_matName << " for object: " << m_name);
+    m_material = m_renderEnv->shadingEngine->getMaterial(m_matName);
+    m_material->frameBegin();
 }
 
 void AuroraObject::frameEnd(){
-    material->frameEnd();
+    m_material->frameEnd();
 }
 
 BBox AuroraObject::worldBound(){
-	return shape->worldBound();
+	return m_shape->worldBound();
 }
 
 BBox AuroraObject::objectBound(){
-	return shape->objectBound();
+	return m_shape->objectBound();
 }
 
 void AuroraObject::dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced){
-	shape->dice(diced);
+	m_shape->dice(diced);
 }
 
 void AuroraObject::makeRenderable( std::vector<RenderableTriangle> &renderable, AttributeState *attrs, int index){
@@ -59,14 +59,14 @@ void AuroraObject::makeRenderable( std::vector<RenderableTriangle> &renderable, 
 	}
     
         // set up attribute state
-	attrs[index].material = material;
+	attrs[index].material = m_material;
 	attrs[index].emmision = Color(0);
         // TODO: Support all transforms
 //    attrs[index].cameraToWorld = shape->cameraToWorld;
 //    attrs[index].worldToCamera = shape->worldToCamera;
 //    attrs[index].objectToWorld = shape->objectToWorld;
 //    attrs[index].worldToObject = shape->worldToObject;
-    attrs[index].cameraToObject = shape->cameraToObject;
-    attrs[index].objectToCamera = shape->objectToCamera;
+    attrs[index].cameraToObject = m_shape->cameraToObject;
+    attrs[index].objectToCamera = m_shape->objectToCamera;
 
 }

@@ -22,19 +22,19 @@ namespace Aurora {
             // TODO: How do I move the implementation to a .cpp file without
             // the linker complaining?
         Texture2DShader(std::string filename):
-        texture(new Texture2D(filename))
+        m_texture(new Texture2D(filename))
         {
-            texName = filename;
+            m_texture_name = filename;
         }
         
         T evaluate(const ShadingGeometry &shdGeo){
                 // TODO: Should probably floor elsewhere
-            return texture->read(shdGeo.st.u - floor(shdGeo.st.u), shdGeo.st.v - floor(shdGeo.st.v), 0.);
+            return m_texture->read(shdGeo.st.u - floor(shdGeo.st.u), shdGeo.st.v - floor(shdGeo.st.v), 0.);
         }
         
     private:
-        std::string texName;
-        Texture2D *texture;
+        std::string m_texture_name;
+        Texture2D *m_texture;
     };
 }
 

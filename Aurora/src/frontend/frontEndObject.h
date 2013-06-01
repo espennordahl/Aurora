@@ -16,17 +16,17 @@ namespace Aurora {
     
     class FrontEndObject{
     public:
-        FrontEndObject(std::string objName, RenderEnvironment *_renderEnv):
-        renderEnv(_renderEnv),
-        name(objName)
+        FrontEndObject(std::string objName, RenderEnvironment *renderEnv):
+        m_renderEnv(renderEnv),
+        m_name(objName)
         {};
         virtual ~FrontEndObject(){};
 
         virtual void frameBegin() = 0;
         virtual void frameEnd() = 0;
         
-        std::string name;
-        RenderEnvironment *renderEnv;
+        std::string m_name;
+        RenderEnvironment *m_renderEnv;
     };
 }
 

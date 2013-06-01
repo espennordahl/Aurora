@@ -84,7 +84,7 @@ void OpenexrDisplay::getPixel(int _width, int _height, Color *col, float *alpha)
 void OpenexrDisplay::draw(int numLines){
     std::string tmpfile = m_filename + "_tmp";
     
-    Imf::Header header(width,
+    Imf::Header header(m_width,
             m_height,
             1, // aspect ratio
             Imath::V2f (0, 0), //screen window center
@@ -104,7 +104,7 @@ void OpenexrDisplay::draw(int numLines){
                                 Imf::globalThreadCount());
 	
         // init buffer
-    file.setFrameBuffer (&m_pixel_buffer[0][0], 1, width);
+    file.setFrameBuffer (&m_pixel_buffer[0][0], 1, m_width);
     
         // write
 	file.writePixels (numLines);

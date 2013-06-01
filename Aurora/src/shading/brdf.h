@@ -31,8 +31,9 @@ namespace Aurora {
 		virtual Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, const LambertParameters &parameters) const = 0;
 		virtual float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const = 0;
         virtual ~Brdf(){};
-        BrdfType brdfType;
-        IntegrationDomain integrationDomain;
+        
+        BrdfType m_brdfType;
+        IntegrationDomain m_integrationDomain;
 	};
 }
 

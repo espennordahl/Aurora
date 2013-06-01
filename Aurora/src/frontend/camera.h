@@ -19,20 +19,20 @@ namespace Aurora {
 	class Camera {
     public:
         Camera();
-        Camera(float _fov, int _width, int _height, int _mpixels);
+        Camera(float fov, int width, int height, int mpixels);
         
         Sample3D convertSample( const Sample2D &sample2d, int i );
     
-        int getWidthSamples() { return widthSamples; }
-        int getHeightSamples() { return heightSamples; }
-        int getPixelSamples(){ return pixelSamples; }
+        int getWidthSamples() { return m_widthSamples; }
+        int getHeightSamples() { return m_heightSamples; }
+        int getPixelSamples(){ return m_pixelSamples; }
         
     
     protected:
-        int widthSamples;
-        int heightSamples;
-        int pixelSamples;
-        float fov;
+        int m_widthSamples;
+        int m_heightSamples;
+        int m_pixelSamples;
+        float m_fov;
 
         Halton_enum m_halton_enum;
         Halton_sampler m_sampler;

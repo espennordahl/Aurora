@@ -29,14 +29,14 @@ Brdf * MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const Shading
 
 LambertParameters MatteMaterial::getBrdfParameters(const ShadingGeometry &shdGeo, Brdf *brdf) {
 LambertParameters params = {
-    renderEnv->shadingEngine->getColor(colorIndex, shdGeo)
+    m_renderEnv->shadingEngine->getColor(colorIndex, shdGeo)
 };
     return params;
 }
 
 
 void MatteMaterial::frameBegin(){
-    LOG_DEBUG(name << ": FrameBegin!");
+    LOG_DEBUG(m_name << ": FrameBegin!");
     brdf->frameBegin();
 }
 

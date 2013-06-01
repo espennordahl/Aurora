@@ -16,12 +16,12 @@
 namespace Aurora {
     template <typename T> class ConstantShader : public Shader<T> {
     public:
-        ConstantShader(T _value): value(_value){};
+        ConstantShader(T value): m_value(value){};
         
-        T evaluate(const ShadingGeometry &shdGeo){ return value; };
+        T evaluate(const ShadingGeometry &shdGeo){ return m_value; };
         
     private:
-        T value;
+        T m_value;
     };
 }
 

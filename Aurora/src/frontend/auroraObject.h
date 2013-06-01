@@ -44,13 +44,13 @@ namespace Aurora {
 		void makeRenderable(std::vector<RenderableTriangle> &renderable, AttributeState *attrs, int index);
                 
             // During parsing we only store the material name.
-        std::string matName;
+        std::string m_matName;
             // The surface material to be used during light transport.
             // Only one can be used per object, but you can combine multiple
             // materials through the MaterialMixer material.
-		Material *material;
+		Material *m_material;
             // Potentially un diced/-renderable geometry.
-		shared_ptr<Shape> shape;
+		shared_ptr<Shape> m_shape;
 	};
 }
 

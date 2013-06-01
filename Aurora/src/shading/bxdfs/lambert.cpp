@@ -21,8 +21,8 @@ tbb::atomic<int> Lambert::m_halton_index = tbb::atomic<int>();
 Lambert::Lambert(std::string name, RenderEnvironment *renderEnv) :
 Brdf(name, renderEnv)
 {
-    brdfType = MatteBrdf;
-    integrationDomain = Hemisphere;
+    m_brdfType = MatteBrdf;
+    m_integrationDomain = Hemisphere;
     m_sampler.init_faure();
 }
 

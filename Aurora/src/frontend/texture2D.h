@@ -26,7 +26,6 @@ namespace Aurora {
         }
     };
     class Texture2D {
-		Imf::Array2D<Imf::Rgba> pixelBuffer;
     public:
         Texture2D(std::string filename);
         
@@ -36,15 +35,16 @@ namespace Aurora {
 		void initPdf();
 		void sample(float r, float *x, float *y);
         
-        int getWidth(){ return width; };
-        int getHeight(){ return height; };
+        int width(){ return m_width; };
+        int height(){ return m_height; };
 		
     protected:
-        int width;
-        int height;
-        float pdfNormalization;
-        std::vector<PdfSample> pdfBuffer;
-        std::string texname;
+		Imf::Array2D<Imf::Rgba> m_pixel_buffer;
+        int m_width;
+        int m_height;
+        float m_pdf_normalization;
+        std::vector<PdfSample> m_pdf_buffer;
+        std::string m_texname;
     };
 }
 

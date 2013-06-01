@@ -37,7 +37,7 @@ namespace Aurora {
         virtual void frameBegin() = 0;
         virtual void frameEnd() = 0;
         
-        ShadingEngine *shdEngine;
+        ShadingEngine *m_shdEngine;
 	};
 }
 

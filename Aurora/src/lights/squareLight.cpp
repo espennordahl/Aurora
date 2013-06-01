@@ -78,7 +78,7 @@ void SquareLight::makeRenderable(std::vector<RenderableTriangle> &renderable, At
 	renderable.push_back(tri1);
 	renderable.push_back(tri2);
 	
-	Material * black = new MatteMaterial("Not In Use - Should be EDF", 0, 1, renderEnv);
+	Material * black = new MatteMaterial("Not In Use - Should be EDF", 0, 1, m_renderEnv);
 	attrs[index].material = black;
 	attrs[index].emmision = color * powf(2,exposure);
 }

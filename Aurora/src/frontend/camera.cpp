@@ -24,8 +24,8 @@ m_halton_enum(Halton_enum(1, 1))
 }
 
 
-Camera::Camera(float _fov, int width, int height, int _mpixels):
-fov(_fov), widthSamples(width), heightSamples(height), pixelSamples(_mpixels),
+Camera::Camera(float fov, int width, int height, int mpixels):
+m_fov(fov), m_widthSamples(width), m_heightSamples(height), m_pixelSamples(mpixels),
 m_halton_enum(Halton_enum(width, height))
 {
     m_sampler.init_faure();
@@ -33,8 +33,8 @@ m_halton_enum(Halton_enum(width, height))
 
 Sample3D Camera::convertSample( const Sample2D &sample2d, int i){
 	Sample3D sample3d;
-	float fovx = fov;
-	float fovy = ((float)heightSamples/(float)widthSamples)*fovx;
+	float fovx = m_fov;
+	float fovy = ((float)m_heightSamples/(float)m_widthSamples)*fovx;
 
 #ifdef USE_HALTON
     const unsigned index = m_halton_enum.get_index(i, sample2d.x, sample2d.y);
@@ -48,8 +48,8 @@ Sample3D Camera::convertSample( const Sample2D &sample2d, int i){
 	float v = sample2d.y + (float) rand()/RAND_MAX;//heightSamples;
 #endif
 
-	sample3d.ray.direction.x = ((2*u - widthSamples)/(float)widthSamples) * fovx;
-	sample3d.ray.direction.y = ((-2*v + heightSamples)/(float)heightSamples) * fovy;
+	sample3d.ray.direction.x = ((2*u - m_widthSamples)/(float)m_widthSamples) * fovx;
+	sample3d.ray.direction.y = ((-2*v + m_heightSamples)/(float)m_heightSamples) * fovy;
 	sample3d.ray.direction.z = -1.f;
 
 	sample3d.ray.direction = normalize(sample3d.ray.direction);

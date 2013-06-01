@@ -20,54 +20,41 @@ ShadingEngine::ShadingEngine()
 
 void ShadingEngine::registerMaterial(std::string materialName, Material * material){
     LOG_DEBUG("Registering material: " << materialName);
-    materialReg[materialName] = material;
+    m_material_map[materialName] = material;
 }
 
 Material * ShadingEngine::getMaterial(std::string materialName){
-    return materialReg[materialName];
+    return m_material_map[materialName];
 }
 
 
 int ShadingEngine::registerShaderColor(const std::string &shdName, Shader<Color> *shader){
     LOG_DEBUG("Registering shader: " << shdName);
-    shdRegColor.push_back(shader);
-    int index = (int)shdRegColor.size()-1;
-    indexMap[shdName] = index;
+    m_shd_map_color.push_back(shader);
+    int index = (int)m_shd_map_color.size()-1;
+    m_index_map[shdName] = index;
     return index;
 }
 
 int ShadingEngine::registerShaderFloat(const std::string &shdName, Shader<float> *shader){
     LOG_DEBUG("Registering shader: " << shdName);
-    shdRegFloat.push_back(shader);
-    int index = (int)shdRegFloat.size()-1;
-    indexMap[shdName] = index;
+    m_shd_map_float.push_back(shader);
+    int index = (int)m_shd_map_float.size()-1;
+    m_index_map[shdName] = index;
     return index;
 }
 
 int ShadingEngine::getShaderIndex(const std::string &shdName){
-    if (indexMap.find(shdName) == indexMap.end()) {
+    if (m_index_map.find(shdName) == m_index_map.end()) {
         LOG_ERROR("Shader not found in ShadingEngine: " << shdName);
     }
-    return indexMap[shdName];
+    return m_index_map[shdName];
 }
 
-
-//int ShadingEngine::registerConstantColor(std::string attrName, Color c){
-//    LOG_DEBUG("Registering constant color: " << attrName);
-//    colorCache.push_back(c);
-//    return (int)colorCache.size()-1;
-//}
-//
-//int ShadingEngine::registerConstantFloat(std::string attrName, float f){
-//    LOG_DEBUG("Registering constant float: " << attrName);
-//    floatCache.push_back(f);
-//    return (int)floatCache.size()-1;
-//}
-
 Color ShadingEngine::getColor(int index, const ShadingGeometry &shdGeo){
-    return shdRegColor[index]->evaluate(shdGeo);
+    return m_shd_map_color[index]->evaluate(shdGeo);
 }
 
 float ShadingEngine::getFloat(int index, const ShadingGeometry &shdGeo){
-    return shdRegFloat[index]->evaluate(shdGeo);
+    return m_shd_map_float[index]->evaluate(shdGeo);
 }
