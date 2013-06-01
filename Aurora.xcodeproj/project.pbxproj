@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		235A8FA21759CF6F00372E43 /* constant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F7C1759CF6F00372E43 /* constant.cpp */; };
+		235A8FA31759CF6F00372E43 /* cookTorrance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F7E1759CF6F00372E43 /* cookTorrance.cpp */; };
+		235A8FA41759CF6F00372E43 /* lambert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F801759CF6F00372E43 /* lambert.cpp */; };
+		235A8FA51759CF6F00372E43 /* specMirror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F821759CF6F00372E43 /* specMirror.cpp */; };
+		235A8FA61759CF6F00372E43 /* specTransmit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F841759CF6F00372E43 /* specTransmit.cpp */; };
+		235A8FA71759CF6F00372E43 /* carMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F881759CF6F00372E43 /* carMaterial.cpp */; };
+		235A8FA81759CF6F00372E43 /* constantMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F8A1759CF6F00372E43 /* constantMaterial.cpp */; };
+		235A8FA91759CF6F00372E43 /* glassMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F8C1759CF6F00372E43 /* glassMaterial.cpp */; };
+		235A8FAA1759CF6F00372E43 /* kelemenMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F8E1759CF6F00372E43 /* kelemenMaterial.cpp */; };
+		235A8FAB1759CF6F00372E43 /* matteMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F911759CF6F00372E43 /* matteMaterial.cpp */; };
+		235A8FAC1759CF6F00372E43 /* transmitMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F931759CF6F00372E43 /* transmitMaterial.cpp */; };
+		235A8FAD1759CF6F00372E43 /* shaderAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F961759CF6F00372E43 /* shaderAttribute.cpp */; };
+		235A8FAE1759CF6F00372E43 /* shaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F981759CF6F00372E43 /* shaderCache.cpp */; };
+		235A8FAF1759CF6F00372E43 /* noise3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F9C1759CF6F00372E43 /* noise3D.cpp */; };
+		235A8FB01759CF6F00372E43 /* shadingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8FA01759CF6F00372E43 /* shadingEngine.cpp */; };
+		235A8FB41759D0BE00372E43 /* texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8FB21759D0BE00372E43 /* texture2D.cpp */; };
 		2389C24517549C93004F1F7F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19117549C93004F1F7F /* main.cpp */; };
 		2389C24617549C93004F1F7F /* bbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19917549C93004F1F7F /* bbox.cpp */; };
 		2389C24717549C93004F1F7F /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19B17549C93004F1F7F /* color.cpp */; };
@@ -38,23 +54,6 @@
 		2389C26117549C93004F1F7F /* uniformGridAccelerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1E017549C93004F1F7F /* uniformGridAccelerator.cpp */; };
 		2389C26217549C93004F1F7F /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1E417549C93004F1F7F /* light.cpp */; };
 		2389C26317549C93004F1F7F /* squareLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1E717549C93004F1F7F /* squareLight.cpp */; };
-		2389C26417549C93004F1F7F /* adaptiveRndSampler2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1EA17549C93004F1F7F /* adaptiveRndSampler2D.cpp */; };
-		2389C26517549C93004F1F7F /* carMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1EF17549C93004F1F7F /* carMaterial.cpp */; };
-		2389C26617549C93004F1F7F /* constant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1F117549C93004F1F7F /* constant.cpp */; };
-		2389C26717549C93004F1F7F /* constantMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1F317549C93004F1F7F /* constantMaterial.cpp */; };
-		2389C26817549C93004F1F7F /* cookTorrance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1F717549C93004F1F7F /* cookTorrance.cpp */; };
-		2389C26917549C93004F1F7F /* glassMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1F917549C93004F1F7F /* glassMaterial.cpp */; };
-		2389C26A17549C93004F1F7F /* kelemenMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1FB17549C93004F1F7F /* kelemenMaterial.cpp */; };
-		2389C26B17549C93004F1F7F /* lambert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1FD17549C93004F1F7F /* lambert.cpp */; };
-		2389C26C17549C93004F1F7F /* matteMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C20117549C93004F1F7F /* matteMaterial.cpp */; };
-		2389C26D17549C93004F1F7F /* noise3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C20317549C93004F1F7F /* noise3D.cpp */; };
-		2389C26E17549C93004F1F7F /* shaderAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C20617549C93004F1F7F /* shaderAttribute.cpp */; };
-		2389C26F17549C93004F1F7F /* shaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C20817549C93004F1F7F /* shaderCache.cpp */; };
-		2389C27017549C93004F1F7F /* shadingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C20B17549C93004F1F7F /* shadingEngine.cpp */; };
-		2389C27117549C93004F1F7F /* specMirror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C20D17549C93004F1F7F /* specMirror.cpp */; };
-		2389C27217549C93004F1F7F /* specTransmit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C20F17549C93004F1F7F /* specTransmit.cpp */; };
-		2389C27317549C93004F1F7F /* texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C21117549C93004F1F7F /* texture2D.cpp */; };
-		2389C27417549C93004F1F7F /* transmitMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C21417549C93004F1F7F /* transmitMaterial.cpp */; };
 		2389C27517549C93004F1F7F /* jsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C21717549C93004F1F7F /* jsonParser.cpp */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +70,47 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		235A8F791759CF6F00372E43 /* brdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdf.h; sourceTree = "<group>"; };
+		235A8F7B1759CF6F00372E43 /* brdfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdfs.h; sourceTree = "<group>"; };
+		235A8F7C1759CF6F00372E43 /* constant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constant.cpp; sourceTree = "<group>"; };
+		235A8F7D1759CF6F00372E43 /* constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constant.h; sourceTree = "<group>"; };
+		235A8F7E1759CF6F00372E43 /* cookTorrance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cookTorrance.cpp; sourceTree = "<group>"; };
+		235A8F7F1759CF6F00372E43 /* cookTorrance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cookTorrance.h; sourceTree = "<group>"; };
+		235A8F801759CF6F00372E43 /* lambert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lambert.cpp; sourceTree = "<group>"; };
+		235A8F811759CF6F00372E43 /* lambert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lambert.h; sourceTree = "<group>"; };
+		235A8F821759CF6F00372E43 /* specMirror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = specMirror.cpp; sourceTree = "<group>"; };
+		235A8F831759CF6F00372E43 /* specMirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = specMirror.h; sourceTree = "<group>"; };
+		235A8F841759CF6F00372E43 /* specTransmit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = specTransmit.cpp; sourceTree = "<group>"; };
+		235A8F851759CF6F00372E43 /* specTransmit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = specTransmit.h; sourceTree = "<group>"; };
+		235A8F861759CF6F00372E43 /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
+		235A8F881759CF6F00372E43 /* carMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = carMaterial.cpp; sourceTree = "<group>"; };
+		235A8F891759CF6F00372E43 /* carMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carMaterial.h; sourceTree = "<group>"; };
+		235A8F8A1759CF6F00372E43 /* constantMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constantMaterial.cpp; sourceTree = "<group>"; };
+		235A8F8B1759CF6F00372E43 /* constantMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constantMaterial.h; sourceTree = "<group>"; };
+		235A8F8C1759CF6F00372E43 /* glassMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = glassMaterial.cpp; sourceTree = "<group>"; };
+		235A8F8D1759CF6F00372E43 /* glassMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glassMaterial.h; sourceTree = "<group>"; };
+		235A8F8E1759CF6F00372E43 /* kelemenMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kelemenMaterial.cpp; sourceTree = "<group>"; };
+		235A8F8F1759CF6F00372E43 /* kelemenMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kelemenMaterial.h; sourceTree = "<group>"; };
+		235A8F901759CF6F00372E43 /* materials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = materials.h; sourceTree = "<group>"; };
+		235A8F911759CF6F00372E43 /* matteMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = matteMaterial.cpp; sourceTree = "<group>"; };
+		235A8F921759CF6F00372E43 /* matteMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matteMaterial.h; sourceTree = "<group>"; };
+		235A8F931759CF6F00372E43 /* transmitMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transmitMaterial.cpp; sourceTree = "<group>"; };
+		235A8F941759CF6F00372E43 /* transmitMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transmitMaterial.h; sourceTree = "<group>"; };
+		235A8F951759CF6F00372E43 /* shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
+		235A8F961759CF6F00372E43 /* shaderAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shaderAttribute.cpp; sourceTree = "<group>"; };
+		235A8F971759CF6F00372E43 /* shaderAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shaderAttribute.h; sourceTree = "<group>"; };
+		235A8F981759CF6F00372E43 /* shaderCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shaderCache.cpp; sourceTree = "<group>"; };
+		235A8F991759CF6F00372E43 /* shaderCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shaderCache.h; sourceTree = "<group>"; };
+		235A8F9B1759CF6F00372E43 /* constantShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constantShader.h; sourceTree = "<group>"; };
+		235A8F9C1759CF6F00372E43 /* noise3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = noise3D.cpp; sourceTree = "<group>"; };
+		235A8F9D1759CF6F00372E43 /* noise3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noise3D.h; sourceTree = "<group>"; };
+		235A8F9E1759CF6F00372E43 /* texture2DShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture2DShader.h; sourceTree = "<group>"; };
+		235A8F9F1759CF6F00372E43 /* shaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shaders.h; sourceTree = "<group>"; };
+		235A8FA01759CF6F00372E43 /* shadingEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shadingEngine.cpp; sourceTree = "<group>"; };
+		235A8FA11759CF6F00372E43 /* shadingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shadingEngine.h; sourceTree = "<group>"; };
+		235A8FB11759D01700372E43 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		235A8FB21759D0BE00372E43 /* texture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture2D.cpp; sourceTree = "<group>"; };
+		235A8FB31759D0BE00372E43 /* texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture2D.h; sourceTree = "<group>"; };
 		2389C0E617549C5D004F1F7F /* Aurora */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Aurora; sourceTree = BUILT_PRODUCTS_DIR; };
 		2389C0F317549C93004F1F7F /* Aurora.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = Aurora.1; sourceTree = "<group>"; };
 		2389C0F417549C93004F1F7F /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -89,15 +129,12 @@
 		2389C19F17549C93004F1F7F /* math_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math_utils.h; sourceTree = "<group>"; };
 		2389C1A017549C93004F1F7F /* matrix4x4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = matrix4x4.cpp; sourceTree = "<group>"; };
 		2389C1A117549C93004F1F7F /* matrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix4x4.h; sourceTree = "<group>"; };
-		2389C1A217549C93004F1F7F /* pbrtParalallel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pbrtParalallel.h; sourceTree = "<group>"; };
 		2389C1A317549C93004F1F7F /* pixelRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pixelRegion.cpp; sourceTree = "<group>"; };
 		2389C1A417549C93004F1F7F /* pixelRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pixelRegion.h; sourceTree = "<group>"; };
 		2389C1A517549C93004F1F7F /* point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = point.cpp; sourceTree = "<group>"; };
 		2389C1A617549C93004F1F7F /* point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = point.h; sourceTree = "<group>"; };
 		2389C1A717549C93004F1F7F /* ray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ray.cpp; sourceTree = "<group>"; };
 		2389C1A817549C93004F1F7F /* ray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ray.h; sourceTree = "<group>"; };
-		2389C1A917549C93004F1F7F /* reference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reference.h; sourceTree = "<group>"; };
-		2389C1AA17549C93004F1F7F /* referenceCounted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = referenceCounted.h; sourceTree = "<group>"; };
 		2389C1AB17549C93004F1F7F /* sample2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sample2D.cpp; sourceTree = "<group>"; };
 		2389C1AC17549C93004F1F7F /* sample2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sample2D.h; sourceTree = "<group>"; };
 		2389C1AD17549C93004F1F7F /* sample3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sample3D.cpp; sourceTree = "<group>"; };
@@ -157,49 +194,6 @@
 		2389C1E617549C93004F1F7F /* lights.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lights.h; sourceTree = "<group>"; };
 		2389C1E717549C93004F1F7F /* squareLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = squareLight.cpp; sourceTree = "<group>"; };
 		2389C1E817549C93004F1F7F /* squareLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = squareLight.h; sourceTree = "<group>"; };
-		2389C1EA17549C93004F1F7F /* adaptiveRndSampler2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = adaptiveRndSampler2D.cpp; sourceTree = "<group>"; };
-		2389C1EB17549C93004F1F7F /* adaptiveRndSampler2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = adaptiveRndSampler2D.h; sourceTree = "<group>"; };
-		2389C1ED17549C93004F1F7F /* brdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdf.h; sourceTree = "<group>"; };
-		2389C1EE17549C93004F1F7F /* brdfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdfs.h; sourceTree = "<group>"; };
-		2389C1EF17549C93004F1F7F /* carMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = carMaterial.cpp; sourceTree = "<group>"; };
-		2389C1F017549C93004F1F7F /* carMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carMaterial.h; sourceTree = "<group>"; };
-		2389C1F117549C93004F1F7F /* constant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constant.cpp; sourceTree = "<group>"; };
-		2389C1F217549C93004F1F7F /* constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constant.h; sourceTree = "<group>"; };
-		2389C1F317549C93004F1F7F /* constantMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constantMaterial.cpp; sourceTree = "<group>"; };
-		2389C1F417549C93004F1F7F /* constantMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constantMaterial.h; sourceTree = "<group>"; };
-		2389C1F517549C93004F1F7F /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
-		2389C1F617549C93004F1F7F /* constantShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constantShader.h; sourceTree = "<group>"; };
-		2389C1F717549C93004F1F7F /* cookTorrance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cookTorrance.cpp; sourceTree = "<group>"; };
-		2389C1F817549C93004F1F7F /* cookTorrance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cookTorrance.h; sourceTree = "<group>"; };
-		2389C1F917549C93004F1F7F /* glassMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = glassMaterial.cpp; sourceTree = "<group>"; };
-		2389C1FA17549C93004F1F7F /* glassMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glassMaterial.h; sourceTree = "<group>"; };
-		2389C1FB17549C93004F1F7F /* kelemenMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kelemenMaterial.cpp; sourceTree = "<group>"; };
-		2389C1FC17549C93004F1F7F /* kelemenMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kelemenMaterial.h; sourceTree = "<group>"; };
-		2389C1FD17549C93004F1F7F /* lambert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lambert.cpp; sourceTree = "<group>"; };
-		2389C1FE17549C93004F1F7F /* lambert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lambert.h; sourceTree = "<group>"; };
-		2389C1FF17549C93004F1F7F /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
-		2389C20017549C93004F1F7F /* materials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = materials.h; sourceTree = "<group>"; };
-		2389C20117549C93004F1F7F /* matteMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = matteMaterial.cpp; sourceTree = "<group>"; };
-		2389C20217549C93004F1F7F /* matteMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matteMaterial.h; sourceTree = "<group>"; };
-		2389C20317549C93004F1F7F /* noise3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = noise3D.cpp; sourceTree = "<group>"; };
-		2389C20417549C93004F1F7F /* noise3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noise3D.h; sourceTree = "<group>"; };
-		2389C20517549C93004F1F7F /* shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
-		2389C20617549C93004F1F7F /* shaderAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shaderAttribute.cpp; sourceTree = "<group>"; };
-		2389C20717549C93004F1F7F /* shaderAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shaderAttribute.h; sourceTree = "<group>"; };
-		2389C20817549C93004F1F7F /* shaderCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shaderCache.cpp; sourceTree = "<group>"; };
-		2389C20917549C93004F1F7F /* shaderCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shaderCache.h; sourceTree = "<group>"; };
-		2389C20A17549C93004F1F7F /* shaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shaders.h; sourceTree = "<group>"; };
-		2389C20B17549C93004F1F7F /* shadingEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shadingEngine.cpp; sourceTree = "<group>"; };
-		2389C20C17549C93004F1F7F /* shadingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shadingEngine.h; sourceTree = "<group>"; };
-		2389C20D17549C93004F1F7F /* specMirror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = specMirror.cpp; sourceTree = "<group>"; };
-		2389C20E17549C93004F1F7F /* specMirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = specMirror.h; sourceTree = "<group>"; };
-		2389C20F17549C93004F1F7F /* specTransmit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = specTransmit.cpp; sourceTree = "<group>"; };
-		2389C21017549C93004F1F7F /* specTransmit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = specTransmit.h; sourceTree = "<group>"; };
-		2389C21117549C93004F1F7F /* texture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture2D.cpp; sourceTree = "<group>"; };
-		2389C21217549C93004F1F7F /* texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture2D.h; sourceTree = "<group>"; };
-		2389C21317549C93004F1F7F /* texture2DShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture2DShader.h; sourceTree = "<group>"; };
-		2389C21417549C93004F1F7F /* transmitMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transmitMaterial.cpp; sourceTree = "<group>"; };
-		2389C21517549C93004F1F7F /* transmitMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transmitMaterial.h; sourceTree = "<group>"; };
 		2389C21717549C93004F1F7F /* jsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsonParser.cpp; sourceTree = "<group>"; };
 		2389C21817549C93004F1F7F /* jsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsonParser.h; sourceTree = "<group>"; };
 		2389C21917549C93004F1F7F /* parseCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseCamera.h; sourceTree = "<group>"; };
@@ -228,6 +222,75 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		235A8F781759CF6F00372E43 /* shading */ = {
+			isa = PBXGroup;
+			children = (
+				235A8F791759CF6F00372E43 /* brdf.h */,
+				235A8F7A1759CF6F00372E43 /* bxdfs */,
+				235A8F861759CF6F00372E43 /* material.h */,
+				235A8F871759CF6F00372E43 /* materials */,
+				235A8F951759CF6F00372E43 /* shader.h */,
+				235A8F961759CF6F00372E43 /* shaderAttribute.cpp */,
+				235A8F971759CF6F00372E43 /* shaderAttribute.h */,
+				235A8F981759CF6F00372E43 /* shaderCache.cpp */,
+				235A8F991759CF6F00372E43 /* shaderCache.h */,
+				235A8F9A1759CF6F00372E43 /* shaders */,
+				235A8F9F1759CF6F00372E43 /* shaders.h */,
+				235A8FA01759CF6F00372E43 /* shadingEngine.cpp */,
+				235A8FA11759CF6F00372E43 /* shadingEngine.h */,
+			);
+			path = shading;
+			sourceTree = "<group>";
+		};
+		235A8F7A1759CF6F00372E43 /* bxdfs */ = {
+			isa = PBXGroup;
+			children = (
+				235A8F7B1759CF6F00372E43 /* brdfs.h */,
+				235A8F7C1759CF6F00372E43 /* constant.cpp */,
+				235A8F7D1759CF6F00372E43 /* constant.h */,
+				235A8F7E1759CF6F00372E43 /* cookTorrance.cpp */,
+				235A8F7F1759CF6F00372E43 /* cookTorrance.h */,
+				235A8F801759CF6F00372E43 /* lambert.cpp */,
+				235A8F811759CF6F00372E43 /* lambert.h */,
+				235A8F821759CF6F00372E43 /* specMirror.cpp */,
+				235A8F831759CF6F00372E43 /* specMirror.h */,
+				235A8F841759CF6F00372E43 /* specTransmit.cpp */,
+				235A8F851759CF6F00372E43 /* specTransmit.h */,
+			);
+			path = bxdfs;
+			sourceTree = "<group>";
+		};
+		235A8F871759CF6F00372E43 /* materials */ = {
+			isa = PBXGroup;
+			children = (
+				235A8F881759CF6F00372E43 /* carMaterial.cpp */,
+				235A8F891759CF6F00372E43 /* carMaterial.h */,
+				235A8F8A1759CF6F00372E43 /* constantMaterial.cpp */,
+				235A8F8B1759CF6F00372E43 /* constantMaterial.h */,
+				235A8F8C1759CF6F00372E43 /* glassMaterial.cpp */,
+				235A8F8D1759CF6F00372E43 /* glassMaterial.h */,
+				235A8F8E1759CF6F00372E43 /* kelemenMaterial.cpp */,
+				235A8F8F1759CF6F00372E43 /* kelemenMaterial.h */,
+				235A8F901759CF6F00372E43 /* materials.h */,
+				235A8F911759CF6F00372E43 /* matteMaterial.cpp */,
+				235A8F921759CF6F00372E43 /* matteMaterial.h */,
+				235A8F931759CF6F00372E43 /* transmitMaterial.cpp */,
+				235A8F941759CF6F00372E43 /* transmitMaterial.h */,
+			);
+			path = materials;
+			sourceTree = "<group>";
+		};
+		235A8F9A1759CF6F00372E43 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				235A8F9B1759CF6F00372E43 /* constantShader.h */,
+				235A8F9C1759CF6F00372E43 /* noise3D.cpp */,
+				235A8F9D1759CF6F00372E43 /* noise3D.h */,
+				235A8F9E1759CF6F00372E43 /* texture2DShader.h */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
 		2389C0DD17549C5D004F1F7F = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +311,7 @@
 		2389C0F217549C93004F1F7F /* Aurora */ = {
 			isa = PBXGroup;
 			children = (
+				235A8FB11759D01700372E43 /* constants.h */,
 				2389C0F317549C93004F1F7F /* Aurora.1 */,
 				2389C0F417549C93004F1F7F /* config.json */,
 				2389C0F517549C93004F1F7F /* external */,
@@ -277,13 +341,12 @@
 		2389C19217549C93004F1F7F /* src */ = {
 			isa = PBXGroup;
 			children = (
+				235A8F781759CF6F00372E43 /* shading */,
 				2389C19317549C93004F1F7F /* attributes */,
 				2389C19817549C93004F1F7F /* core */,
 				2389C1B917549C93004F1F7F /* frontend */,
 				2389C1C717549C93004F1F7F /* geometry */,
 				2389C1E317549C93004F1F7F /* lights */,
-				2389C1E917549C93004F1F7F /* sampling */,
-				2389C1EC17549C93004F1F7F /* shading */,
 				2389C21617549C93004F1F7F /* translator */,
 			);
 			path = src;
@@ -312,15 +375,12 @@
 				2389C19F17549C93004F1F7F /* math_utils.h */,
 				2389C1A017549C93004F1F7F /* matrix4x4.cpp */,
 				2389C1A117549C93004F1F7F /* matrix4x4.h */,
-				2389C1A217549C93004F1F7F /* pbrtParalallel.h */,
 				2389C1A317549C93004F1F7F /* pixelRegion.cpp */,
 				2389C1A417549C93004F1F7F /* pixelRegion.h */,
 				2389C1A517549C93004F1F7F /* point.cpp */,
 				2389C1A617549C93004F1F7F /* point.h */,
 				2389C1A717549C93004F1F7F /* ray.cpp */,
 				2389C1A817549C93004F1F7F /* ray.h */,
-				2389C1A917549C93004F1F7F /* reference.h */,
-				2389C1AA17549C93004F1F7F /* referenceCounted.h */,
 				2389C1AB17549C93004F1F7F /* sample2D.cpp */,
 				2389C1AC17549C93004F1F7F /* sample2D.h */,
 				2389C1AD17549C93004F1F7F /* sample3D.cpp */,
@@ -342,6 +402,8 @@
 		2389C1B917549C93004F1F7F /* frontend */ = {
 			isa = PBXGroup;
 			children = (
+				235A8FB21759D0BE00372E43 /* texture2D.cpp */,
+				235A8FB31759D0BE00372E43 /* texture2D.h */,
 				2389C1BA17549C93004F1F7F /* auroraObject.cpp */,
 				2389C1BB17549C93004F1F7F /* auroraObject.h */,
 				2389C1BC17549C93004F1F7F /* camera.cpp */,
@@ -403,63 +465,6 @@
 				2389C1E817549C93004F1F7F /* squareLight.h */,
 			);
 			path = lights;
-			sourceTree = "<group>";
-		};
-		2389C1E917549C93004F1F7F /* sampling */ = {
-			isa = PBXGroup;
-			children = (
-				2389C1EA17549C93004F1F7F /* adaptiveRndSampler2D.cpp */,
-				2389C1EB17549C93004F1F7F /* adaptiveRndSampler2D.h */,
-			);
-			path = sampling;
-			sourceTree = "<group>";
-		};
-		2389C1EC17549C93004F1F7F /* shading */ = {
-			isa = PBXGroup;
-			children = (
-				2389C1ED17549C93004F1F7F /* brdf.h */,
-				2389C1EE17549C93004F1F7F /* brdfs.h */,
-				2389C1EF17549C93004F1F7F /* carMaterial.cpp */,
-				2389C1F017549C93004F1F7F /* carMaterial.h */,
-				2389C1F117549C93004F1F7F /* constant.cpp */,
-				2389C1F217549C93004F1F7F /* constant.h */,
-				2389C1F317549C93004F1F7F /* constantMaterial.cpp */,
-				2389C1F417549C93004F1F7F /* constantMaterial.h */,
-				2389C1F517549C93004F1F7F /* constants.h */,
-				2389C1F617549C93004F1F7F /* constantShader.h */,
-				2389C1F717549C93004F1F7F /* cookTorrance.cpp */,
-				2389C1F817549C93004F1F7F /* cookTorrance.h */,
-				2389C1F917549C93004F1F7F /* glassMaterial.cpp */,
-				2389C1FA17549C93004F1F7F /* glassMaterial.h */,
-				2389C1FB17549C93004F1F7F /* kelemenMaterial.cpp */,
-				2389C1FC17549C93004F1F7F /* kelemenMaterial.h */,
-				2389C1FD17549C93004F1F7F /* lambert.cpp */,
-				2389C1FE17549C93004F1F7F /* lambert.h */,
-				2389C1FF17549C93004F1F7F /* material.h */,
-				2389C20017549C93004F1F7F /* materials.h */,
-				2389C20117549C93004F1F7F /* matteMaterial.cpp */,
-				2389C20217549C93004F1F7F /* matteMaterial.h */,
-				2389C20317549C93004F1F7F /* noise3D.cpp */,
-				2389C20417549C93004F1F7F /* noise3D.h */,
-				2389C20517549C93004F1F7F /* shader.h */,
-				2389C20617549C93004F1F7F /* shaderAttribute.cpp */,
-				2389C20717549C93004F1F7F /* shaderAttribute.h */,
-				2389C20817549C93004F1F7F /* shaderCache.cpp */,
-				2389C20917549C93004F1F7F /* shaderCache.h */,
-				2389C20A17549C93004F1F7F /* shaders.h */,
-				2389C20B17549C93004F1F7F /* shadingEngine.cpp */,
-				2389C20C17549C93004F1F7F /* shadingEngine.h */,
-				2389C20D17549C93004F1F7F /* specMirror.cpp */,
-				2389C20E17549C93004F1F7F /* specMirror.h */,
-				2389C20F17549C93004F1F7F /* specTransmit.cpp */,
-				2389C21017549C93004F1F7F /* specTransmit.h */,
-				2389C21117549C93004F1F7F /* texture2D.cpp */,
-				2389C21217549C93004F1F7F /* texture2D.h */,
-				2389C21317549C93004F1F7F /* texture2DShader.h */,
-				2389C21417549C93004F1F7F /* transmitMaterial.cpp */,
-				2389C21517549C93004F1F7F /* transmitMaterial.h */,
-			);
-			path = shading;
 			sourceTree = "<group>";
 		};
 		2389C21617549C93004F1F7F /* translator */ = {
@@ -580,24 +585,23 @@
 				2389C26117549C93004F1F7F /* uniformGridAccelerator.cpp in Sources */,
 				2389C26217549C93004F1F7F /* light.cpp in Sources */,
 				2389C26317549C93004F1F7F /* squareLight.cpp in Sources */,
-				2389C26417549C93004F1F7F /* adaptiveRndSampler2D.cpp in Sources */,
-				2389C26517549C93004F1F7F /* carMaterial.cpp in Sources */,
-				2389C26617549C93004F1F7F /* constant.cpp in Sources */,
-				2389C26717549C93004F1F7F /* constantMaterial.cpp in Sources */,
-				2389C26817549C93004F1F7F /* cookTorrance.cpp in Sources */,
-				2389C26917549C93004F1F7F /* glassMaterial.cpp in Sources */,
-				2389C26A17549C93004F1F7F /* kelemenMaterial.cpp in Sources */,
-				2389C26B17549C93004F1F7F /* lambert.cpp in Sources */,
-				2389C26C17549C93004F1F7F /* matteMaterial.cpp in Sources */,
-				2389C26D17549C93004F1F7F /* noise3D.cpp in Sources */,
-				2389C26E17549C93004F1F7F /* shaderAttribute.cpp in Sources */,
-				2389C26F17549C93004F1F7F /* shaderCache.cpp in Sources */,
-				2389C27017549C93004F1F7F /* shadingEngine.cpp in Sources */,
-				2389C27117549C93004F1F7F /* specMirror.cpp in Sources */,
-				2389C27217549C93004F1F7F /* specTransmit.cpp in Sources */,
-				2389C27317549C93004F1F7F /* texture2D.cpp in Sources */,
-				2389C27417549C93004F1F7F /* transmitMaterial.cpp in Sources */,
 				2389C27517549C93004F1F7F /* jsonParser.cpp in Sources */,
+				235A8FA21759CF6F00372E43 /* constant.cpp in Sources */,
+				235A8FA31759CF6F00372E43 /* cookTorrance.cpp in Sources */,
+				235A8FA41759CF6F00372E43 /* lambert.cpp in Sources */,
+				235A8FA51759CF6F00372E43 /* specMirror.cpp in Sources */,
+				235A8FA61759CF6F00372E43 /* specTransmit.cpp in Sources */,
+				235A8FA71759CF6F00372E43 /* carMaterial.cpp in Sources */,
+				235A8FA81759CF6F00372E43 /* constantMaterial.cpp in Sources */,
+				235A8FA91759CF6F00372E43 /* glassMaterial.cpp in Sources */,
+				235A8FAA1759CF6F00372E43 /* kelemenMaterial.cpp in Sources */,
+				235A8FAB1759CF6F00372E43 /* matteMaterial.cpp in Sources */,
+				235A8FAC1759CF6F00372E43 /* transmitMaterial.cpp in Sources */,
+				235A8FAD1759CF6F00372E43 /* shaderAttribute.cpp in Sources */,
+				235A8FAE1759CF6F00372E43 /* shaderCache.cpp in Sources */,
+				235A8FAF1759CF6F00372E43 /* noise3D.cpp in Sources */,
+				235A8FB01759CF6F00372E43 /* shadingEngine.cpp in Sources */,
+				235A8FB41759D0BE00372E43 /* texture2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

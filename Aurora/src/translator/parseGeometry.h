@@ -210,7 +210,7 @@ namespace Aurora {
         }
     }
  
-    inline void parseObject(Json::Value &root, RenderEnvironment *renderEnv, std::vector<Reference<AuroraObject> > &objects, std::vector<Light* > &lights, Transform *camTrans, AuroraGlobals globals){
+    inline void parseObject(Json::Value &root, RenderEnvironment *renderEnv, std::vector<std::tr1::shared_ptr<AuroraObject> > &objects, std::vector<Light* > &lights, Transform *camTrans, AuroraGlobals globals){
         
         
         if( root.size() > 0 ) {
@@ -310,8 +310,8 @@ namespace Aurora {
                 
                     // Create object
                 Transform *tInv = new Transform(transStack->inverse(*transStack));
-                Reference<Shape> shp = new ObjTriangleMesh(transStack, tInv, objPath);
-                Reference<AuroraObject> aurObj = new AuroraObject(shp, material);
+                std::tr1::shared_ptr<Shape> shp = new ObjTriangleMesh(transStack, tInv, objPath);
+                std::tr1::shared_ptr<AuroraObject> aurObj = new AuroraObject(shp, material);
                 objects.push_back(aurObj);
                 
                 LOG_INFO("successfully parsed objMesh: " << objPath);

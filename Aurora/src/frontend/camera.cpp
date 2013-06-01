@@ -24,33 +24,11 @@ m_halton_enum(Halton_enum(1, 1))
 }
 
 
-Camera::Camera(float _fov, int width, int height, int _mpixels, Sampler2D *_sampler):
-fov(_fov), widthSamples(width), heightSamples(height), pixelSamples(_mpixels), sampler(_sampler),
+Camera::Camera(float _fov, int width, int height, int _mpixels):
+fov(_fov), widthSamples(width), heightSamples(height), pixelSamples(_mpixels),
 m_halton_enum(Halton_enum(width, height))
 {
     m_sampler.init_faure();
-}
-
-//trCamera::~trCamera(){
-//	free(sampler);
-//}
-
-//void trCamera::setSampler( trSampler2D *s ){
-//	sampler = s;
-//}
-
-void Camera::generateSamples(){
-	sampler->generateSamples(widthSamples, heightSamples, pixelSamples);	
-}
-
-bool Camera::nextSample( Sample2D *sample ){
-	// we generate 2d samples, and turn them into
-	// 3d samples which we pass to the renderer.
-	
-	if (sampler->nextSample(sample )) {
-		return true;
-	}
-	return false;
 }
 
 Sample3D Camera::convertSample( const Sample2D &sample2d, int i){

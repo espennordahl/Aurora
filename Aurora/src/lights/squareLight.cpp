@@ -140,7 +140,7 @@ Color SquareLight::emission(){
     return color * powf(2,exposure);
 }
 
-Reference<Shape> SquareLight::shape(){
+std::tr1::shared_ptr<Shape> SquareLight::shape(){
 	Point p1 = Point(-xScale, -yScale, 0);
 	Point p2 = Point(-xScale,yScale, 0);
 	Point p3 = Point(xScale, yScale, 0);
@@ -160,7 +160,7 @@ Reference<Shape> SquareLight::shape(){
     uv UV[2] = {tmpUV, tmpUV};
     int Nindex[6] = {0, 0, 0, 0, 0, 0};
     
-    Reference<Shape> s = new TriangleMesh(objectToCamera, cameraToObject, 2, 4, 4, Index, Nindex, P, N, UV);
+    shared_ptr<Shape> s = shared_ptr<Shape>(new TriangleMesh(objectToCamera, cameraToObject, 2, 4, 4, Index, Nindex, P, N, UV));
 
     return s;
 }

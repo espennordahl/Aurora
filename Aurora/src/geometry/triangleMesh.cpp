@@ -53,9 +53,9 @@ BBox TriangleMesh::worldBound() const{
 	return wBound;
 }
 
-void TriangleMesh::dice( std::vector<Reference<Geometry> > &diced){
+void TriangleMesh::dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced){
 	for (int t=0; t < _numTriangles; t++) {
-		Reference<Geometry> tri = new TriangleGeo(objectToCamera, cameraToObject, 
+		shared_ptr<Geometry> tri = shared_ptr<Geometry>(new TriangleGeo(objectToCamera, cameraToObject,
 												  P[vertexIndex[t*3]], 
 												  P[vertexIndex[t*3+1]], 
 												  P[vertexIndex[t*3+2]],
@@ -64,7 +64,7 @@ void TriangleMesh::dice( std::vector<Reference<Geometry> > &diced){
                                                   N[normalIndex[t*3+2]],
                                                   UV[t*3],
                                                   UV[t*3+1],
-                                                  UV[t*3+2]);
+                                                  UV[t*3+2]));
 		diced.push_back(tri);
 	}
 }

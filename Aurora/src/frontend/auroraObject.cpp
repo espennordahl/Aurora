@@ -16,13 +16,13 @@
 
 using namespace Aurora;
 
-AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, Reference<Shape> _shape, Material * _material ) :
+AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, std::tr1::shared_ptr<Shape> _shape, Material * _material ) :
 FrontEndObject(name, renderEnv), 
 shape(_shape), material(_material) {
 	
 }
 
-AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, Reference<Shape> _shape, std::string _matName ):
+AuroraObject::AuroraObject(std::string name, RenderEnvironment *renderEnv, std::tr1::shared_ptr<Shape> _shape, std::string _matName ):
 FrontEndObject(name, renderEnv),
 shape(_shape), matName(_matName)
 {
@@ -46,13 +46,13 @@ BBox AuroraObject::objectBound(){
 	return shape->objectBound();
 }
 
-void AuroraObject::dice( std::vector<Reference<Geometry> > &diced){
+void AuroraObject::dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced){
 	shape->dice(diced);
 }
 
 void AuroraObject::makeRenderable( std::vector<RenderableTriangle> &renderable, AttributeState *attrs, int index){
         // dice the shape into triangles
-	std::vector<Reference<Geometry> > diced;
+	std::vector<std::tr1::shared_ptr<Geometry> > diced;
 	dice(diced);
 	for (int i=0; i < diced.size(); i++) {
 		diced[i]->makeRenderable(renderable, index);

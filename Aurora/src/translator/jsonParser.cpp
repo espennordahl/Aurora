@@ -222,7 +222,7 @@ inline Transform getTransformAttr(const std::string &name, Json::Value &root){
     return trans;
 }
 
-inline Reference<AuroraObject> getGeometry(Transform cameraTransform, Json::Value &root, RenderEnvironment *renderEnv){
+inline std::tr1::shared_ptr<AuroraObject> getGeometry(Transform cameraTransform, Json::Value &root, RenderEnvironment *renderEnv){
         // read all standard data
     std::string path        = getStringAttr("path", root);
     std::string name        = getStringAttr("name", root);
@@ -233,8 +233,8 @@ inline Reference<AuroraObject> getGeometry(Transform cameraTransform, Json::Valu
     Transform invCam = cameraTransform.inverse(cameraTransform); // inverse came
     Transform *objStack = new Transform(invCam * objTransform); // obj in cam space
     Transform *objInv = new Transform(objStack->inverse(*objStack)); // inv obj in cam space
-    Reference<Shape> shp = new ObjTriangleMesh(objStack, objInv, path);
-    Reference<AuroraObject> aurObj = new AuroraObject(name, renderEnv, shp, material);
+    shared_ptr<Shape> shp = shared_ptr<Shape>(new ObjTriangleMesh(objStack, objInv, path));
+    shared_ptr<AuroraObject> aurObj = shared_ptr<AuroraObject>(new AuroraObject(name, renderEnv, shp, material));
 
     return aurObj;
 }
@@ -576,7 +576,7 @@ void JsonParser::parseGeometry(Json::Value &root){
                     // check if we're dealing with a light or mesh
                 std::string objType = getStringAttr("type", *objItr);
                 if (objType == "geometry"){
-                    Reference<AuroraObject> geo = getGeometry(*cameraTransform, *objItr, renderEnv);
+                    std::tr1::shared_ptr<AuroraObject> geo = getGeometry(*cameraTransform, *objItr, renderEnv);
                     objects.push_back(geo);
                 }
                 else if (objType == "light"){

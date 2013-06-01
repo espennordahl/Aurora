@@ -234,7 +234,7 @@ ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, co
         }
     }
     
-	shape = new TriangleMesh(o2c, c2o, numTriangles, numVertices, numNorms, vertexIndex, normalIndex, P, N, UV);
+	m_shape = shared_ptr<Shape>(new TriangleMesh(o2c, c2o, numTriangles, numVertices, numNorms, vertexIndex, normalIndex, P, N, UV));
 	free(P);
 	free(N);
     free(UV);
@@ -247,6 +247,6 @@ BBox ObjTriangleMesh::worldBound() const{
 	return BBox();
 }
 
-void ObjTriangleMesh::dice( std::vector<Reference<Geometry> > &diced){
-	shape->dice(diced);
+void ObjTriangleMesh::dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced){
+	m_shape->dice(diced);
 }

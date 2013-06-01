@@ -29,7 +29,7 @@ namespace Aurora {
         Renderer( char *file );
 		void render();		
 		Camera *renderCam;
-		std::vector<Reference<AuroraObject> > objects;
+		std::vector<std::tr1::shared_ptr<AuroraObject> > objects;
 		std::vector<Light* > lights;
 		InfiniteAreaLight *envLight;
 		RenderEnvironment renderEnv;

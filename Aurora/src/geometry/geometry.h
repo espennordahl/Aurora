@@ -14,7 +14,7 @@
 namespace Aurora {
 	class RenderableTriangle;
 
-	class Geometry : public ReferenceCounted {
+	class Geometry {
 	public:
 		Geometry( const Transform *o2c, const Transform *c2o ) : objectToCamera(o2c), cameraToObject(c2o) { };
 		virtual ~Geometry(){};

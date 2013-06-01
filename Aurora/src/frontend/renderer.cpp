@@ -14,7 +14,6 @@
 #include "uniformGridAccelerator.h"
 #include "kdTreeAccelerator.h"
 #include "embreeAccelerator.h"
-#include "adaptiveRndSampler2D.h"
 #include "embreeMesh.h"
 #include "lights.h"
 #include "shadingEngine.h"
@@ -76,8 +75,7 @@ void Renderer::buildRenderEnvironment(){
     }
     
         // camera
-    AdaptiveRndSampler2D *cameraSampler = new AdaptiveRndSampler2D();
-    renderCam = new Camera((*renderEnv.globals)[FieldOfView], (*renderEnv.globals)[ResolutionX], (*renderEnv.globals)[ResolutionY], (*renderEnv.globals)[PixelSamples], cameraSampler);
+    renderCam = new Camera((*renderEnv.globals)[FieldOfView], (*renderEnv.globals)[ResolutionX], (*renderEnv.globals)[ResolutionY], (*renderEnv.globals)[PixelSamples]);
     
 	if (!objects.size()) {
 		LOG_ERROR("No objects found.");

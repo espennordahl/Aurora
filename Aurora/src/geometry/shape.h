@@ -18,13 +18,13 @@
 #include <vector>
 
 namespace Aurora {
-	class Shape : public ReferenceCounted {
+	class Shape {
 	public:
 		Shape( const Transform *o2c, const Transform *c2o ) : objectToCamera(o2c), cameraToObject(c2o) { };
 		
 		virtual ~Shape(){};
             // Splits the geometry into triangles
-		virtual void dice( std::vector<Reference<Geometry> > &diced) = 0;
+		virtual void dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced) = 0;
         
             // Converts the shape into an embree object. 
             // TODO: This is pretty hacky, and can placed in the 

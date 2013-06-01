@@ -17,11 +17,11 @@
 #include "embreeMesh.h"
 
 namespace Aurora {
-	class AuroraObject : public FrontEndObject, public ReferenceCounted {
+	class AuroraObject : public FrontEndObject {
 	public:	
 		AuroraObject(std::string name, RenderEnvironment *renderEnv): FrontEndObject(name, renderEnv) { };
-		AuroraObject( std::string name, RenderEnvironment *renderEnv, Reference<Shape> shape, Material * material );
-		AuroraObject( std::string name, RenderEnvironment *renderEnv, Reference<Shape> shape, std::string matName );
+		AuroraObject( std::string name, RenderEnvironment *renderEnv, std::tr1::shared_ptr<Shape> shape, Material * material );
+		AuroraObject( std::string name, RenderEnvironment *renderEnv, std::tr1::shared_ptr<Shape> shape, std::string matName );
 
             // Calls the childrens methods of the same name
 		BBox worldBound();
@@ -35,7 +35,7 @@ namespace Aurora {
         void frameEnd();
 
             // Splits the shape into triangles.
-		void dice( std::vector<Reference<Geometry> > &diced);
+		void dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced);
         
             // Called once all objects have been parsed, and 
             // is responsible for initializing the correct AttributeState for the object
@@ -50,7 +50,7 @@ namespace Aurora {
             // materials through the MaterialMixer material.
 		Material *material;
             // Potentially un diced/-renderable geometry.
-		Reference <Shape> shape;
+		shared_ptr<Shape> shape;
 	};
 }
 

@@ -30,7 +30,7 @@ namespace Aurora {
 		BBox objectBound() const;
 		BBox worldBound() const;
 		
-		void dice( std::vector<Reference<Geometry> > &diced) ;
+		void dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced) ;
         
         void makeEmbree(embree::BuildTriangle* triangles, embree::BuildVertex* vertices, std::vector<Vector> &normals, std::vector< uv > &uvs, int *currentTri, int *currentVertex, AttributeState *attrs, int attributeIndex);
 

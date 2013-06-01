@@ -19,12 +19,8 @@ namespace Aurora {
 	class Camera {
     public:
         Camera();
-        Camera(float _fov, int _width, int _height, int _mpixels, Sampler2D *Sampler);
+        Camera(float _fov, int _width, int _height, int _mpixels);
         
-        void generateSamples();
-
-        bool nextSample( Sample2D *sample );
-
         Sample3D convertSample( const Sample2D &sample2d, int i );
     
         int getWidthSamples() { return widthSamples; }
@@ -38,7 +34,6 @@ namespace Aurora {
         int pixelSamples;
         float fov;
 
-        Sampler2D *sampler;
         Halton_enum m_halton_enum;
         Halton_sampler m_sampler;
         static tbb::atomic<int> m_halton_index;

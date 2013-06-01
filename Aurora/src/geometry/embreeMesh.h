@@ -28,11 +28,11 @@ namespace Aurora {
         size_t numTriangles;
         size_t numVertices;
     
-        std::vector<Reference<Shape> > shapes;
+        std::vector<std::tr1::shared_ptr<Shape> > shapes;
         
         EmbreeMesh(){numTriangles = 0; numVertices = 0;};
         
-        void appendTriangleMesh(Reference<Shape> shape, int index){
+        void appendTriangleMesh(std::tr1::shared_ptr<Shape> shape, int index){
             shapes.push_back(shape);
         }
     

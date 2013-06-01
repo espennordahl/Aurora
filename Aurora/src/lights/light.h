@@ -43,7 +43,7 @@ namespace Aurora {
         virtual Color emission() = 0;
         
             // TODO: Do we need this?
-        virtual Reference<Shape> shape() = 0;
+        virtual std::tr1::shared_ptr<Shape> shape() = 0;
         
             // TODO: Do we need this?
         LightType lightType;

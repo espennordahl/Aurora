@@ -32,7 +32,7 @@ namespace Aurora {
 		
         Color emission(){return Color(1);};
         
-        Reference<Shape> shape() { return NULL; };
+        std::tr1::shared_ptr<Shape> shape() { return std::tr1::shared_ptr<Shape>(); };
         
         void frameBegin(){};
         void frameEnd(){};
