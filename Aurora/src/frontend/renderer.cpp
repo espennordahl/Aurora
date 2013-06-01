@@ -22,10 +22,11 @@
 #define lcontext LOG_Renderer
 
 #include <iostream>
-#include <pthread.h>
 #include <math.h>
 
 #include <tbb/parallel_for.h>
+#include <tbb/task.h>
+#include <tbb/task_group.h>
 
 #include "jsonParser.h"
 
@@ -351,31 +352,17 @@ private:
     OpenexrDisplay *m_display;
 };
 
-
-struct threadargs{
-	RenderEnvironment *renderEnv;
-	Sample2D *sampleBuffer;
-	int numSamples;
-    int threadNum;
+class DrawTask
+{
+    OpenexrDisplay *m_driver;
+    int m_height;
+public:
+    DrawTask(OpenexrDisplay *driver, int height):m_driver(driver), m_height(height){}
+    void operator()()
+    {
+        m_driver->draw(m_height);
+    }
 };
-
-struct accumulationargs{
-    OpenexrDisplay *display;
-    int multisamples;
-    int height;
-    int width;
-    time_t *beginDraw;
-    time_t *endDraw;
-    int *nRenderedSamples;
-    float *renderProgress;
-    std::vector<Sample2D> *renderedSamples;
-    std::vector<std::vector < int > > *multisampleBuffer;
-    bool finalSamples;
-};
-
-void *integrateThreaded( void *threadid );
-
-void *accumulate( void * threaddata );
 
 void Renderer::renderImageTBB(){
     LOG_INFO("*************************************");
@@ -394,6 +381,7 @@ void Renderer::renderImageTBB(){
     }
     displayDriver = new OpenexrDisplay(width, height, fn, &renderEnv);
     displayDriver->draw(height);
+    tbb::task_group group;
     for(int i=0; i<multisamples; ++i){
         tbb::parallel_for( tbb::blocked_range<size_t>(0,width*height),
                           IntegrateParallel(width,
@@ -405,10 +393,12 @@ void Renderer::renderImageTBB(){
                                             )
                           );
         if(i % 5 == 0){
-            displayDriver->draw(height);
+            group.wait();
+            group.run(DrawTask(displayDriver, height));
         }
         LOG_INFO("Render progress: " << 100 * (i+1)/(float)multisamples << "%");
     }
+    group.wait();
 }
 
 

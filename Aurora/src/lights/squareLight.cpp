@@ -39,59 +39,6 @@ SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transf
     m_sampler.init_faure();
 }
 
-Sample3D SquareLight::generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain){
-#ifdef USE_HALTON
-    const int i = m_halton_index.fetch_and_increment();
-    float x = m_sampler.sample(LIGHT_DOMAIN_X, i);
-    float y = m_sampler.sample(LIGHT_DOMAIN_Y, i);
-#else
-    float x = (float) rand()/RAND_MAX;
-    float y = (float) rand()/RAND_MAX;
-#endif
-	Point lightP = Point((x-0.5) * xScale * 2, (y-0.5) * yScale * 2, 0.f);
-	lightP = (*objectToCamera)(lightP);
-	Vector dir = lightP - orig;
-    float sampleLength = dir.length();
-    dir = normalize(dir);
-	Sample3D s = Sample3D(Ray(dir, orig, RAY_BIAS, sampleLength - (RAY_BIAS*10)));
-    float d = dot(lightN, dir);
-    if (d < 0.) {
-        d = -d;
-    }
-    else {
-        d = 0.f;
-    }
-    s.color = eval(s, Nn);
-    if (d == 0.) {
-        s.pdf = 0.;
-    }
-    else{
-        s.pdf = (sampleLength*sampleLength) / (d * xScale * yScale * 4.);
-    }
-	return s;
-}
-
-Color SquareLight::eval( const Sample3D &sample, const Vector &Nn ) {
-//	Vector Ln = (*objectToCamera)(Vector(0,0,1));
-//    float d = dot(normalize(sample.ray.direction), Ln);
-//	if (d < 0.f)
-//		d = 0;//-dot;
-	Color col =  color * powf(2,exposure);
-	return col;
-}
-
-float SquareLight::pdf( Sample3D *sample, const Vector &Nn, const IntegrationDomain &integrationDomain){
-	if (intersectBinary(&sample->ray)) {
-        float d = dot(lightN, normalize(sample->ray.direction));
-        if (d < 0.) {
-            d = -d;
-        }
-        float pdf = (sample->ray.maxt * sample->ray.maxt) / (d * xScale * yScale * 4.);
-        sample->ray.maxt -= RAY_BIAS*10;
-		return pdf;
-	}
-	return 0.f;
-}
 
 bool SquareLight::intersectBinary( Ray *ray ) const{
     

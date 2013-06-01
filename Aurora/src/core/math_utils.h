@@ -39,7 +39,11 @@ namespace Aurora {
 	inline Vector normalize(const Vector &v){
 		return (v / v.length());
 	}
-
+    
+    template <typename T>
+    inline int sign(T val) {
+        return (T(0) < val) - (val < T(0));
+    }
 	// Vector cross()
 	// Left handed cross product of two Vectors
 	inline Vector cross(const Vector &v1, const Vector &v2){

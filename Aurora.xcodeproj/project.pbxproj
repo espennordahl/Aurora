@@ -802,6 +802,7 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_X86_VECTOR_INSTRUCTIONS = default;
 				CURRENT_PROJECT_VERSION = 0.2;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_KERNEL_DEVELOPMENT = NO;
 				GCC_FAST_MATH = NO;
@@ -831,7 +832,7 @@
 					/base/sw/intel/tbb41_20130314oss/lib/,
 				);
 				LINK_WITH_STANDARD_LIBRARIES = YES;
-				LLVM_LTO = NO;
+				LLVM_LTO = YES;
 				OTHER_LDFLAGS = (
 					"/base/sw/zlib-1.2.8/libz.a",
 					"/base/sw/jsoncpp-src-0.5.0/libs/linux-gcc-4.2.1/libjson_linux-gcc-4.2.1_libmt.a",
