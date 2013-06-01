@@ -19,15 +19,15 @@ col(_col)
 void Constant::frameBegin(){}
 void Constant::frameEnd(){}
 
-Sample3D Constant::getSample(const Vector &Vn, const Vector &Nn)const{
+Sample3D Constant::getSample(const Vector &Vn, const Vector &Nn, const LambertParameters &parameters)const{
     return Sample3D();
 }
 
-Color Constant::evalSampleTangent(const Vector &Ln, const Vector &Vn)const{
+Color Constant::evalSampleTangent(const Vector &Ln, const Vector &Vn, const LambertParameters &parameters)const{
     return col;
 }
 
-Color Constant::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn)const{
+Color Constant::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, const LambertParameters &parameters)const{
     return col;
 }
 

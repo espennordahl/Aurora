@@ -20,13 +20,15 @@ namespace Aurora {
         MirrorBrdf
     };
     
+    struct LambertParameters;
+    
 	class Brdf : public FrontEndObject {
 	public:
         Brdf(std::string objName, RenderEnvironment *renderEnv):FrontEndObject(objName, renderEnv){};
         
-		virtual Sample3D getSample(const Vector &Vn, const Vector &Nn) const = 0;
-		virtual Color evalSampleTangent(const Vector &Ln, const Vector &Vn) const = 0;
-		virtual Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn) const = 0;
+		virtual Sample3D getSample(const Vector &Vn, const Vector &Nn, const LambertParameters &parameters) const = 0;
+		virtual Color evalSampleTangent(const Vector &Ln, const Vector &Vn, const LambertParameters &parameters) const = 0;
+		virtual Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, const LambertParameters &parameters) const = 0;
 		virtual float pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const = 0;
         virtual ~Brdf(){};
         BrdfType brdfType;

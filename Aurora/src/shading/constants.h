@@ -40,7 +40,7 @@
 #define SPECALBEDO_REFLECTANCE_ENTRIES 21
 
     // quasi monte carlo
-    //#define USE_HALTON
+#define USE_HALTON
 
 #define CAMERA_DOMAIN_X 0
 #define CAMERA_DOMAIN_Y 1

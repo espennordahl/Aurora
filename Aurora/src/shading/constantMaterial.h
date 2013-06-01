@@ -18,7 +18,7 @@ namespace Aurora {
 	public:
 		ConstantMaterial( std::string name, Color col, RenderEnvironment *renderEnv);
 		Brdf * getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo ) ;
-        LambertParameters getBrdfParameters(const ShadingGeometry &shdGeo) { return LambertParameters();}
+        LambertParameters getBrdfParameters(const ShadingGeometry &shdGeo, Brdf *brdf) { return LambertParameters();}
         void frameBegin();
         void frameEnd();
         

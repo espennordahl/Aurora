@@ -204,6 +204,7 @@ public:
                         
                             // sample lights
                         currentBrdf = attrs->material->getBrdf(Vn, Nn, isect.shdGeo );
+                        LambertParameters brdf_parameters = attrs->material->getBrdfParameters(isect.shdGeo, currentBrdf);
                         
                         if (bounces < (*m_render_environment->globals)[MaxDepth]) {
                             int numLights = (int)m_render_environment->lights.size();
@@ -221,7 +222,8 @@ public:
                                     if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
                                         li = 0;
                                     Lo += lightSample.color *
-                                    currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn) * li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
+                                    currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdf_parameters) *
+                                    li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
                                 }
                             }
                             
@@ -241,15 +243,15 @@ public:
                                         if (li != 0) {
                                             float weight = PowerHeuristic(1, lightSample.pdf, 1, brdfPdf);
                                             Lo += lightSample.color * weight *
-                                            currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn) * li *
-                                            costheta * pathThroughput * (float)numLights / lightSample.pdf;
+                                            currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdf_parameters) *
+                                            li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
                                         }
                                     }
                                 }
                                 
                                 
                                     // brdf sample
-                                Sample3D brdfSample = currentBrdf->getSample(Vn, Nn);
+                                Sample3D brdfSample = currentBrdf->getSample(Vn, Nn, brdf_parameters);
                                 brdfSample.ray.origin = orig;
                                 costheta = dot(Nn, brdfSample.ray.direction);
                                 if (costheta > 0.) {
@@ -270,7 +272,7 @@ public:
                             
                         }
                             // sample brdf
-                        currentSample = currentBrdf->getSample(Vn, Nn);
+                        currentSample = currentBrdf->getSample(Vn, Nn, brdf_parameters);
                         if ( currentSample.pdf <= 0.f ) {
                             break;
                         }

@@ -18,9 +18,9 @@ namespace Aurora {
 	public:
 		Constant(std::string name, Color col, RenderEnvironment *renderEnv);
 		
-		Sample3D getSample(const Vector &Vn, const Vector &Nn) const;
-		Color evalSampleTangent(const Vector &Ln, const Vector &Vn) const;
-		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn)const;
+		Sample3D getSample(const Vector &Vn, const Vector &Nn, const LambertParameters &parameters) const;
+		Color evalSampleTangent(const Vector &Ln, const Vector &Vn, const LambertParameters &parameters) const;
+		Color evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, const LambertParameters &parameters)const;
 		
         void frameBegin();
         void frameEnd();
