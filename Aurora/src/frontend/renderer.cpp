@@ -37,10 +37,37 @@ Renderer::Renderer( char *file ){
 }
 
 void Renderer::render(){
-	parseSceneDescription();
+    
+    time_t parseBegin;
+	time(&parseBegin);
+
+    parseSceneDescription();
 	
+    	// Time
+	time_t parseEnd;
+	time(&parseEnd);
+	int totalTime = difftime(parseEnd, parseBegin);
+    
+	LOG_INFO("Total parsing time: "
+             << floor(totalTime/60/60) << " h "
+             << floor((totalTime/60) % 60) << " min "
+             << totalTime % 60 << " sec.");
+
+    time_t envBegin;
+	time(&envBegin);
+    
 	buildRenderEnvironment();
-	
+    	// Time
+	time_t envEnd;
+	time(&envEnd);
+	totalTime = difftime(envEnd, envBegin);
+    
+	LOG_INFO("Total time building render env: "
+             << floor(totalTime/60/60) << " h "
+             << floor((totalTime/60) % 60) << " min "
+             << totalTime % 60 << " sec.");
+
+    
 	renderImageTBB();
 	
 	outputStats();
@@ -392,10 +419,8 @@ void Renderer::renderImageTBB(){
                                             displayDriver
                                             )
                           );
-        if(i % 5 == 0){
-            group.wait();
-            group.run(DrawTask(displayDriver, height));
-        }
+        group.wait();
+        group.run(DrawTask(displayDriver, height));
         LOG_INFO("Render progress: " << 100 * (i+1)/(float)multisamples << "%");
     }
     group.wait();

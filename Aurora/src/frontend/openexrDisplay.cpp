@@ -65,9 +65,10 @@ void OpenexrDisplay::appendValue(int _width, int _height, const Color &col, floa
     Color oldCol;
     float oldAlpha;
     getPixel(_width, _height, &oldCol, &oldAlpha);
-    float sampleNum = ++m_multisample_buffer[_width][_height];
+    float sampleNum = ++m_multisample_buffer[_height][_width];
     float weight = 1.f/sampleNum;
     Color newCol = col;
+    newCol.clamp(4.f);
     setPixel(_width, _height, oldCol*(1-weight) + newCol * weight,
                      oldAlpha*(1-weight) + alpha*weight);
 

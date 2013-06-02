@@ -159,6 +159,12 @@ namespace Aurora {
             return 0.2126*r + 0.7152*g + 0.0722*b; 
         }
         
+        inline void clamp(float f){
+            r = fminf(f, r);
+            g = fminf(f, g);
+            b = fminf(f, b);
+        }
+        
 		friend std::ostream& operator<<(std::ostream &os, Color const &c){
 			os << "(" << c.r << ", " << c.g << ", " << c.b << ")";
 			return os;

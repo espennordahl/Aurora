@@ -187,7 +187,7 @@ def auRender(lazy = False):
 
     ## objects
     print "MtoAur: Parsing objects."
-    for mesh in ls(type='mesh'):
+    for mesh in ls(type='mesh', visible=True):
         obj = parseMesh(mesh, lazy)
         
         # get shading groups from shapes:

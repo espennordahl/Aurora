@@ -222,16 +222,26 @@ ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, co
         hasUVs = false;
         LOG_WARNING("Mesh has no UVs in file. Adding garbage UVs");
     }
+    else{
+        if (uvIndex.size() != numTriangles*3){
+            LOG_WARNING("UV Index vector smaller than expected. Should be: " <<
+                        numTriangles * 3 << " , but is: " << uvIndex.size() << ".");
+        }
+    }
     for (uint32_t i = 0; i < numTriangles*3; i++) {
         if (hasUVs) {
-            UV[i] = uvs[uvIndex[i]-1];
+            size_t index = uvIndex[i]-1;
+            if (index < uvs.size()){
+                UV[i] = uvs[index];
+                continue;
+            } else {
+                LOG_WARNING("UV index out of range. Adding garbage uv for vertex");
+            }
         }
-        else{
-            uv myUV;
-            myUV.u = 0;
-            myUV.v = 0;
-            UV[i] = myUV;
-        }
+        uv myUV;
+        myUV.u = 0;
+        myUV.v = 0;
+        UV[i] = myUV;
     }
     
 	m_shape = shared_ptr<Shape>(new TriangleMesh(o2c, c2o, numTriangles, numVertices, numNorms, vertexIndex, normalIndex, P, N, UV));
