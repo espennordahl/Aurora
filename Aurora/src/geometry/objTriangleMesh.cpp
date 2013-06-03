@@ -244,7 +244,8 @@ ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, co
         UV[i] = myUV;
     }
     
-	m_shape = shared_ptr<Shape>(new TriangleMesh(o2c, c2o, numTriangles, numVertices, numNorms, vertexIndex, normalIndex, P, N, UV));
+    m_shape = shared_ptr<Shape>(new TriangleMesh(o2c, c2o, numTriangles, numVertices, numNorms, vertexIndex, normalIndex, P, N, UV));
+        //	m_shape = shared_ptr<Shape>(new LoopSubdivMesh(o2c, c2o, numTriangles, numVertices, vertexIndex, P, 1));
 	free(P);
 	free(N);
     free(UV);

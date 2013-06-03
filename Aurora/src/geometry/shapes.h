@@ -11,5 +11,6 @@
 
 #include "triangleMesh.h"
 #include "objTriangleMesh.h"
+#include "loopSubdivMesh.h"
 
 #endif

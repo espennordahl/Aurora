@@ -18,6 +18,8 @@ namespace Aurora {
 		TriangleMesh( const Transform *o2c, const Transform *c2o,
                      int numTris, int numVerts, int numNorms, const int *vertIndex, const int *normIndex, const Point *Pin, const Vector *Nin, const uv *UVin);
 		
+        TriangleMesh(): Shape(NULL, NULL){};
+        
 		BBox objectBound() const;
 		BBox worldBound() const;
 		

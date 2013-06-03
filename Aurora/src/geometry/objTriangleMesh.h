@@ -12,6 +12,7 @@
 #include "core.h"
 #include "shape.h"
 #include "triangleMesh.h"
+#include "loopSubdivMesh.h"
 
 namespace Aurora {
 	class ObjTriangleMesh : public Shape{
