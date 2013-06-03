@@ -15,16 +15,7 @@
 namespace Aurora {
 	class TriangleMesh : public Shape{
     public:		
-		BBox wBound;
-		BBox oBound;
-		int _numTriangles;
-		int _numVertices;
-		int *vertexIndex;
-        int *normalIndex;
-		Point *P;
-        Vector *N;
-        uv *UV;
-		TriangleMesh( const Transform *o2c, const Transform *c2o, 
+		TriangleMesh( const Transform *o2c, const Transform *c2o,
                      int numTris, int numVerts, int numNorms, const int *vertIndex, const int *normIndex, const Point *Pin, const Vector *Nin, const uv *UVin);
 		
 		BBox objectBound() const;
@@ -36,6 +27,16 @@ namespace Aurora {
 
         int numTriangles(){ return _numTriangles; };
         int numVertices(){ return _numVertices; };
+        
+        BBox wBound;
+		BBox oBound;
+		int _numTriangles;
+		int _numVertices;
+		int *vertexIndex;
+        int *normalIndex;
+		Point *P;
+        Vector *N;
+        uv *UV;
 	};
 }
 

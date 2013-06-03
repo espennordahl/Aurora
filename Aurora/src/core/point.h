@@ -21,17 +21,18 @@ namespace Aurora{
 		float y;
 		float z;
 		
-		Point(const Vector &v);
-		Point(float _x, float _y, float _z);
-		Point(float f);
-		Point();
+		explicit Point(const Vector &v);
+		explicit Point(float _x, float _y, float _z);
+		explicit Point(float f);
+		explicit Point();
 			
         bool hasNaNs();
 		Point operator+(const Vector &v);
-		Vector operator+(const Point &p) const;
+		Point operator+(const Point &p) const;
 		
 		Point &operator+=(const Vector &v);
-
+		Point &operator+=(const Point &p);
+        
 		Point operator-(const Vector &v);
 		Point &operator-=(const Vector &v);
 

@@ -19,6 +19,8 @@
 
 namespace Aurora{
 	
+    class Point;
+    
 	class Vector{
 	public:
 		float x;
@@ -31,21 +33,23 @@ namespace Aurora{
 #pragma mark Constructors
         
         /* constructors */
-        Vector(float _x, float _y, float _z):
+        explicit Vector(float _x, float _y, float _z):
         x(_x), y(_y), z(_z) {
                 // check for NaNs
             assert(!hasNaNs());
         }
         
-        Vector( float f ):
+        explicit Vector( float f ):
         x(f), y(f), z(f)
         {
             assert(!hasNaNs());
         }
         
-        Vector(){
+        explicit Vector(){
             Vector(0,1,0);
         }
+        
+        explicit Vector(const Point &p);
         
 #pragma mark -
 #pragma mark Handy Methods
@@ -96,7 +100,7 @@ namespace Aurora{
         }
         
             //	multiplication
-        inline Vector operator*(float f) const{
+        inline const Vector operator*(float f) const{
             return Vector(f*x, f*y, f*z);
         }
         

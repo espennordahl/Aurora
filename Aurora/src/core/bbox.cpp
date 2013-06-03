@@ -117,7 +117,8 @@ Point BBox::lerp(float x, float y, float z) const{
 }
 
 void BBox::boudingSphere( Point *c, float *rad ) const{
-	*c = .5f * pMin + .5f * pMax;
+	*c = .5f * pMin;
+    *c += .5f * pMax;
 	*rad = inside(*c) ? distance(*c, pMax) : 0.0f;
 }
 

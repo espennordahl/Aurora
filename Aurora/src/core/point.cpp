@@ -68,8 +68,14 @@ Point &Point::operator+=(const Vector &v){
 	return *this;
 }
 
-Vector Point::operator+(const Point &p) const {
-	return Vector(x+p.x, y+p.y, z+p.z);
+Point &Point::operator+=(const Point &p){
+	x += p.x; y += p.y; z += p.z;
+	return *this;
+}
+
+
+Point Point::operator+(const Point &p) const {
+	return Point(x+p.x, y+p.y, z+p.z);
 }
 
 // subtraction
