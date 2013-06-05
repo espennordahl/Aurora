@@ -214,7 +214,6 @@ public:
                             int numLights = (int)m_render_environment->lights.size();
                             Light* currentLight = m_render_environment->lights[rand() % numLights];
                             
-                            
                                 // For diffuse samples we don't need MIS
                             if (currentBrdf->m_brdfType == MatteBrdf) {
                                 

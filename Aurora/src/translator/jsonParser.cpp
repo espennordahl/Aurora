@@ -228,12 +228,13 @@ inline std::tr1::shared_ptr<AuroraObject> getGeometry(Transform cameraTransform,
     std::string name        = getStringAttr("name", root);
     std::string material    = getStringAttr("material", root);
     Transform objTransform = getTransformAttr("transforms", root);
+    int subdlevels          = getIntAttr("subdlevels", root);
 
         // construct transforms
     Transform invCam = cameraTransform.inverse(cameraTransform); // inverse came
     Transform *objStack = new Transform(invCam * objTransform); // obj in cam space
     Transform *objInv = new Transform(objStack->inverse(*objStack)); // inv obj in cam space
-    shared_ptr<Shape> shp = shared_ptr<Shape>(new ObjTriangleMesh(objStack, objInv, path));
+    shared_ptr<Shape> shp = shared_ptr<Shape>(new ObjTriangleMesh(objStack, objInv, subdlevels, path));
     shared_ptr<AuroraObject> aurObj = shared_ptr<AuroraObject>(new AuroraObject(name, renderEnv, shp, material));
 
     return aurObj;

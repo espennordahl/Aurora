@@ -17,7 +17,7 @@
 namespace Aurora {
 	class ObjTriangleMesh : public Shape{
     public:
-		ObjTriangleMesh( const Transform *o2c, const Transform *c2o, const std::string &objfile );
+		ObjTriangleMesh( const Transform *o2c, const Transform *c2o, int subdlevels, const std::string &objfile );
         
 		BBox objectBound() const;
 		BBox worldBound() const;

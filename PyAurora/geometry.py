@@ -39,10 +39,11 @@ class Mesh(core.Serializable):
 
 
 class ObjMesh(Mesh):
-	def __init__(self, name, path):
-		Mesh.__init__(self, name, ["path"])
-		self._s["path"] = path
-		self._s["type"] = "geometry"
+    def __init__(self, name, subdlevels, path):
+        Mesh.__init__(self, name, ["path", "subdlevels"])
+        self._s["path"] = path
+        self._s["type"] = "geometry"
+        self._s["subdlevels"] = subdlevels
 
 class TriangleMesh(Mesh):
 	def __init__(self, name, points, pointIndices):

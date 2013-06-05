@@ -162,7 +162,7 @@ bool ObjTriangleMesh::parseObjLine(const std::string &line, std::vector<Point> &
 	return true;
 }
 
-ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, const std::string &objfile ): Shape(o2c, c2o) {
+ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, int subdlevels, const std::string &objfile ): Shape(o2c, c2o) {
 	std::vector<Point> points;
     std::vector<Vector> normals;
     std::vector<uv> uvs;
@@ -244,8 +244,11 @@ ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, co
         UV[i] = myUV;
     }
     
-    m_shape = shared_ptr<Shape>(new TriangleMesh(o2c, c2o, numTriangles, numVertices, numNorms, vertexIndex, normalIndex, P, N, UV));
-        //	m_shape = shared_ptr<Shape>(new LoopSubdivMesh(o2c, c2o, numTriangles, numVertices, vertexIndex, P, 1));
+    if (subdlevels) {
+        m_shape = shared_ptr<Shape>(new LoopSubdivMesh(o2c, c2o, numTriangles, numVertices, vertexIndex, P, subdlevels));
+    } else {
+        m_shape = shared_ptr<Shape>(new TriangleMesh(o2c, c2o, numTriangles, numVertices, numNorms, vertexIndex, normalIndex, P, N, UV));
+    }
 	free(P);
 	free(N);
     free(UV);

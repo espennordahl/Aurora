@@ -146,7 +146,10 @@ def parseMesh(mesh, lazy):
     cmds.select(mesh.name())
     if not lazy:
         cmds.file(path + mesh.name(), force=True, pr=1,typ="OBJexport",es=1, op="groups=0; ptgroups=0; materials=0; smoothing=0; normals=0")
-    obj = geometry.ObjMesh(mesh.name(), path + mesh.name() + ".obj")
+    subdlevels = 0
+    if "subdlevels" in cmds.listAttr(mesh.name()):
+        subdlevels = cmds.getAttr(mesh.name() + ".subdlevels")
+    obj = geometry.ObjMesh(mesh.name(), subdlevels, path + mesh.name() + ".obj")
     
     return obj
 

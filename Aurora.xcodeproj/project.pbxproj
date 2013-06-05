@@ -184,9 +184,6 @@
 		2389C1E817549C93004F1F7F /* squareLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = squareLight.h; sourceTree = "<group>"; };
 		2389C21717549C93004F1F7F /* jsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsonParser.cpp; sourceTree = "<group>"; };
 		2389C21817549C93004F1F7F /* jsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsonParser.h; sourceTree = "<group>"; };
-		2389C21917549C93004F1F7F /* parseCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseCamera.h; sourceTree = "<group>"; };
-		2389C21A17549C93004F1F7F /* parseGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseGeometry.h; sourceTree = "<group>"; };
-		2389C21B17549C93004F1F7F /* parseOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseOptions.h; sourceTree = "<group>"; };
 		2389C21D17549C93004F1F7F /* core.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = core.py; sourceTree = "<group>"; };
 		2389C21F17549C93004F1F7F /* example.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = example.py; sourceTree = "<group>"; };
 		2389C22017549C93004F1F7F /* geometry.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = geometry.py; sourceTree = "<group>"; };
@@ -452,9 +449,6 @@
 			children = (
 				2389C21717549C93004F1F7F /* jsonParser.cpp */,
 				2389C21817549C93004F1F7F /* jsonParser.h */,
-				2389C21917549C93004F1F7F /* parseCamera.h */,
-				2389C21A17549C93004F1F7F /* parseGeometry.h */,
-				2389C21B17549C93004F1F7F /* parseOptions.h */,
 			);
 			path = translator;
 			sourceTree = "<group>";
