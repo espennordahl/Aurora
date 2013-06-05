@@ -45,7 +45,6 @@ namespace Aurora {
 		time_t renderTime;
 		float renderProgress;
         std::string filename;
-//        AuroraGlobals globals;
 		Transform *cameraTransform;
 		
 		bool integrateSampleSINGLE(Sample3D *sample, float importance);

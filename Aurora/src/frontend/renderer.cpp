@@ -10,9 +10,6 @@
 #include "shapes.h"
 #include "auroraObject.h"
 #include "materials.h"
-#include "dummyAccelerationStructure.h"
-#include "uniformGridAccelerator.h"
-#include "kdTreeAccelerator.h"
 #include "embreeAccelerator.h"
 #include "embreeMesh.h"
 #include "lights.h"
@@ -112,44 +109,25 @@ void Renderer::buildRenderEnvironment(){
         // acceleration structure
     AccelerationStructure *accel;
     
-    if ((*renderEnv.globals)[AccelStructure] != ACCEL_EMBREE) {
-        int numObjects = (int)objects.size();
-        attrs = new AttributeState[numObjects + lights.size()];
-        std::vector<RenderableTriangle> renderable;
-        for (int i=0; i < numObjects; i++) {
-            objects[i]->makeRenderable(renderable, attrs, i);
-        }
-        for (int i=0; i < lights.size(); i++) {
-            lights[i]->makeRenderable(renderable, attrs, numObjects + i);
-        }
-        
-    //	AccelerationStructure *accel = new DummyAccelerationStructure(renderable);
-    //	AccelerationStructure *accel = new UniformGridAccelerator(renderable);
-        accel = new KdTreeAccelerator(renderable, KD_INTERSECTCOST, KD_TRAVERSECOST, KD_EMPTYBONUS, (*renderEnv.globals)[KD_MaxLeaf], (*renderEnv.globals)[KD_MaxDepth]);
+    int numObjects = (int)objects.size();
+    int numLights = (int)lights.size();
+    attrs = new AttributeState[numObjects + numLights];
+    EmbreeMesh mesh;
+    for (int i=0; i < numObjects; i++) {
+        mesh.appendTriangleMesh(objects[i]->m_shape, i);
+        attrs[i].material = objects[i]->m_material;
+        attrs[i].emmision = Color(0.);
     }
-    else {
-        int numObjects = (int)objects.size();
-        int numLights = (int)lights.size();
-        attrs = new AttributeState[numObjects + numLights];
-        EmbreeMesh mesh;
-        for (int i=0; i < numObjects; i++) {
-            mesh.appendTriangleMesh(objects[i]->m_shape, i);
-            attrs[i].material = objects[i]->m_material;
-            attrs[i].emmision = Color(0.);
+    for (int i=0; i < numLights; i++) {
+        if (lights[i]->lightType != type_envLight) {
+            mesh.appendTriangleMesh(lights[i]->shape(), i + numObjects);
         }
-        for (int i=0; i < numLights; i++) {
-            if (lights[i]->lightType != type_envLight) {
-                mesh.appendTriangleMesh(lights[i]->shape(), i + numObjects);
-            }
-            Material * black = new ConstantMaterial("Not in use - lightsource", Color(0.f), &renderEnv);
-            attrs[i + numObjects].material = black;
-            attrs[i + numObjects].emmision = lights[i]->emission();
-        }
-        accel = new EmbreeAccelerator(mesh, attrs);
+        Material * black = new ConstantMaterial("Not in use - lightsource", Color(0.f), &renderEnv);
+        attrs[i + numObjects].material = black;
+        attrs[i + numObjects].emmision = lights[i]->emission();
     }
+    accel = new EmbreeAccelerator(mesh, attrs);
     
-
-	
 	renderEnv.accelerationStructure = accel;
 	renderEnv.attributeState = attrs;
 	renderEnv.lights = lights;
@@ -180,8 +158,8 @@ public:
     
     void operator()(const tbb::blocked_range<size_t>& r) const{
         for(size_t i=r.begin(); i!=r.end(); ++i){
-            int y = i / m_width;
             int x = i % m_width;
+            int y = (int)i / m_width;
             Sample2D current_sample_2d = Sample2D(x, y);
             
             Sample3D sample = m_render_environment->renderCam->convertSample(current_sample_2d, m_sample_index);

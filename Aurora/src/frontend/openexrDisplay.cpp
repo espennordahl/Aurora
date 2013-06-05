@@ -22,14 +22,15 @@
 using namespace Aurora;
 
 OpenexrDisplay::OpenexrDisplay(int width, int height, std::string file, RenderEnvironment * renderEnv) :
-Display::Display(width, height, "openExrDisplay:" + file, renderEnv){
+FrontEndObject("Display:" + file, renderEnv),
+m_width(width),
+m_height(height){
 	m_filename = file;
-	m_pixel_buffer.resizeErase(width, m_height);
+	m_pixel_buffer.resizeErase(m_height, m_width);
     m_multisample_buffer.resize(m_height);
 	for (int i=0; i<m_height; i++) {
-//        m_pixel_buffer[i].resize(width);
-        m_multisample_buffer[i].resize(width);
-		for (int j=0; j<width; j++) {
+        m_multisample_buffer[i].resize(m_width);
+		for (int j=0; j<m_width; j++) {
 			Imf::Rgba &p = m_pixel_buffer[i][j];
 			p.r = 0.f;
 			p.g = 0.f;
@@ -51,48 +52,56 @@ void OpenexrDisplay::frameEnd(){
     
 }
 
+int OpenexrDisplay::width() const{
+    return m_width;
+}
 
+int OpenexrDisplay::height() const {
+    return m_height;
+}
 
-void OpenexrDisplay::setPixel(int _width, int _height, const Color &col, float alpha){
-	Imf::Rgba &p = m_pixel_buffer[_height][_width];
+void OpenexrDisplay::setPixel(int x, int y, const Color &col, float alpha){
+	Imf::Rgba &p = m_pixel_buffer[y][x];
 	p.r = col.r;
 	p.g = col.g;
 	p.b = col.b;
 	p.a = alpha;
 }
 
-void OpenexrDisplay::appendValue(int _width, int _height, const Color &col, float alpha){
+void OpenexrDisplay::appendValue(int x, int y, const Color &col, float alpha){
     Color oldCol;
     float oldAlpha;
-    getPixel(_width, _height, &oldCol, &oldAlpha);
-    float sampleNum = ++m_multisample_buffer[_height][_width];
+    getPixel(x, y, &oldCol, &oldAlpha);
+    m_multisample_buffer[y][x] += 1;
+    float sampleNum = m_multisample_buffer[y][x];
     float weight = 1.f/sampleNum;
     Color newCol = col;
     newCol.clamp(4.f);
-    setPixel(_width, _height, oldCol*(1-weight) + newCol * weight,
+    setPixel(x, y, oldCol*(1-weight) + newCol * weight,
                      oldAlpha*(1-weight) + alpha*weight);
 
 }
 
-void OpenexrDisplay::getPixel(int _width, int _height, Color *col, float *alpha){
-	col->r = m_pixel_buffer[_height][_width].r;
-	col->g = m_pixel_buffer[_height][_width].g;
-	col->b = m_pixel_buffer[_height][_width].b;
-	*alpha = (float)m_pixel_buffer[_height][_width].a;
+void OpenexrDisplay::getPixel(int x, int y, Color *col, float *alpha){
+    Imf::Rgba &p = m_pixel_buffer[y][x];
+	col->r = p.r;
+	col->g = p.g;
+	col->b = p.b;
+	*alpha = (float)p.a;
 }
 
 
 void OpenexrDisplay::draw(int numLines){
     std::string tmpfile = m_filename + "_tmp";
     
-    Imf::Header header(m_width,
-            m_height,
-            1, // aspect ratio
-            Imath::V2f (0, 0), //screen window center
-            1, // screen window width
-            Imf::INCREASING_Y, // line order
-            Imf::ZIP_COMPRESSION // compression
-            );
+    Imf::Header header( m_width,
+                        m_height,
+                        1, // aspect ratio
+                        Imath::V2f (0, 0), //screen window center
+                        1, // screen window width
+                        Imf::INCREASING_Y, // line order
+                        Imf::ZIP_COMPRESSION // compression
+                        );
 
     for (StringMap::iterator it = m_metadata.begin(); it != m_metadata.end(); ++it){
 //        LOG_DEBUG("Inserting exr metatada: " << it->first << " : " << it->second);

@@ -21,9 +21,6 @@
 
 namespace Aurora {
 	class EmbreeAccelerator: public AccelerationStructure {
-	protected:
-        embree::Ref<embree::Intersector> intersector;
-        EmbreeMesh mesh;
     public:
 		EmbreeAccelerator(){ };
 		EmbreeAccelerator(const EmbreeMesh &mesh, AttributeState *attrs);
@@ -31,6 +28,11 @@ namespace Aurora {
 		bool intersect( Ray *ray, Intersection *intersection) const;
 		bool intersectBinary( Ray *ray ) const;
         void getShadingTriangles( int triangleIndex, ShadingGeometry *shdGeo );
+        
+    private:
+        embree::Ref<embree::Intersector> m_intersector;
+        EmbreeMesh m_mesh;
+
 	};
 }
 

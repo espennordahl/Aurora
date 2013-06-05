@@ -12,7 +12,6 @@
 #include "core.h"
 #include "brdf.h"
 #include "shader.h"
-#include "shaderCache.h"
 #include "material.h"
 
 #include <tr1/unordered_map>
