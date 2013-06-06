@@ -315,23 +315,22 @@ inline Material * getMaterial(std::string type, std::string name, Json::Value &r
     Material * mat;
 
     if (type == "kelemenMaterial") {
-//            // diff color
-//        ShaderAttribute diffCol       = getShaderAttr(colorAttr, "diffusecolor", root);
-//        int diffColIndex = initShader(name + ":diffuseAlbedo", diffCol, colorAttr, renderEnv);
-//            // spec color
-//        ShaderAttribute specCol       = getShaderAttr(colorAttr, "speccolor", root);
-//        int specColIndex = initShader(name + ":specularColor", specCol, colorAttr, renderEnv);
-//            // reflectance
-//        ShaderAttribute reflectance   = getShaderAttr(floatAttr, "reflectance", root);
-//        //initShader(name + ":specReflectance", reflectance, floatAttr, renderEnv); TODO: Varying reflectance
-//            // roughness
-//        ShaderAttribute roughness      = getShaderAttr(floatAttr, "roughness", root);
-//        int roughnessIndex = initShader(name + ":specRoughness", roughness, floatAttr, renderEnv);
-//
-//        mat = new KelemenMaterial(name, renderEnv,
-//                                  diffColIndex, specColIndex,
-//                                  roughnessIndex, reflectance.getFloat(), //TODO: Shader implementation
-//                                  (*renderEnv->globals)[LightSamples]);
+            // diff color
+        ShaderAttribute diffCol       = getShaderAttr(colorAttr, "diffusecolor", root);
+        int diffColIndex = initShader(name + ":diffuseAlbedo", diffCol, colorAttr, renderEnv);
+            // spec color
+        ShaderAttribute specCol       = getShaderAttr(colorAttr, "speccolor", root);
+        int specColIndex = initShader(name + ":specularColor", specCol, colorAttr, renderEnv);
+            // reflectance
+        ShaderAttribute reflectance   = getShaderAttr(floatAttr, "reflectance", root);
+        //initShader(name + ":specReflectance", reflectance, floatAttr, renderEnv); TODO: Varying reflectance
+            // roughness
+        ShaderAttribute roughness      = getShaderAttr(floatAttr, "roughness", root);
+        int roughnessIndex = initShader(name + ":specRoughness", roughness, floatAttr, renderEnv);
+
+        mat = new KelemenMaterial(name, renderEnv,
+                                  diffColIndex, specColIndex,
+                                  roughnessIndex, reflectance.getFloat());
     }
     else if (type == "matteMaterial") {
         ShaderAttribute col = getShaderAttr(colorAttr, "color", root);

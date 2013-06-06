@@ -38,7 +38,6 @@
 		2389C25117549C93004F1F7F /* vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1B717549C93004F1F7F /* vector.cpp */; };
 		2389C25217549C93004F1F7F /* auroraObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1BA17549C93004F1F7F /* auroraObject.cpp */; };
 		2389C25317549C93004F1F7F /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1BC17549C93004F1F7F /* camera.cpp */; };
-		2389C25417549C93004F1F7F /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1BE17549C93004F1F7F /* display.cpp */; };
 		2389C25517549C93004F1F7F /* openexrDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1C117549C93004F1F7F /* openexrDisplay.cpp */; };
 		2389C25717549C93004F1F7F /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1C517549C93004F1F7F /* renderer.cpp */; };
 		2389C25917549C93004F1F7F /* embreeAccelerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1CB17549C93004F1F7F /* embreeAccelerator.cpp */; };
@@ -150,8 +149,6 @@
 		2389C1BB17549C93004F1F7F /* auroraObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = auroraObject.h; sourceTree = "<group>"; };
 		2389C1BC17549C93004F1F7F /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
 		2389C1BD17549C93004F1F7F /* camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camera.h; sourceTree = "<group>"; };
-		2389C1BE17549C93004F1F7F /* display.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = display.cpp; sourceTree = "<group>"; };
-		2389C1BF17549C93004F1F7F /* display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = display.h; sourceTree = "<group>"; };
 		2389C1C017549C93004F1F7F /* frontEndObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frontEndObject.h; sourceTree = "<group>"; };
 		2389C1C117549C93004F1F7F /* openexrDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openexrDisplay.cpp; sourceTree = "<group>"; };
 		2389C1C217549C93004F1F7F /* openexrDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openexrDisplay.h; sourceTree = "<group>"; };
@@ -391,8 +388,6 @@
 				2389C1BB17549C93004F1F7F /* auroraObject.h */,
 				2389C1BC17549C93004F1F7F /* camera.cpp */,
 				2389C1BD17549C93004F1F7F /* camera.h */,
-				2389C1BE17549C93004F1F7F /* display.cpp */,
-				2389C1BF17549C93004F1F7F /* display.h */,
 				2389C1C017549C93004F1F7F /* frontEndObject.h */,
 				2389C1C117549C93004F1F7F /* openexrDisplay.cpp */,
 				2389C1C217549C93004F1F7F /* openexrDisplay.h */,
@@ -543,7 +538,6 @@
 				2389C25117549C93004F1F7F /* vector.cpp in Sources */,
 				2389C25217549C93004F1F7F /* auroraObject.cpp in Sources */,
 				2389C25317549C93004F1F7F /* camera.cpp in Sources */,
-				2389C25417549C93004F1F7F /* display.cpp in Sources */,
 				2389C25517549C93004F1F7F /* openexrDisplay.cpp in Sources */,
 				2389C25717549C93004F1F7F /* renderer.cpp in Sources */,
 				2389C25917549C93004F1F7F /* embreeAccelerator.cpp in Sources */,

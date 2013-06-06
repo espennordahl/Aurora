@@ -207,8 +207,9 @@ public:
                         }
                         
                             // sample lights
-                        currentBrdf = attrs->material->getBrdf(Vn, Nn, isect.shdGeo );
-                        LambertParameters brdf_parameters = attrs->material->getBrdfParameters(isect.shdGeo, currentBrdf);
+                        BrdfState brdf_state = attrs->material->getBrdf(Vn, Nn, isect.shdGeo);
+                        currentBrdf = brdf_state.brdf;
+                        bxdfParameters *brdf_parameters = brdf_state.parameters;
                         
                         if (bounces < (*m_render_environment->globals)[MaxDepth]) {
                             int numLights = (int)m_render_environment->lights.size();
@@ -238,7 +239,7 @@ public:
                                     // sample light
                                 float costheta = dot(Nn, lightSample.ray.direction);
                                 if (costheta > 0. && lightSample.pdf > 0.) {
-                                    float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn);
+                                    float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn, brdf_parameters);
                                     if (brdfPdf > 0.) {
                                         float li = 1;
                                         if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
@@ -276,6 +277,7 @@ public:
                         }
                             // sample brdf
                         currentSample = currentBrdf->getSample(Vn, Nn, brdf_parameters);
+                        delete brdf_parameters; //TODO: Lousy place to kill this
                         if ( currentSample.pdf <= 0.f ) {
                             break;
                         }

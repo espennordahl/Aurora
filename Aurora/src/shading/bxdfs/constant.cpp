@@ -19,18 +19,18 @@ col(_col)
 void Constant::frameBegin(){}
 void Constant::frameEnd(){}
 
-Sample3D Constant::getSample(const Vector &Vn, const Vector &Nn, const LambertParameters &parameters)const{
+Sample3D Constant::getSample(const Vector &Vn, const Vector &Nn, bxdfParameters *parameters)const{
     return Sample3D();
 }
 
-Color Constant::evalSampleTangent(const Vector &Ln, const Vector &Vn, const LambertParameters &parameters)const{
+Color Constant::evalSampleTangent(const Vector &Ln, const Vector &Vn, bxdfParameters *parameters)const{
     return col;
 }
 
-Color Constant::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, const LambertParameters &parameters)const{
+Color Constant::evalSampleWorld(const Vector &Ln, const Vector &Vn, const Vector &Nn, bxdfParameters *parameters)const{
     return col;
 }
 
-float Constant::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn) const{
+float Constant::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, bxdfParameters *parameters) const{
     return 0.f;
 }

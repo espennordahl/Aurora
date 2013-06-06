@@ -23,17 +23,12 @@ colorIndex(diffColorIndex)
 	brdf = new Lambert(name + ":lambert", renderEnv);
 }
 
-Brdf * MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo ) {
-	return brdf;
-}
+BrdfState MatteMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo ) {
+    bxdfParameters *params = new LambertParameters(m_renderEnv->shadingEngine->getColor(colorIndex, shdGeo));
 
-LambertParameters MatteMaterial::getBrdfParameters(const ShadingGeometry &shdGeo, Brdf *brdf) {
-LambertParameters params = {
-    m_renderEnv->shadingEngine->getColor(colorIndex, shdGeo)
-};
-    return params;
+    BrdfState state = {brdf, params};
+	return state;
 }
-
 
 void MatteMaterial::frameBegin(){
     LOG_DEBUG(m_name << ": FrameBegin!");
