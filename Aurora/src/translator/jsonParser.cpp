@@ -333,9 +333,29 @@ inline Material * getMaterial(std::string type, std::string name, Json::Value &r
                                   roughnessIndex, reflectance.getFloat());
     }
     else if (type == "matteMaterial") {
+        
         ShaderAttribute col = getShaderAttr(colorAttr, "color", root);
         int colorIndex = initShader(name + ":diffColor", col, colorAttr, renderEnv);
         mat = new MatteMaterial(name, colorIndex, (*renderEnv->globals)[LightSamples] ,renderEnv);
+        
+    } else if (type == "metalMaterial") {
+            // reflectance
+        ShaderAttribute reflectance      = getShaderAttr(colorAttr, "reflectance", root);
+        int reflectanceIndex = initShader(name + ":reflectance", reflectance, colorAttr, renderEnv);
+            // roughness A
+        ShaderAttribute roughnessA       = getShaderAttr(floatAttr, "roughnessA", root);
+        int roughnessIndexA  = initShader(name + ":roughnessA", roughnessA, floatAttr, renderEnv);
+            // roughness B
+        ShaderAttribute roughnessB       = getShaderAttr(floatAttr, "roughnessB", root);
+        int roughnessIndexB  = initShader(name + ":roughnessB", roughnessA, floatAttr, renderEnv);
+            // mix
+        ShaderAttribute mix              = getShaderAttr(floatAttr, "mix", root);
+        int mixIndex         = initShader(name + ":mix", mix, floatAttr, renderEnv);
+        
+        mat = new MetalMaterial(name, renderEnv,
+                                roughnessIndexA, roughnessIndexB,
+                                mixIndex, reflectanceIndex);
+
     }
     else if (type == "carMaterial"){
 //            // base diffuse

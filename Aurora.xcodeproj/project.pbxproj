@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		23110BA6175B1B14005D1911 /* loopSubdivMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23110BA4175B1B14005D1911 /* loopSubdivMesh.cpp */; };
+		2312E0CF1761C78A008954D8 /* metalMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2312E0CD1761C78A008954D8 /* metalMaterial.cpp */; };
 		235A8FA21759CF6F00372E43 /* constant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F7C1759CF6F00372E43 /* constant.cpp */; };
 		235A8FA31759CF6F00372E43 /* cookTorrance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F7E1759CF6F00372E43 /* cookTorrance.cpp */; };
 		235A8FA41759CF6F00372E43 /* lambert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F801759CF6F00372E43 /* lambert.cpp */; };
@@ -67,6 +68,8 @@
 /* Begin PBXFileReference section */
 		23110BA4175B1B14005D1911 /* loopSubdivMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = loopSubdivMesh.cpp; sourceTree = "<group>"; };
 		23110BA5175B1B14005D1911 /* loopSubdivMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loopSubdivMesh.h; sourceTree = "<group>"; };
+		2312E0CD1761C78A008954D8 /* metalMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metalMaterial.cpp; sourceTree = "<group>"; };
+		2312E0CE1761C78A008954D8 /* metalMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metalMaterial.h; sourceTree = "<group>"; };
 		235A8F791759CF6F00372E43 /* brdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdf.h; sourceTree = "<group>"; };
 		235A8F7B1759CF6F00372E43 /* brdfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdfs.h; sourceTree = "<group>"; };
 		235A8F7C1759CF6F00372E43 /* constant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constant.cpp; sourceTree = "<group>"; };
@@ -256,6 +259,8 @@
 				235A8F921759CF6F00372E43 /* matteMaterial.h */,
 				235A8F931759CF6F00372E43 /* transmitMaterial.cpp */,
 				235A8F941759CF6F00372E43 /* transmitMaterial.h */,
+				2312E0CD1761C78A008954D8 /* metalMaterial.cpp */,
+				2312E0CE1761C78A008954D8 /* metalMaterial.h */,
 			);
 			path = materials;
 			sourceTree = "<group>";
@@ -566,6 +571,7 @@
 				235A8FB01759CF6F00372E43 /* shadingEngine.cpp in Sources */,
 				235A8FB41759D0BE00372E43 /* texture2D.cpp in Sources */,
 				23110BA6175B1B14005D1911 /* loopSubdivMesh.cpp in Sources */,
+				2312E0CF1761C78A008954D8 /* metalMaterial.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

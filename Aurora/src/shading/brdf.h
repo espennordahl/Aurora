@@ -21,6 +21,7 @@ namespace Aurora {
     };
     
     struct bxdfParameters{
+        virtual ~bxdfParameters(){};
     };
     
 	class Brdf : public FrontEndObject {

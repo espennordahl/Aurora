@@ -11,6 +11,7 @@
 
 #include "matteMaterial.h"
 #include "kelemenMaterial.h"
+#include "metalMaterial.h"
 //#include "transmitMaterial.h"
 //#include "glassMaterial.h"
 //#include "carMaterial.h"

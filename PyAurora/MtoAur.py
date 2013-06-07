@@ -63,7 +63,6 @@ def parseMaterial(inputShd, objName, scene):
             # Check if this is a car paint shader
             print cmds.listAttr(inputShd.name())
             if "clearcoatReflectance" in cmds.listAttr(inputShd.name()):
-                print "TRUUUUE!"
                 diffcol = [col[0], col[1], col[2]]
                 clearcoatRefl = cmds.getAttr(inputShd + ".clearcoatReflectance")
                 clearcoatRough = cmds.getAttr(inputShd + ".clearcoatRoughness")
@@ -105,6 +104,12 @@ def parseMaterial(inputShd, objName, scene):
                                                    [speccol[0], speccol[1], speccol[2]],
                                                    roughness,
                                                    reflectance)
+    elif "phongE" in inputShd.type():
+        reflectance = [col[0], col[1], col[2]]
+        roughnessA = cmds.getAttr(inputShd + ".roughness")
+        roughnessB = cmds.getAttr(inputShd + ".highlightSize")
+        mix = cmds.getAttr(inputShd + ".reflectivity")
+        material = shaders.MetalMaterial(inputShd.name(), reflectance, roughnessA, roughnessB, mix)
     else:
         print "ERROR: Can't find shader type for object %s" % objName
         raise Exception

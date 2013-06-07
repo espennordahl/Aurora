@@ -36,6 +36,7 @@ struct lc{
 #define LOG_Parser              lc(Log::Debug,	"Parser")
 #define LOG_KelemenMaterial     lc(Log::Debug,	"Kelemen")
 #define LOG_MatteMaterial       lc(Log::Debug,	"Matte")
+#define LOG_MetalMaterial       lc(Log::Debug,	"Metal")
 #define LOG_Lights              lc(Log::Debug,	"Lights")
 #define LOG_Matrix              lc(Log::Debug,	"Matrix")
 #define LOG_Texture2D           lc(Log::Debug,	"Texture2D")
