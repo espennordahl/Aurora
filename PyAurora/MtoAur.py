@@ -24,6 +24,21 @@ def parseShader(inputShd):
         raise Exception
 
 
+def getShaderValue(inputShd, valuename, valuetype, scene):
+    # check if anything is connected
+    connections = listConnections(inputShd.name() + "." + valuename, d=False, s=True)
+    if len(connections) > 0:
+        shader = parseShader(connections[0])
+        scene.appendShader(shader)
+        return shader.getName()
+    else:
+        result = cmds.getAttr(inputShd + "." + valuename)
+        if valuetype is "color":
+            return [result[0][0], result[0][1], result[0][2]]
+        else:
+            return result
+
+
 def parseMaterial(inputShd, objName, scene):
     """
         Parses a material assigned to the mesh. 
@@ -34,13 +49,7 @@ def parseMaterial(inputShd, objName, scene):
     
     material = "" ## init
     if "lambert" in inputShd.type():
-        diffcol = [col[0], col[1], col[2]]
-        # check if anything is connected
-        connections = listConnections(inputShd.name() + ".color", d=False, s=True)
-        if len(connections) > 0:
-            shader = parseShader(connections[0])
-            scene.appendShader(shader)
-            diffcol = shader.getName()
+        diffcol = getShaderValue(inputShd, "color", "color", scene)
         material = shaders.MatteMaterial(inputShd.name(), diffcol)
     elif "blinn" in inputShd.type():
         # First check if refractions are on
@@ -105,10 +114,10 @@ def parseMaterial(inputShd, objName, scene):
                                                    roughness,
                                                    reflectance)
     elif "phongE" in inputShd.type():
-        reflectance = [col[0], col[1], col[2]]
-        roughnessA = cmds.getAttr(inputShd + ".roughness")
-        roughnessB = cmds.getAttr(inputShd + ".highlightSize")
-        mix = cmds.getAttr(inputShd + ".reflectivity")
+        reflectance = getShaderValue(inputShd, "color", "color", scene)
+        roughnessA = getShaderValue(inputShd, "roughness", "float", scene)
+        roughnessB = getShaderValue(inputShd, "highlightSize", "float", scene)
+        mix = getShaderValue(inputShd, "reflectivity", "float", scene)
         material = shaders.MetalMaterial(inputShd.name(), reflectance, roughnessA, roughnessB, mix)
     else:
         print "ERROR: Can't find shader type for object %s" % objName
