@@ -29,7 +29,7 @@ struct Aurora::SDVertex {
         // SDVertex Methods
     size_t valence() const;
     void oneRing(Point *P) const;
-    
+        
     bool operator==(const SDVertex &v2) const {
         return *P == *v2.P;
     }
@@ -55,6 +55,7 @@ struct Aurora::SDFace {
         for (size_t i = 0; i < 4; ++i)
             children[i] = NULL;
     }
+    
         // SDFace Methods
     size_t vnum(const Point *p) const {
         for (size_t i = 0; i < 3; ++i) {
@@ -180,7 +181,6 @@ Shape(o2c, c2o)
     for (size_t i = 0; i < nvertices; ++i){
         uniqueVertices.insert(P[i]);
     }
-    LOG_WARNING("Unique: " << uniqueVertices.size());
     
         // Allocate _LoopSubdiv_ vertices and faces
     SDVertex *verts = new SDVertex[nvertices];
@@ -251,8 +251,6 @@ Shape(o2c, c2o)
             }
         }
     }
-    
-    LOG_WARNING("NUM EDGES: " << edges.size());
     
         // Finish vertex initialization
     for (size_t i = 0; i < nvertices; ++i) {
@@ -548,15 +546,19 @@ Shape(o2c, c2o)
                              c2o,
                              (int)ntris,
                              (int)nverts,
-                             (int)nverts, // num norms
-                             (int)nverts, // num uvs
                              trimesh_verts,
-                             trimesh_verts, // norm Index... assumed to be the same as vert index
-                             trimesh_verts, // uv index.. not right
                              Plimit,
                              Ns,
                              UVLimit
                              );
+    
+    delete[] Pring;
+    delete[] Ns;
+    delete[] UVLimit;
+    delete[] Plimit;
+    delete[] trimesh_verts;
+    delete[] vertices[0];
+    delete[] faces[0];
 }
 
 

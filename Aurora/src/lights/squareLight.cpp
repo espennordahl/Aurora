@@ -92,23 +92,15 @@ std::tr1::shared_ptr<Shape> SquareLight::shape(){
 	Point p2 = Point(-xScale,yScale, 0);
 	Point p3 = Point(xScale, yScale, 0);
 	Point p4 = Point(xScale, -yScale, 0);
-//	p1 = (*objectToCamera)(p1);
-//	p2 = (*objectToCamera)(p2);
-//	p3 = (*objectToCamera)(p3);
-//	p4 = (*objectToCamera)(p4);
 
 	Point P[4] = {p1, p2, p3, p4};
 	
 	int Index[6] = {0, 1, 3,
 		2, 1, 3};   
     
-    Vector N[2] = {lightN, lightN};
-    uv tmpUV;
-    uv UV[2] = {tmpUV, tmpUV};
-    int Nindex[6] = {0, 0, 0, 0, 0, 0};
-    int UVindex[6] = {0, 0, 0, 0, 0, 0};
-    
-    shared_ptr<Shape> s = shared_ptr<Shape>(new TriangleMesh(objectToCamera, cameraToObject, 2, 4, 4, 4, Index, Nindex, UVindex, P, N, UV));
+    Vector N[4] = {lightN, lightN, lightN, lightN};
+
+    shared_ptr<Shape> s = shared_ptr<Shape>(new TriangleMesh(objectToCamera, cameraToObject, 2, 4, Index, P, N, NULL));
 
     return s;
 }

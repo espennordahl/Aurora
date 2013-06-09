@@ -51,9 +51,6 @@ namespace Aurora{
         void makeEmbree(embree::BuildTriangle* triangles, embree::BuildVertex* vertices, std::vector<Vector> &normals, std::vector< uv > &uvs, int *currentTri, int *currentVertex, AttributeState *attrs, int attributeIndex){
             m_trimesh.makeEmbree(triangles, vertices, normals, uvs, currentTri, currentVertex, attrs, attributeIndex);
         };
-        void dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced){
-            m_trimesh.dice(diced);
-        }
         
     private:
         static float beta(int valence);

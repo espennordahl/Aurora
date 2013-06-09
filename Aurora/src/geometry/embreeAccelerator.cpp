@@ -10,6 +10,8 @@
 
 #include "embreeAccelerator.h"
 
+#include "log.h"
+#define lcontext LOG_Embree
 
 using namespace Aurora;
 
@@ -30,6 +32,8 @@ EmbreeAccelerator::EmbreeAccelerator(const EmbreeMesh &mesh, AttributeState *att
 //  const BBox3f& bounds = empty,    //!< optional approximate bounding box of the geometry
 //  bool freeArrays = true);         //!< if true, triangle and vertex arrays are freed when no 
     m_intersector = accel->queryInterface<embree::Intersector> ();
+    
+    LOG_INFO("Size of prim vars: " <<  (m_mesh.uvs.capacity() * sizeof(uv) + m_mesh.normals.capacity() *sizeof(Vector)) / 1024 / 1024 << "MB");
 }
 
 bool EmbreeAccelerator::intersect( Ray *ray, Intersection *intersection) const{

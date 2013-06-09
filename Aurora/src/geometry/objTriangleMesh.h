@@ -21,9 +21,7 @@ namespace Aurora {
         
 		BBox objectBound() const;
 		BBox worldBound() const;
-		
-		void dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced) ;
-        
+		        
         void makeEmbree(embree::BuildTriangle* triangles, embree::BuildVertex* vertices, std::vector<Vector> &normals, std::vector< uv > &uvs, int *currentTri, int *currentVertex, AttributeState *attrs, int attributeIndex){
             m_shape->makeEmbree(triangles, vertices, normals, uvs, currentTri, currentVertex, attrs, attributeIndex);
         };

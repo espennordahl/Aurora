@@ -114,9 +114,10 @@ void Renderer::buildRenderEnvironment(){
     attrs = new AttributeState[numObjects + numLights];
     EmbreeMesh mesh;
     for (int i=0; i < numObjects; i++) {
-        mesh.appendTriangleMesh(objects[i]->m_shape, i);
-        attrs[i].material = objects[i]->m_material;
+        mesh.appendTriangleMesh(objects.back()->m_shape, i);
+        attrs[i].material = objects.back()->m_material;
         attrs[i].emmision = Color(0.);
+        objects.pop_back();
     }
     for (int i=0; i < numLights; i++) {
         if (lights[i]->lightType != type_envLight) {

@@ -33,16 +33,7 @@ namespace Aurora {
             // after rendering
         void frameBegin();
         void frameEnd();
-
-            // Splits the shape into triangles.
-		void dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced);
         
-            // Called once all objects have been parsed, and 
-            // is responsible for initializing the correct AttributeState for the object
-            // and convert all geometry to renderable triangles and add them to the 
-            // passed vector.
-		void makeRenderable(std::vector<RenderableTriangle> &renderable, AttributeState *attrs, int index);
-                
             // During parsing we only store the material name.
         std::string m_matName;
             // The surface material to be used during light transport.

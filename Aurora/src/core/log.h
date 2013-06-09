@@ -32,7 +32,7 @@ struct lc{
 #define LOG_Sampler3D           lc(Log::Debug,	"Sampler3D")
 #define LOG_Renderer            lc(Log::Debug,	"Renderer")
 #define LOG_AdaptiveRndSampler  lc(Log::Debug,	"AdaptiveRndSampler")
-#define LOG_Gridaccel           lc(Log::Debug,	"GridAccel")
+#define LOG_Embree              lc(Log::Debug,	"Embree")
 #define LOG_Parser              lc(Log::Debug,	"Parser")
 #define LOG_KelemenMaterial     lc(Log::Debug,	"Kelemen")
 #define LOG_MatteMaterial       lc(Log::Debug,	"Matte")
