@@ -10,6 +10,7 @@
 #define __Aurora__loopSubdivMesh__
 
 #include <iostream>
+#include <set.h>
 
 #include "shape.h"
 
@@ -18,14 +19,28 @@
 
 namespace Aurora{
 
+    class PointCompare {
+    public:
+        bool operator()(const Point &a, const Point &b) {
+            if (a.x != b.x){
+                return a.x < b.x;
+            }
+            if (a.y != b.y){
+                return a.y < b.y;
+            }
+            return a.z < b.z;
+//            return a.x == b.x && a.y == b.y && a.z == b.z;
+        }
+    };
+
+    
     struct SDVertex;
     struct SDFace;
     struct SDEdge;
 
     class LoopSubdivMesh : public Shape {
     public:
-        LoopSubdivMesh(const Transform *o2c, const Transform *c2o, int nfaces, int nvertices, const int *vertexIndices, const Point *P, int nlevels);
-        ~LoopSubdivMesh();
+        LoopSubdivMesh(const Transform *o2c, const Transform *c2o, int nfaces, int nvertices, const int *vertexIndices, const Point *P, const uv *UVin, int nlevels);
         
         BBox objectBound() const{ return m_trimesh.objectBound(); }
 		BBox worldBound() const{ return m_trimesh.worldBound(); }
@@ -44,12 +59,11 @@ namespace Aurora{
         static float beta(int valence);
         static float gamma(int valence);
 
-        Point weightOneRing(SDVertex *vert, float beta);
-        Point weightBoundary(SDVertex *vert, float beta);
-
-        int m_nlevels;
-        std::vector<SDVertex *> m_vertices;
-        std::vector<SDFace *> m_faces;
+        void weightOneRing(set<Point, PointCompare> &unique, SDVertex *destVert,
+                           SDVertex *vert, float beta) const;
+        
+        void weightBoundary(set<Point, PointCompare> &unique, SDVertex *destVert,
+                            SDVertex *vert, float beta) const;
         
         TriangleMesh m_trimesh;
         

@@ -106,8 +106,9 @@ std::tr1::shared_ptr<Shape> SquareLight::shape(){
     uv tmpUV;
     uv UV[2] = {tmpUV, tmpUV};
     int Nindex[6] = {0, 0, 0, 0, 0, 0};
+    int UVindex[6] = {0, 0, 0, 0, 0, 0};
     
-    shared_ptr<Shape> s = shared_ptr<Shape>(new TriangleMesh(objectToCamera, cameraToObject, 2, 4, 4, Index, Nindex, P, N, UV));
+    shared_ptr<Shape> s = shared_ptr<Shape>(new TriangleMesh(objectToCamera, cameraToObject, 2, 4, 4, 4, Index, Nindex, UVindex, P, N, UV));
 
     return s;
 }

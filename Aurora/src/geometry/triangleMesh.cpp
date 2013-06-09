@@ -16,7 +16,7 @@
 using namespace Aurora;
 
 TriangleMesh::TriangleMesh( const Transform *o2c, const Transform *c2o, 
-						   int numTris, int numVerts, int numNorms, const int *vertIndex, const int *normIndex, const Point *Pin, const Vector *Nin, const uv *UVin) : 
+						   int numTris, int numVerts, int numNorms, int numUVs, const int *vertIndex, const int *normIndex, const int *_uvIndex, const Point *Pin, const Vector *Nin, const uv *UVin) :
 							Shape(o2c, c2o){
 								
 	_numTriangles = numTris;
@@ -24,10 +24,12 @@ TriangleMesh::TriangleMesh( const Transform *o2c, const Transform *c2o,
 	vertexIndex = new int[3 * _numTriangles];
 	memcpy(vertexIndex, vertIndex, 3 * _numTriangles * sizeof(int));
     normalIndex = new int[3 * _numTriangles];
-    memcpy(normalIndex, normIndex, 3 * _numTriangles * sizeof(int));                        
+    memcpy(normalIndex, normIndex, 3 * _numTriangles * sizeof(int));
+    uvIndex = new int[3 * _numTriangles];
+    memcpy(uvIndex, _uvIndex, 3 * _numTriangles * sizeof(int));
 	P = new Point[ numVerts ];
     N = new Vector[ numNorms ];
-    UV = new uv[ numTris* 3  ] ; // TODO: Add arbitrary primvar support        
+    UV = new uv[ numUVs ];
 	// transform vertices to world space, and calculate bbox
 	// TODO: Default constructor for trBBox is weirding out..
 	wBound = BBox((*objectToCamera)(Pin[0]));
@@ -40,7 +42,7 @@ TriangleMesh::TriangleMesh( const Transform *o2c, const Transform *c2o,
     for (int i=0; i < numNorms; i++) { 
         N[i] = normalize(Nin[i]);
     }
-    for (int i = 0; i < numTris * 3; i++) {                                    
+    for(int i=0; i < numUVs; ++i){
         UV[i] = UVin[i];
     }
 }
@@ -62,9 +64,9 @@ void TriangleMesh::dice( std::vector<std::tr1::shared_ptr<Geometry> > &diced){
                                                   N[normalIndex[t*3]],
                                                   N[normalIndex[t*3+1]],
                                                   N[normalIndex[t*3+2]],
-                                                  UV[t*3],
-                                                  UV[t*3+1],
-                                                  UV[t*3+2]));
+                                                  UV[uvIndex[t*3]],
+                                                  UV[uvIndex[t*3+1]],
+                                                  UV[uvIndex[t*3+2]]));
 		diced.push_back(tri);
 	}
 }
@@ -84,10 +86,9 @@ void TriangleMesh::makeEmbree(embree::BuildTriangle* triangles, embree::BuildVer
         normals.push_back((*objectToCamera)(N[normalIndex[t*3]]));
         normals.push_back((*objectToCamera)(N[normalIndex[t*3+1]]));
         normals.push_back((*objectToCamera)(N[normalIndex[t*3+2]]));
-        uvs.push_back(UV[t*3]);
-        uvs.push_back(UV[t*3+1]);
-        uvs.push_back(UV[t*3+2]);
-
+        uvs.push_back(UV[uvIndex[t*3]]);
+        uvs.push_back(UV[uvIndex[t*3+1]]);
+        uvs.push_back(UV[uvIndex[t*3+2]]);
     }
     *currentVertex += _numVertices;
     *currentTri += _numTriangles;

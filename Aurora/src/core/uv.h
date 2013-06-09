@@ -11,6 +11,8 @@
 
 namespace Aurora {
     struct uv{
+        uv():u(0.f),v(0.f){}
+        uv(float s, float t):u(s), v(t){}
         float u;
         float v;
     };

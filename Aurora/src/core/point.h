@@ -48,6 +48,24 @@ namespace Aurora{
 
 		float &operator[](int index);
 		const float operator[](int index) const;
+        
+            // comparison
+        inline bool operator==(const Point &p) const {
+            return p.x == x && p.y == y && p.z == z;
+        }
+        
+        inline bool operator!=(const Point &p) const {
+            return p.x != x || p.y == y || p.z == z;
+        }
+
+        inline bool operator<(const Point &p) const {
+            if(p.x != x)
+                return x < p.x;
+            if(p.y != y)
+                return y < p.y;
+            return z < p.z;
+        }
+
 		
 		friend std::ostream& operator<<(std::ostream &os, Point const &p){
 			os << "(" << p.x << ", " << p.y << ", " << p.z << ")";

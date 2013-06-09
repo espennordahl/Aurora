@@ -617,8 +617,9 @@ void JsonParser::parseGeometry(Json::Value &root){
             break;
 
         }
-        if (!foundGeometry) {
-            LOG_WARNING("No geometry found in file " << filename << ".");
-        }
     }
+    if (!foundGeometry) {
+        LOG_WARNING("No geometry found in file " << filename << ".");
+    }
+
 }

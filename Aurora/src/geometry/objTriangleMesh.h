@@ -31,9 +31,7 @@ namespace Aurora {
         int numTriangles(){ return m_shape->numTriangles(); };
         int numVertices(){ return m_shape->numVertices(); };
 
-	protected:
-		bool parseObjLine(const std::string &line, std::vector<Point> &points, std::vector<Vector> &normals, std::vector<uv> &uvs, std::vector<int> &vertIndex, std::vector<int> &normIndex, std::vector<int> &uvIndex);
-        
+	protected:        
         std::tr1::shared_ptr<Shape> m_shape;
 	};
 }

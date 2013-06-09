@@ -85,9 +85,9 @@ void ObjParser::run(){
             }
             case readingUV:{
                 ss >> buffer[0] >> buffer[1];
-                uv myUVs = {
+                uv myUVs = uv(
                     buffer[0],
-                    buffer[1]};
+                    buffer[1]);
                 uvs->push_back(myUVs);
                 state = waitingForLine;
                 break;
@@ -207,7 +207,6 @@ bool ObjParser::parseFile(){
     if (state == error) {
         return false;
     }
-    
     
     return true;
 }

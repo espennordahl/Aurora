@@ -151,11 +151,11 @@ namespace Aurora{
         }
         
             // comparison
-        inline bool operator==(const Vector &v){
+        inline bool operator==(const Vector &v) const {
             return v.x == x && v.y == y && v.z == z;
         }
         
-        inline bool operator!=(const Vector &v){
+        inline bool operator!=(const Vector &v) const {
             return v.x != x || v.y == y || v.z == z;
         }
 	};
