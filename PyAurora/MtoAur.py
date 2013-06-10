@@ -10,14 +10,14 @@ import math
 import maya.cmds as cmds
 from pymel.core import *
 
-def parseShader(inputShd):
+def parseShader(inputShd, valuetype):
     """
         Parses a shader and returns the pyAurora shader object.
     """
     if "file" in inputShd.type():
         texname = cmds.getAttr(inputShd + ".fileTextureName")
         # TODO: Get correct return value type
-        shd = shaders.Texture2DShader(inputShd.name(), "color", str(texname))
+        shd = shaders.Texture2DShader(inputShd.name(), valuetype, str(texname))
         return shd
     else:
         print "unknown shader type :%s" % inputShd.type()
@@ -28,7 +28,7 @@ def getShaderValue(inputShd, valuename, valuetype, scene):
     # check if anything is connected
     connections = listConnections(inputShd.name() + "." + valuename, d=False, s=True)
     if len(connections) > 0:
-        shader = parseShader(connections[0])
+        shader = parseShader(connections[0], valuetype)
         scene.appendShader(shader)
         return shader.getName()
     else:
@@ -118,7 +118,8 @@ def parseMaterial(inputShd, objName, scene):
         roughnessA = getShaderValue(inputShd, "roughness", "float", scene)
         roughnessB = getShaderValue(inputShd, "highlightSize", "float", scene)
         mix = getShaderValue(inputShd, "reflectivity", "float", scene)
-        material = shaders.MetalMaterial(inputShd.name(), reflectance, roughnessA, roughnessB, mix)
+        gain = getShaderValue(inputShd, "specularColor", "color", scene)
+        material = shaders.MetalMaterial(inputShd.name(), reflectance, roughnessA, roughnessB, mix, gain)
     else:
         print "ERROR: Can't find shader type for object %s" % objName
         raise Exception

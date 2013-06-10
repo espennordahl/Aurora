@@ -39,16 +39,17 @@ class MatteMaterial(core.Serializable):
         root[self.getName()] = serializedObj
 
 class MetalMaterial(core.Serializable):
-    def __init__(self, name, reflectance, roughnessA, roughnessB, mix):
+    def __init__(self, name, reflectance, roughnessA, roughnessB, mix, gain):
         if not isinstance(reflectance, str):
             reflectance[0] = float(reflectance[0])
             reflectance[1] = float(reflectance[1])
             reflectance[2] = float(reflectance[2])
-        core.Serializable.__init__(self, name, ["reflectance", "roughnessA", "roughnessB", "mix", "type"])
+        core.Serializable.__init__(self, name, ["reflectance", "roughnessA", "roughnessB", "mix", "gain", "type"])
         self._s["reflectance"] = reflectance
         self._s["roughnessA"] = roughnessA
         self._s["roughnessB"] = roughnessB
         self._s["mix"] = mix
+        self._s["gain"] = gain
         self._s["type"] = "metalMaterial"
 
     def serialize(self, root):

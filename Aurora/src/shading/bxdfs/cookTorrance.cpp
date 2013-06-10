@@ -38,7 +38,7 @@ void CookTorrance::frameEnd(){
 }
 
 inline float ctD(float roughness, float cosalpha, float tanalpha){
-    const float rough2 = roughness * roughness;
+    const float rough2 = max(0.001f, roughness * roughness);
     const float exp = expf( -(tanalpha * tanalpha) / rough2);
     const float divisor = rough2 * M_PI * powf(cosalpha, 3.f);
     return exp / divisor;

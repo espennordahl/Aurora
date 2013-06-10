@@ -29,7 +29,7 @@ namespace Aurora {
         
         T evaluate(const ShadingGeometry &shdGeo){
                 // TODO: Should probably floor elsewhere
-            return m_texture->read(shdGeo.st.u - floor(shdGeo.st.u), shdGeo.st.v - floor(shdGeo.st.v), 0.);
+            return m_texture->read(shdGeo.st.u - floor(shdGeo.st.u), 1.f- (shdGeo.st.v - floor(shdGeo.st.v)), 0.);
         }
         
     private:

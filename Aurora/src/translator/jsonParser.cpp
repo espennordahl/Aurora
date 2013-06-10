@@ -347,14 +347,17 @@ inline Material * getMaterial(std::string type, std::string name, Json::Value &r
         int roughnessIndexA  = initShader(name + ":roughnessA", roughnessA, floatAttr, renderEnv);
             // roughness B
         ShaderAttribute roughnessB       = getShaderAttr(floatAttr, "roughnessB", root);
-        int roughnessIndexB  = initShader(name + ":roughnessB", roughnessA, floatAttr, renderEnv);
+        int roughnessIndexB  = initShader(name + ":roughnessB", roughnessB, floatAttr, renderEnv);
             // mix
         ShaderAttribute mix              = getShaderAttr(floatAttr, "mix", root);
         int mixIndex         = initShader(name + ":mix", mix, floatAttr, renderEnv);
+            // gain
+        ShaderAttribute gain              = getShaderAttr(colorAttr, "gain", root);
+        int gainIndex         = initShader(name + ":gain", gain, colorAttr, renderEnv);
         
         mat = new MetalMaterial(name, renderEnv,
                                 roughnessIndexA, roughnessIndexB,
-                                mixIndex, reflectanceIndex);
+                                mixIndex, reflectanceIndex, gainIndex);
 
     }
     else if (type == "carMaterial"){
@@ -544,6 +547,23 @@ inline Shader<Color>* getColorShader(const std::string &name, Json::Value &root)
     return newShd;
 }
 
+inline Shader<float>* getFloatShader(const std::string &name, Json::Value &root){
+    
+    Shader<float> *newShd;
+    
+    std::string shdType = getStringAttr("type", root);
+    
+    if (shdType == "texture2DShader") {
+        std::string texturePath = getStringAttr("texturename", root);
+        newShd = new Texture2DShader<float>(texturePath);
+    }
+    else{
+        LOG_ERROR("Unknown color shader type: " << shdType);
+    }
+    return newShd;
+}
+
+
 void JsonParser::parseShaders(Json::Value &root){
     LOG_DEBUG("Parsing Shaders.");
     bool foundShaders = false;
@@ -563,6 +583,9 @@ void JsonParser::parseShaders(Json::Value &root){
                 if (attributeType == "color"){
                     Shader<Color> *newShd = getColorShader(shdName, *objItr);
                     renderEnv->shadingEngine->registerShaderColor(shdName, newShd);
+                } else if (attributeType == "float"){
+                    Shader<float> *newShd = getFloatShader(shdName, *objItr);
+                    renderEnv->shadingEngine->registerShaderFloat(shdName, newShd);
                 }
                 else{
                     LOG_ERROR("Unable to parse shader for attribute type: " << attributeType);
