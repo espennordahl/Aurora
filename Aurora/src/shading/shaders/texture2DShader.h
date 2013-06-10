@@ -19,8 +19,6 @@
 namespace Aurora {
     template <class T> class Texture2DShader : public Shader<T>{
     public:
-            // TODO: How do I move the implementation to a .cpp file without
-            // the linker complaining?
         Texture2DShader(std::string filename):
         m_texture(new Texture2D(filename))
         {
@@ -36,6 +34,25 @@ namespace Aurora {
         std::string m_texture_name;
         Texture2D *m_texture;
     };
+    
+    template <> class Texture2DShader <float> : public Shader<float>{
+    public:
+        Texture2DShader(std::string filename):
+        m_texture(new Texture2D(filename))
+        {
+            m_texture_name = filename;
+        }
+        
+        float evaluate(const ShadingGeometry &shdGeo){
+                // TODO: Should probably floor elsewhere
+            return m_texture->read(shdGeo.st.u - floor(shdGeo.st.u), 1.f- (shdGeo.st.v - floor(shdGeo.st.v)), 0.).r;
+        }
+        
+    private:
+        std::string m_texture_name;
+        Texture2D *m_texture;
+    };
+
 }
 
 

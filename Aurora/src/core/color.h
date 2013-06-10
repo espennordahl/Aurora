@@ -54,11 +54,7 @@ namespace Aurora {
         }
         
 #pragma mark -
-#pragma mark Operators
-        operator float(){
-            return r;
-        }
-        
+#pragma mark Operators        
             // Addition
         inline const Color operator+(const Color &col)const{
             return Color(r+col.r, g+col.g, b+col.b);
