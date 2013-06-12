@@ -208,73 +208,81 @@ public:
                         }
                         
                             // sample lights
-                        BrdfState brdf_state = attrs->material->getBrdf(Vn, Nn, isect.shdGeo);
+                        BrdfState brdf_state = attrs->material->getBrdf(Vn, Nn, isect.shdGeo, mattePath);
                         currentBrdf = brdf_state.brdf;
                         bxdfParameters *brdf_parameters = brdf_state.parameters;
                         
                         if (bounces < (*m_render_environment->globals)[MaxDepth]) {
                             int numLights = (int)m_render_environment->lights.size();
-                            Light* currentLight = m_render_environment->lights[rand() % numLights];
-                            
-                                // For diffuse samples we don't need MIS
-                            if (currentBrdf->m_brdfType == MatteBrdf) {
-                                
-                                Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
-                                    // sample light
-                                float costheta = dot(Nn, lightSample.ray.direction);
-                                if (costheta >= 0. && lightSample.pdf > 0.) {
-                                    float li = 1;
-                                    if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
-                                        li = 0;
-                                    Lo += lightSample.color *
-                                    currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdf_parameters) *
-                                    li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
+                            std::vector<int> lightIndices;
+                            for(int i=0; i<numLights; ++i){
+                                if (m_render_environment->lights[i]->visible(orig,Nn, currentBrdf->m_integrationDomain)) {
+                                    lightIndices.push_back(i);
                                 }
                             }
+                            numLights = (int)lightIndices.size();
                             
-                                // Specular lobes MIS
-                            else {
-                                
-                                    // light sample
-                                Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
-                                    // sample light
-                                float costheta = dot(Nn, lightSample.ray.direction);
-                                if (costheta > 0. && lightSample.pdf > 0.) {
-                                    float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn, brdf_parameters);
-                                    if (brdfPdf > 0.) {
+                            if(numLights){
+                                Light* currentLight = m_render_environment->lights[lightIndices[rand() % numLights]];
+                                    // For diffuse samples we don't need MIS
+                                if (currentBrdf->m_brdfType == MatteBrdf) {
+                                    
+                                    Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
+                                        // sample light
+                                    float costheta = dot(Nn, lightSample.ray.direction);
+                                    if (costheta >= 0. && lightSample.pdf > 0.) {
                                         float li = 1;
                                         if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
                                             li = 0;
-                                        if (li != 0) {
-                                            float weight = PowerHeuristic(1, lightSample.pdf, 1, brdfPdf);
-                                            Lo += lightSample.color * weight *
-                                            currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdf_parameters) *
-                                            li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
-                                        }
+                                        Lo += lightSample.color *
+                                        currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdf_parameters) *
+                                        li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
                                     }
                                 }
                                 
-                                
-                                    // brdf sample
-                                Sample3D brdfSample = currentBrdf->getSample(Vn, Nn, brdf_parameters);
-                                brdfSample.ray.origin = orig;
-                                costheta = dot(Nn, brdfSample.ray.direction);
-                                if (costheta > 0.) {
-                                    float lightPdf = currentLight->pdf(&brdfSample, Nn, currentBrdf->m_integrationDomain);
-                                    if (lightPdf > 0. && brdfSample.pdf > 0.) {
-                                        float li = 1;
-                                        if (m_render_environment->accelerationStructure->intersectBinary(&brdfSample.ray))
-                                            li = 0;
-                                        if (li != 0) {
-                                            float weight = PowerHeuristic(1, brdfSample.pdf, 1, lightPdf);
-                                            Lo += brdfSample.color * weight *
-                                            currentLight->eval(brdfSample, Nn) *
-                                            costheta * pathThroughput * (float)numLights / brdfSample.pdf;
+                                    // Specular lobes MIS
+                                else {
+                                    
+                                        // light sample
+                                    Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
+                                        // sample light
+                                    float costheta = dot(Nn, lightSample.ray.direction);
+                                    if (costheta > 0. && lightSample.pdf > 0.) {
+                                        float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn, brdf_parameters);
+                                        if (brdfPdf > 0.) {
+                                            float li = 1;
+                                            if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
+                                                li = 0;
+                                            if (li != 0) {
+                                                float weight = PowerHeuristic(1, lightSample.pdf, 1, brdfPdf);
+                                                Lo += lightSample.color * weight *
+                                                currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdf_parameters) *
+                                                li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
+                                            }
+                                        }
+                                    }
+                                    
+                                    
+                                        // brdf sample
+                                    Sample3D brdfSample = currentBrdf->getSample(Vn, Nn, brdf_parameters);
+                                    brdfSample.ray.origin = orig;
+                                    costheta = dot(Nn, brdfSample.ray.direction);
+                                    if (costheta > 0.) {
+                                        float lightPdf = currentLight->pdf(&brdfSample, Nn, currentBrdf->m_integrationDomain);
+                                        if (lightPdf > 0. && brdfSample.pdf > 0.) {
+                                            float li = 1;
+                                            if (m_render_environment->accelerationStructure->intersectBinary(&brdfSample.ray))
+                                                li = 0;
+                                            if (li != 0) {
+                                                float weight = PowerHeuristic(1, brdfSample.pdf, 1, lightPdf);
+                                                Lo += brdfSample.color * weight *
+                                                currentLight->eval(brdfSample, Nn) *
+                                                costheta * pathThroughput * (float)numLights / brdfSample.pdf;
+                                            }
                                         }
                                     }
                                 }
                             }
-                            
                         }
                             // sample brdf
                         currentSample = currentBrdf->getSample(Vn, Nn, brdf_parameters);

@@ -27,14 +27,22 @@ SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transf
     Point p1 = Point(-xScale, -yScale, 0);
 	Point p2 = Point(-xScale,yScale, 0);
 	Point p3 = Point(xScale, yScale, 0);
+    Point p4 = Point(xScale, -yScale, 0);
 	p1 = (*objectToCamera)(p1);
 	p2 = (*objectToCamera)(p2);
 	p3 = (*objectToCamera)(p3);
+	p4 = (*objectToCamera)(p4);
     
     Vector v1 = p1 - p2;
     Vector v2 = p2 - p3;
     
     lightN = normalize(cross(v1, v2));
+    
+    
+    pCam[0] = p1;
+    pCam[1] = p2;
+    pCam[2] = p3;
+    pCam[3] = p4;
     
     m_sampler.init_faure();
 }

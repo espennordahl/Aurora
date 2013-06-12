@@ -25,7 +25,9 @@ namespace Aurora {
 		Color eval( const Sample3D &sample, const Vector &Nn ) ;
 		
 		float pdf( Sample3D *sample, const Vector &Nn, const IntegrationDomain &integrationDomain) ;
-		
+
+        bool visible( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain ){ return true; }
+
 		bool intersectBinary( Ray *ray ) const;
 		
 		void makeRenderable(std::vector<RenderableTriangle> &renderable, AttributeState *attrs, int index);

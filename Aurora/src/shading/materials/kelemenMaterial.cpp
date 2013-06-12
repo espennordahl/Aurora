@@ -221,12 +221,16 @@ float KelemenMaterial::getAlbedo(float costheta, float roughness){
     return (1.-roughnessMix) * resultRoughnessA + roughnessMix * resultRoughnessB;
 }
 
-BrdfState KelemenMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo ) {
+BrdfState KelemenMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath) {
 
     CookTorranceParameters *ctParams = new CookTorranceParameters(
         m_renderEnv->shadingEngine->getColor(specColorIndex, shdGeo),
         m_renderEnv->shadingEngine->getFloat(roughnessIndex, shdGeo),
         reflectance);
+    
+    if (mattePath) {
+        ctParams->roughness = ctParams->roughness * (1.-CAUSTIC_BLUR) + CAUSTIC_BLUR;
+    }
 
     if (ctParams->reflectance < 1.f) { // exception to get specular response only (for debug purposes)
             // get albedo

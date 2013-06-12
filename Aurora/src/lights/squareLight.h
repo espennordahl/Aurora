@@ -27,6 +27,9 @@ namespace Aurora {
 		
         inline float pdf( Sample3D *sample, const Vector &Nn, const IntegrationDomain &integrationDomain);
 		
+        inline bool visible( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain );
+
+        
 		bool intersectBinary( Ray *ray ) const;
 		
 		void makeRenderable(std::vector<RenderableTriangle> &renderable, AttributeState *attrs, int index);
@@ -43,6 +46,7 @@ namespace Aurora {
 		float yScale;
         Vector lightN;
         Halton_sampler m_sampler;
+        Point pCam[4];
         
         static tbb::atomic<int> m_halton_index;
 
@@ -95,6 +99,20 @@ namespace Aurora {
         }
         return 0.f;
     }
+    
+    bool SquareLight::visible( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain ){
+        if(integrationDomain == Sphere){
+            return true;
+        }
+        for (int i=0; i < 4; ++i) {
+            Vector v = pCam[i] - orig;
+            if (dot(v, Nn) > 0.f) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     
 }

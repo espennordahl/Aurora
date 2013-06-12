@@ -32,7 +32,9 @@ namespace Aurora {
 		
             // Evalutes the pdf for a given sample
 		virtual float pdf( Sample3D *sample, const Vector &Nn, const IntegrationDomain &integrationDomain ) = 0;
-		
+
+        virtual bool visible( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain ) = 0;
+        
             // Checks whether a ray intersects the light or not.
 		virtual bool intersectBinary( Ray *ray ) const = 0;
 		

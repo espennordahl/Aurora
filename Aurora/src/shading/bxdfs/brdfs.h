@@ -10,9 +10,9 @@
 #define Aurora_brdfs_h
 
 #include "lambert.h"
-//#include "cookTorrance.h"
-//#include "constant.h"
-//#include "specTransmit.h"
-//#include "specMirror.h"
+#include "cookTorrance.h"
+#include "constant.h"
+#include "specTransmit.h"
+#include "specMirror.h"
 
 #endif

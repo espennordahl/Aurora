@@ -28,7 +28,7 @@ m_gainIndex(gainIndex)
 	m_brdf = new CookTorrance(name + ":cookTorranceA", renderEnv);
 }
 
-BrdfState MetalMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo ) {
+BrdfState MetalMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath) {
     float mix = m_renderEnv->shadingEngine->getFloat(m_mixIndex, shdGeo);
     float r = rand()/(float)RAND_MAX;
     Color reflectance = m_renderEnv->shadingEngine->getColor(m_reflectanceIndex, shdGeo);
@@ -40,6 +40,9 @@ BrdfState MetalMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const Shad
     spec_color.b = schlick(costheta, reflectance.b);
     if(r > mix){
         bxdfParameters *params = new CookTorranceParameters(spec_color * gain,
+                                                            mattePath ?
+                                                            m_renderEnv->shadingEngine->getFloat(m_roughnessIndexA, shdGeo)
+                                                            * (1.-CAUSTIC_BLUR) + CAUSTIC_BLUR :
                                                             m_renderEnv->shadingEngine->getFloat(m_roughnessIndexA, shdGeo),
                                                             1.);
         BrdfState state = {m_brdf, params};
@@ -47,6 +50,9 @@ BrdfState MetalMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const Shad
 
     } else {
         bxdfParameters *params = new CookTorranceParameters(spec_color * gain,
+                                                            mattePath ?
+                                                            m_renderEnv->shadingEngine->getFloat(m_roughnessIndexB, shdGeo)
+                                                            * (1.-CAUSTIC_BLUR) + CAUSTIC_BLUR :
                                                             m_renderEnv->shadingEngine->getFloat(m_roughnessIndexB, shdGeo),
                                                             1.);
         BrdfState state = {m_brdf, params};

@@ -23,7 +23,7 @@ namespace Aurora {
 		KelemenMaterial( std::string name, RenderEnvironment *renderEnv,
                         int diffColIndex, int specColIndex,
                         int roughnessIndex, float reflectance);
-		BrdfState getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo ) ;
+		BrdfState getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo , bool mattePath) ;
 		
         void frameBegin();
         void frameEnd();

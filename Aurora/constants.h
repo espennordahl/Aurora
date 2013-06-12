@@ -9,6 +9,9 @@
 #ifndef Aurora_constants_h
 #define Aurora_constants_h
 
+// bias
+#define CAUSTIC_BLUR 0.5
+
 // colors
 #define ISBLACK  0.0001
 

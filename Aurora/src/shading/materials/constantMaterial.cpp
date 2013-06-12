@@ -16,7 +16,7 @@ Material(name, renderEnv)
     brdf = new Constant(name, col, renderEnv);
 }
 
-BrdfState ConstantMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo){
+BrdfState ConstantMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath){
     BrdfState state;
     state.brdf = brdf;
     state.parameters = new bxdfParameters();

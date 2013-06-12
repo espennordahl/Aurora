@@ -409,10 +409,11 @@ inline Material * getMaterial(std::string type, std::string name, Json::Value &r
 //
     }
     else if (type == "glassMaterial") {
-//        ShaderAttribute specCol       = getShaderAttr(colorAttr, "specColor", root);
-//        ShaderAttribute reflectance   = getShaderAttr(floatAttr, "reflectance", root);
-//        ShaderAttribute ior      = getShaderAttr(floatAttr, "ior", root);
-//        mat = new GlassMaterial(name, specCol.getColor(), Color(1.), reflectance.getFloat(), ior.getFloat(), renderEnv);
+        ShaderAttribute specCol       = getShaderAttr(colorAttr, "specColor", root);
+        ShaderAttribute reflectance   = getShaderAttr(floatAttr, "reflectance", root);
+        ShaderAttribute ior      = getShaderAttr(floatAttr, "ior", root);
+        ShaderAttribute transCol = getShaderAttr(colorAttr, "transmitColor", root);
+        mat = new GlassMaterial(name, specCol.getColor(), transCol.getColor(), reflectance.getFloat(), ior.getFloat(), renderEnv);
     }
     else {
         LOG_ERROR("Unknown material: " << type);

@@ -29,7 +29,7 @@ namespace Aurora {
 	public:
         Material(std::string name, RenderEnvironment *renderEnv): FrontEndObject(name, renderEnv){};
             // Returns a brdf to run during light transport.
-		virtual BrdfState getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo ) = 0;
+		virtual BrdfState getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath) = 0;
             // FrameBegin and FrameEnd are pipeline methods for doing
             // any kind of pre and post rendering work. This method
             // is ran on all front end objects recursively before and
