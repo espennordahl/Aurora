@@ -10,7 +10,8 @@
 #define Aurora_constants_h
 
 // bias
-#define CAUSTIC_BLUR 0.5
+#define CAUSTIC_BLUR 0.25
+#define FIREFLY 200
 
 // colors
 #define ISBLACK  0.0001
@@ -20,21 +21,6 @@
 
 // ray tracing
 #define RAY_BIAS 0.0005
-
-#define MIN_ROULETTE 0.85
-#define MAX_ROULETTE 0.9
-
-// threading
-#define NUM_THREADS 8
-#define SAMPLES_PER_THREAD 10000
-
-// kd tree
-#define KD_INTERSECTCOST 1
-#define KD_TRAVERSECOST 1
-#define KD_EMPTYBONUS 1
-
-// shader cache
-#define NUM_SHADING_POINTS 2
 
 // kelemen albedo cache settings
 #define SPECALBEDO_SAMPLES 250000

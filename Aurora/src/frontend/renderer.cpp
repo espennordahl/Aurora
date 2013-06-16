@@ -164,16 +164,20 @@ public:
             Sample2D current_sample_2d = Sample2D(x, y);
             
             Sample3D sample = m_render_environment->renderCam->convertSample(current_sample_2d, m_sample_index);
-            Color Lo = Color(0.f);
             float alpha = 0.f;
+            Color pixelColor = 0.f;
             Intersection firstIsect;
+            
+            float continueProbability = 1.f;
             
                 // find first intersection
             if (m_render_environment->accelerationStructure->intersect(&sample.ray, &firstIsect)) {
                 alpha = 1.f;
+                Color Lo = Color(0.f);
                 
                     // then find all the next vertices of the path
                 for (int i=0; i < m_num_samples; i++) {
+                    Lo = Color(0.f);
                     Sample3D currentSample = sample;
                     Intersection isect = firstIsect;
                     Color pathThroughput = Color(1.f);
@@ -292,6 +296,9 @@ public:
                         }
                         if (currentBrdf->m_brdfType != MirrorBrdf) {
                             pathThroughput *= currentSample.color * dot(Nn, currentSample.ray.direction) / currentSample.pdf;
+                            if(bounces > (*m_render_environment->globals)[MinDepth]){
+                                continueProbability *= currentSample.color.lum() * dot(Nn, currentSample.ray.direction) / currentSample.pdf;
+                            }
                             if (pathThroughput.isBlack()) {
                                 break;
                             }
@@ -304,11 +311,13 @@ public:
                         }
                         else {
                             pathThroughput *= currentSample.color;
+                            if(bounces > (*m_render_environment->globals)[MinDepth]){
+                                continueProbability *= currentSample.color.lum();
+                            }
                             rayType = MirrorRay;
                         }
                             // possibly terminate path here
                         if (bounces > (*m_render_environment->globals)[MinDepth]) {
-                            float continueProbability = min((float)MAX_ROULETTE, pathThroughput.lum()*10);
                             if ((float) rand()/RAND_MAX > continueProbability) {
                                 break;
                             }
@@ -341,6 +350,12 @@ public:
                             break;
                         }
                     }
+                    
+                    while(Lo.r > FIREFLY || Lo.g > FIREFLY || Lo.b > FIREFLY){
+                        LOG_WARNING("Reducing firefly: " << Lo);
+                        Lo *= 0.2f;
+                    }
+                    pixelColor += Lo/(float)m_num_samples;
                 }
                 
             } else { // camera ray miss
@@ -348,13 +363,13 @@ public:
                     Light* light = m_render_environment->lights[i];
                     if (light->lightType == type_envLight) {
                         // multiplier is a hack to counter the div below
-                        Lo += light->eval(sample, sample.ray.direction) * (float)m_num_samples;
+                        pixelColor += light->eval(sample, sample.ray.direction);
                         alpha = 1.;
                     }
                 }
             }
             
-            m_display->appendValue(x, y, Lo/(float)m_num_samples, alpha);
+            m_display->appendValue(x, y, pixelColor, alpha);
         }
     }
     
@@ -398,6 +413,8 @@ void Renderer::renderImageTBB(){
     displayDriver->draw(height);
     tbb::task_group group;
     for(int i=0; i<multisamples; ++i){
+        time_t progressionStart;
+        time(&progressionStart);
         tbb::parallel_for( tbb::blocked_range<size_t>(0,width*height),
                           IntegrateParallel(width,
                                             height,
@@ -410,6 +427,11 @@ void Renderer::renderImageTBB(){
         group.wait();
         group.run(DrawTask(displayDriver, height));
         LOG_INFO("Render progress: " << 100 * (i+1)/(float)multisamples << "%");
+        time_t currentTime;
+        time(&currentTime);
+        int progtime = difftime(currentTime, progressionStart);
+        int remaining = progtime * (multisamples - (i+1));
+        LOG_INFO("Estimated time remaining: " << floor(remaining/60/60) << "h" << floor(remaining/60)%60 << "min" << remaining%60 << "sec.");
     }
     group.wait();
 }
