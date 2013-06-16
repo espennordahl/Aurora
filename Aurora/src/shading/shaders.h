@@ -11,5 +11,6 @@
 
 #include "texture2DShader.h"
 #include "constantShader.h"
+#include "triplanarTextureShader.h"
 
 #endif

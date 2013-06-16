@@ -168,8 +168,6 @@ public:
             Color pixelColor = 0.f;
             Intersection firstIsect;
             
-            float continueProbability = 1.f;
-            
                 // find first intersection
             if (m_render_environment->accelerationStructure->intersect(&sample.ray, &firstIsect)) {
                 alpha = 1.f;
@@ -177,6 +175,7 @@ public:
                 
                     // then find all the next vertices of the path
                 for (int i=0; i < m_num_samples; i++) {
+                    float continueProbability = 1.f;
                     Lo = Color(0.f);
                     Sample3D currentSample = sample;
                     Intersection isect = firstIsect;

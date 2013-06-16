@@ -16,9 +16,15 @@ def parseShader(inputShd, valuetype):
     """
     if "file" in inputShd.type():
         texname = cmds.getAttr(inputShd + ".fileTextureName")
-        # TODO: Get correct return value type
-        shd = shaders.Texture2DShader(inputShd.name(), valuetype, str(texname))
-        return shd
+
+        # hack: Filter size means it's triplanar
+        if (cmds.getAttr(inputShd + ".preFilter") == 1):
+            scale = cmds.getAttr(inputShd + ".scale")
+            shd = shaders.TriplanarTextureShader(inputShd.name(), valuetype, str(texname), scale)
+            return shd
+        else:
+            shd = shaders.Texture2DShader(inputShd.name(), valuetype, str(texname))
+            return shd
     else:
         print "unknown shader type :%s" % inputShd.type()
         raise Exception

@@ -542,6 +542,11 @@ inline Shader<Color>* getColorShader(const std::string &name, Json::Value &root)
         std::string texturePath = getStringAttr("texturename", root);
         newShd = new Texture2DShader<Color>(texturePath);
     }
+    else if (shdType == "triplanarTextureShader"){
+        std::string texturePath = getStringAttr("texturename", root);
+        float scale = getDoubleAttr("scale", root);
+        newShd = new TriplanarTextureShader<Color>(texturePath, scale);
+    }
     else{
         LOG_ERROR("Unknown color shader type: " << shdType);
     }
@@ -557,6 +562,11 @@ inline Shader<float>* getFloatShader(const std::string &name, Json::Value &root)
     if (shdType == "texture2DShader") {
         std::string texturePath = getStringAttr("texturename", root);
         newShd = new Texture2DShader<float>(texturePath);
+    }
+    else if (shdType == "triplanarTextureShader"){
+        std::string texturePath = getStringAttr("texturename", root);
+        float scale = getDoubleAttr("scale", root);
+        newShd = new TriplanarTextureShader<float>(texturePath, scale);
     }
     else{
         LOG_ERROR("Unknown color shader type: " << shdType);

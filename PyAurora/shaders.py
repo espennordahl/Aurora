@@ -17,6 +17,24 @@ class Texture2DShader(core.Serializable):
                 serializedObj[key] = self._s[key]
         root[self.getName()] = serializedObj
 
+class TriplanarTextureShader(core.Serializable):
+    def __init__(self, name, attributetype, texturename, scale):
+        core.Serializable.__init__(self, name, ["texturename", "scale", "type", "attributetype"])
+        self._s["texturename"] = texturename
+        self._s["type"] = "triplanarTextureShader"
+        self._s["scale"] = scale
+        self._s["attributetype"] = attributetype
+
+    def serialize(self, root):
+        serializedObj = {}
+        for key in self._serialize:
+            if isinstance(self._s[key], core.Serializable):
+                serializedObj[key] = {}
+                self._s[key].serialize(serializedObj[key])
+            else:
+                serializedObj[key] = self._s[key]
+        root[self.getName()] = serializedObj
+
 
 class MatteMaterial(core.Serializable):
     def __init__(self, name, color = [1,1,1]):

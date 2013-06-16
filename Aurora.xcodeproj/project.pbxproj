@@ -194,6 +194,7 @@
 		23B1685C17589E7D00E81FBD /* halton_enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halton_enum.h; sourceTree = "<group>"; };
 		23B1685D17589E7D00E81FBD /* halton_gen.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = halton_gen.py; sourceTree = "<group>"; };
 		23B1685E17589E7D00E81FBD /* halton_sampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halton_sampler.h; sourceTree = "<group>"; };
+		23C2ED32176D74A900FC65E3 /* triplanarTextureShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = triplanarTextureShader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +273,7 @@
 				235A8F9C1759CF6F00372E43 /* noise3D.cpp */,
 				235A8F9D1759CF6F00372E43 /* noise3D.h */,
 				235A8F9E1759CF6F00372E43 /* texture2DShader.h */,
+				23C2ED32176D74A900FC65E3 /* triplanarTextureShader.h */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
