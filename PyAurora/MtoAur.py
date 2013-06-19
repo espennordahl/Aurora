@@ -104,19 +104,14 @@ def parseMaterial(inputShd, objName, scene):
             else:
                 # If there are no refractions or car paint attributes we create a KelemenShader
                 # base parameters
-                diffcol = [col[0], col[1], col[2]]
-                speccol = cmds.getAttr(inputShd + ".specularColor")[0]
-                roughness = cmds.getAttr(inputShd + ".specularRollOff")
-                reflectance = cmds.getAttr(inputShd + ".reflectivity")
-                # check if anything is connected
+                diffcol = getShaderValue(inputShd, "color", "color", scene)
+                speccol = getShaderValue(inputShd, "specularColor", "color", scene)
+                roughness = getShaderValue(inputShd, "specularRollOff", "float", scene)
+                reflectance = getShaderValue(inputShd, "reflectivity", "float", scene)
                 connections = listConnections(inputShd.name() + ".color", d=False, s=True)
-                if len(connections) > 0:
-                    shader = parseShader(connections[0])
-                    scene.appendShader(shader)
-                    diffcol = shader.getName()
                 material = shaders.KelemenMaterial(inputShd.name(),
                                                    diffcol,
-                                                   [speccol[0], speccol[1], speccol[2]],
+                                                   speccol,
                                                    roughness,
                                                    reflectance)
     elif "phongE" in inputShd.type():

@@ -211,8 +211,8 @@ class KelemenMaterial(core.Serializable):
                                         "type"])
         self._s["diffusecolor"] = diffcolor
         self._s["speccolor"] = speccolor
-        self._s["roughness"] = float(roughness)
-        self._s["reflectance"] = float(reflectance)
+        self._s["roughness"] = roughness
+        self._s["reflectance"] = reflectance
         self._s["type"] = "kelemenMaterial"
 
     def serialize(self, root):
