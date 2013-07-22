@@ -51,7 +51,8 @@ namespace Aurora {
 		bool integrateSampleMULTI(Sample3D *sample, float importance);
 		OpenexrDisplay *displayDriver;
         
-        pthread_t accumThread;
+        tbb::atomic<long> m_numrays;
+        double m_rayspeed;
 	};
 }
 

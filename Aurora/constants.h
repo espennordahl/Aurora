@@ -10,7 +10,7 @@
 #define Aurora_constants_h
 
 // bias
-#define CAUSTIC_BLUR 0.25
+#define CAUSTIC_BLUR 0.2
 #define FIREFLY 200
 
 // colors

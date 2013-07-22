@@ -152,9 +152,10 @@ public:
                       int num_samples,
                       int sample_index,
                       RenderEnvironment *render_environment,
-                      OpenexrDisplay *display):
+                      OpenexrDisplay *display,
+                      tbb::atomic<long> *raycount):
     m_width(width), m_height(height), m_num_samples(num_samples), m_sample_index(sample_index),
-    m_render_environment(render_environment), m_display(display)
+    m_render_environment(render_environment), m_display(display), m_raycount(raycount)
     {}
     
     void operator()(const tbb::blocked_range<size_t>& r) const{
@@ -169,6 +170,7 @@ public:
             Intersection firstIsect;
             
                 // find first intersection
+            m_raycount->fetch_and_increment();
             if (m_render_environment->accelerationStructure->intersect(&sample.ray, &firstIsect)) {
                 alpha = 1.f;
                 Color Lo = Color(0.f);
@@ -235,6 +237,7 @@ public:
                                     float costheta = dot(Nn, lightSample.ray.direction);
                                     if (costheta >= 0. && lightSample.pdf > 0.) {
                                         float li = 1;
+                                        m_raycount->fetch_and_increment();
                                         if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
                                             li = 0;
                                         Lo += lightSample.color *
@@ -254,6 +257,7 @@ public:
                                         float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn, brdf_parameters);
                                         if (brdfPdf > 0.) {
                                             float li = 1;
+                                            m_raycount->fetch_and_increment();
                                             if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
                                                 li = 0;
                                             if (li != 0) {
@@ -274,6 +278,7 @@ public:
                                         float lightPdf = currentLight->pdf(&brdfSample, Nn, currentBrdf->m_integrationDomain);
                                         if (lightPdf > 0. && brdfSample.pdf > 0.) {
                                             float li = 1;
+                                            m_raycount->fetch_and_increment();
                                             if (m_render_environment->accelerationStructure->intersectBinary(&brdfSample.ray))
                                                 li = 0;
                                             if (li != 0) {
@@ -336,6 +341,7 @@ public:
                         }
                         trueBounces++;
                             // find next vertex
+                        m_raycount->fetch_and_increment();
                         if (!m_render_environment->accelerationStructure->intersect(&currentSample.ray, &isect)) {
                             if (rayType == MirrorRay) {
                                 for (int i=0; i < m_render_environment->lights.size(); i++) {
@@ -379,6 +385,7 @@ private:
     int m_sample_index;
     RenderEnvironment *m_render_environment;
     OpenexrDisplay *m_display;
+    tbb::atomic<long> *m_raycount;
 };
 
 class DrawTask
@@ -399,6 +406,10 @@ void Renderer::renderImageTBB(){
 	
         // start render timer
 	time(&renderTime);
+    
+        // init stats
+    m_rayspeed = 0;
+    m_numrays = tbb::atomic<long>();
 	
         // set up buffer and sampler
 	int width = renderCam->getWidthSamples();
@@ -420,7 +431,8 @@ void Renderer::renderImageTBB(){
                                             (*renderEnv.globals)[LightSamples],
                                             i,
                                             &renderEnv,
-                                            displayDriver
+                                            displayDriver,
+                                            &m_numrays
                                             )
                           );
         group.wait();
@@ -431,6 +443,10 @@ void Renderer::renderImageTBB(){
         int progtime = difftime(currentTime, progressionStart);
         int remaining = progtime * (multisamples - (i+1));
         LOG_INFO("Estimated time remaining: " << floor(remaining/60/60) << "h" << floor(remaining/60)%60 << "min" << remaining%60 << "sec.");
+        double speed = (m_numrays * 0.001) / std::max(1, progtime);
+        LOG_INFO("Current speed: " << speed << "K rays/sec.");
+        m_rayspeed += speed / multisamples;
+        m_numrays = tbb::atomic<long>();
     }
     group.wait();
 }
@@ -455,7 +471,14 @@ void Renderer::outputStats(){
                                 intToString(floor((totalTime/60) % 60)) + " min "+
                                 intToString(totalTime % 60) + " sec.";
     displayDriver->addMetadata(std::string("renderTime"), stringTime);
+    
+    // Rays
+    LOG_INFO("Average speed: " << m_rayspeed << "K rays/sec.");
+    std::string stringSpeed = intToString(m_rayspeed) + "K rays/sec.";
+    displayDriver->addMetadata(std::string("RaySpeed"), stringSpeed);
+    
     displayDriver->draw(displayDriver->height());
+    
 
 	LOG_INFO("Done outputting statistics.");
     LOG_INFO("*************************************\n");
