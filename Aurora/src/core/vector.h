@@ -58,6 +58,9 @@ namespace Aurora{
             return (isnan(x) || isnan(y) || isnan(z));
         }
         
+        inline bool isZero(){
+            return !(x || y || z);
+        }
         
         inline float lengthSquared() const{
             return x*x + y*y + z*z;
@@ -158,6 +161,12 @@ namespace Aurora{
         inline bool operator!=(const Vector &v) const {
             return v.x != x || v.y == y || v.z == z;
         }
+        
+        friend std::ostream& operator<<(std::ostream &os, Vector const &v){
+			os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+			return os;
+            };
+        
 	};
 }
 

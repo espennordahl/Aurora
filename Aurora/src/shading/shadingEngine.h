@@ -17,6 +17,9 @@
 #include <tr1/unordered_map>
 
 namespace Aurora {
+    
+#define UNSET_SHADER_INDEX -1
+    
     class ShadingEngine{
     public:
         ShadingEngine();

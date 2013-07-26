@@ -16,8 +16,8 @@
 
 using namespace Aurora;
 
-MatteMaterial::MatteMaterial( std::string name, int diffColorIndex, int numSamples, RenderEnvironment *renderEnv):
-Material(name, renderEnv),
+MatteMaterial::MatteMaterial( std::string name, int diffColorIndex, int normalIndex, RenderEnvironment *renderEnv):
+Material(name, renderEnv, normalIndex),
 colorIndex(diffColorIndex)
 {
 	brdf = new Lambert(name + ":lambert", renderEnv);

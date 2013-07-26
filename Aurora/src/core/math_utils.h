@@ -112,14 +112,19 @@ namespace Aurora {
 	// Takes three Pointers to Vectors and changes the two last
 	// so they form a left handed coordinate system based on the first.
 	inline void coordinateSystem(const Vector &v1, Vector *v2, Vector *v3){
-		if (fabsf(v1.x) > fabsf(v1.y)) {
-			float invLen = 1.f / sqrtf(v1.x*v1.x + v1.z*v1.z);
-			*v2 = Vector(-v1.z * invLen, 0.f, v1.x * invLen);
-		}
-		else {
-			float invLen = 1.f / sqrt(v1.y*v1.y + v1.z*v1.z);
-			*v2 = Vector(0.f, v1.z * invLen, -v1.y * invLen);
-		}
+//		if (fabsf(v1.x) > fabsf(v1.y)) {
+//			float invLen = 1.f / sqrtf(v1.x*v1.x + v1.z*v1.z);
+//			*v2 = Vector(-v1.z * invLen, 0.f, v1.x * invLen);
+//		}
+//		else {
+//			float invLen = 1.f / sqrt(v1.y*v1.y + v1.z*v1.z);
+//			*v2 = Vector(0.f, v1.z * invLen, -v1.y * invLen);
+//		}
+        if(!v1.x && v1.y && !v1.z){
+            *v2 = cross(v1, Vector(1.f, 0.f, 0.f));
+        } else {
+            *v2 = cross(v1, Vector(0.f, 1.f, 0.f));
+        }
 		*v3 = cross(v1, *v2);
 	}
 

@@ -83,7 +83,7 @@ bool EmbreeAccelerator::intersect( Ray *ray, Intersection *intersection) const{
         st.u = _s;
         st.v = _t;
         intersection->shdGeo.P = hitp;
-        intersection->shdGeo.Ns = normalize(norm);
+        intersection->shdGeo.Ng = intersection->hitN;
         intersection->shdGeo.st = st;
         intersection->shdGeo.triangleIndex = isect.id1;
         intersection->shdGeo.barCoords = Point(u,v,w);

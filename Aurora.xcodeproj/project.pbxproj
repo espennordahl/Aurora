@@ -51,6 +51,7 @@
 		2389C26217549C93004F1F7F /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1E417549C93004F1F7F /* light.cpp */; };
 		2389C26317549C93004F1F7F /* squareLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1E717549C93004F1F7F /* squareLight.cpp */; };
 		2389C27517549C93004F1F7F /* jsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C21717549C93004F1F7F /* jsonParser.cpp */; };
+		23B5885117A1AFD6000EFAA0 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23B5885017A1AFD6000EFAA0 /* material.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -194,6 +195,7 @@
 		23B1685C17589E7D00E81FBD /* halton_enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halton_enum.h; sourceTree = "<group>"; };
 		23B1685D17589E7D00E81FBD /* halton_gen.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = halton_gen.py; sourceTree = "<group>"; };
 		23B1685E17589E7D00E81FBD /* halton_sampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halton_sampler.h; sourceTree = "<group>"; };
+		23B5885017A1AFD6000EFAA0 /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = material.cpp; path = materials/material.cpp; sourceTree = "<group>"; };
 		23C2ED32176D74A900FC65E3 /* triplanarTextureShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = triplanarTextureShader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -214,6 +216,7 @@
 				235A8F791759CF6F00372E43 /* brdf.h */,
 				235A8F7A1759CF6F00372E43 /* bxdfs */,
 				235A8F861759CF6F00372E43 /* material.h */,
+				23B5885017A1AFD6000EFAA0 /* material.cpp */,
 				235A8F871759CF6F00372E43 /* materials */,
 				235A8F951759CF6F00372E43 /* shader.h */,
 				235A8F961759CF6F00372E43 /* shaderAttribute.cpp */,
@@ -574,6 +577,7 @@
 				235A8FB41759D0BE00372E43 /* texture2D.cpp in Sources */,
 				23110BA6175B1B14005D1911 /* loopSubdivMesh.cpp in Sources */,
 				2312E0CF1761C78A008954D8 /* metalMaterial.cpp in Sources */,
+				23B5885117A1AFD6000EFAA0 /* material.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -773,6 +777,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_X86_VECTOR_INSTRUCTIONS = default;
+				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 0.2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_DYNAMIC_NO_PIC = NO;

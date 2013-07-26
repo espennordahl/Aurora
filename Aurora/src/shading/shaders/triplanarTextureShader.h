@@ -29,7 +29,7 @@ namespace Aurora {
         T evaluate(const ShadingGeometry &shdGeo){
             float weights[3];
             float weightsum = 0.f;
-            Vector N = normalize((*shdGeo.cameraToObject)(shdGeo.Ns));
+            Vector N = normalize((*shdGeo.cameraToObject)(shdGeo.Ng));
             for (int i=0; i<3; ++i) {
                 weights[i] = fabsf(N[i]);
                 weights[i] -= 0.25;
@@ -72,7 +72,7 @@ namespace Aurora {
             float weights[3];
             float weightsum = 0.f;
             for (int i=0; i<3; ++i) {
-                weights[i] = fabsf(shdGeo.Ns[i]);
+                weights[i] = fabsf(shdGeo.Ng[i]);
                 weights[i] -= 0.2;
                 weights[i] = max(weights[i], 0.f);
                 weightsum += weights[i];

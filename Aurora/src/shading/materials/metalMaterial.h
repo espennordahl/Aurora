@@ -19,7 +19,7 @@ namespace Aurora {
 	public:
 		MetalMaterial( std::string name, RenderEnvironment *renderEnv,
                       int reflectanceIndex, int roughnessIndexA,
-                      int roughnessIndexB, int mixIndex, int gainIndex);
+                      int roughnessIndexB, int mixIndex, int gainIndex, int normalIndex);
 		BrdfState getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath ) ;
         
         void frameBegin();

@@ -27,17 +27,21 @@ namespace Aurora {
     
 	class Material : public FrontEndObject {
 	public:
-        Material(std::string name, RenderEnvironment *renderEnv): FrontEndObject(name, renderEnv){};
+        Material(std::string name, RenderEnvironment *renderEnv, int normalindex);
             // Returns a brdf to run during light transport.
 		virtual BrdfState getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath) = 0;
             // FrameBegin and FrameEnd are pipeline methods for doing
             // any kind of pre and post rendering work. This method
             // is ran on all front end objects recursively before and
             // after rendering
+        
+        void runNormalShader(ShadingGeometry *shdGeo);
+        
         virtual void frameBegin() = 0;
         virtual void frameEnd() = 0;
         
-        ShadingEngine *m_shdEngine;
+    protected:
+        int m_normals_index;
 	};
 }
 

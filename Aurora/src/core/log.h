@@ -51,6 +51,7 @@ struct lc{
 #define LOG_ExrDisplay          lc(Log::Debug,  "ExrDisplay")
 #define LOG_StringUtils         lc(Log::Debug,  "StringUtils")
 #define LOG_Subdiv              lc(Log::Debug,  "Subdiv")
+#define LOG_Material            lc(Log::Debug,  "Material")
 
 class Log
 {

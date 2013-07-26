@@ -123,7 +123,7 @@ void Renderer::buildRenderEnvironment(){
         if (lights[i]->lightType != type_envLight) {
             mesh.appendTriangleMesh(lights[i]->shape(), i + numObjects);
         }
-        Material * black = new ConstantMaterial("Not in use - lightsource", Color(0.f), &renderEnv);
+        Material * black = new ConstantMaterial("Not in use - lightsource", Color(0.f), UNSET_SHADER_INDEX, &renderEnv);
         attrs[i + numObjects].material = black;
         attrs[i + numObjects].emmision = lights[i]->emission();
     }
@@ -192,8 +192,9 @@ public:
                         AttributeState *attrs = &m_render_environment->attributeState[isect.attributesIndex];
                         isect.shdGeo.cameraToObject = attrs->cameraToObject;
                         isect.shdGeo.objectToCamera = attrs->objectToCamera;
+                        attrs->material->runNormalShader(&isect.shdGeo);
                         Vector Vn = normalize(-currentSample.ray.direction);
-                        Nn = normalize(isect.hitN);
+                        Nn = isect.shdGeo.Ns;
                         Point orig = isect.hitP;
                         if (rayType == DiffuseRay) {
                             mattePath = true;
@@ -360,6 +361,7 @@ public:
                         LOG_WARNING("Reducing firefly: " << Lo);
                         Lo *= 0.2f;
                     }
+                        //pixelColor += Color(Nn.x, Nn.y, Nn.z) / (float)m_num_samples;
                     pixelColor += Lo/(float)m_num_samples;
                 }
                 

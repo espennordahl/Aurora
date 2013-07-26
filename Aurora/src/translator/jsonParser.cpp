@@ -313,6 +313,13 @@ inline int initShader(const std::string &name, const ShaderAttribute &attr, cons
 inline Material * getMaterial(std::string type, std::string name, Json::Value &root, RenderEnvironment *renderEnv){
     
     Material * mat;
+    
+    int normalIndex = UNSET_SHADER_INDEX;
+        // look for normal map shader
+    if (root.get( "normalmap", -1) != -1){
+        ShaderAttribute normalmap = getShaderAttr(colorAttr, "normalmap", root);
+        normalIndex = initShader(name + ":normalMap", normalmap, colorAttr, renderEnv);
+    }
 
     if (type == "kelemenMaterial") {
             // diff color
@@ -330,13 +337,13 @@ inline Material * getMaterial(std::string type, std::string name, Json::Value &r
 
         mat = new KelemenMaterial(name, renderEnv,
                                   diffColIndex, specColIndex,
-                                  roughnessIndex, reflectance.getFloat());
+                                  roughnessIndex, reflectance.getFloat(), normalIndex);
     }
     else if (type == "matteMaterial") {
         
         ShaderAttribute col = getShaderAttr(colorAttr, "color", root);
         int colorIndex = initShader(name + ":diffColor", col, colorAttr, renderEnv);
-        mat = new MatteMaterial(name, colorIndex, (*renderEnv->globals)[LightSamples] ,renderEnv);
+        mat = new MatteMaterial(name, colorIndex, normalIndex, renderEnv);
         
     } else if (type == "metalMaterial") {
             // reflectance
@@ -357,8 +364,7 @@ inline Material * getMaterial(std::string type, std::string name, Json::Value &r
         
         mat = new MetalMaterial(name, renderEnv,
                                 roughnessIndexA, roughnessIndexB,
-                                mixIndex, reflectanceIndex, gainIndex);
-
+                                mixIndex, reflectanceIndex, gainIndex, normalIndex);
     }
     else if (type == "carMaterial"){
 //            // base diffuse
@@ -413,7 +419,8 @@ inline Material * getMaterial(std::string type, std::string name, Json::Value &r
         ShaderAttribute reflectance   = getShaderAttr(floatAttr, "reflectance", root);
         ShaderAttribute ior      = getShaderAttr(floatAttr, "ior", root);
         ShaderAttribute transCol = getShaderAttr(colorAttr, "transmitColor", root);
-        mat = new GlassMaterial(name, specCol.getColor(), transCol.getColor(), reflectance.getFloat(), ior.getFloat(), renderEnv);
+        mat = new GlassMaterial(name, specCol.getColor(), transCol.getColor(),
+                                reflectance.getFloat(), ior.getFloat(), normalIndex, renderEnv);
     }
     else {
         LOG_ERROR("Unknown material: " << type);

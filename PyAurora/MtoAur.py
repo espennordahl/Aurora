@@ -124,6 +124,10 @@ def parseMaterial(inputShd, objName, scene):
     else:
         print "ERROR: Can't find shader type for object %s" % objName
         raise Exception
+
+    # Look for normal map shader
+    if "normalmap" in cmds.listAttr(inputShd.name()):
+        material.setNormalMap(getShaderValue(inputShd, "normalmap", "color", scene))
     return material
 
 def parseLight(light):
