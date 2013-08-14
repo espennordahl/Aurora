@@ -24,6 +24,7 @@
 		235A8FAF1759CF6F00372E43 /* noise3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F9C1759CF6F00372E43 /* noise3D.cpp */; };
 		235A8FB01759CF6F00372E43 /* shadingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8FA01759CF6F00372E43 /* shadingEngine.cpp */; };
 		235A8FB41759D0BE00372E43 /* texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8FB21759D0BE00372E43 /* texture2D.cpp */; };
+		2386EC4817BC108A0013F27A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4717BC108A0013F27A /* libz.dylib */; };
 		2389C24517549C93004F1F7F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19117549C93004F1F7F /* main.cpp */; };
 		2389C24617549C93004F1F7F /* bbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19917549C93004F1F7F /* bbox.cpp */; };
 		2389C24717549C93004F1F7F /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19B17549C93004F1F7F /* color.cpp */; };
@@ -111,6 +112,7 @@
 		235A8FB21759D0BE00372E43 /* texture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture2D.cpp; sourceTree = "<group>"; };
 		235A8FB31759D0BE00372E43 /* texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture2D.h; sourceTree = "<group>"; };
 		236D6811175F18D300802617 /* accelerationStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = accelerationStructure.h; sourceTree = "<group>"; };
+		2386EC4717BC108A0013F27A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2389C0E617549C5D004F1F7F /* Aurora */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Aurora; sourceTree = BUILT_PRODUCTS_DIR; };
 		2389C0F317549C93004F1F7F /* Aurora.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = Aurora.1; sourceTree = "<group>"; };
 		2389C0F417549C93004F1F7F /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2386EC4817BC108A0013F27A /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +287,7 @@
 		2389C0DD17549C5D004F1F7F = {
 			isa = PBXGroup;
 			children = (
+				2386EC4717BC108A0013F27A /* libz.dylib */,
 				2389C0F217549C93004F1F7F /* Aurora */,
 				2389C21C17549C93004F1F7F /* PyAurora */,
 				2389C0E717549C5D004F1F7F /* Products */,
@@ -630,7 +634,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
-					"/base/sw/zlib-1.2.8/libz.a",
 					"/base/sw/jsoncpp-src-0.5.0/libs/linux-gcc-4.2.1/libjson_linux-gcc-4.2.1_libmt.a",
 					/usr/local/Cellar/szip/2.1/lib/libsz.a,
 					/usr/local/Cellar/ilmbase/1.0.2/lib/libHalf.a,
@@ -692,7 +695,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
-					"/base/sw/zlib-1.2.8/libz.a",
 					"/base/sw/jsoncpp-src-0.5.0/libs/linux-gcc-4.2.1/libjson_linux-gcc-4.2.1_libmt.a",
 					/usr/local/Cellar/szip/2.1/lib/libsz.a,
 					/usr/local/Cellar/ilmbase/1.0.2/lib/libHalf.a,
@@ -750,7 +752,6 @@
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				LLVM_LTO = NO;
 				OTHER_LDFLAGS = (
-					"/base/sw/zlib-1.2.8/libz.a",
 					"/base/sw/jsoncpp-src-0.5.0/libs/linux-gcc-4.2.1/libjson_linux-gcc-4.2.1_libmt.a",
 					/usr/local/Cellar/szip/2.1/lib/libsz.a,
 					/usr/local/Cellar/ilmbase/1.0.2/lib/libHalf.a,
@@ -812,7 +813,6 @@
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				LLVM_LTO = YES;
 				OTHER_LDFLAGS = (
-					"/base/sw/zlib-1.2.8/libz.a",
 					"/base/sw/jsoncpp-src-0.5.0/libs/linux-gcc-4.2.1/libjson_linux-gcc-4.2.1_libmt.a",
 					/usr/local/Cellar/szip/2.1/lib/libsz.a,
 					/usr/local/Cellar/ilmbase/1.0.2/lib/libHalf.a,

@@ -29,7 +29,7 @@ int main (int argc, char* const argv[])
 
         // unit tests
         //    #ifndef NDEBUG
-        Renderer ren = Renderer((char *)"/Users/espennordahl/Documents/Aurora/pyAurora/tmp.asc");
+        Renderer ren = Renderer((char *)"/Users/espennordahl/Documents/pyAurora/cubes_v01.asc");
         ren.render();
     return 0;
         // #endif
