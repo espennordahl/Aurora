@@ -25,6 +25,12 @@
 		235A8FB01759CF6F00372E43 /* shadingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8FA01759CF6F00372E43 /* shadingEngine.cpp */; };
 		235A8FB41759D0BE00372E43 /* texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8FB21759D0BE00372E43 /* texture2D.cpp */; };
 		2386EC4817BC108A0013F27A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4717BC108A0013F27A /* libz.dylib */; };
+		2386EC5017BC21250013F27A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4F17BC21250013F27A /* Cocoa.framework */; };
+		2386EC5A17BC21260013F27A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2386EC5817BC21260013F27A /* InfoPlist.strings */; };
+		2386EC5C17BC21260013F27A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2386EC5B17BC21260013F27A /* main.m */; };
+		2386EC6017BC21260013F27A /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2386EC5E17BC21260013F27A /* Credits.rtf */; };
+		2386EC6317BC21260013F27A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2386EC6217BC21260013F27A /* AppDelegate.m */; };
+		2386EC6617BC21260013F27A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2386EC6417BC21260013F27A /* MainMenu.xib */; };
 		2389C24517549C93004F1F7F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19117549C93004F1F7F /* main.cpp */; };
 		2389C24617549C93004F1F7F /* bbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19917549C93004F1F7F /* bbox.cpp */; };
 		2389C24717549C93004F1F7F /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19B17549C93004F1F7F /* color.cpp */; };
@@ -53,6 +59,7 @@
 		2389C26317549C93004F1F7F /* squareLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1E717549C93004F1F7F /* squareLight.cpp */; };
 		2389C27517549C93004F1F7F /* jsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C21717549C93004F1F7F /* jsonParser.cpp */; };
 		23B5885117A1AFD6000EFAA0 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23B5885017A1AFD6000EFAA0 /* material.cpp */; };
+		23E7C15617BC2BCA006874AB /* RenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E7C15517BC2BCA006874AB /* RenderViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -113,6 +120,19 @@
 		235A8FB31759D0BE00372E43 /* texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture2D.h; sourceTree = "<group>"; };
 		236D6811175F18D300802617 /* accelerationStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = accelerationStructure.h; sourceTree = "<group>"; };
 		2386EC4717BC108A0013F27A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		2386EC4D17BC21250013F27A /* AuroraUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuroraUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2386EC4F17BC21250013F27A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		2386EC5217BC21250013F27A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		2386EC5317BC21250013F27A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		2386EC5417BC21250013F27A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2386EC5717BC21260013F27A /* AuroraUI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AuroraUI-Info.plist"; sourceTree = "<group>"; };
+		2386EC5917BC21260013F27A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2386EC5B17BC21260013F27A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2386EC5D17BC21260013F27A /* AuroraUI-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AuroraUI-Prefix.pch"; sourceTree = "<group>"; };
+		2386EC5F17BC21260013F27A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		2386EC6117BC21260013F27A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2386EC6217BC21260013F27A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2386EC6517BC21260013F27A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2389C0E617549C5D004F1F7F /* Aurora */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Aurora; sourceTree = BUILT_PRODUCTS_DIR; };
 		2389C0F317549C93004F1F7F /* Aurora.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = Aurora.1; sourceTree = "<group>"; };
 		2389C0F417549C93004F1F7F /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -199,9 +219,19 @@
 		23B1685E17589E7D00E81FBD /* halton_sampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halton_sampler.h; sourceTree = "<group>"; };
 		23B5885017A1AFD6000EFAA0 /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = material.cpp; path = materials/material.cpp; sourceTree = "<group>"; };
 		23C2ED32176D74A900FC65E3 /* triplanarTextureShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = triplanarTextureShader.h; sourceTree = "<group>"; };
+		23E7C15417BC2BCA006874AB /* RenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderViewController.h; sourceTree = "<group>"; };
+		23E7C15517BC2BCA006874AB /* RenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2386EC4A17BC21250013F27A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2386EC5017BC21250013F27A /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2389C0E317549C5D004F1F7F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -284,12 +314,58 @@
 			path = shaders;
 			sourceTree = "<group>";
 		};
+		2386EC4E17BC21250013F27A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2386EC4F17BC21250013F27A /* Cocoa.framework */,
+				2386EC5117BC21250013F27A /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2386EC5117BC21250013F27A /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2386EC5217BC21250013F27A /* AppKit.framework */,
+				2386EC5317BC21250013F27A /* CoreData.framework */,
+				2386EC5417BC21250013F27A /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		2386EC5517BC21250013F27A /* AuroraUI */ = {
+			isa = PBXGroup;
+			children = (
+				2386EC6117BC21260013F27A /* AppDelegate.h */,
+				2386EC6217BC21260013F27A /* AppDelegate.m */,
+				23E7C15417BC2BCA006874AB /* RenderViewController.h */,
+				23E7C15517BC2BCA006874AB /* RenderViewController.m */,
+				2386EC6417BC21260013F27A /* MainMenu.xib */,
+				2386EC5617BC21250013F27A /* Supporting Files */,
+			);
+			path = AuroraUI;
+			sourceTree = "<group>";
+		};
+		2386EC5617BC21250013F27A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2386EC5717BC21260013F27A /* AuroraUI-Info.plist */,
+				2386EC5817BC21260013F27A /* InfoPlist.strings */,
+				2386EC5B17BC21260013F27A /* main.m */,
+				2386EC5D17BC21260013F27A /* AuroraUI-Prefix.pch */,
+				2386EC5E17BC21260013F27A /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		2389C0DD17549C5D004F1F7F = {
 			isa = PBXGroup;
 			children = (
 				2386EC4717BC108A0013F27A /* libz.dylib */,
 				2389C0F217549C93004F1F7F /* Aurora */,
 				2389C21C17549C93004F1F7F /* PyAurora */,
+				2386EC5517BC21250013F27A /* AuroraUI */,
+				2386EC4E17BC21250013F27A /* Frameworks */,
 				2389C0E717549C5D004F1F7F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -298,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				2389C0E617549C5D004F1F7F /* Aurora */,
+				2386EC4D17BC21250013F27A /* AuroraUI.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -489,6 +566,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2386EC4C17BC21250013F27A /* AuroraUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2386EC6917BC21260013F27A /* Build configuration list for PBXNativeTarget "AuroraUI" */;
+			buildPhases = (
+				2386EC4917BC21250013F27A /* Sources */,
+				2386EC4A17BC21250013F27A /* Frameworks */,
+				2386EC4B17BC21250013F27A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AuroraUI;
+			productName = AuroraUI;
+			productReference = 2386EC4D17BC21250013F27A /* AuroraUI.app */;
+			productType = "com.apple.product-type.application";
+		};
 		2389C0E517549C5D004F1F7F /* Aurora */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2389C0EF17549C5D004F1F7F /* Build configuration list for PBXNativeTarget "Aurora" */;
@@ -528,11 +622,35 @@
 			projectRoot = "";
 			targets = (
 				2389C0E517549C5D004F1F7F /* Aurora */,
+				2386EC4C17BC21250013F27A /* AuroraUI */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		2386EC4B17BC21250013F27A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2386EC5A17BC21260013F27A /* InfoPlist.strings in Resources */,
+				2386EC6017BC21260013F27A /* Credits.rtf in Resources */,
+				2386EC6617BC21260013F27A /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		2386EC4917BC21250013F27A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2386EC5C17BC21260013F27A /* main.m in Sources */,
+				2386EC6317BC21260013F27A /* AppDelegate.m in Sources */,
+				23E7C15617BC2BCA006874AB /* RenderViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2389C0E217549C5D004F1F7F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -587,7 +705,66 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		2386EC5817BC21260013F27A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2386EC5917BC21260013F27A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2386EC5E17BC21260013F27A /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2386EC5F17BC21260013F27A /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		2386EC6417BC21260013F27A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2386EC6517BC21260013F27A /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		2386EC6717BC21260013F27A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AuroraUI/AuroraUI-Prefix.pch";
+				INFOPLIST_FILE = "AuroraUI/AuroraUI-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2386EC6817BC21260013F27A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AuroraUI/AuroraUI-Prefix.pch";
+				INFOPLIST_FILE = "AuroraUI/AuroraUI-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		2389C0ED17549C5D004F1F7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -836,6 +1013,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2386EC6917BC21260013F27A /* Build configuration list for PBXNativeTarget "AuroraUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2386EC6717BC21260013F27A /* Debug */,
+				2386EC6817BC21260013F27A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2389C0E117549C5D004F1F7F /* Build configuration list for PBXProject "Aurora" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
