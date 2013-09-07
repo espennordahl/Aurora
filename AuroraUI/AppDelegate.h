@@ -14,8 +14,5 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet RenderViewController *renderViewController;
-@property (assign) IBOutlet NSTextView *textEditor;
-
--(IBAction)renderButtonClicked:(id)sender;
 
 @end

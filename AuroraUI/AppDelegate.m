@@ -15,9 +15,5 @@
     // Insert code here to initialize your application
 }
 
--(IBAction)renderButtonClicked:(id)sender
-{
-    NSLog(@"CLICK!");
-}
 
 @end
