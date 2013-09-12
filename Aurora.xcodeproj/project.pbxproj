@@ -7,70 +7,96 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		23110BA6175B1B14005D1911 /* loopSubdivMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23110BA4175B1B14005D1911 /* loopSubdivMesh.cpp */; };
-		2312E0CF1761C78A008954D8 /* metalMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2312E0CD1761C78A008954D8 /* metalMaterial.cpp */; };
-		235A8FA21759CF6F00372E43 /* constant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F7C1759CF6F00372E43 /* constant.cpp */; };
-		235A8FA31759CF6F00372E43 /* cookTorrance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F7E1759CF6F00372E43 /* cookTorrance.cpp */; };
-		235A8FA41759CF6F00372E43 /* lambert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F801759CF6F00372E43 /* lambert.cpp */; };
-		235A8FA51759CF6F00372E43 /* specMirror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F821759CF6F00372E43 /* specMirror.cpp */; };
-		235A8FA61759CF6F00372E43 /* specTransmit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F841759CF6F00372E43 /* specTransmit.cpp */; };
-		235A8FA71759CF6F00372E43 /* carMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F881759CF6F00372E43 /* carMaterial.cpp */; };
-		235A8FA81759CF6F00372E43 /* constantMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F8A1759CF6F00372E43 /* constantMaterial.cpp */; };
-		235A8FA91759CF6F00372E43 /* glassMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F8C1759CF6F00372E43 /* glassMaterial.cpp */; };
-		235A8FAA1759CF6F00372E43 /* kelemenMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F8E1759CF6F00372E43 /* kelemenMaterial.cpp */; };
-		235A8FAB1759CF6F00372E43 /* matteMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F911759CF6F00372E43 /* matteMaterial.cpp */; };
-		235A8FAC1759CF6F00372E43 /* transmitMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F931759CF6F00372E43 /* transmitMaterial.cpp */; };
-		235A8FAD1759CF6F00372E43 /* shaderAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F961759CF6F00372E43 /* shaderAttribute.cpp */; };
-		235A8FAF1759CF6F00372E43 /* noise3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F9C1759CF6F00372E43 /* noise3D.cpp */; };
-		235A8FB01759CF6F00372E43 /* shadingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8FA01759CF6F00372E43 /* shadingEngine.cpp */; };
-		235A8FB41759D0BE00372E43 /* texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8FB21759D0BE00372E43 /* texture2D.cpp */; };
+		233BE74217E21DB40059ACD1 /* libAuroraLib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */; };
+		233BE74317E21DBA0059ACD1 /* libAuroraLib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */; };
+		233BE74417E21DDA0059ACD1 /* constant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F7C1759CF6F00372E43 /* constant.cpp */; };
+		233BE74517E21DDA0059ACD1 /* cookTorrance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F7E1759CF6F00372E43 /* cookTorrance.cpp */; };
+		233BE74617E21DDA0059ACD1 /* lambert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F801759CF6F00372E43 /* lambert.cpp */; };
+		233BE74717E21DDA0059ACD1 /* specMirror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F821759CF6F00372E43 /* specMirror.cpp */; };
+		233BE74817E21DDA0059ACD1 /* specTransmit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F841759CF6F00372E43 /* specTransmit.cpp */; };
+		233BE74917E21DDA0059ACD1 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23B5885017A1AFD6000EFAA0 /* material.cpp */; };
+		233BE74A17E21DDA0059ACD1 /* carMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F881759CF6F00372E43 /* carMaterial.cpp */; };
+		233BE74B17E21DDA0059ACD1 /* constantMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F8A1759CF6F00372E43 /* constantMaterial.cpp */; };
+		233BE74C17E21DDA0059ACD1 /* glassMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F8C1759CF6F00372E43 /* glassMaterial.cpp */; };
+		233BE74D17E21DDA0059ACD1 /* kelemenMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F8E1759CF6F00372E43 /* kelemenMaterial.cpp */; };
+		233BE74E17E21DDA0059ACD1 /* matteMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F911759CF6F00372E43 /* matteMaterial.cpp */; };
+		233BE74F17E21DDA0059ACD1 /* transmitMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F931759CF6F00372E43 /* transmitMaterial.cpp */; };
+		233BE75017E21DDA0059ACD1 /* metalMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2312E0CD1761C78A008954D8 /* metalMaterial.cpp */; };
+		233BE75117E21DDA0059ACD1 /* shaderAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F961759CF6F00372E43 /* shaderAttribute.cpp */; };
+		233BE75217E21DDA0059ACD1 /* noise3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F9C1759CF6F00372E43 /* noise3D.cpp */; };
+		233BE75317E21DDA0059ACD1 /* shadingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8FA01759CF6F00372E43 /* shadingEngine.cpp */; };
+		233BE75417E21DDA0059ACD1 /* bbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19917549C93004F1F7F /* bbox.cpp */; };
+		233BE75517E21DDA0059ACD1 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19B17549C93004F1F7F /* color.cpp */; };
+		233BE75617E21DDA0059ACD1 /* matrix4x4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1A017549C93004F1F7F /* matrix4x4.cpp */; };
+		233BE75717E21DDA0059ACD1 /* pixelRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1A317549C93004F1F7F /* pixelRegion.cpp */; };
+		233BE75817E21DDA0059ACD1 /* point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1A517549C93004F1F7F /* point.cpp */; };
+		233BE75917E21DDA0059ACD1 /* ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1A717549C93004F1F7F /* ray.cpp */; };
+		233BE75A17E21DDA0059ACD1 /* sample2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1AB17549C93004F1F7F /* sample2D.cpp */; };
+		233BE75B17E21DDA0059ACD1 /* sample3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1AD17549C93004F1F7F /* sample3D.cpp */; };
+		233BE75C17E21DDA0059ACD1 /* sampler2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1AF17549C93004F1F7F /* sampler2D.cpp */; };
+		233BE75D17E21DDA0059ACD1 /* sampler3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1B117549C93004F1F7F /* sampler3D.cpp */; };
+		233BE75E17E21DDA0059ACD1 /* transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1B417549C93004F1F7F /* transform.cpp */; };
+		233BE75F17E21DDA0059ACD1 /* vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1B717549C93004F1F7F /* vector.cpp */; };
+		233BE76017E21DDA0059ACD1 /* texture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8FB21759D0BE00372E43 /* texture2D.cpp */; };
+		233BE76117E21DDA0059ACD1 /* auroraObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1BA17549C93004F1F7F /* auroraObject.cpp */; };
+		233BE76217E21DDA0059ACD1 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1BC17549C93004F1F7F /* camera.cpp */; };
+		233BE76317E21DDA0059ACD1 /* openexrDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1C117549C93004F1F7F /* openexrDisplay.cpp */; };
+		233BE76417E21DDA0059ACD1 /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1C517549C93004F1F7F /* renderer.cpp */; };
+		233BE76517E21DDA0059ACD1 /* session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23B92E6317DBB47F00B01685 /* session.cpp */; };
+		233BE76617E21DDA0059ACD1 /* embreeAccelerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1CB17549C93004F1F7F /* embreeAccelerator.cpp */; };
+		233BE76717E21DDA0059ACD1 /* infiniteAreaLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1CF17549C93004F1F7F /* infiniteAreaLight.cpp */; };
+		233BE76817E21DDA0059ACD1 /* objParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1D317549C93004F1F7F /* objParser.cpp */; };
+		233BE76917E21DDA0059ACD1 /* objTriangleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1D517549C93004F1F7F /* objTriangleMesh.cpp */; };
+		233BE76A17E21DDA0059ACD1 /* renderableTriangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1D817549C93004F1F7F /* renderableTriangle.cpp */; };
+		233BE76B17E21DDA0059ACD1 /* loopSubdivMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23110BA4175B1B14005D1911 /* loopSubdivMesh.cpp */; };
+		233BE76C17E21DDA0059ACD1 /* triangleGeo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1DC17549C93004F1F7F /* triangleGeo.cpp */; };
+		233BE76D17E21DDA0059ACD1 /* triangleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1DE17549C93004F1F7F /* triangleMesh.cpp */; };
+		233BE76E17E21DDA0059ACD1 /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1E417549C93004F1F7F /* light.cpp */; };
+		233BE76F17E21DDA0059ACD1 /* squareLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1E717549C93004F1F7F /* squareLight.cpp */; };
+		233BE77017E21DDA0059ACD1 /* jsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C21717549C93004F1F7F /* jsonParser.cpp */; };
+		233BE77117E21DE80059ACD1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4717BC108A0013F27A /* libz.dylib */; };
+		233BE77217E21DEE0059ACD1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4717BC108A0013F27A /* libz.dylib */; };
+		233BE77717E222720059ACD1 /* libAuroraLib.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */; };
+		233BE77D17E23B840059ACD1 /* DSCN5796.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 233BE77C17E23B840059ACD1 /* DSCN5796.JPG */; };
+		233BE77F17E23BB80059ACD1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 233BE77E17E23BB80059ACD1 /* CoreGraphics.framework */; };
 		2386EC4817BC108A0013F27A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4717BC108A0013F27A /* libz.dylib */; };
 		2386EC5017BC21250013F27A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4F17BC21250013F27A /* Cocoa.framework */; };
 		2386EC5A17BC21260013F27A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2386EC5817BC21260013F27A /* InfoPlist.strings */; };
 		2386EC5C17BC21260013F27A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2386EC5B17BC21260013F27A /* main.m */; };
 		2386EC6017BC21260013F27A /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2386EC5E17BC21260013F27A /* Credits.rtf */; };
-		2386EC6317BC21260013F27A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2386EC6217BC21260013F27A /* AppDelegate.m */; };
+		2386EC6317BC21260013F27A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2386EC6217BC21260013F27A /* AppDelegate.mm */; };
 		2386EC6617BC21260013F27A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2386EC6417BC21260013F27A /* MainMenu.xib */; };
 		2389C24517549C93004F1F7F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19117549C93004F1F7F /* main.cpp */; };
-		2389C24617549C93004F1F7F /* bbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19917549C93004F1F7F /* bbox.cpp */; };
-		2389C24717549C93004F1F7F /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19B17549C93004F1F7F /* color.cpp */; };
-		2389C24817549C93004F1F7F /* matrix4x4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1A017549C93004F1F7F /* matrix4x4.cpp */; };
-		2389C24917549C93004F1F7F /* pixelRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1A317549C93004F1F7F /* pixelRegion.cpp */; };
-		2389C24A17549C93004F1F7F /* point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1A517549C93004F1F7F /* point.cpp */; };
-		2389C24B17549C93004F1F7F /* ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1A717549C93004F1F7F /* ray.cpp */; };
-		2389C24C17549C93004F1F7F /* sample2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1AB17549C93004F1F7F /* sample2D.cpp */; };
-		2389C24D17549C93004F1F7F /* sample3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1AD17549C93004F1F7F /* sample3D.cpp */; };
-		2389C24E17549C93004F1F7F /* sampler2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1AF17549C93004F1F7F /* sampler2D.cpp */; };
-		2389C24F17549C93004F1F7F /* sampler3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1B117549C93004F1F7F /* sampler3D.cpp */; };
-		2389C25017549C93004F1F7F /* transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1B417549C93004F1F7F /* transform.cpp */; };
-		2389C25117549C93004F1F7F /* vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1B717549C93004F1F7F /* vector.cpp */; };
-		2389C25217549C93004F1F7F /* auroraObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1BA17549C93004F1F7F /* auroraObject.cpp */; };
-		2389C25317549C93004F1F7F /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1BC17549C93004F1F7F /* camera.cpp */; };
-		2389C25517549C93004F1F7F /* openexrDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1C117549C93004F1F7F /* openexrDisplay.cpp */; };
-		2389C25717549C93004F1F7F /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1C517549C93004F1F7F /* renderer.cpp */; };
-		2389C25917549C93004F1F7F /* embreeAccelerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1CB17549C93004F1F7F /* embreeAccelerator.cpp */; };
-		2389C25A17549C93004F1F7F /* infiniteAreaLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1CF17549C93004F1F7F /* infiniteAreaLight.cpp */; };
-		2389C25C17549C93004F1F7F /* objParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1D317549C93004F1F7F /* objParser.cpp */; };
-		2389C25D17549C93004F1F7F /* objTriangleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1D517549C93004F1F7F /* objTriangleMesh.cpp */; };
-		2389C25E17549C93004F1F7F /* renderableTriangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1D817549C93004F1F7F /* renderableTriangle.cpp */; };
-		2389C25F17549C93004F1F7F /* triangleGeo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1DC17549C93004F1F7F /* triangleGeo.cpp */; };
-		2389C26017549C93004F1F7F /* triangleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1DE17549C93004F1F7F /* triangleMesh.cpp */; };
-		2389C26217549C93004F1F7F /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1E417549C93004F1F7F /* light.cpp */; };
-		2389C26317549C93004F1F7F /* squareLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1E717549C93004F1F7F /* squareLight.cpp */; };
-		2389C27517549C93004F1F7F /* jsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C21717549C93004F1F7F /* jsonParser.cpp */; };
-		23B5885117A1AFD6000EFAA0 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23B5885017A1AFD6000EFAA0 /* material.cpp */; };
 		23E7C15617BC2BCA006874AB /* RenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E7C15517BC2BCA006874AB /* RenderViewController.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		233BE77317E21DFE0059ACD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2389C0DE17549C5D004F1F7F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 233BE73D17E21D900059ACD1;
+			remoteInfo = AuroraLib;
+		};
+		233BE77517E21E050059ACD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2389C0DE17549C5D004F1F7F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 233BE73D17E21D900059ACD1;
+			remoteInfo = AuroraLib;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		2389C0E417549C5D004F1F7F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = /usr/share/man/man1/;
+			buildActionMask = 12;
+			dstPath = /usr/local/lib;
 			dstSubfolderSpec = 0;
 			files = (
+				233BE77717E222720059ACD1 /* libAuroraLib.dylib in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -79,6 +105,9 @@
 		23110BA5175B1B14005D1911 /* loopSubdivMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loopSubdivMesh.h; sourceTree = "<group>"; };
 		2312E0CD1761C78A008954D8 /* metalMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metalMaterial.cpp; sourceTree = "<group>"; };
 		2312E0CE1761C78A008954D8 /* metalMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metalMaterial.h; sourceTree = "<group>"; };
+		233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libAuroraLib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		233BE77C17E23B840059ACD1 /* DSCN5796.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = DSCN5796.JPG; path = ../../../bilder/fb/DSCN5796.JPG; sourceTree = "<group>"; };
+		233BE77E17E23BB80059ACD1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		235A8F791759CF6F00372E43 /* brdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdf.h; sourceTree = "<group>"; };
 		235A8F7B1759CF6F00372E43 /* brdfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdfs.h; sourceTree = "<group>"; };
 		235A8F7C1759CF6F00372E43 /* constant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constant.cpp; sourceTree = "<group>"; };
@@ -131,7 +160,7 @@
 		2386EC5D17BC21260013F27A /* AuroraUI-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AuroraUI-Prefix.pch"; sourceTree = "<group>"; };
 		2386EC5F17BC21260013F27A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2386EC6117BC21260013F27A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		2386EC6217BC21260013F27A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2386EC6217BC21260013F27A /* AppDelegate.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		2386EC6517BC21260013F27A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2389C0E617549C5D004F1F7F /* Aurora */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Aurora; sourceTree = BUILT_PRODUCTS_DIR; };
 		2389C0F317549C93004F1F7F /* Aurora.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = Aurora.1; sourceTree = "<group>"; };
@@ -214,20 +243,34 @@
 		2389C22417549C93004F1F7F /* MtoAur.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = MtoAur.py; sourceTree = "<group>"; };
 		2389C22617549C93004F1F7F /* shaders.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = shaders.py; sourceTree = "<group>"; };
 		2389C22817549C93004F1F7F /* UI.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = UI.py; sourceTree = "<group>"; };
+		23A0876817DCDC61006E03BC /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		23B1685C17589E7D00E81FBD /* halton_enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halton_enum.h; sourceTree = "<group>"; };
 		23B1685D17589E7D00E81FBD /* halton_gen.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = halton_gen.py; sourceTree = "<group>"; };
 		23B1685E17589E7D00E81FBD /* halton_sampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halton_sampler.h; sourceTree = "<group>"; };
 		23B5885017A1AFD6000EFAA0 /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = material.cpp; path = materials/material.cpp; sourceTree = "<group>"; };
+		23B92E6317DBB47F00B01685 /* session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = session.cpp; sourceTree = "<group>"; };
+		23B92E6417DBB47F00B01685 /* session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = session.h; sourceTree = "<group>"; };
 		23C2ED32176D74A900FC65E3 /* triplanarTextureShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = triplanarTextureShader.h; sourceTree = "<group>"; };
 		23E7C15417BC2BCA006874AB /* RenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderViewController.h; sourceTree = "<group>"; };
 		23E7C15517BC2BCA006874AB /* RenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		233BE73B17E21D900059ACD1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				233BE77117E21DE80059ACD1 /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2386EC4A17BC21250013F27A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				233BE77F17E23BB80059ACD1 /* CoreGraphics.framework in Frameworks */,
+				233BE77217E21DEE0059ACD1 /* libz.dylib in Frameworks */,
+				233BE74317E21DBA0059ACD1 /* libAuroraLib.dylib in Frameworks */,
 				2386EC5017BC21250013F27A /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,6 +279,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				233BE74217E21DB40059ACD1 /* libAuroraLib.dylib in Frameworks */,
 				2386EC4817BC108A0013F27A /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +361,8 @@
 		2386EC4E17BC21250013F27A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				233BE77E17E23BB80059ACD1 /* CoreGraphics.framework */,
+				23A0876817DCDC61006E03BC /* OpenGL.framework */,
 				2386EC4F17BC21250013F27A /* Cocoa.framework */,
 				2386EC5117BC21250013F27A /* Other Frameworks */,
 			);
@@ -338,7 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				2386EC6117BC21260013F27A /* AppDelegate.h */,
-				2386EC6217BC21260013F27A /* AppDelegate.m */,
+				2386EC6217BC21260013F27A /* AppDelegate.mm */,
 				23E7C15417BC2BCA006874AB /* RenderViewController.h */,
 				23E7C15517BC2BCA006874AB /* RenderViewController.m */,
 				2386EC6417BC21260013F27A /* MainMenu.xib */,
@@ -362,6 +408,7 @@
 		2389C0DD17549C5D004F1F7F = {
 			isa = PBXGroup;
 			children = (
+				233BE77C17E23B840059ACD1 /* DSCN5796.JPG */,
 				2389C0F217549C93004F1F7F /* Aurora */,
 				2389C21C17549C93004F1F7F /* PyAurora */,
 				2386EC5517BC21250013F27A /* AuroraUI */,
@@ -375,6 +422,7 @@
 			children = (
 				2389C0E617549C5D004F1F7F /* Aurora */,
 				2386EC4D17BC21250013F27A /* AuroraUI.app */,
+				233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -485,6 +533,8 @@
 				2389C1C417549C93004F1F7F /* renderEnvironment.h */,
 				2389C1C517549C93004F1F7F /* renderer.cpp */,
 				2389C1C617549C93004F1F7F /* renderer.h */,
+				23B92E6317DBB47F00B01685 /* session.cpp */,
+				23B92E6417DBB47F00B01685 /* session.h */,
 			);
 			path = frontend;
 			sourceTree = "<group>";
@@ -565,7 +615,34 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		233BE73C17E21D900059ACD1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		233BE73D17E21D900059ACD1 /* AuroraLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 233BE73F17E21D900059ACD1 /* Build configuration list for PBXNativeTarget "AuroraLib" */;
+			buildPhases = (
+				233BE73A17E21D900059ACD1 /* Sources */,
+				233BE73B17E21D900059ACD1 /* Frameworks */,
+				233BE73C17E21D900059ACD1 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AuroraLib;
+			productName = AuroraLib;
+			productReference = 233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
 		2386EC4C17BC21250013F27A /* AuroraUI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2386EC6917BC21260013F27A /* Build configuration list for PBXNativeTarget "AuroraUI" */;
@@ -577,6 +654,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				233BE77617E21E050059ACD1 /* PBXTargetDependency */,
 			);
 			name = AuroraUI;
 			productName = AuroraUI;
@@ -594,6 +672,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				233BE77417E21DFE0059ACD1 /* PBXTargetDependency */,
 			);
 			name = Aurora;
 			productName = Aurora;
@@ -623,6 +702,7 @@
 			targets = (
 				2389C0E517549C5D004F1F7F /* Aurora */,
 				2386EC4C17BC21250013F27A /* AuroraUI */,
+				233BE73D17E21D900059ACD1 /* AuroraLib */,
 			);
 		};
 /* End PBXProject section */
@@ -634,6 +714,7 @@
 			files = (
 				2386EC5A17BC21260013F27A /* InfoPlist.strings in Resources */,
 				2386EC6017BC21260013F27A /* Credits.rtf in Resources */,
+				233BE77D17E23B840059ACD1 /* DSCN5796.JPG in Resources */,
 				2386EC6617BC21260013F27A /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -641,12 +722,64 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		233BE73A17E21D900059ACD1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				233BE74417E21DDA0059ACD1 /* constant.cpp in Sources */,
+				233BE74517E21DDA0059ACD1 /* cookTorrance.cpp in Sources */,
+				233BE74617E21DDA0059ACD1 /* lambert.cpp in Sources */,
+				233BE74717E21DDA0059ACD1 /* specMirror.cpp in Sources */,
+				233BE74817E21DDA0059ACD1 /* specTransmit.cpp in Sources */,
+				233BE74917E21DDA0059ACD1 /* material.cpp in Sources */,
+				233BE74A17E21DDA0059ACD1 /* carMaterial.cpp in Sources */,
+				233BE74B17E21DDA0059ACD1 /* constantMaterial.cpp in Sources */,
+				233BE74C17E21DDA0059ACD1 /* glassMaterial.cpp in Sources */,
+				233BE74D17E21DDA0059ACD1 /* kelemenMaterial.cpp in Sources */,
+				233BE74E17E21DDA0059ACD1 /* matteMaterial.cpp in Sources */,
+				233BE74F17E21DDA0059ACD1 /* transmitMaterial.cpp in Sources */,
+				233BE75017E21DDA0059ACD1 /* metalMaterial.cpp in Sources */,
+				233BE75117E21DDA0059ACD1 /* shaderAttribute.cpp in Sources */,
+				233BE75217E21DDA0059ACD1 /* noise3D.cpp in Sources */,
+				233BE75317E21DDA0059ACD1 /* shadingEngine.cpp in Sources */,
+				233BE75417E21DDA0059ACD1 /* bbox.cpp in Sources */,
+				233BE75517E21DDA0059ACD1 /* color.cpp in Sources */,
+				233BE75617E21DDA0059ACD1 /* matrix4x4.cpp in Sources */,
+				233BE75717E21DDA0059ACD1 /* pixelRegion.cpp in Sources */,
+				233BE75817E21DDA0059ACD1 /* point.cpp in Sources */,
+				233BE75917E21DDA0059ACD1 /* ray.cpp in Sources */,
+				233BE75A17E21DDA0059ACD1 /* sample2D.cpp in Sources */,
+				233BE75B17E21DDA0059ACD1 /* sample3D.cpp in Sources */,
+				233BE75C17E21DDA0059ACD1 /* sampler2D.cpp in Sources */,
+				233BE75D17E21DDA0059ACD1 /* sampler3D.cpp in Sources */,
+				233BE75E17E21DDA0059ACD1 /* transform.cpp in Sources */,
+				233BE75F17E21DDA0059ACD1 /* vector.cpp in Sources */,
+				233BE76017E21DDA0059ACD1 /* texture2D.cpp in Sources */,
+				233BE76117E21DDA0059ACD1 /* auroraObject.cpp in Sources */,
+				233BE76217E21DDA0059ACD1 /* camera.cpp in Sources */,
+				233BE76317E21DDA0059ACD1 /* openexrDisplay.cpp in Sources */,
+				233BE76417E21DDA0059ACD1 /* renderer.cpp in Sources */,
+				233BE76517E21DDA0059ACD1 /* session.cpp in Sources */,
+				233BE76617E21DDA0059ACD1 /* embreeAccelerator.cpp in Sources */,
+				233BE76717E21DDA0059ACD1 /* infiniteAreaLight.cpp in Sources */,
+				233BE76817E21DDA0059ACD1 /* objParser.cpp in Sources */,
+				233BE76917E21DDA0059ACD1 /* objTriangleMesh.cpp in Sources */,
+				233BE76A17E21DDA0059ACD1 /* renderableTriangle.cpp in Sources */,
+				233BE76B17E21DDA0059ACD1 /* loopSubdivMesh.cpp in Sources */,
+				233BE76C17E21DDA0059ACD1 /* triangleGeo.cpp in Sources */,
+				233BE76D17E21DDA0059ACD1 /* triangleMesh.cpp in Sources */,
+				233BE76E17E21DDA0059ACD1 /* light.cpp in Sources */,
+				233BE76F17E21DDA0059ACD1 /* squareLight.cpp in Sources */,
+				233BE77017E21DDA0059ACD1 /* jsonParser.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2386EC4917BC21250013F27A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				2386EC5C17BC21260013F27A /* main.m in Sources */,
-				2386EC6317BC21260013F27A /* AppDelegate.m in Sources */,
+				2386EC6317BC21260013F27A /* AppDelegate.mm in Sources */,
 				23E7C15617BC2BCA006874AB /* RenderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,54 +789,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				2389C24517549C93004F1F7F /* main.cpp in Sources */,
-				2389C24617549C93004F1F7F /* bbox.cpp in Sources */,
-				2389C24717549C93004F1F7F /* color.cpp in Sources */,
-				2389C24817549C93004F1F7F /* matrix4x4.cpp in Sources */,
-				2389C24917549C93004F1F7F /* pixelRegion.cpp in Sources */,
-				2389C24A17549C93004F1F7F /* point.cpp in Sources */,
-				2389C24B17549C93004F1F7F /* ray.cpp in Sources */,
-				2389C24C17549C93004F1F7F /* sample2D.cpp in Sources */,
-				2389C24D17549C93004F1F7F /* sample3D.cpp in Sources */,
-				2389C24E17549C93004F1F7F /* sampler2D.cpp in Sources */,
-				2389C24F17549C93004F1F7F /* sampler3D.cpp in Sources */,
-				2389C25017549C93004F1F7F /* transform.cpp in Sources */,
-				2389C25117549C93004F1F7F /* vector.cpp in Sources */,
-				2389C25217549C93004F1F7F /* auroraObject.cpp in Sources */,
-				2389C25317549C93004F1F7F /* camera.cpp in Sources */,
-				2389C25517549C93004F1F7F /* openexrDisplay.cpp in Sources */,
-				2389C25717549C93004F1F7F /* renderer.cpp in Sources */,
-				2389C25917549C93004F1F7F /* embreeAccelerator.cpp in Sources */,
-				2389C25A17549C93004F1F7F /* infiniteAreaLight.cpp in Sources */,
-				2389C25C17549C93004F1F7F /* objParser.cpp in Sources */,
-				2389C25D17549C93004F1F7F /* objTriangleMesh.cpp in Sources */,
-				2389C25E17549C93004F1F7F /* renderableTriangle.cpp in Sources */,
-				2389C25F17549C93004F1F7F /* triangleGeo.cpp in Sources */,
-				2389C26017549C93004F1F7F /* triangleMesh.cpp in Sources */,
-				2389C26217549C93004F1F7F /* light.cpp in Sources */,
-				2389C26317549C93004F1F7F /* squareLight.cpp in Sources */,
-				2389C27517549C93004F1F7F /* jsonParser.cpp in Sources */,
-				235A8FA21759CF6F00372E43 /* constant.cpp in Sources */,
-				235A8FA31759CF6F00372E43 /* cookTorrance.cpp in Sources */,
-				235A8FA41759CF6F00372E43 /* lambert.cpp in Sources */,
-				235A8FA51759CF6F00372E43 /* specMirror.cpp in Sources */,
-				235A8FA61759CF6F00372E43 /* specTransmit.cpp in Sources */,
-				235A8FA71759CF6F00372E43 /* carMaterial.cpp in Sources */,
-				235A8FA81759CF6F00372E43 /* constantMaterial.cpp in Sources */,
-				235A8FA91759CF6F00372E43 /* glassMaterial.cpp in Sources */,
-				235A8FAA1759CF6F00372E43 /* kelemenMaterial.cpp in Sources */,
-				235A8FAB1759CF6F00372E43 /* matteMaterial.cpp in Sources */,
-				235A8FAC1759CF6F00372E43 /* transmitMaterial.cpp in Sources */,
-				235A8FAD1759CF6F00372E43 /* shaderAttribute.cpp in Sources */,
-				235A8FAF1759CF6F00372E43 /* noise3D.cpp in Sources */,
-				235A8FB01759CF6F00372E43 /* shadingEngine.cpp in Sources */,
-				235A8FB41759D0BE00372E43 /* texture2D.cpp in Sources */,
-				23110BA6175B1B14005D1911 /* loopSubdivMesh.cpp in Sources */,
-				2312E0CF1761C78A008954D8 /* metalMaterial.cpp in Sources */,
-				23B5885117A1AFD6000EFAA0 /* material.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		233BE77417E21DFE0059ACD1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 233BE73D17E21D900059ACD1 /* AuroraLib */;
+			targetProxy = 233BE77317E21DFE0059ACD1 /* PBXContainerItemProxy */;
+		};
+		233BE77617E21E050059ACD1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 233BE73D17E21D900059ACD1 /* AuroraLib */;
+			targetProxy = 233BE77517E21E050059ACD1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2386EC5817BC21260013F27A /* InfoPlist.strings */ = {
@@ -733,17 +835,47 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		233BE74017E21D900059ACD1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		233BE74117E21D900059ACD1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		2386EC6717BC21260013F27A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AuroraUI/AuroraUI-Prefix.pch";
 				INFOPLIST_FILE = "AuroraUI/AuroraUI-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -752,14 +884,13 @@
 		2386EC6817BC21260013F27A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AuroraUI/AuroraUI-Prefix.pch";
 				INFOPLIST_FILE = "AuroraUI/AuroraUI-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -769,8 +900,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -804,11 +935,12 @@
 					/usr/local/Cellar/szip/2.1/include,
 					/usr/local/Cellar/openexr/1.7.0/include/OpenEXR/,
 					"/base/sw/jsoncpp-src-0.5.0/include/json/",
-					/base/sw/embree/rtcore/common/sys,
+					/base/sw/embree/rtcore/common/sys/,
 					/base/sw/embree/rtcore/common/,
-					/base/sw/embree/common/sys/base/sw/embree/common,
+					"/base/sw/embree/common/sys\n/base/sw/embree/common/",
 					/base/sw/embree/common/,
 					/usr/local/Cellar/ilmbase/1.0.2/include/OpenEXR/,
+					"/base/sw/intel/tbb41_20130314oss/include/**",
 				);
 				LD_GENERATE_MAP_FILE = NO;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
@@ -840,8 +972,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -872,12 +1004,14 @@
 					"/base/sw/jsoncpp-src-0.5.0/include/json/",
 					/base/sw/embree/rtcore/common/sys/,
 					/base/sw/embree/rtcore/common/,
-					/base/sw/embree/common/sys/base/sw/embree/common/,
+					"/base/sw/embree/common/sys\n/base/sw/embree/common/",
 					/base/sw/embree/common/,
 					/usr/local/Cellar/ilmbase/1.0.2/include/OpenEXR/,
+					"/base/sw/intel/tbb41_20130314oss/include/**",
 				);
 				LD_GENERATE_MAP_FILE = NO;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1025,6 +1159,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		233BE73F17E21D900059ACD1 /* Build configuration list for PBXNativeTarget "AuroraLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				233BE74017E21D900059ACD1 /* Debug */,
+				233BE74117E21D900059ACD1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		2386EC6917BC21260013F27A /* Build configuration list for PBXNativeTarget "AuroraUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

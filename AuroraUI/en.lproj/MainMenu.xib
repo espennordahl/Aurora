@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A569" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
+        <deployment defaultVersion="1090" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
     </dependencies>
     <objects>
@@ -652,9 +652,35 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="600" height="400"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-            <view key="contentView" id="372">
+            <view key="contentView" wantsLayer="YES" id="372" userLabel="ImageView" customClass="NSImageView">
                 <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oop-QT-iOY">
+                        <rect key="frame" x="2" y="47" width="596" height="351"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="FVJ-tN-JlU"/>
+                    </imageView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hX3-pc-WTd">
+                        <rect key="frame" x="14" y="7" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ec0-u0-5IV">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="buttonPressed:" target="494" id="jbq-Ik-jWG"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="oop-QT-iOY" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="5" id="HQE-ac-Eor"/>
+                    <constraint firstAttribute="bottom" secondItem="oop-QT-iOY" secondAttribute="bottom" constant="50" id="Ma4-ro-wVt"/>
+                    <constraint firstAttribute="bottom" secondItem="hX3-pc-WTd" secondAttribute="bottom" constant="14" id="Raq-Ht-r3g"/>
+                    <constraint firstAttribute="trailing" secondItem="oop-QT-iOY" secondAttribute="trailing" constant="5" id="WZo-Fi-aON"/>
+                    <constraint firstItem="hX3-pc-WTd" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="20" id="qUs-QX-AlI"/>
+                    <constraint firstItem="oop-QT-iOY" firstAttribute="top" secondItem="372" secondAttribute="top" constant="5" id="xiP-5d-WLh"/>
+                </constraints>
             </view>
         </window>
         <customObject id="494" customClass="AppDelegate">
@@ -664,6 +690,10 @@
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
-        <viewController id="847" customClass="RenderViewController"/>
+        <viewController id="847" customClass="RenderViewController">
+            <connections>
+                <outlet property="view" destination="oop-QT-iOY" id="GAL-ee-5eY"/>
+            </connections>
+        </viewController>
     </objects>
 </document>

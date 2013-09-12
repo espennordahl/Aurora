@@ -10,4 +10,6 @@
 
 @interface RenderViewController : NSViewController
 
+-(void)imageDidChange:(NSImage*)image;
+
 @end

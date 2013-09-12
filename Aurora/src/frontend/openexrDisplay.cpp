@@ -128,3 +128,18 @@ void OpenexrDisplay::draw(int numLines){
 void OpenexrDisplay::addMetadata(const std::string &key, const std::string &value){
     m_metadata[key] = value;
 }
+
+const std::string OpenexrDisplay::filename() const{
+    return m_filename;
+}
+
+void *OpenexrDisplay::copy(){
+    m_copied_buffer.resizeErase(m_height, m_width);
+	for (int i=0; i<m_height; i++) {
+        m_multisample_buffer[i].resize(m_width);
+		for (int j=0; j<m_width; j++) {
+            m_copied_buffer[i][j] = m_pixel_buffer[i][j];
+        }
+    }
+    return &m_copied_buffer[0][0];
+}

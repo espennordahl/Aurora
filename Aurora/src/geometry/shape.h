@@ -41,6 +41,8 @@ namespace Aurora {
 		const Transform *objectToCamera;
 		const Transform *cameraToObject;
 	};
+    
+    typedef std::tr1::shared_ptr<Shape> ShapePtr;
 }
 
 #endif

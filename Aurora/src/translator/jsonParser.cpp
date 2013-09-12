@@ -442,7 +442,6 @@ void JsonParser::parseOptions(Json::Value &root){
             int r_lightSamples =   getIntAttr("lightsamples", *itr);
             int r_mindepth =       getIntAttr("mindepth", *itr);
             int r_maxdepth =       getIntAttr("maxdepth", *itr);
-            int r_useEmbree =      getIntAttr("useEmbree", *itr);
             int r_resolution[2];   getIntArrayAttr("resolution", *itr, 2, r_resolution);
             std::string r_fileName = getStringAttr("filename", *itr);
             r_fileName = stringTemplate(r_fileName);
@@ -459,10 +458,6 @@ void JsonParser::parseOptions(Json::Value &root){
             (*renderEnv->globals)[MinDepth] = (double)r_mindepth;
             LOG_DEBUG("Setting max trace depth to: " << r_maxdepth);
             (*renderEnv->globals)[MaxDepth] = (double)r_maxdepth;
-            LOG_DEBUG("Setting trace kernel to: " << (r_useEmbree > 0 ? "embree" : "aurora") );
-            if (r_useEmbree > 0.) {
-                (*renderEnv->globals)[AccelStructure] = ACCEL_EMBREE;
-            }
             LOG_DEBUG("Setting resolution to: " << r_resolution[0] << " * " << r_resolution[1]);
             (*renderEnv->globals)[ResolutionX] = r_resolution[0];
             (*renderEnv->globals)[ResolutionY] = r_resolution[1];

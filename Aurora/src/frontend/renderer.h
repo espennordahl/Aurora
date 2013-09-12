@@ -23,18 +23,27 @@
 #include <map>
 
 namespace Aurora {
+    class Session;
+}
+
+namespace Aurora{
     
 	class Renderer {
 	public:
-        Renderer( char *file );
-		void render();		
+        Renderer(std::string file);
+		void render();
+		void setDelegate(Session *delegate);
+
+        void stop();
+        
 		Camera *renderCam;
 		std::vector<std::tr1::shared_ptr<AuroraObject> > objects;
 		std::vector<Light* > lights;
 		InfiniteAreaLight *envLight;
 		RenderEnvironment renderEnv;
 		AttributeState *attrs;
-		
+		OpenexrDisplay *displayDriver;
+    
 	private:
 		void parseSceneDescription();
 		void buildRenderEnvironment();
@@ -46,13 +55,13 @@ namespace Aurora {
 		float renderProgress;
         std::string filename;
 		Transform *cameraTransform;
-		
-		bool integrateSampleSINGLE(Sample3D *sample, float importance);
-		bool integrateSampleMULTI(Sample3D *sample, float importance);
-		OpenexrDisplay *displayDriver;
+
+        bool m_stopped;
+		bool m_rendering;
         
         tbb::atomic<long> m_numrays;
         double m_rayspeed;
+        Session *m_delegate;
 	};
 }
 

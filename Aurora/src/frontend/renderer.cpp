@@ -26,14 +26,29 @@
 #include <tbb/task_group.h>
 
 #include "jsonParser.h"
+#include "session.h"
 
 using namespace Aurora;
 
-Renderer::Renderer( char *file ){
-    filename = std::string(file);
+Renderer::Renderer(std::string file){
+    filename = file;
+}
+
+void Renderer::setDelegate(Aurora::Session *delegate){
+    m_delegate = delegate;
+}
+
+void Renderer::stop(){
+    m_stopped = true;
 }
 
 void Renderer::render(){
+
+    while (m_rendering){
+        usleep(100);
+    }
+    m_stopped = false;
+    m_rendering = true;
     
     time_t parseBegin;
 	time(&parseBegin);
@@ -394,11 +409,14 @@ class DrawTask
 {
     OpenexrDisplay *m_driver;
     int m_height;
+    Session *m_delegate;
 public:
-    DrawTask(OpenexrDisplay *driver, int height):m_driver(driver), m_height(height){}
+    DrawTask(OpenexrDisplay *driver, int height, Session *delegate):
+    m_driver(driver), m_height(height), m_delegate(delegate){}
     void operator()()
     {
-        m_driver->draw(m_height);
+            //m_driver->draw(m_height);
+        m_delegate->imageDidUpdate();
     }
 };
 
@@ -425,6 +443,9 @@ void Renderer::renderImageTBB(){
     displayDriver->draw(height);
     tbb::task_group group;
     for(int i=0; i<multisamples; ++i){
+        if (m_stopped) {
+            break;
+        }
         time_t progressionStart;
         time(&progressionStart);
         tbb::parallel_for( tbb::blocked_range<size_t>(0,width*height),
@@ -438,7 +459,7 @@ void Renderer::renderImageTBB(){
                                             )
                           );
         group.wait();
-        group.run(DrawTask(displayDriver, height));
+        group.run(DrawTask(displayDriver, height, m_delegate));
         LOG_INFO("Render progress: " << 100 * (i+1)/(float)multisamples << "%");
         time_t currentTime;
         time(&currentTime);
@@ -481,6 +502,8 @@ void Renderer::outputStats(){
     
     displayDriver->draw(displayDriver->height());
     
+
+    m_rendering = false;
 
 	LOG_INFO("Done outputting statistics.");
     LOG_INFO("*************************************\n");

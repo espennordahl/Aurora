@@ -185,7 +185,6 @@ def auRender(lazy = False):
                 "maxdepth"        : cmds.getAttr("AURglobals.maxdepth"),
                 "pixelsamples"	  : cmds.getAttr("AURglobals.pixelsamples"),
                 "resolution"	  : [cmds.getAttr("AURglobals.resX"), cmds.getAttr("AURglobals.resY")],
-                "useEmbree"		  : cmds.getAttr("AURglobals.useEmbree"),
     }
 
     scene.setOptions(options)

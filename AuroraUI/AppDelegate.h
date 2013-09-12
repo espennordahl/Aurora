@@ -15,4 +15,8 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet RenderViewController *renderViewController;
 
+-(IBAction)buttonPressed:(id)sender;
+
+-(void)imageDidUpdate;
+
 @end

@@ -43,6 +43,6 @@
 #define VERSION "0.2"
 
 // base paths
-#define CONFIGPATH "/Users/espennordahl/Documents/Aurora/Aurora/config.json"
+#define CONFIGPATH "/Users/espennordahl/Documents/Aurora/XCode/Aurora/Aurora/config.json"
 
 #endif
