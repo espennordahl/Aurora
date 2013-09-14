@@ -25,16 +25,17 @@
 -(void)imageDidChange:(NSImage*)image
 {
     NSLog(@"Received image update. Updating view!");
-    [image recache];
     NSLog(@"Image size: %f %f", image.size.width, image.size.height);
     NSImageView *view = (NSImageView *)self.view;
+
+        // ugly hack to force refresh
+    [view setImageFrameStyle:NSImageFramePhoto];
     view.image = image;
-    [view setNeedsDisplay:YES];
-        // setNeedsDisplay doesn't work for some reason, so forcing
-        // an update by changing the frame instead...
-    CGRect oldFrame = view.frame;
-    view.frame = CGRectMake(0, 0, 10, 10);
-    view.frame = oldFrame;
+    CGRect frame = view.frame;
+    view.frame = CGRectMake(1, 2, 3, 4);
+    view.frame = frame;
+    [view setImageFrameStyle:NSImageFrameGrayBezel];
+    [view setNeedsDisplay];
 }
 
 @end

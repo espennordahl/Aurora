@@ -17,7 +17,7 @@
 #define ISBLACK  0.0001
 
 // exr
-#define DRAW_DELAY 10
+#define DRAW_DELAY 1
 
 // ray tracing
 #define RAY_BIAS 0.0005

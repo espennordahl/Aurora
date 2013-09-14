@@ -30,7 +30,10 @@
 
 using namespace Aurora;
 
-Renderer::Renderer(std::string file){
+Renderer::Renderer(std::string file):
+m_rendering(false),
+m_stopped(false)
+{
     filename = file;
 }
 
@@ -441,13 +444,18 @@ void Renderer::renderImageTBB(){
     }
     displayDriver = new OpenexrDisplay(width, height, fn, &renderEnv);
     displayDriver->draw(height);
-    tbb::task_group group;
+    tbb::task_group drawtask;
+    time_t drawTime;
+    time(&drawTime);
     for(int i=0; i<multisamples; ++i){
         if (m_stopped) {
             break;
         }
-        time_t progressionStart;
-        time(&progressionStart);
+        time_t currentTime;
+        time_t progressionStartTime;
+        time(&progressionStartTime);
+
+        drawtask.wait();
         tbb::parallel_for( tbb::blocked_range<size_t>(0,width*height),
                           IntegrateParallel(width,
                                             height,
@@ -458,12 +466,16 @@ void Renderer::renderImageTBB(){
                                             &m_numrays
                                             )
                           );
-        group.wait();
-        group.run(DrawTask(displayDriver, height, m_delegate));
-        LOG_INFO("Render progress: " << 100 * (i+1)/(float)multisamples << "%");
-        time_t currentTime;
+        
         time(&currentTime);
-        int progtime = difftime(currentTime, progressionStart);
+        if(!i || difftime(currentTime, drawTime) > DRAW_DELAY) {
+            drawtask.run(DrawTask(displayDriver, height, m_delegate));
+            time(&drawTime);
+        }
+        
+        LOG_INFO("Render progress: " << 100 * (i+1)/(float)multisamples << "%");
+        time(&currentTime);
+        int progtime = difftime(currentTime, progressionStartTime);
         int remaining = progtime * (multisamples - (i+1));
         LOG_INFO("Estimated time remaining: " << floor(remaining/60/60) << "h" << floor(remaining/60)%60 << "min" << remaining%60 << "sec.");
         double speed = (m_numrays * 0.001) / std::max(1, progtime);
@@ -471,7 +483,7 @@ void Renderer::renderImageTBB(){
         m_rayspeed += speed / multisamples;
         m_numrays = tbb::atomic<long>();
     }
-    group.wait();
+    drawtask.wait();
 }
 
 
