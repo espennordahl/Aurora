@@ -10,10 +10,13 @@
 
 #import "RenderViewController.h"
 
+#import "ValueWheelView.h"
+
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet RenderViewController *renderViewController;
+@property (assign) IBOutlet ValueWheelView *wheel;
 
 -(IBAction)buttonPressed:(id)sender;
 

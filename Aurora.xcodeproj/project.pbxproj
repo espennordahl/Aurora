@@ -59,6 +59,7 @@
 		233BE77717E222720059ACD1 /* libAuroraLib.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */; };
 		233BE77D17E23B840059ACD1 /* DSCN5796.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 233BE77C17E23B840059ACD1 /* DSCN5796.JPG */; };
 		233BE77F17E23BB80059ACD1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 233BE77E17E23BB80059ACD1 /* CoreGraphics.framework */; };
+		233BE78317E4B8AB0059ACD1 /* ValueWheelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 233BE78217E4B8AB0059ACD1 /* ValueWheelView.m */; };
 		2386EC4817BC108A0013F27A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4717BC108A0013F27A /* libz.dylib */; };
 		2386EC5017BC21250013F27A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4F17BC21250013F27A /* Cocoa.framework */; };
 		2386EC5A17BC21260013F27A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2386EC5817BC21260013F27A /* InfoPlist.strings */; };
@@ -108,6 +109,8 @@
 		233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libAuroraLib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		233BE77C17E23B840059ACD1 /* DSCN5796.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = DSCN5796.JPG; path = ../../../bilder/fb/DSCN5796.JPG; sourceTree = "<group>"; };
 		233BE77E17E23BB80059ACD1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		233BE78117E4B8AB0059ACD1 /* ValueWheelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValueWheelView.h; sourceTree = "<group>"; };
+		233BE78217E4B8AB0059ACD1 /* ValueWheelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValueWheelView.m; sourceTree = "<group>"; };
 		235A8F791759CF6F00372E43 /* brdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdf.h; sourceTree = "<group>"; };
 		235A8F7B1759CF6F00372E43 /* brdfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdfs.h; sourceTree = "<group>"; };
 		235A8F7C1759CF6F00372E43 /* constant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constant.cpp; sourceTree = "<group>"; };
@@ -387,6 +390,8 @@
 				2386EC6217BC21260013F27A /* AppDelegate.mm */,
 				23E7C15417BC2BCA006874AB /* RenderViewController.h */,
 				23E7C15517BC2BCA006874AB /* RenderViewController.m */,
+				233BE78117E4B8AB0059ACD1 /* ValueWheelView.h */,
+				233BE78217E4B8AB0059ACD1 /* ValueWheelView.m */,
 				2386EC6417BC21260013F27A /* MainMenu.xib */,
 				2386EC5617BC21250013F27A /* Supporting Files */,
 			);
@@ -778,6 +783,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				233BE78317E4B8AB0059ACD1 /* ValueWheelView.m in Sources */,
 				2386EC5C17BC21260013F27A /* main.m in Sources */,
 				2386EC6317BC21260013F27A /* AppDelegate.mm in Sources */,
 				23E7C15617BC2BCA006874AB /* RenderViewController.m in Sources */,
@@ -1166,6 +1172,7 @@
 				233BE74117E21D900059ACD1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2386EC6917BC21260013F27A /* Build configuration list for PBXNativeTarget "AuroraUI" */ = {
 			isa = XCConfigurationList;

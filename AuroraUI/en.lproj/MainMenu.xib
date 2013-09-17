@@ -650,14 +650,14 @@
         <window title="AuroraUI" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="600" height="400"/>
+            <rect key="contentRect" x="335" y="390" width="602" height="447"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-            <view key="contentView" wantsLayer="YES" id="372" userLabel="ImageView" customClass="NSImageView">
-                <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+            <view key="contentView" wantsLayer="YES" id="372" userLabel="rootView" customClass="NSImageView">
+                <rect key="frame" x="0.0" y="0.0" width="602" height="447"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oop-QT-iOY">
-                        <rect key="frame" x="2" y="47" width="596" height="351"/>
+                        <rect key="frame" x="2" y="97" width="598" height="348"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="FVJ-tN-JlU"/>
                     </imageView>
@@ -672,10 +672,14 @@
                             <action selector="buttonPressed:" target="494" id="jbq-Ik-jWG"/>
                         </connections>
                     </button>
+                    <customView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="McN-Qh-XLc" customClass="ValueWheelView">
+                        <rect key="frame" x="20" y="347" width="80" height="80"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </customView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="oop-QT-iOY" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="5" id="HQE-ac-Eor"/>
-                    <constraint firstAttribute="bottom" secondItem="oop-QT-iOY" secondAttribute="bottom" constant="50" id="Ma4-ro-wVt"/>
+                    <constraint firstAttribute="bottom" secondItem="oop-QT-iOY" secondAttribute="bottom" constant="100" id="Ma4-ro-wVt"/>
                     <constraint firstAttribute="bottom" secondItem="hX3-pc-WTd" secondAttribute="bottom" constant="14" id="Raq-Ht-r3g"/>
                     <constraint firstAttribute="trailing" secondItem="oop-QT-iOY" secondAttribute="trailing" constant="5" id="WZo-Fi-aON"/>
                     <constraint firstItem="hX3-pc-WTd" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="20" id="qUs-QX-AlI"/>
@@ -686,6 +690,7 @@
         <customObject id="494" customClass="AppDelegate">
             <connections>
                 <outlet property="renderViewController" destination="847" id="856"/>
+                <outlet property="wheel" destination="McN-Qh-XLc" id="zQl-0z-xas"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>

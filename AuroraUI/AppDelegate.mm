@@ -32,6 +32,7 @@ public:
 @implementation AppDelegate
 
 @synthesize m_session;
+@synthesize wheel = _wheel;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -85,4 +86,22 @@ public:
     
     [self.renderViewController imageDidChange:render];
 }
+
+-(void)setWheel:(ValueWheelView *)wheel
+{
+    [_wheel removeTarget:self];
+    [wheel setTarget:self];
+    _wheel = wheel;
+}
+
+-(ValueWheelView*)wheel
+{
+    return _wheel;
+}
+
+-(void)valueChanged:(NSNotification*)notification
+{
+    NSLog(@"Value changed: %f", self.wheel.floatValue);
+}
+
 @end
