@@ -21,6 +21,7 @@ Session::Session(const std::string scenefile):
 m_renderer(Renderer(scenefile.c_str()))
 {
     m_renderer.setDelegate(this);
+    m_renderer.parseSceneDescription();
 }
 
 class render_task : public tbb::task {
@@ -37,6 +38,7 @@ private:
 };
 
 void Session::start(){
+    applyAttributeChanges();
     render_task& task = *new(tbb::task::allocate_root()) render_task(&m_renderer);
     tbb::task::spawn(task);
 }
@@ -57,11 +59,11 @@ private:
 
 void Session::stop(){
     stop_task& task = *new(tbb::task::allocate_root()) stop_task(&m_renderer);
-    tbb::task::spawn(task);
+    tbb::task::spawn_root_and_wait(task);
 }
 
 void Session::addObject(ObjectPtr object){
-    
+    m_objects.push_back(object);
 }
 
 void Session::removeObject(ObjectPtr object){
@@ -77,7 +79,7 @@ void Session::setResolution(int width, int height){
 }
 
 const std::vector<ObjectPtr> &Session::objects() const{
-    return std::vector<ObjectPtr>();
+    return m_objects;
 }
 
 void *Session::imageFile(){
@@ -92,3 +94,32 @@ int Session::height(){
     return m_renderer.displayDriver->height();
 }
 
+void Session::addAttributeChange(const AttributeChange &change)
+{
+    m_changeMutex.lock();
+    
+    m_changes.push_back(change);
+
+    m_changeMutex.unlock();
+}
+
+void Session::applyAttributeChanges()
+{
+    m_changeMutex.lock();
+    
+    for (int i=0; i<m_changes.size(); ++i) {
+        bool foundObject = false;
+        for (int j=0; j<m_objects.size(); ++j) {
+            if (m_objects[j]->name() == m_changes[i].objectName()) {
+                foundObject = true;
+                m_objects[j]->applyAttributeChange(m_changes[i]);
+            }
+        }
+        assert(foundObject);
+    }
+    
+    m_changes.clear();
+    
+    m_changeMutex.unlock();
+    
+}

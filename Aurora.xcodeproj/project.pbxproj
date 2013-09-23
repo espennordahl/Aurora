@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23324FE417E8AD6F00CE8ACC /* attributeChange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23324FE017E8A50300CE8ACC /* attributeChange.cpp */; };
 		233BE74217E21DB40059ACD1 /* libAuroraLib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */; };
 		233BE74317E21DBA0059ACD1 /* libAuroraLib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */; };
 		233BE74417E21DDA0059ACD1 /* constant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235A8F7C1759CF6F00372E43 /* constant.cpp */; };
@@ -106,6 +107,8 @@
 		23110BA5175B1B14005D1911 /* loopSubdivMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loopSubdivMesh.h; sourceTree = "<group>"; };
 		2312E0CD1761C78A008954D8 /* metalMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metalMaterial.cpp; sourceTree = "<group>"; };
 		2312E0CE1761C78A008954D8 /* metalMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metalMaterial.h; sourceTree = "<group>"; };
+		23324FE017E8A50300CE8ACC /* attributeChange.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attributeChange.cpp; sourceTree = "<group>"; };
+		23324FE117E8A50300CE8ACC /* attributeChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attributeChange.h; sourceTree = "<group>"; };
 		233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libAuroraLib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		233BE77C17E23B840059ACD1 /* DSCN5796.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = DSCN5796.JPG; path = ../../../bilder/fb/DSCN5796.JPG; sourceTree = "<group>"; };
 		233BE77E17E23BB80059ACD1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -540,6 +543,8 @@
 				2389C1C617549C93004F1F7F /* renderer.h */,
 				23B92E6317DBB47F00B01685 /* session.cpp */,
 				23B92E6417DBB47F00B01685 /* session.h */,
+				23324FE017E8A50300CE8ACC /* attributeChange.cpp */,
+				23324FE117E8A50300CE8ACC /* attributeChange.h */,
 			);
 			path = frontend;
 			sourceTree = "<group>";
@@ -731,6 +736,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23324FE417E8AD6F00CE8ACC /* attributeChange.cpp in Sources */,
 				233BE74417E21DDA0059ACD1 /* constant.cpp in Sources */,
 				233BE74517E21DDA0059ACD1 /* cookTorrance.cpp in Sources */,
 				233BE74617E21DDA0059ACD1 /* lambert.cpp in Sources */,

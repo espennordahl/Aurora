@@ -44,6 +44,15 @@ int ShadingEngine::registerShaderFloat(const std::string &shdName, Shader<float>
     return index;
 }
 
+void ShadingEngine::replaceShaderColor(int index, Shader<Color> *shader){
+    m_shd_map_color[index] = shader;
+}
+
+void ShadingEngine::replaceShaderFloat(int index, Shader<float> *shader){
+    m_shd_map_float[index] = shader;
+}
+
+
 int ShadingEngine::getShaderIndex(const std::string &shdName){
     if (m_index_map.find(shdName) == m_index_map.end()) {
         LOG_ERROR("Shader not found in ShadingEngine: " << shdName);

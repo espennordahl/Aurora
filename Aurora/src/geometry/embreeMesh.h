@@ -51,8 +51,18 @@ namespace Aurora {
 
             int currentTri = 0;
             int currentVertex = 0;
+
+            EmbreeStructure geometryStructure = {
+                triangles,
+                vertices,
+                &normals,
+                &uvs,
+                &currentTri,
+                &currentVertex
+            };
+
             for (int i=0; i < shapes.size(); i++) {
-                shapes[i]->makeEmbree(triangles, vertices, normals, uvs, &currentTri, &currentVertex, attrs, i);
+                shapes[i]->makeEmbree(geometryStructure, attrs, i);
             }
         }
     };

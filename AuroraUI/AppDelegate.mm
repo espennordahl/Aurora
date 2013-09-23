@@ -102,6 +102,9 @@ public:
 -(void)valueChanged:(NSNotification*)notification
 {
     NSLog(@"Value changed: %f", self.wheel.floatValue);
+    m_session->stop();
+    m_session->addAttributeChange(Aurora::AttributeChange("pCubeShape1", "abc", self.wheel.floatValue, Aurora::AttributeChange::kShaderChange));
+    m_session->start();
 }
 
 @end

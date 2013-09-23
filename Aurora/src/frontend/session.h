@@ -11,11 +11,13 @@
 
 #include <iostream>
 
+#include <tbb/mutex.h>
+
 #include "auroraObject.h"
 #include "renderer.h"
+#include "attributeChange.h"
 
 namespace Aurora {
-    
     class Session{
     public:
         Session();
@@ -44,10 +46,16 @@ namespace Aurora {
         void *imageFile();
         
         virtual void imageDidUpdate() = 0;
+        
+        void addAttributeChange(const AttributeChange &change);
 
     private:
+        std::vector<AttributeChange> m_changes;
+        tbb::mutex m_changeMutex;
         std::vector<ObjectPtr> m_objects;
         Renderer m_renderer;
+        
+        void applyAttributeChanges();
     };
 }
 

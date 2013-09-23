@@ -15,6 +15,7 @@
 #include "renderableTriangle.h"
 #include "attributeState.h"
 #include "embreeMesh.h"
+#include "attributeChange.h"
 
 namespace Aurora {
 	class AuroraObject : public FrontEndObject {
@@ -28,6 +29,8 @@ namespace Aurora {
         
         void frameBegin();
         void frameEnd();
+        
+        void applyAttributeChange(const AttributeChange &change);
         
         std::string m_matName;
 

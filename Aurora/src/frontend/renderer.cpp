@@ -43,31 +43,16 @@ void Renderer::setDelegate(Aurora::Session *delegate){
 
 void Renderer::stop(){
     m_stopped = true;
+    while (m_rendering){
+        usleep(100);
+    }
 }
 
 void Renderer::render(){
 
-    while (m_rendering){
-        usleep(100);
-    }
     m_stopped = false;
     m_rendering = true;
     
-    time_t parseBegin;
-	time(&parseBegin);
-
-    parseSceneDescription();
-	
-    	// Time
-	time_t parseEnd;
-	time(&parseEnd);
-	int totalTime = difftime(parseEnd, parseBegin);
-    
-	LOG_INFO("Total parsing time: "
-             << floor(totalTime/60/60) << " h "
-             << floor((totalTime/60) % 60) << " min "
-             << totalTime % 60 << " sec.");
-
     time_t envBegin;
 	time(&envBegin);
     
@@ -75,7 +60,7 @@ void Renderer::render(){
     	// Time
 	time_t envEnd;
 	time(&envEnd);
-	totalTime = difftime(envEnd, envBegin);
+	int totalTime = difftime(envEnd, envBegin);
     
 	LOG_INFO("Total time building render env: "
              << floor(totalTime/60/60) << " h "
@@ -89,6 +74,9 @@ void Renderer::render(){
 }
 
 void Renderer::parseSceneDescription(){
+    time_t parseBegin;
+	time(&parseBegin);
+    
     LOG_INFO("*************************************");
 	LOG_INFO("Parsing scene description.");
     
@@ -104,8 +92,23 @@ void Renderer::parseSceneDescription(){
     objects = parser.getObjects();
     lights = parser.getLights();
     
+    for (int i=0; i<objects.size(); i++) {
+        m_delegate->addObject(objects[i]);
+    }
+    
 	LOG_INFO("Done parsing scene description.");	
     LOG_INFO("*************************************\n");
+    
+        // Time
+	time_t parseEnd;
+	time(&parseEnd);
+	int totalTime = difftime(parseEnd, parseBegin);
+    
+	LOG_INFO("Total parsing time: "
+             << floor(totalTime/60/60) << " h "
+             << floor((totalTime/60) % 60) << " min "
+             << totalTime % 60 << " sec.");
+
 }
 
 void Renderer::buildRenderEnvironment(){
@@ -132,10 +135,9 @@ void Renderer::buildRenderEnvironment(){
     attrs = new AttributeState[numObjects + numLights];
     EmbreeMesh mesh;
     for (int i=0; i < numObjects; i++) {
-        mesh.appendTriangleMesh(objects.back()->m_shape, i);
-        attrs[i].material = objects.back()->m_material;
+        mesh.appendTriangleMesh(objects[i]->m_shape, i);
+        attrs[i].material = objects[i]->m_material;
         attrs[i].emmision = Color(0.);
-        objects.pop_back();
     }
     for (int i=0; i < numLights; i++) {
         if (lights[i]->lightType != type_envLight) {

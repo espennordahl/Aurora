@@ -38,3 +38,7 @@ void Material::runNormalShader(ShadingGeometry *shdGeo){
         shdGeo->Ns = shdGeo->Ng;
     }
 }
+
+void Material::applyAttributeChange(const AttributeChange &change){
+    LOG_ERROR("Unable to apply attribute change.");
+}

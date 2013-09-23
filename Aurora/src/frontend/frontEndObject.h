@@ -21,10 +21,15 @@ namespace Aurora {
         m_name(objName)
         {};
         virtual ~FrontEndObject(){};
+        
+        std::string name() const {
+            return m_name;
+        }
 
         virtual void frameBegin() = 0;
         virtual void frameEnd() = 0;
-        
+
+    protected:
         std::string m_name;
         RenderEnvironment *m_renderEnv;
     };

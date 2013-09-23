@@ -31,6 +31,7 @@ namespace Aurora{
 	class Renderer {
 	public:
         Renderer(std::string file);
+        void parseSceneDescription();
 		void render();
 		void setDelegate(Session *delegate);
 
@@ -45,7 +46,6 @@ namespace Aurora{
 		OpenexrDisplay *displayDriver;
     
 	private:
-		void parseSceneDescription();
 		void buildRenderEnvironment();
 		void renderImage();
 		void renderImageTBB();

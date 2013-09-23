@@ -21,6 +21,8 @@ namespace Aurora {
         void frameBegin();
         void frameEnd();
         
+        virtual void applyAttributeChange(const AttributeChange &change);
+        
 	private:
 		Brdf * brdf;
         int colorIndex;

@@ -12,6 +12,7 @@
 #include "core.h"
 #include "intersection.h"
 #include "brdf.h"
+#include "attributeChange.h"
 
     // forward declarations
 namespace Aurora {
@@ -36,6 +37,8 @@ namespace Aurora {
             // after rendering
         
         void runNormalShader(ShadingGeometry *shdGeo);
+        
+        virtual void applyAttributeChange(const AttributeChange &change);
         
         virtual void frameBegin() = 0;
         virtual void frameEnd() = 0;

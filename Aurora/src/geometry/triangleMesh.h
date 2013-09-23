@@ -23,11 +23,14 @@ namespace Aurora {
 		BBox objectBound() const;
 		BBox worldBound() const;
 		        
-        void makeEmbree(embree::BuildTriangle* triangles, embree::BuildVertex* vertices, std::vector<Vector> &normals, std::vector< uv > &uvs, int *currentTri, int *currentVertex, AttributeState *attrs, int attributeIndex);
+        void makeEmbree(EmbreeStructure &geometryOut, AttributeState *attrs, int attributeIndex);
 
         int numTriangles(){ return _numTriangles; };
         int numVertices(){ return _numVertices; };
         
+        void clearCache();
+
+    private:
         BBox wBound;
 		BBox oBound;
 		int _numTriangles;
