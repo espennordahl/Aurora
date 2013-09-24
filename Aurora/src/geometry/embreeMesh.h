@@ -21,15 +21,6 @@ namespace Aurora {
     class EmbreeMesh {
     public:
         
-        embree::BuildTriangle* triangles;
-        embree::BuildVertex*   vertices;
-        std::vector< Vector > normals;
-        std::vector< uv > uvs;
-        size_t numTriangles;
-        size_t numVertices;
-    
-        std::vector<std::tr1::shared_ptr<Shape> > shapes;
-        
         EmbreeMesh(){numTriangles = 0; numVertices = 0;};
         
         void appendTriangleMesh(std::tr1::shared_ptr<Shape> shape, int index){
@@ -65,6 +56,16 @@ namespace Aurora {
                 shapes[i]->makeEmbree(geometryStructure, attrs, i);
             }
         }
+        
+        embree::BuildTriangle* triangles;
+        embree::BuildVertex*   vertices;
+        std::vector< Vector > normals;
+        std::vector< uv > uvs;
+        size_t numTriangles;
+        size_t numVertices;
+        
+        std::vector<std::tr1::shared_ptr<Shape> > shapes;
+
     };
 }
 

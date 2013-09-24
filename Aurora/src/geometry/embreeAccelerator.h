@@ -23,6 +23,7 @@ namespace Aurora {
 	class EmbreeAccelerator: public AccelerationStructure {
     public:
 		EmbreeAccelerator(){ };
+        ~EmbreeAccelerator();
 		EmbreeAccelerator(const EmbreeMesh &mesh, AttributeState *attrs);
 		
 		bool intersect( Ray *ray, Intersection *intersection) const;

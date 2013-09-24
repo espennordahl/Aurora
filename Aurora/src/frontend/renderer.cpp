@@ -71,6 +71,8 @@ void Renderer::render(){
 	renderImageTBB();
 	
 	outputStats();
+    
+    postRenderCleanup();
 }
 
 void Renderer::parseSceneDescription(){
@@ -139,8 +141,8 @@ void Renderer::buildRenderEnvironment(){
         attrs[i].material = objects[i]->m_material;
         attrs[i].emmision = Color(0.);
     }
-    for (int i=0; i < numLights; i++) {
-        if (lights[i]->lightType != type_envLight) {
+    for (int i=0; i < numLights; i++){
+        if (lights[i]->lightType != type_envLight){
             mesh.appendTriangleMesh(lights[i]->shape(), i + numObjects);
         }
         Material * black = new ConstantMaterial("Not in use - lightsource", Color(0.f), UNSET_SHADER_INDEX, &renderEnv);
@@ -514,11 +516,17 @@ void Renderer::outputStats(){
     std::string stringSpeed = intToString(m_rayspeed) + "K rays/sec.";
     displayDriver->addMetadata(std::string("RaySpeed"), stringSpeed);
     
-    displayDriver->draw(displayDriver->height());
-    
-
-    m_rendering = false;
-
 	LOG_INFO("Done outputting statistics.");
     LOG_INFO("*************************************\n");
+}
+
+void Renderer::postRenderCleanup(){
+    displayDriver->draw(displayDriver->height());
+
+    delete displayDriver;
+    delete renderEnv.accelerationStructure;
+    delete renderEnv.attributeState;
+    delete renderEnv.renderCam;
+    
+    m_rendering = false;
 }

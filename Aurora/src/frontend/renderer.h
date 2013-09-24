@@ -27,7 +27,7 @@ namespace Aurora {
 }
 
 namespace Aurora{
-    
+
 	class Renderer {
 	public:
         Renderer(std::string file);
@@ -50,7 +50,8 @@ namespace Aurora{
 		void renderImage();
 		void renderImageTBB();
 		void outputStats();
-		
+		void postRenderCleanup();
+        
 		time_t renderTime;
 		float renderProgress;
         std::string filename;
