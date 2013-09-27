@@ -65,8 +65,7 @@ ObjTriangleMesh::ObjTriangleMesh( const Transform *o2c, const Transform *c2o, in
 	for (size_t i = 0; i < numVertices; i++) {
 		P[i] = points[vertexIndex[i]];
 
-        //N[i] = normals[nIndex[i]];
-        N[i] = Vector(0,1,0);
+        N[i] = normals[nIndex[i]];
         if (N[i].x == 0. && N[i].y == 0. && N[i].z == 0.) {
             LOG_WARNING("Found empty normal. Setting to 0,1,0");
             N[i] = Vector(0,1,0);

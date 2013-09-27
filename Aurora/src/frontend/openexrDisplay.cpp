@@ -165,13 +165,25 @@ const std::string OpenexrDisplay::filename() const{
 
 char *OpenexrDisplay::copy(){
     m_copy_mutex.lock();
-    m_copied_buffer.resizeErase(m_height, m_width);
-	for (int i=0; i<m_height; i++) {
-        m_multisample_buffer[i].resize(m_width);
+    
+    u_char *buffer = new u_char[m_height*m_width*4];
+    u_char *channel = buffer;
+	
+    for (int i=0; i<m_height; i++) {
 		for (int j=0; j<m_width; j++) {
-            m_copied_buffer[i][j] = m_pixel_buffer[i][j];
-        }
-    }
+			Imf::Rgba &p = m_pixel_buffer[i][j];
+            *channel = 255 * pow(MIN((float)p.r, 1.), 0.45454545);
+            ++channel;
+            *channel = 255 * pow(MIN((float)p.g, 1.), 0.45454545);
+            ++channel;
+            *channel = 255 * pow(MIN((float)p.b, 1.), 0.45454545);
+            ++channel;
+            *channel = 255 * MIN((float)p.a, 1.);
+            ++channel;
+		}
+	}
+    
     m_copy_mutex.unlock();
-    return (char*)&m_copied_buffer[0][0];
+
+    return (char*)buffer;
 }

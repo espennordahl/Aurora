@@ -76,12 +76,12 @@ public:
                                                               width*height*4,
                                                               NULL);
     
-    int bitsPerComponent = 16;
-    int bitsPerPixel = 4*16;
-    int bytesPerRow = 4 * 16 * width / 8;
+    int bitsPerComponent = 8;
+    int bitsPerPixel = 4*8;
+    int bytesPerRow = 4 * 8 * width / 8;
 
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-    CGBitmapInfo bitmapInfo = kCGBitmapByteOrder16Little;
+    CGBitmapInfo bitmapInfo = kCGImageAlphaLast;
     CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
     CGImageRef imageRef = CGImageCreate(width,
                                         height,
