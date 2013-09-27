@@ -20,6 +20,6 @@
 
 -(IBAction)buttonPressed:(id)sender;
 
--(void)imageDidUpdate;
+-(void)imageDidUpdate:(NSNotification*)notification;
 
 @end

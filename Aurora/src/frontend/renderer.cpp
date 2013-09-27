@@ -32,7 +32,10 @@ using namespace Aurora;
 
 Renderer::Renderer(std::string file):
 m_rendering(false),
-m_stopped(false)
+m_stopped(false),
+m_widthOverride(0),
+m_heightOverride(0),
+displayDriver(NULL)
 {
     filename = file;
 }
@@ -46,6 +49,15 @@ void Renderer::stop(){
     while (m_rendering){
         usleep(100);
     }
+}
+
+bool Renderer::isRunning(){
+    return m_rendering;
+}
+
+void Renderer::setResolution(int width, int height){
+    m_widthOverride = width;
+    m_heightOverride = height;
 }
 
 void Renderer::render(){
@@ -116,6 +128,11 @@ void Renderer::parseSceneDescription(){
 void Renderer::buildRenderEnvironment(){
     LOG_INFO("*************************************");
 	LOG_INFO("Building render environment.");
+    
+    if (m_widthOverride && m_heightOverride) {
+        (*renderEnv.globals)[ResolutionX] = m_widthOverride;
+        (*renderEnv.globals)[ResolutionY] = m_heightOverride;
+    }
     
         // preFrame
     for (u_int32_t i=0; i < objects.size(); i++) {
@@ -422,7 +439,7 @@ public:
     m_driver(driver), m_height(height), m_delegate(delegate){}
     void operator()()
     {
-            //m_driver->draw(m_height);
+        m_driver->draw(m_height);
         m_delegate->imageDidUpdate();
     }
 };
@@ -442,12 +459,18 @@ void Renderer::renderImageTBB(){
 	int width = renderCam->getWidthSamples();
 	int height = renderCam->getHeightSamples();
 	int multisamples = renderCam->getPixelSamples();
+
     std::string fn = (*renderEnv.stringGlobals)["fileName"];
     if(fn == ""){
         LOG_ERROR("Render output filename is blank");
     }
-    displayDriver = new OpenexrDisplay(width, height, fn, &renderEnv);
-    displayDriver->draw(height);
+    if (!displayDriver) {
+        displayDriver = new OpenexrDisplay(width, height, fn, &renderEnv);
+    } else {
+        displayDriver->clear();
+        displayDriver->resize(width, height);
+    }
+
     tbb::task_group drawtask;
     time_t drawTime;
     time(&drawTime);
@@ -523,7 +546,6 @@ void Renderer::outputStats(){
 void Renderer::postRenderCleanup(){
     displayDriver->draw(displayDriver->height());
 
-    delete displayDriver;
     delete renderEnv.accelerationStructure;
     delete renderEnv.attributeState;
     delete renderEnv.renderCam;

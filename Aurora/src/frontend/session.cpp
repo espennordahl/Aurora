@@ -75,14 +75,21 @@ void Session::objectChanged(ObjectPtr object, ChangeType change){
 }
 
 void Session::setResolution(int width, int height){
-    
+    bool running = m_renderer.isRunning();
+    if (running) {
+        stop();
+    }
+    m_renderer.setResolution(width, height);
+    if (running) {
+        start();
+    }
 }
 
 const std::vector<ObjectPtr> &Session::objects() const{
     return m_objects;
 }
 
-void *Session::imageFile(){
+char *Session::imageFile(){
     return m_renderer.displayDriver->copy();
 }
 

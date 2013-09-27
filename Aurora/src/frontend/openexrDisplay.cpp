@@ -26,19 +26,7 @@ FrontEndObject("Display:" + file, renderEnv),
 m_width(width),
 m_height(height){
 	m_filename = file;
-	m_pixel_buffer.resizeErase(m_height, m_width);
-    m_multisample_buffer.resize(m_height);
-	for (int i=0; i<m_height; i++) {
-        m_multisample_buffer[i].resize(m_width);
-		for (int j=0; j<m_width; j++) {
-			Imf::Rgba &p = m_pixel_buffer[i][j];
-			p.r = 0.f;
-			p.g = 0.f;
-			p.b = 0.f;
-			p.a = 0.f;
-            m_multisample_buffer[i][j] = 0;
-		}
-	}
+    resize(width, height);
     m_metadata["renderer"] = std::string("Aurora v") + VERSION;
 }
 
@@ -89,6 +77,48 @@ void OpenexrDisplay::getPixel(int x, int y, Color *col, float *alpha){
 	*alpha = (float)p.a;
 }
 
+void OpenexrDisplay::clear(){
+    for (int i=0; i<m_height; i++) {
+		for (int j=0; j<m_width; j++) {
+			Imf::Rgba &p = m_pixel_buffer[i][j];
+			p.r = 0.f;
+			p.g = 0.f;
+			p.b = 0.f;
+			p.a = 0.f;
+            m_multisample_buffer[i][j] = 0;
+		}
+	}
+}
+
+void OpenexrDisplay::resize(int width, int height){
+    m_copy_mutex.lock();
+    
+    m_pixel_buffer.resizeErase(height, width);
+    
+    for (int i=0; i<m_multisample_buffer.size(); ++i) {
+        m_multisample_buffer[i].clear();
+    }
+    m_multisample_buffer.clear();
+
+    m_multisample_buffer.resize(height);
+	for (int i=0; i<height; i++) {
+        m_multisample_buffer[i].resize(width);
+		for (int j=0; j<width; j++) {
+			Imf::Rgba &p = m_pixel_buffer[i][j];
+			p.r = 0.f;
+			p.g = 0.f;
+			p.b = 0.f;
+			p.a = 0.f;
+            m_multisample_buffer[i][j] = 0;
+		}
+	}
+
+    m_width = width;
+    m_height = height;
+    
+    m_copy_mutex.unlock();
+}
+
 
 void OpenexrDisplay::draw(int numLines){
     std::string tmpfile = m_filename + "_tmp";
@@ -133,7 +163,8 @@ const std::string OpenexrDisplay::filename() const{
     return m_filename;
 }
 
-void *OpenexrDisplay::copy(){
+char *OpenexrDisplay::copy(){
+    m_copy_mutex.lock();
     m_copied_buffer.resizeErase(m_height, m_width);
 	for (int i=0; i<m_height; i++) {
         m_multisample_buffer[i].resize(m_width);
@@ -141,5 +172,6 @@ void *OpenexrDisplay::copy(){
             m_copied_buffer[i][j] = m_pixel_buffer[i][j];
         }
     }
-    return &m_copied_buffer[0][0];
+    m_copy_mutex.unlock();
+    return (char*)&m_copied_buffer[0][0];
 }

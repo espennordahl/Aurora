@@ -68,6 +68,7 @@
 		2386EC6017BC21260013F27A /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2386EC5E17BC21260013F27A /* Credits.rtf */; };
 		2386EC6317BC21260013F27A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2386EC6217BC21260013F27A /* AppDelegate.mm */; };
 		2386EC6617BC21260013F27A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2386EC6417BC21260013F27A /* MainMenu.xib */; };
+		238854F117F1EF50006DEF37 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 238854F017F1EF50006DEF37 /* RenderView.m */; };
 		2389C24517549C93004F1F7F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19117549C93004F1F7F /* main.cpp */; };
 		23E7C15617BC2BCA006874AB /* RenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E7C15517BC2BCA006874AB /* RenderViewController.m */; };
 /* End PBXBuildFile section */
@@ -168,6 +169,8 @@
 		2386EC6117BC21260013F27A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2386EC6217BC21260013F27A /* AppDelegate.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		2386EC6517BC21260013F27A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		238854EF17F1EF50006DEF37 /* RenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderView.h; sourceTree = "<group>"; };
+		238854F017F1EF50006DEF37 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
 		2389C0E617549C5D004F1F7F /* Aurora */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Aurora; sourceTree = BUILT_PRODUCTS_DIR; };
 		2389C0F317549C93004F1F7F /* Aurora.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = Aurora.1; sourceTree = "<group>"; };
 		2389C0F417549C93004F1F7F /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -389,6 +392,8 @@
 		2386EC5517BC21250013F27A /* AuroraUI */ = {
 			isa = PBXGroup;
 			children = (
+				238854EF17F1EF50006DEF37 /* RenderView.h */,
+				238854F017F1EF50006DEF37 /* RenderView.m */,
 				2386EC6117BC21260013F27A /* AppDelegate.h */,
 				2386EC6217BC21260013F27A /* AppDelegate.mm */,
 				23E7C15417BC2BCA006874AB /* RenderViewController.h */,
@@ -790,6 +795,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				233BE78317E4B8AB0059ACD1 /* ValueWheelView.m in Sources */,
+				238854F117F1EF50006DEF37 /* RenderView.m in Sources */,
 				2386EC5C17BC21260013F27A /* main.m in Sources */,
 				2386EC6317BC21260013F27A /* AppDelegate.mm in Sources */,
 				23E7C15617BC2BCA006874AB /* RenderViewController.m in Sources */,

@@ -16,7 +16,7 @@
 #include "ImfRgba.h"
 
 #include <string.h>
-#include <pthread.h>
+#include <tbb/mutex.h>
 
 namespace Aurora {
 	class OpenexrDisplay : FrontEndObject{
@@ -29,6 +29,9 @@ namespace Aurora {
 		void draw(int numLines);		
         void addMetadata(const std::string &key, const std::string &value);
         
+        void clear();
+        void resize(int width, int height);
+        
         int height() const;
         int width() const;
         
@@ -37,7 +40,7 @@ namespace Aurora {
         
         const std::string filename() const;
         
-        void *copy();
+        char *copy();
 
 	private:
         int m_width;
@@ -47,6 +50,7 @@ namespace Aurora {
         std::vector<std::vector < int > > m_multisample_buffer;
         StringMap m_metadata;
 		std::string m_filename;
+        tbb::mutex m_copy_mutex;
 	};
 }
 

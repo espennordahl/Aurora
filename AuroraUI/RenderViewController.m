@@ -7,6 +7,7 @@
 //
 
 #import "RenderViewController.h"
+#import "RenderView.h"
 
 @interface RenderViewController ()
 
@@ -22,20 +23,21 @@
     return self;
 }
 
+//
+//-(void)awakeFromNib
+//{
+//    [self.view setWantsLayer:YES];
+//    [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];    
+//}
+
 -(void)imageDidChange:(NSImage*)image
 {
     NSLog(@"Received image update. Updating view!");
     NSLog(@"Image size: %f %f", image.size.width, image.size.height);
-    NSImageView *view = (NSImageView *)self.view;
-
-        // ugly hack to force refresh
-    [view setImageFrameStyle:NSImageFramePhoto];
+    RenderView* view = (RenderView*)self.view;
     view.image = image;
-    CGRect frame = view.frame;
-    view.frame = CGRectMake(1, 2, 3, 4);
-    view.frame = frame;
-    [view setImageFrameStyle:NSImageFrameGrayBezel];
-    [view setNeedsDisplay];
+    self.view = view;
+    [self.view setNeedsDisplay:YES];
 }
 
 @end

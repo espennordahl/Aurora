@@ -17,7 +17,7 @@ public:
     {};
     
     void imageDidUpdate(){
-        [delegate imageDidUpdate];
+        [delegate performSelectorOnMainThread:@selector(imageDidUpdate:) withObject:Nil waitUntilDone:NO];
     }
     
     AppDelegate *delegate;
@@ -36,13 +36,26 @@ public:
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [self.renderViewController.view addObserver:self forKeyPath:@"frame" options:Nil context:Nil];
     [self _setupSession];
     m_session->start();
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self.renderViewController.view) {
+        if ([keyPath isEqualToString:@"frame"]) {
+            m_session->setResolution(self.renderViewController.view.frame.size.width, self.renderViewController.view.frame.size.height);
+        }
+    }
+}
+
+
+
 -(void)_setupSession
 {
     m_session = new SessionBridge("/Users/espennordahl/Documents/Aurora/pyAurora/tmp.asc");
+    m_session->setResolution(self.renderViewController.view.frame.size.width, self.renderViewController.view.frame.size.height);
     m_session->delegate = self;
 }
 
@@ -52,7 +65,7 @@ public:
     m_session->start();
 }
 
--(void)imageDidUpdate
+-(void)imageDidUpdate:(NSNotification*)notification
 {
     void *pixeldata = m_session->imageFile();
     int width = m_session->width();

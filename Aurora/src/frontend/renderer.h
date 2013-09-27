@@ -36,6 +36,8 @@ namespace Aurora{
 		void setDelegate(Session *delegate);
 
         void stop();
+        void setResolution(int width, int height);
+        bool isRunning();
         
 		Camera *renderCam;
 		std::vector<std::tr1::shared_ptr<AuroraObject> > objects;
@@ -63,6 +65,9 @@ namespace Aurora{
         tbb::atomic<long> m_numrays;
         double m_rayspeed;
         Session *m_delegate;
+        
+        int m_widthOverride;
+        int m_heightOverride;
 	};
 }
 

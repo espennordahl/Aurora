@@ -43,7 +43,7 @@ namespace Aurora {
         
         const std::vector<ObjectPtr> &objects() const;
         
-        void *imageFile();
+        char *imageFile();
         
         virtual void imageDidUpdate() = 0;
         
