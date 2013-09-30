@@ -46,7 +46,8 @@ namespace Aurora {
         int m_width;
         int m_height;
         Imf::Array2D<Imf::Rgba> m_pixel_buffer;
-        Imf::Array2D<Imf::Rgba> m_copied_buffer;
+        bool m_hasBuffer;
+        u_char *m_copied_buffer;
         std::vector<std::vector < int > > m_multisample_buffer;
         StringMap m_metadata;
 		std::string m_filename;

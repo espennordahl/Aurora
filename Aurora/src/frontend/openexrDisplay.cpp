@@ -24,7 +24,9 @@ using namespace Aurora;
 OpenexrDisplay::OpenexrDisplay(int width, int height, std::string file, RenderEnvironment * renderEnv) :
 FrontEndObject("Display:" + file, renderEnv),
 m_width(width),
-m_height(height){
+m_height(height),
+m_hasBuffer(false)
+{
 	m_filename = file;
     resize(width, height);
     m_metadata["renderer"] = std::string("Aurora v") + VERSION;
@@ -93,8 +95,12 @@ void OpenexrDisplay::clear(){
 void OpenexrDisplay::resize(int width, int height){
     m_copy_mutex.lock();
     
-    m_pixel_buffer.resizeErase(height, width);
+    if(m_hasBuffer){
+        delete[] m_copied_buffer;
+        m_hasBuffer = false;
+    }
     
+    m_pixel_buffer.resizeErase(height, width);
     for (int i=0; i<m_multisample_buffer.size(); ++i) {
         m_multisample_buffer[i].clear();
     }
@@ -166,8 +172,11 @@ const std::string OpenexrDisplay::filename() const{
 char *OpenexrDisplay::copy(){
     m_copy_mutex.lock();
     
-    u_char *buffer = new u_char[m_height*m_width*4];
-    u_char *channel = buffer;
+    if(!m_hasBuffer){
+        m_copied_buffer = new u_char[m_height*m_width*4];
+        m_hasBuffer = true;
+    }
+    u_char *channel = m_copied_buffer;
 	
     for (int i=0; i<m_height; i++) {
 		for (int j=0; j<m_width; j++) {
@@ -185,5 +194,5 @@ char *OpenexrDisplay::copy(){
     
     m_copy_mutex.unlock();
 
-    return (char*)buffer;
+    return (char*)m_copied_buffer;
 }

@@ -17,6 +17,7 @@ namespace Aurora {
 	class RenderableGeometry {
 	public:
 		int attributes;
+        RenderableGeometry(){};
 		RenderableGeometry( int _attributes ):attributes(_attributes){ };
 		
 		virtual BBox worldBound() const = 0;

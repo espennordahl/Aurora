@@ -15,7 +15,8 @@
 
 namespace Aurora {
 	class RenderableTriangle : public RenderableGeometry {
-	public:		
+	public:
+        RenderableTriangle(){};
 		RenderableTriangle( const Point &p1, const Point &p2, const Point &p3, const Vector &n1, const Vector &n2, const Vector &n3, int _attributes );
 
 		BBox worldBound() const;
