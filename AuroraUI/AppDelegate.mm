@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import "LightEditViewController.h"
+
 #include "session.h"
 
 class SessionBridge : public Aurora::Session{
@@ -26,18 +28,20 @@ public:
 @interface AppDelegate ()
 
 @property SessionBridge *m_session;
+@property LightEditViewController *m_lightEditController;
 
 @end
 
 @implementation AppDelegate
 
 @synthesize m_session;
-@synthesize wheel = _wheel;
+@synthesize m_lightEditController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [self.renderViewController.view addObserver:self forKeyPath:@"frame" options:Nil context:Nil];
     [self _setupSession];
+    [self _setupLightEdit];
     m_session->start();
 }
 
@@ -50,7 +54,11 @@ public:
     }
 }
 
-
+-(void)_setupLightEdit
+{
+    m_lightEditController = [[LightEditViewController alloc] initWithSession:m_session];
+    [self.renderViewController.view addSubview:m_lightEditController.view];
+}
 
 -(void)_setupSession
 {
@@ -98,26 +106,6 @@ public:
     NSImage *render = [[NSImage alloc] initWithCGImage:imageRef size:NSZeroSize];
     
     [self.renderViewController imageDidChange:render];
-}
-
--(void)setWheel:(ValueWheelView *)wheel
-{
-    [_wheel removeTarget:self];
-    [wheel setTarget:self];
-    _wheel = wheel;
-}
-
--(ValueWheelView*)wheel
-{
-    return _wheel;
-}
-
--(void)valueChanged:(NSNotification*)notification
-{
-    NSLog(@"Value changed: %f", self.wheel.floatValue);
-    m_session->stop();
-    m_session->addAttributeChange(Aurora::AttributeChange("pCubeShape1", "abc", self.wheel.floatValue, Aurora::AttributeChange::kShaderChange));
-    m_session->start();
 }
 
 @end

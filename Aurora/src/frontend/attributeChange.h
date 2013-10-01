@@ -23,7 +23,8 @@ namespace Aurora {
         
         enum ObjectType{
             kShaderChange,
-            kShapeChange
+            kShapeChange,
+            kLightChange
         };
     
         AttributeChange(const std::string &objectName, const std::string &attributeName, float floatValue, ObjectType objecttype);

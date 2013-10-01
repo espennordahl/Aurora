@@ -49,7 +49,6 @@ SquareLight::SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transf
     m_tri2 = RenderableTriangle(p3, p2, p4, up, up, up, 2);
     
     m_sampler.init_faure();
-    m_intensity = powf(2,exposure);
 }
 
 void SquareLight::makeRenderable(std::vector<RenderableTriangle> &renderable, AttributeState *attrs, int index){
@@ -73,7 +72,7 @@ void SquareLight::makeRenderable(std::vector<RenderableTriangle> &renderable, At
 }
 
 Color SquareLight::emission(){
-    return color * powf(2,exposure);
+    return color * powf(2,m_exposure);
 }
 
 std::tr1::shared_ptr<Shape> SquareLight::shape(){

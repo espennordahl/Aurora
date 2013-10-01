@@ -62,6 +62,7 @@ void Renderer::setResolution(int width, int height){
 
 void Renderer::render(){
 
+    assert(m_rendering == false);
     m_stopped = false;
     m_rendering = true;
     
@@ -105,11 +106,7 @@ void Renderer::parseSceneDescription(){
     parser.parseScene(NULL);
     objects = parser.getObjects();
     lights = parser.getLights();
-    
-    for (int i=0; i<objects.size(); i++) {
-        m_delegate->addObject(objects[i]);
-    }
-    
+        
 	LOG_INFO("Done parsing scene description.");	
     LOG_INFO("*************************************\n");
     

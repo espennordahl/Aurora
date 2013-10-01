@@ -26,8 +26,18 @@ Light::Light( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Tr
 	objectToWorld(o2w),
 	cameraToWorld(c2w),
 	worldToCamera(w2c),
-	exposure(_exposure), 
 	color(_color)
 {
-	
+	setExposure(_exposure);
+}
+
+void Light::applyAttributeChange(const AttributeChange &change){
+    switch (change.objectType()) {
+        case AttributeChange::kLightChange:
+            assert(change.attributeName() == "exposure");
+            setExposure(change.floatValue());
+            break;
+        default:
+            assert(false);
+    }
 }

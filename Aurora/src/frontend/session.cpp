@@ -62,18 +62,6 @@ void Session::stop(){
     tbb::task::spawn_root_and_wait(task);
 }
 
-void Session::addObject(ObjectPtr object){
-    m_objects.push_back(object);
-}
-
-void Session::removeObject(ObjectPtr object){
-    
-}
-
-void Session::objectChanged(ObjectPtr object, ChangeType change){
-    
-}
-
 void Session::setResolution(int width, int height){
     bool running = m_renderer.isRunning();
     if (running) {
@@ -85,8 +73,13 @@ void Session::setResolution(int width, int height){
     }
 }
 
+const std::vector<Light*> &Session::lights() const{
+    return m_renderer.lights;
+}
+
+
 const std::vector<ObjectPtr> &Session::objects() const{
-    return m_objects;
+    return m_renderer.objects;
 }
 
 char *Session::imageFile(){
@@ -103,27 +96,54 @@ int Session::height(){
 
 void Session::addAttributeChange(const AttributeChange &change)
 {
-    m_changeMutex.lock();
+    bool running = m_renderer.isRunning();
+    if (running) {
+        stop();
+    }
     
+    m_changeMutex.lock();
     m_changes.push_back(change);
-
     m_changeMutex.unlock();
+
+    if (running) {
+        start();
+    }
 }
 
 void Session::applyAttributeChanges()
 {
     m_changeMutex.lock();
     
+    std::vector<Aurora::ObjectPtr> objects = this->objects();
+    std::vector<Aurora::Light*> lights = this->lights();
+    
     for (int i=0; i<m_changes.size(); ++i) {
         bool foundObject = false;
-        for (int j=0; j<m_objects.size(); ++j) {
-            if (m_objects[j]->name() == m_changes[i].objectName()) {
+        
+        for (int j=0; j<objects.size(); ++j) {
+            if (objects[j]->name() == m_changes[i].objectName()) {
                 foundObject = true;
-                m_objects[j]->applyAttributeChange(m_changes[i]);
+                objects[j]->applyAttributeChange(m_changes[i]);
+                break;
             }
         }
+        
+        if (foundObject) {
+            continue;
+        }
+
+        for (int l=0; l<lights.size(); ++l) {
+            if (lights[l]->name() == m_changes[i].objectName()) {
+                foundObject = true;
+                lights[l]->applyAttributeChange(m_changes[i]);
+                break;
+            }
+        }
+        
         assert(foundObject);
     }
+    
+    
     
     m_changes.clear();
     

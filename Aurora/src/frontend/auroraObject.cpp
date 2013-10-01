@@ -55,6 +55,6 @@ void AuroraObject::applyAttributeChange(const AttributeChange &change){
             m_shape->applyAttributeChange(change);
             break;
         default:
-            break;
+            assert(false);
     }
 }

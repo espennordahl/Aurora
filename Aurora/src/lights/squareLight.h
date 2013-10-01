@@ -46,7 +46,6 @@ namespace Aurora {
         Vector lightN;
         Halton_sampler m_sampler;
         Point pCam[4];
-        float m_intensity;
         RenderableTriangle m_tri1;
         RenderableTriangle m_tri2;
         
