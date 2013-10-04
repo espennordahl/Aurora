@@ -15,14 +15,36 @@
 class SessionBridge : public Aurora::Session{
 public:
     SessionBridge(const std::string &scenefile):
-    Aurora::Session(scenefile)
+    Aurora::Session(scenefile),
+    m_updateCount(0)
     {};
     
     void imageDidUpdate(){
         [delegate performSelectorOnMainThread:@selector(imageDidUpdate:) withObject:Nil waitUntilDone:NO];
     }
+
+    void start(){
+        m_updateCount = 0;
+        Session::start();
+    }
+    
+    char *imageFile(){
+        ++m_updateCount;
+        if (shouldReturnThumbnail()) {
+            return Session::proxyFile((4 - m_updateCount)*2);
+        } else {
+            return Session::imageFile();
+        }
+    }
     
     AppDelegate *delegate;
+
+private:
+    int m_updateCount;
+    
+    bool shouldReturnThumbnail(){
+        return m_updateCount < 4;
+    }
 };
 
 @interface AppDelegate ()
@@ -85,8 +107,8 @@ public:
                                                               NULL);
     
     int bitsPerComponent = 8;
-    int bitsPerPixel = 4*8;
-    int bytesPerRow = 4 * 8 * width / 8;
+    int bitsPerPixel = 4*bitsPerComponent;
+    int bytesPerRow = bitsPerPixel * width / 8;
 
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
     CGBitmapInfo bitmapInfo = kCGImageAlphaLast;

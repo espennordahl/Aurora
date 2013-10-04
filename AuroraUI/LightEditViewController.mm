@@ -29,14 +29,17 @@
     if(self = [super init]){
         m_light = Nil;
         
-        self.view = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 1024, 1024)];
+        self.view = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 200, 250)];
+        self.view.wantsLayer = YES;
+        self.view.layer.backgroundColor = [NSColor lightGrayColor].CGColor;
         
-        m_nameView = [[ItemPickerView alloc] initWithFrame:CGRectMake(0, 0, 512, 100)];
-        [self.view addSubview:m_nameView];
-        
-        m_exposureView = [[ValueWheelView alloc] initWithFrame:CGRectMake(0, 120, 256, 256)];
+        m_exposureView = [[ValueWheelView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         [m_exposureView setTarget:self];
         [self.view addSubview:m_exposureView];
+
+        m_nameView = [[ItemPickerView alloc] initWithFrame:CGRectMake(0, 200, 200, 50)];
+        m_nameView.delegate = self;
+        [self.view addSubview:m_nameView];
         
         m_session = session;
 

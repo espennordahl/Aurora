@@ -33,6 +33,8 @@
     [self _drawBackground];
     [self _drawText];
     [self _drawHandle];
+    [self _drawUpButton];
+    [self _drawDownButton];
 }
 
 -(void)_drawBackground
@@ -62,6 +64,34 @@
     [handlePath moveToPoint:innerPoint];
     [handlePath lineToPoint:outerPoint];
     [handlePath stroke];
+}
+
+-(void)_drawUpButton
+{
+    NSBezierPath *buttonPath = [NSBezierPath bezierPathWithOvalInRect:[self _upButtonRect]];
+    [buttonPath fill];
+}
+
+-(void)_drawDownButton
+{
+    NSBezierPath *buttonPath = [NSBezierPath bezierPathWithOvalInRect:[self _downButtonRect]];
+    [buttonPath fill];
+}
+
+-(CGRect)_downButtonRect
+{
+    CGPoint centerPoint = CGPointMake(self.frame.size.width/2., self.frame.size.height/2.);
+    float buttonSize = 20;
+    
+    return CGRectMake(centerPoint.x - buttonSize/2, centerPoint.y - 15 - buttonSize, buttonSize, buttonSize);
+}
+
+-(CGRect)_upButtonRect
+{
+    CGPoint centerPoint = CGPointMake(self.frame.size.width/2., self.frame.size.height/2.);
+    float buttonSize = 20;
+    
+    return CGRectMake(centerPoint.x - buttonSize/2, centerPoint.y + 15, buttonSize, buttonSize);
 }
 
 -(void)setTarget:(id)target
@@ -102,6 +132,12 @@
 
 -(float)_valueForMousePos:(CGPoint)mousePos
 {
+    if (NSPointInRect(mousePos, [self _downButtonRect])) {
+        return self.floatValue - 1;
+    } else if(NSPointInRect(mousePos, [self _upButtonRect])){
+        return self.floatValue + 1;
+    }
+    
     CGPoint center = CGPointMake(self.frame.size.width/2., self.frame.size.height/2.);
     float angle = atan2f(mousePos.x - center.x, mousePos.y - center.y) + M_PI;
     int integerValue = floor(self.floatValue);

@@ -94,6 +94,10 @@ int Session::height(){
     return m_renderer.displayDriver->height();
 }
 
+char *Session::proxyFile(int level){
+    return m_renderer.displayDriver->proxy(level);
+}
+
 void Session::addAttributeChange(const AttributeChange &change)
 {
     bool running = m_renderer.isRunning();

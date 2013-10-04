@@ -17,6 +17,8 @@
 
 @interface ItemPickerView : NSView
 
+@property id <ItemPickerDelegate> delegate;
+
 @property NSString *name;
 @property NSColor *textColor;
 @property NSColor *glowColor;

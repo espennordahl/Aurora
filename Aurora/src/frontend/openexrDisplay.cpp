@@ -80,6 +80,8 @@ void OpenexrDisplay::getPixel(int x, int y, Color *col, float *alpha){
 }
 
 void OpenexrDisplay::clear(){
+    m_copy_mutex.lock();
+
     for (int i=0; i<m_height; i++) {
 		for (int j=0; j<m_width; j++) {
 			Imf::Rgba &p = m_pixel_buffer[i][j];
@@ -90,6 +92,7 @@ void OpenexrDisplay::clear(){
             m_multisample_buffer[i][j] = 0;
 		}
 	}
+    m_copy_mutex.unlock();
 }
 
 void OpenexrDisplay::resize(int width, int height){
@@ -194,5 +197,48 @@ char *OpenexrDisplay::copy(){
     
     m_copy_mutex.unlock();
 
+    return (char*)m_copied_buffer;
+}
+
+char *OpenexrDisplay::proxy(int level){
+    m_copy_mutex.lock();
+    
+    if(!m_hasBuffer){
+        m_copied_buffer = new u_char[m_height*m_width*4];
+        m_hasBuffer = true;
+    }
+    u_char *channel = m_copied_buffer;
+	
+    for (int i=0; i<m_height; i++) {
+		for (int j=0; j<m_width; j++) {
+            int y = i - i % level;
+            int x = j - j % level;
+            float r = 0;
+            float g = 0;
+            float b = 0;
+            float a = 0;
+            float invLevelSquared = 1. / (level * level);
+            for (int lx=0; lx < level; ++lx) {
+                for (int ly=0; ly < level; ++ly) {
+                    Imf::Rgba &p = m_pixel_buffer[y + ly][x + lx];
+                    r += p.r * invLevelSquared;
+                    g += p.g * invLevelSquared;
+                    b += p.b * invLevelSquared;
+                    a += p.a * invLevelSquared;
+                }
+            }
+            *channel = 255 * pow(MIN(r, 1.), 0.45454545);
+            ++channel;
+            *channel = 255 * pow(MIN(g, 1.), 0.45454545);
+            ++channel;
+            *channel = 255 * pow(MIN(b, 1.), 0.45454545);
+            ++channel;
+            *channel = 255 * MIN(a, 1.);
+            ++channel;
+		}
+	}
+    
+    m_copy_mutex.unlock();
+    
     return (char*)m_copied_buffer;
 }

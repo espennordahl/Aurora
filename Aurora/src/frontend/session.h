@@ -23,7 +23,7 @@ namespace Aurora {
         Session();
         Session(const std::string scenefile);
         
-        void start();
+        virtual void start();
         void stop();
         
         enum ChangeType{
@@ -35,11 +35,13 @@ namespace Aurora {
         
         int width();
         int height();
+
         
         const std::vector<ObjectPtr> &objects() const;
         const std::vector<Light*> &lights() const;
         
-        char *imageFile();
+        virtual char *imageFile();
+        char *proxyFile(int level);
         
         virtual void imageDidUpdate() = 0;
         

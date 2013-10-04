@@ -41,6 +41,7 @@ namespace Aurora {
         const std::string filename() const;
         
         char *copy();
+        char *proxy(int level);
 
 	private:
         int m_width;

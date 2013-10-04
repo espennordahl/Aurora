@@ -436,7 +436,7 @@ public:
     m_driver(driver), m_height(height), m_delegate(delegate){}
     void operator()()
     {
-        m_driver->draw(m_height);
+//        m_driver->draw(m_height);
         m_delegate->imageDidUpdate();
     }
 };
@@ -492,7 +492,7 @@ void Renderer::renderImageTBB(){
                           );
         
         time(&currentTime);
-        if(!i || difftime(currentTime, drawTime) > DRAW_DELAY) {
+        if((!i || difftime(currentTime, drawTime) > DRAW_DELAY) && !m_stopped) {
             drawtask.run(DrawTask(displayDriver, height, m_delegate));
             time(&drawTime);
         }
