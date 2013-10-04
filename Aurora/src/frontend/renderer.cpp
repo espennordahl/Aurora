@@ -189,9 +189,10 @@ public:
                       int sample_index,
                       RenderEnvironment *render_environment,
                       OpenexrDisplay *display,
-                      tbb::atomic<long> *raycount):
+                      tbb::atomic<long> *raycount,
+                      bool *stopped):
     m_width(width), m_height(height), m_num_samples(num_samples), m_sample_index(sample_index),
-    m_render_environment(render_environment), m_display(display), m_raycount(raycount)
+    m_render_environment(render_environment), m_display(display), m_raycount(raycount), m_stopped(stopped)
     {}
     
     void operator()(const tbb::blocked_range<size_t>& r) const{
@@ -213,6 +214,9 @@ public:
                 
                     // then find all the next vertices of the path
                 for (int i=0; i < m_num_samples; i++) {
+                    if (*m_stopped) {
+                        return;
+                    }
                     float continueProbability = 1.f;
                     Lo = Color(0.f);
                     Sample3D currentSample = sample;
@@ -225,6 +229,9 @@ public:
                     
                     int trueBounces = 0;
                     for (int bounces = 0; ; ++bounces) {
+                        if (*m_stopped) {
+                            return;
+                        }
                         AttributeState *attrs = &m_render_environment->attributeState[isect.attributesIndex];
                         isect.shdGeo.cameraToObject = attrs->cameraToObject;
                         isect.shdGeo.objectToCamera = attrs->objectToCamera;
@@ -424,6 +431,7 @@ private:
     RenderEnvironment *m_render_environment;
     OpenexrDisplay *m_display;
     tbb::atomic<long> *m_raycount;
+    bool *m_stopped;
 };
 
 class DrawTask
@@ -471,6 +479,8 @@ void Renderer::renderImageTBB(){
     tbb::task_group drawtask;
     time_t drawTime;
     time(&drawTime);
+    int numDraws = 0;
+    int lightSamples = 1;
     for(int i=0; i<multisamples; ++i){
         if (m_stopped) {
             break;
@@ -483,18 +493,29 @@ void Renderer::renderImageTBB(){
         tbb::parallel_for( tbb::blocked_range<size_t>(0,width*height),
                           IntegrateParallel(width,
                                             height,
-                                            (*renderEnv.globals)[LightSamples],
+                                            lightSamples,
                                             i,
                                             &renderEnv,
                                             displayDriver,
-                                            &m_numrays
+                                            &m_numrays,
+                                            &m_stopped
                                             )
                           );
         
         time(&currentTime);
-        if((!i || difftime(currentTime, drawTime) > DRAW_DELAY) && !m_stopped) {
+        int timeSinceLastDraw = difftime(currentTime, drawTime);
+        if((!i || timeSinceLastDraw > DRAW_DELAY) && !m_stopped) {
             drawtask.run(DrawTask(displayDriver, height, m_delegate));
             time(&drawTime);
+            ++numDraws;
+            if (numDraws > 1) {
+                if (timeSinceLastDraw < 3) {
+                    lightSamples = 4;
+                }
+                if (numDraws > 4) {
+                    lightSamples = (*renderEnv.globals)[LightSamples];
+                }
+            }
         }
         
         LOG_INFO("Render progress: " << 100 * (i+1)/(float)multisamples << "%");

@@ -112,6 +112,7 @@
         for (id <ValueViewDelegate> target in m_targets) {
             [target valueChanged:self];
         }
+        [self setNeedsDisplay:YES];
     }
 }
 

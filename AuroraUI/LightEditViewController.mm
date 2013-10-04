@@ -14,6 +14,7 @@
 @property ItemPickerView *m_nameView;
 @property Aurora::Session *m_session;
 @property Aurora::Light *m_light;
+@property BOOL m_selecting;
 
 @end
 
@@ -23,6 +24,7 @@
 @synthesize m_exposureView;
 @synthesize m_light;
 @synthesize m_nameView;
+@synthesize m_selecting;
 
 -(id)initWithSession:(Aurora::Session*)session
 {
@@ -54,9 +56,13 @@
 
 -(void)selectLight:(Aurora::Light *)light
 {
+    m_selecting = YES;
+    
     m_light = light;
     m_nameView.name = [NSString stringWithUTF8String:light->name().c_str()];
     m_exposureView.floatValue = m_light->exposure();
+
+    m_selecting = NO;
 }
 
 -(void)nextItemSelected:(id)sender
@@ -79,15 +85,18 @@
     
     for (int i=0; i<lights.size(); ++i) {
         if (m_light == lights[i]) {
-            [self selectLight:lights[(i+offset) % (lights.size()-1)]];
+            [self selectLight:lights[(i+offset) % (lights.size())]];
+            break;
         }
     }
 }
 
 -(void)valueChanged:(NSNotification*)notification
 {
-    NSLog(@"Value changed: %f", m_exposureView.floatValue);
-    m_session->addAttributeChange(Aurora::AttributeChange(m_light->name(), "exposure", m_exposureView.floatValue, Aurora::AttributeChange::kLightChange));
+    if (!m_selecting) {
+        NSLog(@"Value changed: %f", m_exposureView.floatValue);
+        m_session->addAttributeChange(Aurora::AttributeChange(m_light->name(), "exposure", m_exposureView.floatValue, Aurora::AttributeChange::kLightChange));
+    }
 }
 
 

@@ -10,6 +10,8 @@
 
 @implementation ItemPickerView
 
+@synthesize name = _name;
+
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
@@ -66,6 +68,17 @@
     } else if (NSPointInRect(localPoint, [self _rightButtonRect])) {
         [self.delegate nextItemSelected:self];
     }
+}
+
+-(void)setName:(NSString *)name
+{
+    _name = name;
+    [self setNeedsDisplay:YES];
+}
+
+-(NSString*)name
+{
+    return _name;
 }
 
 @end
