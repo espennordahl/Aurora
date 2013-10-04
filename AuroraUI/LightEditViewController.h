@@ -16,7 +16,7 @@
 
 @interface LightEditViewController : NSViewController <ItemPickerDelegate, ValueViewDelegate>
 
--(id)initWithSession:(Aurora::Session*)session;
+@property Aurora::Session *session;
 
 -(void)selectLight:(Aurora::Light*)light;
 

@@ -510,7 +510,7 @@ void Renderer::renderImageTBB(){
             ++numDraws;
             if (numDraws > 1) {
                 if (timeSinceLastDraw < 3) {
-                    lightSamples = 4;
+                    lightSamples = MAX(4, (*renderEnv.globals)[LightSamples]);
                 }
                 if (numDraws > 4) {
                     lightSamples = (*renderEnv.globals)[LightSamples];

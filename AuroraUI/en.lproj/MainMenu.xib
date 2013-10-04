@@ -652,30 +652,36 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="602" height="447"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-            <view key="contentView" wantsLayer="YES" id="372" userLabel="renderView" customClass="RenderView">
+            <view key="contentView" wantsLayer="YES" id="372" userLabel="background view">
                 <rect key="frame" x="0.0" y="0.0" width="602" height="447"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hX3-pc-WTd">
-                        <rect key="frame" x="14" y="7" width="82" height="32"/>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Prh-ZF-9vA" userLabel="renderview" customClass="RenderView">
+                        <rect key="frame" x="0.0" y="200" width="602" height="247"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ec0-u0-5IV">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="buttonPressed:" target="494" id="jbq-Ik-jWG"/>
-                        </connections>
-                    </button>
+                    </customView>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="WQc-SZ-0b6" userLabel="lighteditview">
+                        <rect key="frame" x="0.0" y="0.0" width="602" height="200"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="200" id="WA2-VF-jVk"/>
+                        </constraints>
+                    </customView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="hX3-pc-WTd" secondAttribute="bottom" constant="14" id="Raq-Ht-r3g"/>
-                    <constraint firstItem="hX3-pc-WTd" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="20" id="qUs-QX-AlI"/>
+                    <constraint firstAttribute="bottom" secondItem="WQc-SZ-0b6" secondAttribute="bottom" id="HuQ-sE-QPd"/>
+                    <constraint firstItem="Prh-ZF-9vA" firstAttribute="top" secondItem="372" secondAttribute="top" id="HzH-85-9om"/>
+                    <constraint firstItem="Prh-ZF-9vA" firstAttribute="leading" secondItem="372" secondAttribute="leading" id="IMw-dz-L5a"/>
+                    <constraint firstItem="WQc-SZ-0b6" firstAttribute="top" secondItem="Prh-ZF-9vA" secondAttribute="bottom" id="T9X-mg-kiT"/>
+                    <constraint firstAttribute="trailing" secondItem="Prh-ZF-9vA" secondAttribute="trailing" id="f3v-YT-znB"/>
+                    <constraint firstAttribute="trailing" secondItem="WQc-SZ-0b6" secondAttribute="trailing" id="l8A-p3-hEr"/>
+                    <constraint firstItem="WQc-SZ-0b6" firstAttribute="leading" secondItem="372" secondAttribute="leading" id="xYK-9K-9Qf"/>
                 </constraints>
             </view>
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
+                <outlet property="lightEditController" destination="Hoa-h3-b30" id="J4D-YD-RqQ"/>
                 <outlet property="renderViewController" destination="847" id="856"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
@@ -683,7 +689,12 @@
         <customObject id="420" customClass="NSFontManager"/>
         <viewController id="847" customClass="RenderViewController">
             <connections>
-                <outlet property="view" destination="372" id="g7P-Au-P3H"/>
+                <outlet property="view" destination="Prh-ZF-9vA" id="ACP-mS-UYg"/>
+            </connections>
+        </viewController>
+        <viewController id="Hoa-h3-b30" userLabel="LightEdit View Controller" customClass="LightEditViewController">
+            <connections>
+                <outlet property="view" destination="WQc-SZ-0b6" id="qXQ-U8-E9h"/>
             </connections>
         </viewController>
     </objects>

@@ -12,46 +12,83 @@
 
 @property ValueWheelView *m_exposureView;
 @property ItemPickerView *m_nameView;
-@property Aurora::Session *m_session;
 @property Aurora::Light *m_light;
 @property BOOL m_selecting;
+@property NSSlider *m_rslider;
+@property NSSlider *m_gslider;
+@property NSSlider *m_bslider;
 
 @end
 
 @implementation LightEditViewController
 
-@synthesize m_session;
+@synthesize session = _session;
 @synthesize m_exposureView;
 @synthesize m_light;
 @synthesize m_nameView;
 @synthesize m_selecting;
+@synthesize m_rslider;
+@synthesize m_gslider;
+@synthesize m_bslider;
 
--(id)initWithSession:(Aurora::Session*)session
+-(void)awakeFromNib
 {
-    if(self = [super init]){
-        m_light = Nil;
-        
-        self.view = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 200, 250)];
-        self.view.wantsLayer = YES;
-        self.view.layer.backgroundColor = [NSColor lightGrayColor].CGColor;
-        
-        m_exposureView = [[ValueWheelView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-        [m_exposureView setTarget:self];
-        [self.view addSubview:m_exposureView];
-
-        m_nameView = [[ItemPickerView alloc] initWithFrame:CGRectMake(0, 200, 200, 50)];
-        m_nameView.delegate = self;
-        [self.view addSubview:m_nameView];
-        
-        m_session = session;
-
-        if (m_session->lights().size()) {
-            [self selectLight:m_session->lights()[0]];
-        }
-
-    }
+    m_light = Nil;
     
-    return self;
+    [self.view addObserver:self forKeyPath:@"frame" options:Nil context:Nil];
+    self.view.wantsLayer = YES;
+    self.view.layer.backgroundColor = [NSColor lightGrayColor].CGColor;
+    
+    m_exposureView = [[ValueWheelView alloc] init];
+    [m_exposureView setTarget:self];
+    [self.view addSubview:m_exposureView];
+
+    m_nameView = [[ItemPickerView alloc] init];
+    m_nameView.delegate = self;
+    [self.view addSubview:m_nameView];
+
+    m_rslider = [[NSSlider alloc] init];
+    m_rslider.minValue = 0;
+    m_rslider.maxValue = 1;
+    [m_rslider setTarget:self];
+    [m_rslider setAction:@selector(_rChanged:)];
+    [self.view addSubview:m_rslider];
+    
+    m_gslider = [[NSSlider alloc] init];
+    m_gslider.minValue = 0;
+    m_gslider.maxValue = 1;
+    [m_gslider setTarget:self];
+    [m_gslider setAction:@selector(_gChanged:)];
+    [self.view addSubview:m_gslider];
+    
+    m_bslider = [[NSSlider alloc] init];
+    m_bslider.minValue = 0;
+    m_bslider.maxValue = 1;
+    [m_bslider setTarget:self];
+    [m_bslider setAction:@selector(_bChanged:)];
+    [self.view addSubview:m_bslider];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self.view) {
+        if ([keyPath isEqualToString:@"frame"]) {
+            [self _resizeViews];
+        }
+    }
+}
+
+-(void)setSession:(Aurora::Session*)session
+{
+    _session = session;
+    if (self.session->lights().size()) {
+        [self selectLight:self.session->lights()[0]];
+    }
+}
+
+-(Aurora::Session*)session
+{
+    return _session;
 }
 
 -(void)selectLight:(Aurora::Light *)light
@@ -61,7 +98,11 @@
     m_light = light;
     m_nameView.name = [NSString stringWithUTF8String:light->name().c_str()];
     m_exposureView.floatValue = m_light->exposure();
-
+    
+    [m_rslider setFloatValue:m_light->color.r];
+    [m_gslider setFloatValue:m_light->color.g];
+    [m_bslider setFloatValue:m_light->color.b];
+    
     m_selecting = NO;
 }
 
@@ -77,7 +118,7 @@
 
 -(void)_selectLightWithOffset:(int)offset
 {
-    std::vector<Aurora::Light*> lights = m_session->lights();
+    std::vector<Aurora::Light*> lights = _session->lights();
     
     if (lights.size() == 1) {
         return;
@@ -95,9 +136,53 @@
 {
     if (!m_selecting) {
         NSLog(@"Value changed: %f", m_exposureView.floatValue);
-        m_session->addAttributeChange(Aurora::AttributeChange(m_light->name(), "exposure", m_exposureView.floatValue, Aurora::AttributeChange::kLightChange));
+        _session->addAttributeChange(Aurora::AttributeChange(m_light->name(), "exposure", m_exposureView.floatValue, Aurora::AttributeChange::kLightChange));
     }
 }
 
+-(void)_rChanged:(id)sender
+{
+    if (!m_selecting) {
+        _session->addAttributeChange(Aurora::AttributeChange(m_light->name(), "r", m_rslider.floatValue, Aurora::AttributeChange::kLightChange));
+    }
+
+}
+
+-(void)_gChanged:(id)sender
+{
+    if (!m_selecting) {
+        _session->addAttributeChange(Aurora::AttributeChange(m_light->name(), "g", m_gslider.floatValue, Aurora::AttributeChange::kLightChange));
+    }
+}
+
+-(void)_bChanged:(id)sender
+{
+    if (!m_selecting) {
+        _session->addAttributeChange(Aurora::AttributeChange(m_light->name(), "b", m_bslider.floatValue, Aurora::AttributeChange::kLightChange));
+    }
+}
+
+-(void)_resizeViews
+{
+    m_exposureView.frame = CGRectMake(self.view.frame.origin.x + 25,
+                                      self.view.frame.origin.y + 10,
+                                      MIN(150, self.view.frame.size.width),
+                                      MIN(150, self.view.frame.size.height));
+    
+    m_nameView.frame = CGRectMake(self.view.frame.origin.x,
+                                  self.view.frame.origin.y + m_exposureView.frame.size.height,
+                                  200,
+                                  self.view.frame.size.height - m_exposureView.frame.size.height);
+    
+    const float sliderErode = 25;
+    m_rslider.frame = CGRectMake(CGRectGetMaxX(m_exposureView.frame) + sliderErode,
+                                 2.5 * self.view.frame.size.height/4,
+                                 MIN(self.view.frame.size.width - m_exposureView.frame.size.width - sliderErode*2, 200),
+                                 50);
+    
+    m_gslider.frame = CGRectOffset(m_rslider.frame, 0, -self.view.frame.size.height/4);
+
+    m_bslider.frame = CGRectOffset(m_gslider.frame, 0, -self.view.frame.size.height/4);
+}
 
 @end

@@ -60,7 +60,10 @@ namespace Aurora {
         
             // TODO: Do we need this?
         LightType lightType;
-        
+    
+            // light color tint
+		Color color;
+
 	protected:
 		Transform *objectToCamera;
 		Transform *cameraToObject;
@@ -73,8 +76,6 @@ namespace Aurora {
 		float m_exposure;
         float m_intensity;
 
-            // light color tint
-		Color color;
             // TODO: Do we need this?
         int numSamples;
 	};

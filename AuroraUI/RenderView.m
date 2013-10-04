@@ -23,8 +23,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [[NSColor blackColor] setFill];
-    NSRectFill(dirtyRect);
     [self.image drawInRect:CGRectMake(0, 0, self.image.size.width, self.image.size.height)];
 }
 

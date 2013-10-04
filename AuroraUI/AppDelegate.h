@@ -9,15 +9,14 @@
 #import <Cocoa/Cocoa.h>
 
 #import "RenderViewController.h"
+#import "LightEditViewController.h"
 
-#import "ValueWheelView.h"
-
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet RenderViewController *renderViewController;
+@property (assign) IBOutlet LightEditViewController *lightEditController;
 
--(IBAction)buttonPressed:(id)sender;
 
 -(void)imageDidUpdate:(NSNotification*)notification;
 

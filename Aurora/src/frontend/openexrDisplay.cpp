@@ -220,7 +220,7 @@ char *OpenexrDisplay::proxy(int level){
             float invLevelSquared = 1. / (level * level);
             for (int lx=0; lx < level; ++lx) {
                 for (int ly=0; ly < level; ++ly) {
-                    Imf::Rgba &p = m_pixel_buffer[y + ly][x + lx];
+                    Imf::Rgba &p = m_pixel_buffer[MIN(y + ly, m_height-1)][MIN(x + lx, m_width-1)];
                     r += p.r * invLevelSquared;
                     g += p.g * invLevelSquared;
                     b += p.b * invLevelSquared;

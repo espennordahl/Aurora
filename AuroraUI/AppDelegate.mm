@@ -8,8 +8,6 @@
 
 #import "AppDelegate.h"
 
-#import "LightEditViewController.h"
-
 #include "session.h"
 
 class SessionBridge : public Aurora::Session{
@@ -50,18 +48,17 @@ private:
 @interface AppDelegate ()
 
 @property SessionBridge *m_session;
-@property LightEditViewController *m_lightEditController;
 
 @end
 
 @implementation AppDelegate
 
 @synthesize m_session;
-@synthesize m_lightEditController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [self.renderViewController.view addObserver:self forKeyPath:@"frame" options:Nil context:Nil];
+    self.window.delegate = self;
     [self _setupSession];
     [self _setupLightEdit];
     m_session->start();
@@ -78,8 +75,7 @@ private:
 
 -(void)_setupLightEdit
 {
-    m_lightEditController = [[LightEditViewController alloc] initWithSession:m_session];
-    [self.renderViewController.view addSubview:m_lightEditController.view];
+    self.lightEditController.session = m_session;
 }
 
 -(void)_setupSession
@@ -87,12 +83,6 @@ private:
     m_session = new SessionBridge("/Users/espennordahl/Documents/Aurora/pyAurora/tmp.asc");
     m_session->setResolution(self.renderViewController.view.frame.size.width, self.renderViewController.view.frame.size.height);
     m_session->delegate = self;
-}
-
--(IBAction)buttonPressed:(id)sender
-{
-    m_session->stop();
-    m_session->start();
 }
 
 -(void)imageDidUpdate:(NSNotification*)notification

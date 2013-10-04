@@ -45,10 +45,20 @@
 }
 
 -(void)_drawText
-{
+{    const float fontSize = self.frame.size.height*0.1;
+
     CGPoint centerPoint = CGPointMake(self.frame.size.width/2., self.frame.size.height/2.);
-    CGPoint drawPoint = CGPointMake(centerPoint.x-12, centerPoint.y-7);
-    [[NSString stringWithFormat:@"%.2f", self.floatValue] drawAtPoint:drawPoint withAttributes:Nil];
+    CGPoint drawPoint = CGPointMake(centerPoint.x-fontSize, centerPoint.y-fontSize*0.6);
+    
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setAlignment:NSCenterTextAlignment];
+    
+    NSFont *font = [NSFont boldSystemFontOfSize:fontSize];
+    
+    NSDictionary *attributes = @{NSParagraphStyleAttributeName: style,
+                                 NSFontAttributeName: font};
+    
+    [[NSString stringWithFormat:@"%.2f", self.floatValue] drawAtPoint:drawPoint withAttributes:attributes];
 }
 
 -(void)_drawHandle
@@ -81,17 +91,17 @@
 -(CGRect)_downButtonRect
 {
     CGPoint centerPoint = CGPointMake(self.frame.size.width/2., self.frame.size.height/2.);
-    float buttonSize = 20;
+    float buttonSize = self.frame.size.height*0.1;
     
-    return CGRectMake(centerPoint.x - buttonSize/2, centerPoint.y - 15 - buttonSize, buttonSize, buttonSize);
+    return CGRectMake(centerPoint.x - buttonSize/2, centerPoint.y - self.frame.size.height*0.1 - buttonSize, buttonSize, buttonSize);
 }
 
 -(CGRect)_upButtonRect
 {
     CGPoint centerPoint = CGPointMake(self.frame.size.width/2., self.frame.size.height/2.);
-    float buttonSize = 20;
+    float buttonSize = self.frame.size.height*0.1;
     
-    return CGRectMake(centerPoint.x - buttonSize/2, centerPoint.y + 15, buttonSize, buttonSize);
+    return CGRectMake(centerPoint.x - buttonSize/2, centerPoint.y + self.frame.size.height*0.1, buttonSize, buttonSize);
 }
 
 -(void)setTarget:(id)target

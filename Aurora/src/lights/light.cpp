@@ -32,12 +32,16 @@ Light::Light( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Tr
 }
 
 void Light::applyAttributeChange(const AttributeChange &change){
-    switch (change.objectType()) {
-        case AttributeChange::kLightChange:
-            assert(change.attributeName() == "exposure");
+    assert(change.objectType() == AttributeChange::kLightChange);
+    if(change.attributeName() == "exposure"){
             setExposure(change.floatValue());
-            break;
-        default:
-            assert(false);
+    } else if(change.attributeName() == "r"){
+        color.r = change.floatValue();
+    } else if(change.attributeName() == "g"){
+        color.g = change.floatValue();
+    } else if(change.attributeName() == "b"){
+        color.b = change.floatValue();
+    } else {
+        assert(false);
     }
 }
