@@ -14,6 +14,7 @@ Constant::Constant(std::string name, Color _col, RenderEnvironment *renderEnv):
 Brdf(name, renderEnv),
 col(_col)
 {
+    m_brdfType = ConstantBrdf;
 }
 
 void Constant::frameBegin(){}

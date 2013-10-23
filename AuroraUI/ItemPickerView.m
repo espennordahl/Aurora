@@ -31,7 +31,7 @@
     
     NSDictionary *attributes = @{NSParagraphStyleAttributeName: style,
                                  NSFontAttributeName: font};
-    [self.name drawInRect:CGRectMake(0, self.frame.size.height/2, self.frame.size.width, self.frame.size.height/2) withAttributes:attributes];
+    [self.name drawInRect:CGRectMake(0, self.frame.size.height/2-fontSize, self.frame.size.width, self.frame.size.height/2) withAttributes:attributes];
     
     NSBezierPath *rightButton = [NSBezierPath bezierPathWithOvalInRect:[self _rightButtonRect]];
     [rightButton fill];

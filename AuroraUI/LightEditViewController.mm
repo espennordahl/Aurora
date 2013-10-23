@@ -17,6 +17,7 @@
 @property NSSlider *m_rslider;
 @property NSSlider *m_gslider;
 @property NSSlider *m_bslider;
+@property NSView *m_backgroundView;
 
 @end
 
@@ -30,6 +31,7 @@
 @synthesize m_rslider;
 @synthesize m_gslider;
 @synthesize m_bslider;
+@synthesize m_backgroundView;
 
 -(void)awakeFromNib
 {
@@ -37,7 +39,12 @@
     
     [self.view addObserver:self forKeyPath:@"frame" options:Nil context:Nil];
     self.view.wantsLayer = YES;
-    self.view.layer.backgroundColor = [NSColor lightGrayColor].CGColor;
+    self.view.layer.backgroundColor = [NSColor blackColor].CGColor;
+    
+    m_backgroundView = [[NSView alloc] init];
+    m_backgroundView.wantsLayer = YES;
+    m_backgroundView.layer.backgroundColor = [NSColor grayColor].CGColor;
+    [self.view addSubview:m_backgroundView];
     
     m_exposureView = [[ValueWheelView alloc] init];
     [m_exposureView setTarget:self];
@@ -164,6 +171,11 @@
 
 -(void)_resizeViews
 {
+    m_backgroundView.frame = CGRectMake(self.view.frame.origin.x,
+                                        self.view.frame.origin.y,
+                                        400,
+                                        self.view.frame.size.height);
+    
     m_exposureView.frame = CGRectMake(self.view.frame.origin.x + 25,
                                       self.view.frame.origin.y + 10,
                                       MIN(150, self.view.frame.size.width),
@@ -176,13 +188,13 @@
     
     const float sliderErode = 25;
     m_rslider.frame = CGRectMake(CGRectGetMaxX(m_exposureView.frame) + sliderErode,
-                                 2.5 * self.view.frame.size.height/4,
+                                 1 * self.view.frame.size.height/2,
                                  MIN(self.view.frame.size.width - m_exposureView.frame.size.width - sliderErode*2, 200),
                                  50);
     
-    m_gslider.frame = CGRectOffset(m_rslider.frame, 0, -self.view.frame.size.height/4);
+    m_gslider.frame = CGRectOffset(m_rslider.frame, 0, -self.view.frame.size.height/5);
 
-    m_bslider.frame = CGRectOffset(m_gslider.frame, 0, -self.view.frame.size.height/4);
+    m_bslider.frame = CGRectOffset(m_gslider.frame, 0, -self.view.frame.size.height/5);
 }
 
 @end

@@ -260,6 +260,7 @@ public:
                         BrdfState brdf_state = attrs->material->getBrdf(Vn, Nn, isect.shdGeo, mattePath);
                         currentBrdf = brdf_state.brdf;
                         bxdfParameters *brdf_parameters = brdf_state.parameters;
+                        assert(brdf_parameters != NULL);
                         
                         if (bounces < (*m_render_environment->globals)[MaxDepth]) {
                             int numLights = (int)m_render_environment->lights.size();
@@ -273,7 +274,7 @@ public:
                             
                             if(numLights){
                                 Light* currentLight = m_render_environment->lights[lightIndices[rand() % numLights]];
-                                    // For diffuse samples we don't need MIS
+                                    // For diffuse lobes we only do light sampling
                                 if (currentBrdf->m_brdfType == MatteBrdf) {
                                     
                                     Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
@@ -290,8 +291,8 @@ public:
                                     }
                                 }
                                 
-                                    // Specular lobes MIS
-                                else {
+                                    // For specular lobes we do MIS
+                                else if (currentBrdf->m_brdfType == SpecBrdf){
                                     
                                         // light sample
                                     Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
@@ -333,6 +334,10 @@ public:
                                             }
                                         }
                                     }
+                                }
+                                    // for constant and mirror brdf we do nothing
+                                else {
+                                    assert(currentBrdf->m_brdfType == ConstantBrdf || currentBrdf->m_brdfType == MirrorBrdf);
                                 }
                             }
                         }
@@ -444,7 +449,9 @@ public:
     m_driver(driver), m_height(height), m_delegate(delegate){}
     void operator()()
     {
-//        m_driver->draw(m_height);
+        if (WRITE_EXR) {
+            m_driver->draw(m_height);
+        }
         m_delegate->imageDidUpdate();
     }
 };
