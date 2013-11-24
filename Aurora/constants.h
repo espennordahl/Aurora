@@ -45,6 +45,6 @@
 // base paths
 #define CONFIGPATH "/Users/espennordahl/Documents/Aurora/XCode/Aurora/Aurora/config.json"
 
-#define WRITE_EXR 0
+#define WRITE_EXR 1
 
 #endif

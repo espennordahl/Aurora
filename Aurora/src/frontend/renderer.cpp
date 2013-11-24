@@ -35,6 +35,7 @@ m_rendering(false),
 m_stopped(false),
 m_widthOverride(0),
 m_heightOverride(0),
+m_delegate(NULL),
 displayDriver(NULL)
 {
     filename = file;
@@ -452,7 +453,9 @@ public:
         if (WRITE_EXR) {
             m_driver->draw(m_height);
         }
-        m_delegate->imageDidUpdate();
+        if (m_delegate) {
+            m_delegate->imageDidUpdate();
+        }
     }
 };
 
