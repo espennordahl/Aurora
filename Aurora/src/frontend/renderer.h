@@ -15,6 +15,7 @@
 #include "openexrDisplay.h"
 #include "lights.h"
 #include "options.h"
+#include "integrator.h"
 
 #include <vector>
 #include <fstream>
@@ -31,44 +32,32 @@ namespace Aurora{
 	class Renderer {
 	public:
         Renderer(std::string file);
-        void parseSceneDescription();
 		void render();
-		void setDelegate(Session *delegate);
-
-        void stop();
-        void setResolution(int width, int height);
-        bool isRunning();
         
-		Camera *renderCam;
-		std::vector<std::tr1::shared_ptr<AuroraObject> > objects;
-		std::vector<Light* > lights;
-		InfiniteAreaLight *envLight;
-		RenderEnvironment renderEnv;
-		AttributeState *attrs;
-		OpenexrDisplay *displayDriver;
-    
 	private:
+        void parseSceneDescription();
 		void buildRenderEnvironment();
 		void renderImage();
-		void renderImageTBB();
 		void outputStats();
 		void postRenderCleanup();
         
-		time_t renderTime;
-		float renderProgress;
-        std::string filename;
-		Transform *cameraTransform;
-
-        bool m_stopped;
-		bool m_rendering;
+		time_t m_renderTime;
+		float m_renderProgress;
+        std::string m_filename;
+		Transform *m_cameraTransform;
         
         tbb::atomic<long> m_numrays;
         double m_rayspeed;
-        Session *m_delegate;
-        
-        int m_widthOverride;
-        int m_heightOverride;
-	};
+
+        Camera *m_renderCam;
+		std::vector<std::tr1::shared_ptr<AuroraObject> > m_objects;
+		std::vector<Light* > m_lights;
+		InfiniteAreaLight *m_envLight;
+		RenderEnvironment m_renderEnv;
+		AttributeState *m_attrs;
+		OpenexrDisplay *m_displayDriver;
+        Integrator *m_integrator;
+    };
 }
 
 

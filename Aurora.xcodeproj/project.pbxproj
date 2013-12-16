@@ -42,7 +42,6 @@
 		233BE76217E21DDA0059ACD1 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1BC17549C93004F1F7F /* camera.cpp */; };
 		233BE76317E21DDA0059ACD1 /* openexrDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1C117549C93004F1F7F /* openexrDisplay.cpp */; };
 		233BE76417E21DDA0059ACD1 /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1C517549C93004F1F7F /* renderer.cpp */; };
-		233BE76517E21DDA0059ACD1 /* session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23B92E6317DBB47F00B01685 /* session.cpp */; };
 		233BE76617E21DDA0059ACD1 /* embreeAccelerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1CB17549C93004F1F7F /* embreeAccelerator.cpp */; };
 		233BE76717E21DDA0059ACD1 /* infiniteAreaLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1CF17549C93004F1F7F /* infiniteAreaLight.cpp */; };
 		233BE76817E21DDA0059ACD1 /* objParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C1D317549C93004F1F7F /* objParser.cpp */; };
@@ -56,6 +55,8 @@
 		233BE77017E21DDA0059ACD1 /* jsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C21717549C93004F1F7F /* jsonParser.cpp */; };
 		233BE77117E21DE80059ACD1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4717BC108A0013F27A /* libz.dylib */; };
 		233BE77717E222720059ACD1 /* libAuroraLib.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */; };
+		2370B83A185F88EA00C4F5C0 /* integrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2370B838185F88EA00C4F5C0 /* integrator.cpp */; };
+		2370B83B185F8F2200C4F5C0 /* integrator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2370B838185F88EA00C4F5C0 /* integrator.cpp */; };
 		2386EC4817BC108A0013F27A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2386EC4717BC108A0013F27A /* libz.dylib */; };
 		2389C24517549C93004F1F7F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389C19117549C93004F1F7F /* main.cpp */; };
 /* End PBXBuildFile section */
@@ -91,8 +92,6 @@
 		23324FE017E8A50300CE8ACC /* attributeChange.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attributeChange.cpp; sourceTree = "<group>"; };
 		23324FE117E8A50300CE8ACC /* attributeChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attributeChange.h; sourceTree = "<group>"; };
 		233BE73E17E21D900059ACD1 /* libAuroraLib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libAuroraLib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		233BE78117E4B8AB0059ACD1 /* ValueWheelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValueWheelView.h; sourceTree = "<group>"; };
-		233BE78217E4B8AB0059ACD1 /* ValueWheelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValueWheelView.m; sourceTree = "<group>"; };
 		235A8F791759CF6F00372E43 /* brdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdf.h; sourceTree = "<group>"; };
 		235A8F7B1759CF6F00372E43 /* brdfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brdfs.h; sourceTree = "<group>"; };
 		235A8F7C1759CF6F00372E43 /* constant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constant.cpp; sourceTree = "<group>"; };
@@ -133,21 +132,9 @@
 		235A8FB21759D0BE00372E43 /* texture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture2D.cpp; sourceTree = "<group>"; };
 		235A8FB31759D0BE00372E43 /* texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture2D.h; sourceTree = "<group>"; };
 		236D6811175F18D300802617 /* accelerationStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = accelerationStructure.h; sourceTree = "<group>"; };
+		2370B838185F88EA00C4F5C0 /* integrator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = integrator.cpp; sourceTree = "<group>"; };
+		2370B839185F88EA00C4F5C0 /* integrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = integrator.h; sourceTree = "<group>"; };
 		2386EC4717BC108A0013F27A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		2386EC5717BC21260013F27A /* AuroraUI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AuroraUI-Info.plist"; sourceTree = "<group>"; };
-		2386EC5917BC21260013F27A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2386EC5B17BC21260013F27A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2386EC5D17BC21260013F27A /* AuroraUI-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AuroraUI-Prefix.pch"; sourceTree = "<group>"; };
-		2386EC5F17BC21260013F27A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		2386EC6117BC21260013F27A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		2386EC6217BC21260013F27A /* AppDelegate.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		2386EC6517BC21260013F27A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		238854EF17F1EF50006DEF37 /* RenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderView.h; sourceTree = "<group>"; };
-		238854F017F1EF50006DEF37 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
-		238854F417FA009A006DEF37 /* LightEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightEditViewController.h; sourceTree = "<group>"; };
-		238854F517FA009A006DEF37 /* LightEditViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LightEditViewController.mm; sourceTree = "<group>"; };
-		238854F917FA016C006DEF37 /* ItemPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemPickerView.h; sourceTree = "<group>"; };
-		238854FA17FA016C006DEF37 /* ItemPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemPickerView.m; sourceTree = "<group>"; };
 		2389C0E617549C5D004F1F7F /* Aurora */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Aurora; sourceTree = BUILT_PRODUCTS_DIR; };
 		2389C0F317549C93004F1F7F /* Aurora.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = Aurora.1; sourceTree = "<group>"; };
 		2389C0F417549C93004F1F7F /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -233,11 +220,7 @@
 		23B1685D17589E7D00E81FBD /* halton_gen.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = halton_gen.py; sourceTree = "<group>"; };
 		23B1685E17589E7D00E81FBD /* halton_sampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halton_sampler.h; sourceTree = "<group>"; };
 		23B5885017A1AFD6000EFAA0 /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = material.cpp; path = materials/material.cpp; sourceTree = "<group>"; };
-		23B92E6317DBB47F00B01685 /* session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = session.cpp; sourceTree = "<group>"; };
-		23B92E6417DBB47F00B01685 /* session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = session.h; sourceTree = "<group>"; };
 		23C2ED32176D74A900FC65E3 /* triplanarTextureShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = triplanarTextureShader.h; sourceTree = "<group>"; };
-		23E7C15417BC2BCA006874AB /* RenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderViewController.h; sourceTree = "<group>"; };
-		23E7C15517BC2BCA006874AB /* RenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,45 +331,11 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		2386EC5517BC21250013F27A /* AuroraUI */ = {
-			isa = PBXGroup;
-			children = (
-				238854EF17F1EF50006DEF37 /* RenderView.h */,
-				238854F017F1EF50006DEF37 /* RenderView.m */,
-				2386EC6117BC21260013F27A /* AppDelegate.h */,
-				2386EC6217BC21260013F27A /* AppDelegate.mm */,
-				23E7C15417BC2BCA006874AB /* RenderViewController.h */,
-				23E7C15517BC2BCA006874AB /* RenderViewController.m */,
-				233BE78117E4B8AB0059ACD1 /* ValueWheelView.h */,
-				233BE78217E4B8AB0059ACD1 /* ValueWheelView.m */,
-				2386EC6417BC21260013F27A /* MainMenu.xib */,
-				2386EC5617BC21250013F27A /* Supporting Files */,
-				238854F417FA009A006DEF37 /* LightEditViewController.h */,
-				238854F517FA009A006DEF37 /* LightEditViewController.mm */,
-				238854F917FA016C006DEF37 /* ItemPickerView.h */,
-				238854FA17FA016C006DEF37 /* ItemPickerView.m */,
-			);
-			path = AuroraUI;
-			sourceTree = "<group>";
-		};
-		2386EC5617BC21250013F27A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				2386EC5717BC21260013F27A /* AuroraUI-Info.plist */,
-				2386EC5817BC21260013F27A /* InfoPlist.strings */,
-				2386EC5B17BC21260013F27A /* main.m */,
-				2386EC5D17BC21260013F27A /* AuroraUI-Prefix.pch */,
-				2386EC5E17BC21260013F27A /* Credits.rtf */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		2389C0DD17549C5D004F1F7F = {
 			isa = PBXGroup;
 			children = (
 				2389C0F217549C93004F1F7F /* Aurora */,
 				2389C21C17549C93004F1F7F /* PyAurora */,
-				2386EC5517BC21250013F27A /* AuroraUI */,
 				2386EC4E17BC21250013F27A /* Frameworks */,
 				2389C0E717549C5D004F1F7F /* Products */,
 			);
@@ -507,10 +456,10 @@
 				2389C1C417549C93004F1F7F /* renderEnvironment.h */,
 				2389C1C517549C93004F1F7F /* renderer.cpp */,
 				2389C1C617549C93004F1F7F /* renderer.h */,
-				23B92E6317DBB47F00B01685 /* session.cpp */,
-				23B92E6417DBB47F00B01685 /* session.h */,
 				23324FE017E8A50300CE8ACC /* attributeChange.cpp */,
 				23324FE117E8A50300CE8ACC /* attributeChange.h */,
+				2370B838185F88EA00C4F5C0 /* integrator.cpp */,
+				2370B839185F88EA00C4F5C0 /* integrator.h */,
 			);
 			path = frontend;
 			sourceTree = "<group>";
@@ -691,6 +640,7 @@
 				233BE75617E21DDA0059ACD1 /* matrix4x4.cpp in Sources */,
 				233BE75717E21DDA0059ACD1 /* pixelRegion.cpp in Sources */,
 				233BE75817E21DDA0059ACD1 /* point.cpp in Sources */,
+				2370B83B185F8F2200C4F5C0 /* integrator.cpp in Sources */,
 				233BE75917E21DDA0059ACD1 /* ray.cpp in Sources */,
 				233BE75A17E21DDA0059ACD1 /* sample2D.cpp in Sources */,
 				233BE75B17E21DDA0059ACD1 /* sample3D.cpp in Sources */,
@@ -703,7 +653,6 @@
 				233BE76217E21DDA0059ACD1 /* camera.cpp in Sources */,
 				233BE76317E21DDA0059ACD1 /* openexrDisplay.cpp in Sources */,
 				233BE76417E21DDA0059ACD1 /* renderer.cpp in Sources */,
-				233BE76517E21DDA0059ACD1 /* session.cpp in Sources */,
 				233BE76617E21DDA0059ACD1 /* embreeAccelerator.cpp in Sources */,
 				233BE76717E21DDA0059ACD1 /* infiniteAreaLight.cpp in Sources */,
 				233BE76817E21DDA0059ACD1 /* objParser.cpp in Sources */,
@@ -723,6 +672,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2389C24517549C93004F1F7F /* main.cpp in Sources */,
+				2370B83A185F88EA00C4F5C0 /* integrator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,33 +685,6 @@
 			targetProxy = 233BE77317E21DFE0059ACD1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		2386EC5817BC21260013F27A /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2386EC5917BC21260013F27A /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		2386EC5E17BC21260013F27A /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2386EC5F17BC21260013F27A /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		2386EC6417BC21260013F27A /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2386EC6517BC21260013F27A /* en */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		233BE74017E21D900059ACD1 /* Debug */ = {

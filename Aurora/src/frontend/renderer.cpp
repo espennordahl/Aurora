@@ -26,46 +26,19 @@
 #include <tbb/task_group.h>
 
 #include "jsonParser.h"
-#include "session.h"
 
 using namespace Aurora;
 
 Renderer::Renderer(std::string file):
-m_rendering(false),
-m_stopped(false),
-m_widthOverride(0),
-m_heightOverride(0),
-m_delegate(NULL),
-displayDriver(NULL)
+m_displayDriver(NULL)
 {
-    filename = file;
+    m_filename = file;
 }
 
-void Renderer::setDelegate(Aurora::Session *delegate){
-    m_delegate = delegate;
-}
-
-void Renderer::stop(){
-    m_stopped = true;
-    while (m_rendering){
-        usleep(100);
-    }
-}
-
-bool Renderer::isRunning(){
-    return m_rendering;
-}
-
-void Renderer::setResolution(int width, int height){
-    m_widthOverride = width;
-    m_heightOverride = height;
-}
 
 void Renderer::render(){
 
-    assert(m_rendering == false);
-    m_stopped = false;
-    m_rendering = true;
+    parseSceneDescription();
     
     time_t envBegin;
 	time(&envBegin);
@@ -82,7 +55,7 @@ void Renderer::render(){
              << totalTime % 60 << " sec.");
 
     
-	renderImageTBB();
+	renderImage();
 	
 	outputStats();
     
@@ -96,17 +69,17 @@ void Renderer::parseSceneDescription(){
     LOG_INFO("*************************************");
 	LOG_INFO("Parsing scene description.");
     
-    renderEnv = RenderEnvironment();
-    renderEnv.shadingEngine = new ShadingEngine();
-    renderEnv.globals =  new AuroraGlobals;
-    renderEnv.stringGlobals = new StringMap;
-    setDefaultOptions(renderEnv.globals);
+    m_renderEnv = RenderEnvironment();
+    m_renderEnv.shadingEngine = new ShadingEngine();
+    m_renderEnv.globals =  new AuroraGlobals;
+    m_renderEnv.stringGlobals = new StringMap;
+    setDefaultOptions(m_renderEnv.globals);
 
         // open file
-    JsonParser parser = JsonParser(filename, &renderEnv);
+    JsonParser parser = JsonParser(m_filename, &m_renderEnv);
     parser.parseScene(NULL);
-    objects = parser.getObjects();
-    lights = parser.getLights();
+    m_objects = parser.getObjects();
+    m_lights = parser.getLights();
         
 	LOG_INFO("Done parsing scene description.");	
     LOG_INFO("*************************************\n");
@@ -127,60 +100,49 @@ void Renderer::buildRenderEnvironment(){
     LOG_INFO("*************************************");
 	LOG_INFO("Building render environment.");
     
-    if (m_widthOverride && m_heightOverride) {
-        (*renderEnv.globals)[ResolutionX] = m_widthOverride;
-        (*renderEnv.globals)[ResolutionY] = m_heightOverride;
-    }
-    
         // preFrame
-    for (u_int32_t i=0; i < objects.size(); i++) {
-        objects[i]->frameBegin();
+    for (u_int32_t i=0; i < m_objects.size(); i++) {
+        m_objects[i]->frameBegin();
     }
     
         // camera
-    renderCam = new Camera((*renderEnv.globals)[FieldOfView], (*renderEnv.globals)[ResolutionX], (*renderEnv.globals)[ResolutionY], (*renderEnv.globals)[PixelSamples]);
+    m_renderCam = new Camera((*m_renderEnv.globals)[FieldOfView], (*m_renderEnv.globals)[ResolutionX], (*m_renderEnv.globals)[ResolutionY], (*m_renderEnv.globals)[PixelSamples]);
     
-	if (!objects.size()) {
+	if (!m_objects.size()) {
 		LOG_ERROR("No objects found.");
 	}
 	
         // acceleration structure
     AccelerationStructure *accel;
     
-    int numObjects = (int)objects.size();
-    int numLights = (int)lights.size();
-    attrs = new AttributeState[numObjects + numLights];
+    int numObjects = (int)m_objects.size();
+    int numLights = (int)m_lights.size();
+    m_attrs = new AttributeState[numObjects + numLights];
     EmbreeMesh mesh;
     for (int i=0; i < numObjects; i++) {
-        mesh.appendTriangleMesh(objects[i]->m_shape, i);
-        attrs[i].material = objects[i]->m_material;
-        attrs[i].emmision = Color(0.);
+        mesh.appendTriangleMesh(m_objects[i]->m_shape, i);
+        m_attrs[i].material = m_objects[i]->m_material;
+        m_attrs[i].emmision = Color(0.);
     }
     for (int i=0; i < numLights; i++){
-        if (lights[i]->lightType != type_envLight){
-            mesh.appendTriangleMesh(lights[i]->shape(), i + numObjects);
+        if (m_lights[i]->lightType != type_envLight){
+            mesh.appendTriangleMesh(m_lights[i]->shape(), i + numObjects);
         }
-        Material * black = new ConstantMaterial("Not in use - lightsource", Color(0.f), UNSET_SHADER_INDEX, &renderEnv);
-        attrs[i + numObjects].material = black;
-        attrs[i + numObjects].emmision = lights[i]->emission();
+        Material * black = new ConstantMaterial("Not in use - lightsource", Color(0.f), UNSET_SHADER_INDEX, &m_renderEnv);
+        m_attrs[i + numObjects].material = black;
+        m_attrs[i + numObjects].emmision = m_lights[i]->emission();
     }
-    accel = new EmbreeAccelerator(mesh, attrs);
+    accel = new EmbreeAccelerator(mesh, m_attrs);
     
-	renderEnv.accelerationStructure = accel;
-	renderEnv.attributeState = attrs;
-	renderEnv.lights = lights;
-	renderEnv.envLight = envLight;
-	renderEnv.renderCam = renderCam;
+	m_renderEnv.accelerationStructure = accel;
+	m_renderEnv.attributeState = m_attrs;
+	m_renderEnv.lights = m_lights;
+	m_renderEnv.envLight = m_envLight;
+	m_renderEnv.renderCam = m_renderCam;
     	
 	LOG_INFO("Done building render environment.");
     LOG_INFO("*************************************\n");
 }
-
-inline float PowerHeuristic(int nf, float fPdf, int ng, float gPdf) {
-    float f = nf * fPdf, g = ng * gPdf;
-    return (f*f) / (f*f + g*g);
-}
-
 
 class IntegrateParallel {
 public:
@@ -190,242 +152,25 @@ public:
                       int sample_index,
                       RenderEnvironment *render_environment,
                       OpenexrDisplay *display,
-                      tbb::atomic<long> *raycount,
-                      bool *stopped):
+                      Integrator *integrator,
+                      tbb::atomic<long> *raycount):
     m_width(width), m_height(height), m_num_samples(num_samples), m_sample_index(sample_index),
-    m_render_environment(render_environment), m_display(display), m_raycount(raycount), m_stopped(stopped)
+    m_render_environment(render_environment), m_display(display), m_integrator(integrator), m_raycount(raycount)
     {}
     
     void operator()(const tbb::blocked_range<size_t>& r) const{
         for(size_t i=r.begin(); i!=r.end(); ++i){
+                // generate sample
             int x = i % m_width;
             int y = (int)i / m_width;
             Sample2D current_sample_2d = Sample2D(x, y);
             
             Sample3D sample = m_render_environment->renderCam->convertSample(current_sample_2d, m_sample_index);
-            float alpha = 0.f;
-            Color pixelColor = 0.f;
-            Intersection firstIsect;
             
-                // find first intersection
-            m_raycount->fetch_and_increment();
-            if (m_render_environment->accelerationStructure->intersect(&sample.ray, &firstIsect)) {
-                alpha = 1.f;
-                Color Lo = Color(0.f);
-                
-                    // then find all the next vertices of the path
-                for (int i=0; i < m_num_samples; i++) {
-                    if (*m_stopped) {
-                        return;
-                    }
-                    float continueProbability = 1.f;
-                    Lo = Color(0.f);
-                    Sample3D currentSample = sample;
-                    Intersection isect = firstIsect;
-                    Color pathThroughput = Color(1.f);
-                    Brdf *currentBrdf;
-                    Vector Nn = Vector(0, 0, 1);
-                    bool mattePath = false;
-                    RayType rayType = CameraRay;
-                    
-                    int trueBounces = 0;
-                    for (int bounces = 0; ; ++bounces) {
-                        if (*m_stopped) {
-                            return;
-                        }
-                        AttributeState *attrs = &m_render_environment->attributeState[isect.attributesIndex];
-                        isect.shdGeo.cameraToObject = attrs->cameraToObject;
-                        isect.shdGeo.objectToCamera = attrs->objectToCamera;
-                        attrs->material->runNormalShader(&isect.shdGeo);
-                        Vector Vn = normalize(-currentSample.ray.direction);
-                        Nn = isect.shdGeo.Ns;
-                        Point orig = isect.hitP;
-                        if (rayType == DiffuseRay) {
-                            mattePath = true;
-                        }
-                        
-                            // emmision
-                        if (rayType == CameraRay || rayType == MirrorRay) {
-                            Lo += pathThroughput * attrs->emmision;
-                        }
-                        
-                            // with smooth normals there's a change we get normals
-                            // on the "back side" of the ray.
-                        if (dot(Vn,Nn) <= 0.) {
-                                // If so we force it to the front.
-                            Vector tmp = cross(Nn, Vn);
-                            Nn = normalize(cross(Vn, tmp));
-                        }
-                        
-                            // sample lights
-                        BrdfState brdf_state = attrs->material->getBrdf(Vn, Nn, isect.shdGeo, mattePath);
-                        currentBrdf = brdf_state.brdf;
-                        bxdfParameters *brdf_parameters = brdf_state.parameters;
-                        assert(brdf_parameters != NULL);
-                        
-                        if (bounces < (*m_render_environment->globals)[MaxDepth]) {
-                            int numLights = (int)m_render_environment->lights.size();
-                            std::vector<int> lightIndices;
-                            for(int i=0; i<numLights; ++i){
-                                if (m_render_environment->lights[i]->visible(orig,Nn, currentBrdf->m_integrationDomain)) {
-                                    lightIndices.push_back(i);
-                                }
-                            }
-                            numLights = (int)lightIndices.size();
-                            
-                            if(numLights){
-                                Light* currentLight = m_render_environment->lights[lightIndices[rand() % numLights]];
-                                    // For diffuse lobes we only do light sampling
-                                if (currentBrdf->m_brdfType == MatteBrdf) {
-                                    
-                                    Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
-                                        // sample light
-                                    float costheta = dot(Nn, lightSample.ray.direction);
-                                    if (costheta >= 0. && lightSample.pdf > 0.) {
-                                        float li = 1;
-                                        m_raycount->fetch_and_increment();
-                                        if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
-                                            li = 0;
-                                        Lo += lightSample.color *
-                                        currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdf_parameters) *
-                                        li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
-                                    }
-                                }
-                                
-                                    // For specular lobes we do MIS
-                                else if (currentBrdf->m_brdfType == SpecBrdf){
-                                    
-                                        // light sample
-                                    Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
-                                        // sample light
-                                    float costheta = dot(Nn, lightSample.ray.direction);
-                                    if (costheta > 0. && lightSample.pdf > 0.) {
-                                        float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn, brdf_parameters);
-                                        if (brdfPdf > 0.) {
-                                            float li = 1;
-                                            m_raycount->fetch_and_increment();
-                                            if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
-                                                li = 0;
-                                            if (li != 0) {
-                                                float weight = PowerHeuristic(1, lightSample.pdf, 1, brdfPdf);
-                                                Lo += lightSample.color * weight *
-                                                currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdf_parameters) *
-                                                li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
-                                            }
-                                        }
-                                    }
-                                    
-                                    
-                                        // brdf sample
-                                    Sample3D brdfSample = currentBrdf->getSample(Vn, Nn, brdf_parameters);
-                                    brdfSample.ray.origin = orig;
-                                    costheta = dot(Nn, brdfSample.ray.direction);
-                                    if (costheta > 0.) {
-                                        float lightPdf = currentLight->pdf(&brdfSample, Nn, currentBrdf->m_integrationDomain);
-                                        if (lightPdf > 0. && brdfSample.pdf > 0.) {
-                                            float li = 1;
-                                            m_raycount->fetch_and_increment();
-                                            if (m_render_environment->accelerationStructure->intersectBinary(&brdfSample.ray))
-                                                li = 0;
-                                            if (li != 0) {
-                                                float weight = PowerHeuristic(1, brdfSample.pdf, 1, lightPdf);
-                                                Lo += brdfSample.color * weight *
-                                                currentLight->eval(brdfSample, Nn) *
-                                                costheta * pathThroughput * (float)numLights / brdfSample.pdf;
-                                            }
-                                        }
-                                    }
-                                }
-                                    // for constant and mirror brdf we do nothing
-                                else {
-                                    assert(currentBrdf->m_brdfType == ConstantBrdf || currentBrdf->m_brdfType == MirrorBrdf);
-                                }
-                            }
-                        }
-                            // sample brdf
-                        currentSample = currentBrdf->getSample(Vn, Nn, brdf_parameters);
-                        delete brdf_parameters; //TODO: Lousy place to kill this
-                        if ( currentSample.pdf <= 0.f ) {
-                            break;
-                        }
-                        if (currentBrdf->m_brdfType != MirrorBrdf) {
-                            pathThroughput *= currentSample.color * dot(Nn, currentSample.ray.direction) / currentSample.pdf;
-                            if(bounces > (*m_render_environment->globals)[MinDepth]){
-                                continueProbability *= currentSample.color.lum() * dot(Nn, currentSample.ray.direction) / currentSample.pdf;
-                            }
-                            if (pathThroughput.isBlack()) {
-                                break;
-                            }
-                            if (currentBrdf->m_brdfType == SpecBrdf) {
-                                rayType = SpecularRay;
-                            }
-                            else {
-                                rayType = DiffuseRay;
-                            }
-                        }
-                        else {
-                            pathThroughput *= currentSample.color;
-                            if(bounces > (*m_render_environment->globals)[MinDepth]){
-                                continueProbability *= currentSample.color.lum();
-                            }
-                            rayType = MirrorRay;
-                        }
-                            // possibly terminate path here
-                        if (bounces > (*m_render_environment->globals)[MinDepth]) {
-                            if ((float) rand()/RAND_MAX > continueProbability) {
-                                break;
-                            }
-                            pathThroughput /= continueProbability;
-                        }
-                        if (trueBounces == (*m_render_environment->globals)[MaxDepth]) {
-                            break;
-                        }
-                        
-                            // transform sample to world space
-                            //currentSample.ray.direction = tangentToWorld(currentSample.ray.direction, Nn);
-                        currentSample.ray.origin = orig;
-                        
-                            // if we're a mirror, we don't increment the bounce
-                        if (currentBrdf->m_brdfType == MirrorBrdf) {
-                            --bounces;
-                        }
-                        trueBounces++;
-                            // find next vertex
-                        m_raycount->fetch_and_increment();
-                        if (!m_render_environment->accelerationStructure->intersect(&currentSample.ray, &isect)) {
-                            if (rayType == MirrorRay) {
-                                for (int i=0; i < m_render_environment->lights.size(); i++) {
-                                    Light* light = m_render_environment->lights[i];
-                                    if (light->lightType == type_envLight) {
-                                        Lo += light->eval(sample, sample.ray.direction) * pathThroughput;
-                                    }
-                                }
-                            }
-                                // exit.
-                            break;
-                        }
-                    }
-                    
-                    while(Lo.r > FIREFLY || Lo.g > FIREFLY || Lo.b > FIREFLY){
-                        LOG_WARNING("Reducing firefly: " << Lo);
-                        Lo *= 0.2f;
-                    }
-                        //pixelColor += Color(Nn.x, Nn.y, Nn.z) / (float)m_num_samples;
-                    pixelColor += Lo/(float)m_num_samples;
-                }
-                
-            } else { // camera ray miss
-                for (int i=0; i < m_render_environment->lights.size(); i++) {
-                    Light* light = m_render_environment->lights[i];
-                    if (light->lightType == type_envLight) {
-                        // multiplier is a hack to counter the div below
-                        pixelColor += light->eval(sample, sample.ray.direction);
-                        alpha = 1.;
-                    }
-                }
-            }
+            Integrator::IntegrationResult integrationResult = m_integrator->integrateSample(sample, m_num_samples);
             
-            m_display->appendValue(x, y, pixelColor, alpha);
+            m_display->appendValue(x, y, integrationResult.color, integrationResult.alpha);
+            m_raycount->fetch_and_add(integrationResult.raycount);
         }
     }
     
@@ -437,64 +182,56 @@ private:
     RenderEnvironment *m_render_environment;
     OpenexrDisplay *m_display;
     tbb::atomic<long> *m_raycount;
-    bool *m_stopped;
+    Integrator *m_integrator;
 };
 
 class DrawTask
 {
     OpenexrDisplay *m_driver;
     int m_height;
-    Session *m_delegate;
 public:
-    DrawTask(OpenexrDisplay *driver, int height, Session *delegate):
-    m_driver(driver), m_height(height), m_delegate(delegate){}
+    DrawTask(OpenexrDisplay *driver, int height):
+    m_driver(driver), m_height(height){}
     void operator()()
     {
-        if (WRITE_EXR) {
-            m_driver->draw(m_height);
-        }
-        if (m_delegate) {
-            m_delegate->imageDidUpdate();
-        }
+        m_driver->draw(m_height);
     }
 };
 
-void Renderer::renderImageTBB(){
+void Renderer::renderImage(){
     LOG_INFO("*************************************");
 	LOG_INFO("Rendering image.");
 	
         // start render timer
-	time(&renderTime);
+	time(&m_renderTime);
     
         // init stats
     m_rayspeed = 0;
     m_numrays = tbb::atomic<long>();
 	
         // set up buffer and sampler
-	int width = renderCam->getWidthSamples();
-	int height = renderCam->getHeightSamples();
-	int multisamples = renderCam->getPixelSamples();
+	int width = m_renderCam->getWidthSamples();
+	int height = m_renderCam->getHeightSamples();
+	int multisamples = m_renderCam->getPixelSamples();
 
-    std::string fn = (*renderEnv.stringGlobals)["fileName"];
+    std::string fn = (*m_renderEnv.stringGlobals)["fileName"];
     if(fn == ""){
         LOG_ERROR("Render output filename is blank");
     }
-    if (!displayDriver) {
-        displayDriver = new OpenexrDisplay(width, height, fn, &renderEnv);
+    if (!m_displayDriver) {
+        m_displayDriver = new OpenexrDisplay(width, height, fn, &m_renderEnv);
     } else {
-        displayDriver->clear();
-        displayDriver->resize(width, height);
+        m_displayDriver->clear();
+        m_displayDriver->resize(width, height);
     }
 
+    m_integrator = new Integrator::Integrator(&m_renderEnv);
+    
     tbb::task_group drawtask;
     time_t drawTime;
     time(&drawTime);
-    int numDraws = 0;
     int lightSamples = 1;
     for(int i=0; i<multisamples; ++i){
-        if (m_stopped) {
-            break;
-        }
         time_t currentTime;
         time_t progressionStartTime;
         time(&progressionStartTime);
@@ -505,27 +242,19 @@ void Renderer::renderImageTBB(){
                                             height,
                                             lightSamples,
                                             i,
-                                            &renderEnv,
-                                            displayDriver,
-                                            &m_numrays,
-                                            &m_stopped
+                                            &m_renderEnv,
+                                            m_displayDriver,
+                                            m_integrator,
+                                            &m_numrays
                                             )
                           );
         
         time(&currentTime);
         int timeSinceLastDraw = difftime(currentTime, drawTime);
-        if((!i || timeSinceLastDraw > DRAW_DELAY) && !m_stopped) {
-            drawtask.run(DrawTask(displayDriver, height, m_delegate));
+        if((!i || timeSinceLastDraw > DRAW_DELAY)) {
+            drawtask.run(DrawTask(m_displayDriver, height));
             time(&drawTime);
-            ++numDraws;
-            if (numDraws > 1) {
-                if (timeSinceLastDraw < 3) {
-                    lightSamples = MAX(4, (*renderEnv.globals)[LightSamples]);
-                }
-                if (numDraws > 4) {
-                    lightSamples = (*renderEnv.globals)[LightSamples];
-                }
-            }
+            lightSamples = (*m_renderEnv.globals)[LightSamples];
         }
         
         LOG_INFO("Render progress: " << 100 * (i+1)/(float)multisamples << "%");
@@ -551,7 +280,7 @@ void Renderer::outputStats(){
 	// Time
 	time_t renderEnd;
 	time(&renderEnd);
-	int totalTime = difftime(renderEnd, renderTime);
+	int totalTime = difftime(renderEnd, m_renderTime);
     
 	LOG_INFO("Total render time: " 
              << floor(totalTime/60/60) << " h " 
@@ -560,23 +289,21 @@ void Renderer::outputStats(){
     std::string stringTime =    intToString(floor(totalTime/60/60)) + " h " +
                                 intToString(floor((totalTime/60) % 60)) + " min "+
                                 intToString(totalTime % 60) + " sec.";
-    displayDriver->addMetadata(std::string("renderTime"), stringTime);
+    m_displayDriver->addMetadata(std::string("renderTime"), stringTime);
     
     // Rays
     LOG_INFO("Average speed: " << m_rayspeed << "K rays/sec.");
     std::string stringSpeed = intToString(m_rayspeed) + "K rays/sec.";
-    displayDriver->addMetadata(std::string("RaySpeed"), stringSpeed);
+    m_displayDriver->addMetadata(std::string("RaySpeed"), stringSpeed);
     
 	LOG_INFO("Done outputting statistics.");
     LOG_INFO("*************************************\n");
 }
 
 void Renderer::postRenderCleanup(){
-    displayDriver->draw(displayDriver->height());
+    m_displayDriver->draw(m_displayDriver->height());
 
-    delete renderEnv.accelerationStructure;
-    delete renderEnv.attributeState;
-    delete renderEnv.renderCam;
-    
-    m_rendering = false;
+    delete m_renderEnv.accelerationStructure;
+    delete m_renderEnv.attributeState;
+    delete m_renderEnv.renderCam;
 }

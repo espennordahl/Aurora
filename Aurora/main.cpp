@@ -28,7 +28,6 @@ int main (int argc, char* const argv[])
     LOG_INFO("Starting Aurora.");
 
     Renderer ren = Renderer((char *)"/Users/espennordahl/Documents/Aurora/pyAurora/tmp.asc");
-    ren.parseSceneDescription();
     ren.render();
     return 0;
 

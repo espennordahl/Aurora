@@ -52,6 +52,7 @@ struct lc{
 #define LOG_StringUtils         lc(Log::Debug,  "StringUtils")
 #define LOG_Subdiv              lc(Log::Debug,  "Subdiv")
 #define LOG_Material            lc(Log::Debug,  "Material")
+#define LOG_Integrator          lc(Log::Debug,  "Integrator")
 
 class Log
 {
