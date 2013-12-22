@@ -15,6 +15,7 @@
 
 #include "renderEnvironment.h"
 #include "brdf.h"
+#include "intersection.h"
 
 namespace Aurora {
     
@@ -44,6 +45,8 @@ namespace Aurora {
         IntegrationResult integrateDirectMIS(const LocalGeometry &lg, Light *light, Brdf *brdf, bxdfParameters *brdfParameters);
         
     private:
+        void updateLocalGeometry(const Sample3D &sample, LocalGeometry *lg, Intersection *isect, AttributeState *attrs);
+        
         RenderEnvironment *m_render_environment;
     };
 }

@@ -122,17 +122,12 @@ Integrator::IntegrationResult Integrator::integrateDirect(const LocalGeometry &l
     
     if(numLights){
         Light* light = m_render_environment->lights[lightIndices[rand() % numLights]];
-            // For diffuse lobes we only do light sampling
+
         if (brdf->m_brdfType == MatteBrdf) {
             result = integrateDirectLight(lg, light, brdf, brdfParameters);
-        }
-        
-            // For specular lobes we do MIS
-        else if (brdf->m_brdfType == SpecBrdf){
+        } else if (brdf->m_brdfType == SpecBrdf){
             result = integrateDirectMIS(lg, light, brdf, brdfParameters);
-        }
-            // for constant and mirror brdf we do nothing
-        else {
+        } else {
             assert(brdf->m_brdfType == ConstantBrdf || brdf->m_brdfType == MirrorBrdf);
         }
         
@@ -140,6 +135,26 @@ Integrator::IntegrationResult Integrator::integrateDirect(const LocalGeometry &l
     }
     
     return result;
+}
+
+void Integrator::updateLocalGeometry(const Sample3D &sample, Integrator::LocalGeometry *lg, Intersection *isect, AttributeState *attrs){
+    
+    isect->shdGeo.cameraToObject = attrs->cameraToObject;
+    isect->shdGeo.objectToCamera = attrs->objectToCamera;
+    
+    attrs->material->runNormalShader(&isect->shdGeo);
+
+    lg->Vn = -normalize(sample.ray.direction);
+    lg->Nn = isect->shdGeo.Ns;
+    lg->P = isect->hitP;
+    
+        // with smooth normals there's a change we get normals
+        // on the "back side" of the ray.
+    if (dot(lg->Vn, lg->Nn) <= 0.) {
+            // If so we force it to the front.
+        Vector tmp = cross(lg->Nn, lg->Vn);
+        lg->Nn = normalize(cross(lg->Vn, tmp));
+    }
 }
 
 Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample, int numSamples){
@@ -170,15 +185,13 @@ Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample,
             bool mattePath = false;
             RayType rayType = CameraRay;
             
+            int bounces = 0;
             int trueBounces = 0;
-            for (int bounces = 0; ; ++bounces) {
+            while (trueBounces < (*m_render_environment->globals)[MaxDepth]) {
                 AttributeState *attrs = &m_render_environment->attributeState[isect.attributesIndex];
-                isect.shdGeo.cameraToObject = attrs->cameraToObject;
-                isect.shdGeo.objectToCamera = attrs->objectToCamera;
-                attrs->material->runNormalShader(&isect.shdGeo);
-                lg.Vn = normalize(-currentSample.ray.direction);
-                lg.Nn = isect.shdGeo.Ns;
-                lg.P = isect.hitP;
+
+                updateLocalGeometry(currentSample, &lg, &isect, attrs);
+                
                 if (rayType == DiffuseRay) {
                     mattePath = true;
                 }
@@ -188,20 +201,13 @@ Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample,
                     Lo += pathThroughput * attrs->emmision;
                 }
                 
-                    // with smooth normals there's a change we get normals
-                    // on the "back side" of the ray.
-                if (dot(lg.Vn, lg.Nn) <= 0.) {
-                        // If so we force it to the front.
-                    Vector tmp = cross(lg.Nn, lg.Vn);
-                    lg.Nn = normalize(cross(lg.Vn, tmp));
-                }
-                
-                    // sample lights
+                    // init brdf
                 BrdfState brdf_state = attrs->material->getBrdf(lg.Vn, lg.Nn, isect.shdGeo, mattePath);
                 currentBrdf = brdf_state.brdf;
                 bxdfParameters *brdf_parameters = brdf_state.parameters;
                 assert(brdf_parameters != NULL);
                 
+                    // sample direct lighting
                 if (bounces < (*m_render_environment->globals)[MaxDepth]) {
                     Integrator::IntegrationResult directIntegration = integrateDirect(lg, currentBrdf, brdf_parameters);
 
@@ -209,13 +215,17 @@ Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample,
                     Lo += directIntegration.color * pathThroughput;
                 }
 
-                    // sample brdf
+                    // sample brdf for the next bounce
                 currentSample = currentBrdf->getSample(lg.Vn, lg.Nn, brdf_parameters);
+
                 delete brdf_parameters; //TODO: Lousy place to kill this
+
+                    // terminate if sample contributes zero
                 if ( currentSample.pdf <= 0.f ) {
                     break;
                 }
 
+                    // udpate throughput
                 if (currentBrdf->m_brdfType != MirrorBrdf) {
                     pathThroughput *= currentSample.color * dot(lg.Nn, currentSample.ray.direction) / currentSample.pdf;
                     if(bounces > (*m_render_environment->globals)[MinDepth]){
@@ -231,7 +241,7 @@ Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample,
                         rayType = DiffuseRay;
                     }
                 }
-                else {
+                else { // update throughput for mirror
                     pathThroughput *= currentSample.color;
                     if(bounces > (*m_render_environment->globals)[MinDepth]){
                         continueProbability *= currentSample.color.lum();
@@ -239,31 +249,30 @@ Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample,
                     rayType = MirrorRay;
                 }
                 
-                    // possibly terminate path
+                    // roulette
                 if (bounces > (*m_render_environment->globals)[MinDepth]) {
                     if ((float) rand()/RAND_MAX > continueProbability) {
                         break;
                     }
                     pathThroughput /= continueProbability;
                 }
-                if (trueBounces == (*m_render_environment->globals)[MaxDepth]) {
-                    break;
-                }
-                
-                    // transform sample to world space
-                    //currentSample.ray.direction = tangentToWorld(currentSample.ray.direction, Nn);
+
+                    // update current sample before tracing
                 currentSample.ray.origin = lg.P;
                 
-                    // if we're a mirror, we don't increment the bounce
-                if (currentBrdf->m_brdfType == MirrorBrdf) {
-                    --bounces;
+                    // increment bounce count
+                ++trueBounces;
+                if (currentBrdf->m_brdfType != MirrorBrdf) {
+                    ++bounces;
                 }
-                trueBounces++;
                 
                     // find next vertex
                 ++result.raycount;
                 if (!m_render_environment->accelerationStructure->intersect(&currentSample.ray, &isect)) {
+                        // ray miss
                     if (rayType == MirrorRay) {
+                            // For mirrors we make sure we get the environment light contribution.
+                            // We don't need to sample area lights here, as they would return a ray hit.
                         for (int i=0; i < m_render_environment->lights.size(); i++) {
                             Light* light = m_render_environment->lights[i];
                             if (light->lightType == type_envLight) {
@@ -271,23 +280,26 @@ Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample,
                             }
                         }
                     }
-                        // exit.
                     break;
                 }
             }
             
+                // Firefly filter
             while(Lo.r > FIREFLY || Lo.g > FIREFLY || Lo.b > FIREFLY){
                 LOG_WARNING("Reducing firefly: " << Lo);
                 Lo *= 0.2f;
             }
+            
+                // update final integrated value
             result.color += Lo/(float)numSamples;
         }
         
     } else { // camera ray miss
         for (int i=0; i < m_render_environment->lights.size(); i++) {
+                // Make sure we get the environment light contribution.
+                // We don't need to sample area lights here, as they would return a ray hit.
             Light* light = m_render_environment->lights[i];
             if (light->lightType == type_envLight) {
-                    // multiplier is a hack to counter the div below
                 result.color += light->eval(sample, sample.ray.direction);
                 result.alpha = 1.;
             }
