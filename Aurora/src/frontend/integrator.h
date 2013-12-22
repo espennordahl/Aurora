@@ -14,6 +14,7 @@
 #include "core.h"
 
 #include "renderEnvironment.h"
+#include "brdf.h"
 
 namespace Aurora {
     
@@ -28,7 +29,11 @@ namespace Aurora {
 
         Integrator(RenderEnvironment *renderEnv);
         
-        IntegrationResult integrateSample(Sample3D sample, int numSamples);
+        IntegrationResult integrateCameraSample(Sample3D sample, int numSamples);
+        
+        IntegrationResult integrateDirectLight(const Point &P, const Vector &Nn, const Vector &Vn, Light *light, Brdf *brdf, bxdfParameters *brdfParameters);
+        
+        IntegrationResult integrateDirectMIS(const Point &P, const Vector &Nn, const Vector &Vn, Light *light, Brdf *brdf, bxdfParameters *brdfParameters);
         
     private:
         RenderEnvironment *m_render_environment;

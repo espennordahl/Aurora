@@ -30,7 +30,82 @@ inline float PowerHeuristic(int nf, float fPdf, int ng, float gPdf) {
     return (f*f) / (f*f + g*g);
 }
 
-Integrator::IntegrationResult Integrator::integrateSample(Sample3D sample, int numSamples){
+Integrator::IntegrationResult Integrator::integrateDirectLight(const Point &P, const Vector &Nn, const Vector &Vn, Light *light, Brdf *brdf, bxdfParameters *brdfParameters){
+    Integrator::IntegrationResult result;
+    result.alpha = 0;
+    result.color = Color(0.f);
+    result.raycount = 0;
+
+    Sample3D lightSample = light->generateSample(P, Nn, brdf->m_integrationDomain);
+
+        // sample light
+    float costheta = dot(Nn, lightSample.ray.direction);
+    if (costheta >= 0. && lightSample.pdf > 0.) {
+        float li = 1;
+        ++result.raycount;
+        if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
+            li = 0;
+        result.color += lightSample.color *
+        brdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdfParameters) *
+        li * costheta / lightSample.pdf;
+    }
+
+    return result;
+    
+}
+
+Integrator::IntegrationResult Integrator::integrateDirectMIS(const Point &P, const Vector &Nn, const Vector &Vn,Light *light, Brdf *brdf, bxdfParameters *brdfParameters){
+    Integrator::IntegrationResult result;
+
+    result.alpha = 0;
+    result.color = Color(0.f);
+    result.raycount = 0;
+
+    
+        // light sample
+    Sample3D lightSample = light->generateSample(P, Nn, brdf->m_integrationDomain);
+        // sample light
+    float costheta = dot(Nn, lightSample.ray.direction);
+    if (costheta > 0. && lightSample.pdf > 0.) {
+        float brdfPdf = brdf->pdf(lightSample.ray.direction, Vn, Nn, brdfParameters);
+        if (brdfPdf > 0.) {
+            float li = 1;
+            ++result.raycount;
+            if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
+                li = 0;
+            if (li != 0) {
+                float weight = PowerHeuristic(1, lightSample.pdf, 1, brdfPdf);
+                result.color += lightSample.color * weight *
+                brdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdfParameters) *
+                li * costheta / lightSample.pdf;
+            }
+        }
+    }
+    
+    
+        // brdf sample
+    Sample3D brdfSample = brdf->getSample(Vn, Nn, brdfParameters);
+    brdfSample.ray.origin = P;
+    costheta = dot(Nn, brdfSample.ray.direction);
+    if (costheta > 0.) {
+        float lightPdf = light->pdf(&brdfSample, Nn, brdf->m_integrationDomain);
+        if (lightPdf > 0. && brdfSample.pdf > 0.) {
+            float li = 1;
+            ++result.raycount;
+            if (m_render_environment->accelerationStructure->intersectBinary(&brdfSample.ray))
+                li = 0;
+            if (li != 0) {
+                float weight = PowerHeuristic(1, brdfSample.pdf, 1, lightPdf);
+                result.color += brdfSample.color * weight *
+                light->eval(brdfSample, Nn) *
+                costheta / brdfSample.pdf;
+            }
+        }
+    }
+    return result;
+}
+
+Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample, int numSamples){
 
     Integrator::IntegrationResult result = IntegrationResult();
     result.alpha = 0;
@@ -103,64 +178,19 @@ Integrator::IntegrationResult Integrator::integrateSample(Sample3D sample, int n
                         Light* currentLight = m_render_environment->lights[lightIndices[rand() % numLights]];
                             // For diffuse lobes we only do light sampling
                         if (currentBrdf->m_brdfType == MatteBrdf) {
-                            
-                            Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
-                                // sample light
-                            float costheta = dot(Nn, lightSample.ray.direction);
-                            if (costheta >= 0. && lightSample.pdf > 0.) {
-                                float li = 1;
-                                ++result.raycount;
-                                if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
-                                    li = 0;
-                                    Lo += lightSample.color *
-                                    currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdf_parameters) *
-                                    li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
-                                    }
+                            Integrator::IntegrationResult lightIntegration = integrateDirectLight(orig, Nn, Vn, currentLight, currentBrdf, brdf_parameters);
+                    
+                            result.raycount += lightIntegration.raycount;
+                            Lo += lightIntegration.color * pathThroughput * (float)numLights;
                         }
                         
                             // For specular lobes we do MIS
                         else if (currentBrdf->m_brdfType == SpecBrdf){
+                            Integrator::IntegrationResult MISIntegration = integrateDirectMIS(orig, Nn, Vn, currentLight, currentBrdf, brdf_parameters);
                             
-                                // light sample
-                            Sample3D lightSample = currentLight->generateSample(orig, Nn, currentBrdf->m_integrationDomain);
-                                // sample light
-                            float costheta = dot(Nn, lightSample.ray.direction);
-                            if (costheta > 0. && lightSample.pdf > 0.) {
-                                float brdfPdf = currentBrdf->pdf(lightSample.ray.direction, Vn, Nn, brdf_parameters);
-                                if (brdfPdf > 0.) {
-                                    float li = 1;
-                                    ++result.raycount;
-                                    if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
-                                        li = 0;
-                                        if (li != 0) {
-                                            float weight = PowerHeuristic(1, lightSample.pdf, 1, brdfPdf);
-                                            Lo += lightSample.color * weight *
-                                            currentBrdf->evalSampleWorld(lightSample.ray.direction, Vn, Nn, brdf_parameters) *
-                                            li * costheta * pathThroughput * (float)numLights / lightSample.pdf;
-                                        }
-                                }
-                            }
-                            
-                            
-                                // brdf sample
-                            Sample3D brdfSample = currentBrdf->getSample(Vn, Nn, brdf_parameters);
-                            brdfSample.ray.origin = orig;
-                            costheta = dot(Nn, brdfSample.ray.direction);
-                            if (costheta > 0.) {
-                                float lightPdf = currentLight->pdf(&brdfSample, Nn, currentBrdf->m_integrationDomain);
-                                if (lightPdf > 0. && brdfSample.pdf > 0.) {
-                                    float li = 1;
-                                    ++result.raycount;
-                                    if (m_render_environment->accelerationStructure->intersectBinary(&brdfSample.ray))
-                                        li = 0;
-                                        if (li != 0) {
-                                            float weight = PowerHeuristic(1, brdfSample.pdf, 1, lightPdf);
-                                            Lo += brdfSample.color * weight *
-                                            currentLight->eval(brdfSample, Nn) *
-                                            costheta * pathThroughput * (float)numLights / brdfSample.pdf;
-                                        }
-                                }
-                            }
+                            result.raycount += MISIntegration.raycount;
+                            Lo += MISIntegration.color * pathThroughput * (float)numLights;
+
                         }
                             // for constant and mirror brdf we do nothing
                         else {
