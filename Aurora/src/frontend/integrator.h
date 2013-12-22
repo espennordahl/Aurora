@@ -26,14 +26,22 @@ namespace Aurora {
             float alpha;
             long raycount;
         };
+        
+        struct LocalGeometry{
+            Point P;
+            Vector Vn;
+            Vector Nn;
+        };
 
         Integrator(RenderEnvironment *renderEnv);
         
         IntegrationResult integrateCameraSample(Sample3D sample, int numSamples);
         
-        IntegrationResult integrateDirectLight(const Point &P, const Vector &Nn, const Vector &Vn, Light *light, Brdf *brdf, bxdfParameters *brdfParameters);
+        IntegrationResult integrateDirect(const LocalGeometry &lg, Brdf *brdf, bxdfParameters *brdfParameters);
         
-        IntegrationResult integrateDirectMIS(const Point &P, const Vector &Nn, const Vector &Vn, Light *light, Brdf *brdf, bxdfParameters *brdfParameters);
+        IntegrationResult integrateDirectLight(const LocalGeometry &lg, Light *light, Brdf *brdf, bxdfParameters *brdfParameters);
+        
+        IntegrationResult integrateDirectMIS(const LocalGeometry &lg, Light *light, Brdf *brdf, bxdfParameters *brdfParameters);
         
     private:
         RenderEnvironment *m_render_environment;
