@@ -41,13 +41,12 @@ Integrator::IntegrationResult Integrator::integrateDirectLight(const LocalGeomet
         // sample light
     float costheta = dot(lg.Nn, lightSample.ray.direction);
     if (costheta >= 0. && lightSample.pdf > 0.) {
-        float li = 1;
         ++result.raycount;
-        if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
-            li = 0;
-        result.color += lightSample.color *
-        brdf->evalSampleWorld(lightSample.ray.direction, lg.Vn, lg.Nn, brdfParameters) *
-        li * costheta / lightSample.pdf;
+        if (!m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray)){
+            result.color += lightSample.color *
+            brdf->evalSampleWorld(lightSample.ray.direction, lg.Vn, lg.Nn, brdfParameters) *
+            costheta / lightSample.pdf;
+        }
     }
 
     return result;
@@ -69,15 +68,11 @@ Integrator::IntegrationResult Integrator::integrateDirectMIS(const LocalGeometry
     if (costheta > 0. && lightSample.pdf > 0.) {
         float brdfPdf = brdf->pdf(lightSample.ray.direction, lg.Vn, lg.Nn, brdfParameters);
         if (brdfPdf > 0.) {
-            float li = 1;
             ++result.raycount;
-            if (m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray))
-                li = 0;
-            if (li != 0) {
+            if (!m_render_environment->accelerationStructure->intersectBinary(&lightSample.ray)) {
                 float weight = PowerHeuristic(1, lightSample.pdf, 1, brdfPdf);
                 result.color += lightSample.color * weight *
-                brdf->evalSampleWorld(lightSample.ray.direction, lg.Vn, lg.Nn, brdfParameters) *
-                li * costheta / lightSample.pdf;
+                brdf->evalSampleWorld(lightSample.ray.direction, lg.Vn, lg.Nn, brdfParameters) * costheta / lightSample.pdf;
             }
         }
     }
@@ -90,11 +85,8 @@ Integrator::IntegrationResult Integrator::integrateDirectMIS(const LocalGeometry
     if (costheta > 0.) {
         float lightPdf = light->pdf(&brdfSample, lg.Nn, brdf->m_integrationDomain);
         if (lightPdf > 0. && brdfSample.pdf > 0.) {
-            float li = 1;
             ++result.raycount;
-            if (m_render_environment->accelerationStructure->intersectBinary(&brdfSample.ray))
-                li = 0;
-            if (li != 0) {
+            if (!m_render_environment->accelerationStructure->intersectBinary(&brdfSample.ray)){
                 float weight = PowerHeuristic(1, brdfSample.pdf, 1, lightPdf);
                 result.color += brdfSample.color * weight *
                 light->eval(brdfSample, lg.Nn) *
@@ -180,8 +172,6 @@ Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample,
             Sample3D currentSample = sample;
             Intersection isect = firstIsect;
             Color pathThroughput = Color(1.f);
-            Brdf *currentBrdf;
-            lg.Nn = Vector(0, 0, 1);
             bool mattePath = false;
             RayType rayType = CameraRay;
             
@@ -203,7 +193,7 @@ Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample,
                 
                     // init brdf
                 BrdfState brdf_state = attrs->material->getBrdf(lg.Vn, lg.Nn, isect.shdGeo, mattePath);
-                currentBrdf = brdf_state.brdf;
+                Brdf *currentBrdf = brdf_state.brdf;
                 bxdfParameters *brdf_parameters = brdf_state.parameters;
                 assert(brdf_parameters != NULL);
                 
