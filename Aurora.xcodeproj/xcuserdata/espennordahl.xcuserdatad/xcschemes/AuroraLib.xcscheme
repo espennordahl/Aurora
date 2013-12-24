@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2389C0E517549C5D004F1F7F"
-               BuildableName = "Aurora"
-               BlueprintName = "Aurora"
+               BlueprintIdentifier = "233BE73D17E21D900059ACD1"
+               BuildableName = "libAuroraLib.dylib"
+               BlueprintName = "AuroraLib"
                ReferencedContainer = "container:Aurora.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,15 +29,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2389C0E517549C5D004F1F7F"
-            BuildableName = "Aurora"
-            BlueprintName = "Aurora"
-            ReferencedContainer = "container:Aurora.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -48,22 +39,6 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2389C0E517549C5D004F1F7F"
-            BuildableName = "Aurora"
-            BlueprintName = "Aurora"
-            ReferencedContainer = "container:Aurora.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "DYLD_LIBRARY_PATH"
-            value = "/base/sw/ocio/lib:/base/sw/oiio/dist/macosx/lib:/base/sw/intel/tbb41_20130314oss/lib"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -73,15 +48,6 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2389C0E517549C5D004F1F7F"
-            BuildableName = "Aurora"
-            BlueprintName = "Aurora"
-            ReferencedContainer = "container:Aurora.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

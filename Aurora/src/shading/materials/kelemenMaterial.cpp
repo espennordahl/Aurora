@@ -27,9 +27,10 @@ using namespace Aurora;
 
 KelemenMaterial::KelemenMaterial( std::string name, RenderEnvironment *renderEnv,
                                  int _diffColIndex, int _specColIndex,
-                                 int _roughnessIndex, float _reflectance
+                                 int _roughnessIndex, float _reflectance,
+                                 int normalIndex
                                  ):
-Material(name, renderEnv),
+Material(name, renderEnv, normalIndex),
 reflectance(_reflectance),
 roughnessIndex(_roughnessIndex),
 specColorIndex(_specColIndex),

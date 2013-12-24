@@ -68,8 +68,8 @@ Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, bxdfParamet
 
     Vector Ln = normalize(Vector((Hn * 2 * vdoth) - Vn));
     
-    float ldotn = dot(Ln,Nn);
-    float vdotn = dot(Vn,Nn);
+//    float ldotn = dot(Ln,Nn);
+//    float vdotn = dot(Vn,Nn);
     float ndoth = dot(Nn,Hn);
     
     Color result = Color(0.f);
@@ -100,8 +100,8 @@ float CookTorrance::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, bxd
     
     float vdoth = dot(Vn, Hn);
     float ndoth = dot(Nn, Hn);
-    float ldotn = dot(Ln, Nn);
-    float vdotn = dot(Vn, Nn);
+//    float ldotn = dot(Ln, Nn);
+//    float vdotn = dot(Vn, Nn);
     
 //    if (vdoth <= 0.001 || ndoth <= 0.001 || ldotn <= 0.001 || vdotn <= 0.001) {
 //        return 0;

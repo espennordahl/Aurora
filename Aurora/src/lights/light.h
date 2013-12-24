@@ -35,6 +35,15 @@ namespace Aurora {
 
         virtual bool visible( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain ) = 0;
         
+        float exposure() const {
+            return m_exposure;
+        }
+        
+        virtual void setExposure(float newExposure){
+            m_exposure = newExposure;
+            m_intensity = powf(2,m_exposure);
+        }
+        
             // Checks whether a ray intersects the light or not.
 		virtual bool intersectBinary( Ray *ray ) const = 0;
 		
@@ -47,9 +56,14 @@ namespace Aurora {
             // TODO: Do we need this?
         virtual std::tr1::shared_ptr<Shape> shape() = 0;
         
+        void applyAttributeChange(const AttributeChange &change);
+        
             // TODO: Do we need this?
         LightType lightType;
-        
+    
+            // light color tint
+		Color color;
+
 	protected:
 		Transform *objectToCamera;
 		Transform *cameraToObject;
@@ -59,9 +73,9 @@ namespace Aurora {
 		Transform *worldToCamera;
 		
             // light Exposure
-		float exposure;
-            // light color tint
-		Color color;
+		float m_exposure;
+        float m_intensity;
+
             // TODO: Do we need this?
         int numSamples;
 	};

@@ -10,14 +10,14 @@
 #define Aurora_constants_h
 
 // bias
-#define CAUSTIC_BLUR 0.25
+#define CAUSTIC_BLUR 0.2
 #define FIREFLY 200
 
 // colors
 #define ISBLACK  0.0001
 
 // exr
-#define DRAW_DELAY 10
+#define DRAW_DELAY 1
 
 // ray tracing
 #define RAY_BIAS 0.0005
@@ -29,7 +29,7 @@
 #define SPECALBEDO_REFLECTANCE_ENTRIES 21
 
     // quasi monte carlo
-#define USE_HALTON
+    //#define USE_HALTON
 
 #define CAMERA_DOMAIN_X 0
 #define CAMERA_DOMAIN_Y 1

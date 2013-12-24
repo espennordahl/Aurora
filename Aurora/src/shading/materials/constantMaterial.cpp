@@ -10,8 +10,8 @@
 
 using namespace Aurora;
 
-ConstantMaterial::ConstantMaterial( std::string name, Color col, RenderEnvironment *renderEnv):
-Material(name, renderEnv)
+ConstantMaterial::ConstantMaterial( std::string name, Color col, int normalIndex, RenderEnvironment *renderEnv):
+Material(name, renderEnv, normalIndex)
 {
     brdf = new Constant(name, col, renderEnv);
 }
@@ -25,3 +25,4 @@ BrdfState ConstantMaterial::getBrdf( const Vector &Vn, const Vector &Nn, const S
 
 void ConstantMaterial::frameBegin(){};
 void ConstantMaterial::frameEnd(){};
+

@@ -48,8 +48,12 @@ namespace Aurora{
         int numTriangles(){ return m_trimesh.numTriangles(); };
         int numVertices(){ return m_trimesh.numVertices(); };
         
-        void makeEmbree(embree::BuildTriangle* triangles, embree::BuildVertex* vertices, std::vector<Vector> &normals, std::vector< uv > &uvs, int *currentTri, int *currentVertex, AttributeState *attrs, int attributeIndex){
-            m_trimesh.makeEmbree(triangles, vertices, normals, uvs, currentTri, currentVertex, attrs, attributeIndex);
+        void makeEmbree(EmbreeStructure &geometryOut, AttributeState *attrs, int attributeIndex){
+            m_trimesh.makeEmbree(geometryOut, attrs, attributeIndex);
+        };
+        
+        void clearCache(){
+            m_trimesh.clearCache();
         };
         
     private:

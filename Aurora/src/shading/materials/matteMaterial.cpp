@@ -14,10 +14,14 @@
 #include "log.h"
 #define lcontext LOG_MatteMaterial
 
+
+#include "constantShader.h"
+
+
 using namespace Aurora;
 
-MatteMaterial::MatteMaterial( std::string name, int diffColorIndex, int numSamples, RenderEnvironment *renderEnv):
-Material(name, renderEnv),
+MatteMaterial::MatteMaterial( std::string name, int diffColorIndex, int normalIndex, RenderEnvironment *renderEnv):
+Material(name, renderEnv, normalIndex),
 colorIndex(diffColorIndex)
 {
 	brdf = new Lambert(name + ":lambert", renderEnv);
@@ -37,4 +41,9 @@ void MatteMaterial::frameBegin(){
 
 void MatteMaterial::frameEnd(){
     brdf->frameEnd();
+}
+
+void MatteMaterial::applyAttributeChange(const AttributeChange &change){
+        // hack!!
+    m_renderEnv->shadingEngine->replaceShaderColor(colorIndex, new ConstantShader<Color>(Color(change.floatValue())));
 }

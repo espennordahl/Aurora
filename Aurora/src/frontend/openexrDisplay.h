@@ -16,7 +16,7 @@
 #include "ImfRgba.h"
 
 #include <string.h>
-#include <pthread.h>
+#include <tbb/mutex.h>
 
 namespace Aurora {
 	class OpenexrDisplay : FrontEndObject{
@@ -29,19 +29,30 @@ namespace Aurora {
 		void draw(int numLines);		
         void addMetadata(const std::string &key, const std::string &value);
         
+        void clear();
+        void resize(int width, int height);
+        
         int height() const;
         int width() const;
         
         void frameBegin();
         void frameEnd();
+        
+        const std::string filename() const;
+        
+        char *copy();
+        char *proxy(int level);
 
 	private:
         int m_width;
         int m_height;
         Imf::Array2D<Imf::Rgba> m_pixel_buffer;
+        bool m_hasBuffer;
+        u_char *m_copied_buffer;
         std::vector<std::vector < int > > m_multisample_buffer;
         StringMap m_metadata;
 		std::string m_filename;
+        tbb::mutex m_copy_mutex;
 	};
 }
 

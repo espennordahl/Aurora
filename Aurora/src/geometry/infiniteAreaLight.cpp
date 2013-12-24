@@ -70,10 +70,10 @@ Color InfiniteAreaLight::eval( const Sample3D &sample, const Vector &Nn ) {
         
         Color c = envMap->read(u, v, 0.f);
         assert(c.hasNaNs() == false);
-        return c * pow(2, exposure);
+        return c * pow(2, m_exposure);
     }
     else {
-        return color * pow(2, exposure);
+        return color * pow(2, m_exposure);
     }
 }
 

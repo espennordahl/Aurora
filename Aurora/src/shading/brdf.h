@@ -17,7 +17,8 @@ namespace Aurora {
     enum BrdfType{
         MatteBrdf,
         SpecBrdf,
-        MirrorBrdf
+        MirrorBrdf,
+        ConstantBrdf
     };
     
     struct bxdfParameters{

@@ -17,6 +17,9 @@
 #include <tr1/unordered_map>
 
 namespace Aurora {
+    
+#define UNSET_SHADER_INDEX -1
+    
     class ShadingEngine{
     public:
         ShadingEngine();
@@ -26,7 +29,12 @@ namespace Aurora {
         
         int registerShaderColor(const std::string &shdName, Shader<Color> *shader);
         int registerShaderFloat(const std::string &shdName, Shader<float> *shader);
+
+        void replaceShaderColor(int index, Shader<Color> *shader);
+        void replaceShaderFloat(int index, Shader<float> *shader);
+        
         int getShaderIndex(const std::string &shdName);
+        
         Color getColor(int index, const ShadingGeometry &shdGeo);
         float getFloat(int index, const ShadingGeometry &shdGeo);
         

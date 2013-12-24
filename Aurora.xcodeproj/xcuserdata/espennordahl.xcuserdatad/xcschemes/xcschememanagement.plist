@@ -14,9 +14,24 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>AuroraLib.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>233BE73D17E21D900059ACD1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2386EC4C17BC21250013F27A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>2389C0E517549C5D004F1F7F</key>
 		<dict>
 			<key>primary</key>

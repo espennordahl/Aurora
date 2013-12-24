@@ -16,7 +16,7 @@
 namespace Aurora {
 	class ConstantMaterial : public Material {
 	public:
-		ConstantMaterial( std::string name, Color col, RenderEnvironment *renderEnv);
+		ConstantMaterial( std::string name, Color col, int normalIndex, RenderEnvironment *renderEnv);
 		BrdfState getBrdf( const Vector &Vn, const Vector &Nn, const ShadingGeometry &shdGeo, bool mattePath ) ;
         void frameBegin();
         void frameEnd();

@@ -35,17 +35,11 @@ class TriplanarTextureShader(core.Serializable):
                 serializedObj[key] = self._s[key]
         root[self.getName()] = serializedObj
 
-
-class MatteMaterial(core.Serializable):
-    def __init__(self, name, color = [1,1,1]):
-        if not isinstance(color, str):
-            color[0] = float(color[0])
-            color[1] = float(color[1])
-            color[2] = float(color[2])
-        core.Serializable.__init__(self, name, ["color", "type"])
-        self._s["color"] = color
-        self._s["type"] = "matteMaterial"
-
+class Material(core.Serializable):
+    def setNormalMap(self, normalmap):
+        self._s["normalmap"] = normalmap
+        self._serialize.append("normalmap")
+    
     def serialize(self, root):
         serializedObj = {}
         for key in self._serialize:
@@ -56,7 +50,18 @@ class MatteMaterial(core.Serializable):
                 serializedObj[key] = self._s[key]
         root[self.getName()] = serializedObj
 
-class MetalMaterial(core.Serializable):
+class MatteMaterial(Material):
+    def __init__(self, name, color = [1,1,1]):
+        if not isinstance(color, str):
+            color[0] = float(color[0])
+            color[1] = float(color[1])
+            color[2] = float(color[2])
+        core.Serializable.__init__(self, name, ["color", "type"])
+        self._s["color"] = color
+        self._s["type"] = "matteMaterial"
+
+
+class MetalMaterial(Material):
     def __init__(self, name, reflectance, roughnessA, roughnessB, mix, gain):
         if not isinstance(reflectance, str):
             reflectance[0] = float(reflectance[0])
@@ -70,18 +75,7 @@ class MetalMaterial(core.Serializable):
         self._s["gain"] = gain
         self._s["type"] = "metalMaterial"
 
-    def serialize(self, root):
-        serializedObj = {}
-        for key in self._serialize:
-            if isinstance(self._s[key], core.Serializable):
-                serializedObj[key] = {}
-                self._s[key].serialize(serializedObj[key])
-            else:
-                serializedObj[key] = self._s[key]
-        root[self.getName()] = serializedObj
-
-
-class TransmitMaterial(core.Serializable):
+class TransmitMaterial(Material):
     def __init__(self, name, color = [1,1,1], ior = 1.333):
         if not isinstance(color, str):
             color[0] = float(color[0])
@@ -92,17 +86,7 @@ class TransmitMaterial(core.Serializable):
         self._s["ior"] = float(ior)
         self._s["type"] = "transmitMaterial"
 
-	def serialize(self, root):
-		serializedObj = {}
-		for key in self._serialize:
-			if isinstance(self._s[key], core.Serializable):
-				serializedObj[key] = {}
-				self._s[key].serialize(serializedObj[key])
-			else:
-				serializedObj[key] = self._s[key]
-		root[self.getName()] = serializedObj
-
-class GlassMaterial(core.Serializable):
+class GlassMaterial(Material):
     def __init__(self, name, specCol = [1,1,1], transmitCol = [1,1,1], reflectance = 1.0, ior = 1.333):
         if not isinstance(specCol, str):
             specCol[0] = float(specCol[0])
@@ -119,17 +103,7 @@ class GlassMaterial(core.Serializable):
         self._s["ior"] = float(ior)
         self._s["type"] = "glassMaterial"
 
-    def serialize(self, root):
-        serializedObj = {}
-        for key in self._serialize:
-            if isinstance(self._s[key], core.Serializable):
-                serializedObj[key] = {}
-                self._s[key].serialize(serializedObj[key])
-            else:
-                serializedObj[key] = self._s[key]
-        root[self.getName()] = serializedObj
-
-class CarMaterial(core.Serializable):
+class CarMaterial(Material):
     def __init__(self,
                  name,
                  diffcolor = [1,1,1],
@@ -176,18 +150,7 @@ class CarMaterial(core.Serializable):
         self._s["basespecbottomroughness"] = float(basespecbottomroughness)
         self._s["type"] = "carMaterial"
 
-    def serialize(self, root):
-        serializedObj = {}
-        for key in self._serialize:
-            if isinstance(self._s[key], core.Serializable):
-                serializedObj[key] = {}
-                self._s[key].serialize(serializedObj[key])
-            else:
-                serializedObj[key] = self._s[key]
-            root[self.getName()] = serializedObj
-
-
-class KelemenMaterial(core.Serializable):
+class KelemenMaterial(Material):
     def __init__(self,
 				name,
 				diffcolor = [1,1,1], 
@@ -214,13 +177,3 @@ class KelemenMaterial(core.Serializable):
         self._s["roughness"] = roughness
         self._s["reflectance"] = reflectance
         self._s["type"] = "kelemenMaterial"
-
-    def serialize(self, root):
-        serializedObj = {}
-        for key in self._serialize:
-            if isinstance(self._s[key], core.Serializable):
-                serializedObj[key] = {}
-                self._s[key].serialize(serializedObj[key])
-            else:
-                serializedObj[key] = self._s[key]
-            root[self.getName()] = serializedObj

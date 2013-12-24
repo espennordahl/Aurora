@@ -29,7 +29,7 @@ Material * ShadingEngine::getMaterial(std::string materialName){
 
 
 int ShadingEngine::registerShaderColor(const std::string &shdName, Shader<Color> *shader){
-    LOG_DEBUG("Registering shader: " << shdName);
+    LOG_DEBUG("Registering color shader: " << shdName);
     m_shd_map_color.push_back(shader);
     int index = (int)m_shd_map_color.size()-1;
     m_index_map[shdName] = index;
@@ -37,12 +37,21 @@ int ShadingEngine::registerShaderColor(const std::string &shdName, Shader<Color>
 }
 
 int ShadingEngine::registerShaderFloat(const std::string &shdName, Shader<float> *shader){
-    LOG_DEBUG("Registering shader: " << shdName);
+    LOG_DEBUG("Registering float shader: " << shdName);
     m_shd_map_float.push_back(shader);
     int index = (int)m_shd_map_float.size()-1;
     m_index_map[shdName] = index;
     return index;
 }
+
+void ShadingEngine::replaceShaderColor(int index, Shader<Color> *shader){
+    m_shd_map_color[index] = shader;
+}
+
+void ShadingEngine::replaceShaderFloat(int index, Shader<float> *shader){
+    m_shd_map_float[index] = shader;
+}
+
 
 int ShadingEngine::getShaderIndex(const std::string &shdName){
     if (m_index_map.find(shdName) == m_index_map.end()) {

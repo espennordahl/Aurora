@@ -27,12 +27,9 @@ int main (int argc, char* const argv[])
     tbb::task_scheduler_init init(tbb::task_scheduler_init::automatic);
     LOG_INFO("Starting Aurora.");
 
-        // unit tests
-        //    #ifndef NDEBUG
-        Renderer ren = Renderer((char *)"/Users/espennordahl/Documents/Aurora/pyAurora/tmp.asc");
-        ren.render();
+    Renderer ren = Renderer((char *)"/Users/espennordahl/Documents/Aurora/pyAurora/tmp.asc");
+    ren.render();
     return 0;
-        // #endif
 
     LOG_INFO("Checking command line arguments");
     

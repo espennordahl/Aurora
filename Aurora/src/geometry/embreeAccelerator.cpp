@@ -21,19 +21,21 @@ EmbreeAccelerator::EmbreeAccelerator(const EmbreeMesh &mesh, AttributeState *att
     m_mesh = mesh;
     m_mesh.preRender(attrs);
     embree::Ref<embree::Accel> accel;
-    accel = embree::rtcCreateAccel("bvh4.spatialsplit",             //!< type of acceleration structure to use
-                                   "triangle4",                     //!< type of triangle representation to use
-                                   m_mesh.triangles,  //!< array of triangles
-                                   m_mesh.numTriangles,             //!< number of triangles in array
+    accel = embree::rtcCreateAccel("bvh4.spatialsplit", //!< type of acceleration structure to use
+                                   "triangle4",         //!< type of triangle representation to use
+                                   m_mesh.triangles,    //!< array of triangles
+                                   m_mesh.numTriangles, //!< number of triangles in array
                                    m_mesh.vertices,     //!< array of vertices, has to be aligned to 16 bytes
-                                   m_mesh.numVertices);
-        //                                   embree::BBox3f(),
-        //                         false);             //!< number of vertices in array
-//  const BBox3f& bounds = empty,    //!< optional approximate bounding box of the geometry
-//  bool freeArrays = true);         //!< if true, triangle and vertex arrays are freed when no 
+                                   m_mesh.numVertices,  //!< number of vertices in array
+                                   embree::empty,       //!< optional approximate bounding box of the geometry
+                                   true);               //!< if true, triangle and vertex arrays are freed when no longer needed
     m_intersector = accel->queryInterface<embree::Intersector> ();
     
     LOG_INFO("Size of prim vars: " <<  (m_mesh.uvs.capacity() * sizeof(uv) + m_mesh.normals.capacity() *sizeof(Vector)) / 1024 / 1024 << "MB");
+}
+
+EmbreeAccelerator::~EmbreeAccelerator(){
+    
 }
 
 bool EmbreeAccelerator::intersect( Ray *ray, Intersection *intersection) const{
@@ -83,7 +85,7 @@ bool EmbreeAccelerator::intersect( Ray *ray, Intersection *intersection) const{
         st.u = _s;
         st.v = _t;
         intersection->shdGeo.P = hitp;
-        intersection->shdGeo.Ns = normalize(norm);
+        intersection->shdGeo.Ng = intersection->hitN;
         intersection->shdGeo.st = st;
         intersection->shdGeo.triangleIndex = isect.id1;
         intersection->shdGeo.barCoords = Point(u,v,w);

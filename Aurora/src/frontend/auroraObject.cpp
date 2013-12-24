@@ -45,3 +45,16 @@ BBox AuroraObject::worldBound(){
 BBox AuroraObject::objectBound(){
 	return m_shape->objectBound();
 }
+
+void AuroraObject::applyAttributeChange(const AttributeChange &change){
+    switch (change.objectType()) {
+        case AttributeChange::kShaderChange:
+            m_material->applyAttributeChange(change);
+            break;
+        case AttributeChange::kShapeChange:
+            m_shape->applyAttributeChange(change);
+            break;
+        default:
+            assert(false);
+    }
+}

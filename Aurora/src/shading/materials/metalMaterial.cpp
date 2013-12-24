@@ -17,8 +17,9 @@ using namespace Aurora;
 
 MetalMaterial::MetalMaterial( std::string name, RenderEnvironment *renderEnv,
                              int roughnessIndexA, int roughnessIndexB,
-                             int mixIndex, int reflectanceIndex, int gainIndex):
-Material(name, renderEnv),
+                             int mixIndex, int reflectanceIndex,
+                             int gainIndex, int normalIndex):
+Material(name, renderEnv, normalIndex),
 m_reflectanceIndex(reflectanceIndex),
 m_roughnessIndexA(roughnessIndexA),
 m_roughnessIndexB(roughnessIndexB),

@@ -29,8 +29,7 @@ namespace Aurora {
 		
         inline bool visible( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain );
 
-        
-		bool intersectBinary( Ray *ray ) const;
+		inline bool intersectBinary( Ray *ray ) const;
 		
 		void makeRenderable(std::vector<RenderableTriangle> &renderable, AttributeState *attrs, int index);
 
@@ -47,6 +46,8 @@ namespace Aurora {
         Vector lightN;
         Halton_sampler m_sampler;
         Point pCam[4];
+        RenderableTriangle m_tri1;
+        RenderableTriangle m_tri2;
         
         static tbb::atomic<int> m_halton_index;
 
@@ -81,12 +82,7 @@ namespace Aurora {
     }
     
     Color SquareLight::eval( const Sample3D &sample, const Vector &Nn ) {
-            //	Vector Ln = (*objectToCamera)(Vector(0,0,1));
-            //    float d = dot(normalize(sample.ray.direction), Ln);
-            //	if (d < 0.f)
-            //		d = 0;//-dot;
-        Color col =  color * powf(2,exposure);
-        return col;
+        return color * m_intensity;
     }
     
     float SquareLight::pdf( Sample3D *sample, const Vector &Nn, const IntegrationDomain &integrationDomain){
@@ -113,7 +109,17 @@ namespace Aurora {
         return false;
     }
 
-
+    bool SquareLight::intersectBinary( Ray *ray ) const{
+        
+        Intersection isect;
+        if (m_tri1.intersect(ray, &isect) == true) {
+            return true;
+        }
+        if (m_tri2.intersect(ray, &isect) == true) {
+            return true;
+        }
+        return false;
+    }
     
 }
 
