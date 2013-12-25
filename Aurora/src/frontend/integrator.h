@@ -37,6 +37,8 @@ namespace Aurora {
         Integrator(RenderEnvironment *renderEnv);
         
         IntegrationResult integrateCameraSample(Sample3D sample, int numSamples);
+
+        IntegrationResult integrateCameraSampleBiDirectional(Sample3D sample, int numSamples);
         
         IntegrationResult integrateDirect(const LocalGeometry &lg, Brdf *brdf, bxdfParameters *brdfParameters);
         

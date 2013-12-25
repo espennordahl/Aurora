@@ -23,8 +23,11 @@ namespace Aurora {
 	class Light : public FrontEndObject {
 	public:
 		Light( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, std::string name, RenderEnvironment *renderEnv);
-		
+
             // Generates a sample on the light to be used during light transport.
+        virtual Sample3D generateSample() = 0;
+		
+            // Generates a sample on the light based on a current local geometry.
 		virtual Sample3D generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain ) = 0;
 		
             // Evalues the light emmision for a given sample

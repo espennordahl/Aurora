@@ -167,6 +167,7 @@ public:
             
             Sample3D sample = m_render_environment->renderCam->convertSample(current_sample_2d, m_sample_index);
             
+//            Integrator::IntegrationResult integrationResult = m_integrator->integrateCameraSampleBiDirectional(sample, m_num_samples);
             Integrator::IntegrationResult integrationResult = m_integrator->integrateCameraSample(sample, m_num_samples);
             
             m_display->appendValue(x, y, integrationResult.color, integrationResult.alpha);

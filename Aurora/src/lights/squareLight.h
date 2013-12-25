@@ -21,6 +21,8 @@ namespace Aurora {
 	public:
 		SquareLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, float sizeX, float sizeY, std::string name, RenderEnvironment *renderEnv);
 		
+        inline Sample3D generateSample();
+        
 		inline Sample3D generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain);
 		
 		inline Color eval( const Sample3D &sample, const Vector &Nn ) ;
@@ -52,7 +54,26 @@ namespace Aurora {
         static tbb::atomic<int> m_halton_index;
 
 	};
-    
+
+    Sample3D SquareLight::generateSample(){
+        float x = (float) rand()/RAND_MAX;
+        float y = (float) rand()/RAND_MAX;
+        Point lightP = Point((x-0.5) * xScale * 2, (y-0.5) * yScale * 2, 0.f);
+        x = (float) rand()/RAND_MAX;
+        y = (float) rand()/RAND_MAX;
+        lightP = (*objectToCamera)(lightP);
+        Vector dir = SampleHemisphereUniform(x, y);
+        float d = dir.z;
+        
+        dir = normalize(tangentToWorld(dir, lightN));
+
+        Sample3D s = Sample3D(Ray(dir, lightP, RAY_BIAS, 1000000.));
+        s.color = eval(s, dir);
+        s.pdf = 1.f / (d * xScale * yScale * 4.);
+        
+        return s;
+    }
+
     
     Sample3D SquareLight::generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain){
 #ifdef USE_HALTON
@@ -86,14 +107,15 @@ namespace Aurora {
     }
     
     float SquareLight::pdf( Sample3D *sample, const Vector &Nn, const IntegrationDomain &integrationDomain){
+        float pdf = 0.f;
+        sample->ray.maxt += RAY_BIAS*10;
         if (intersectBinary(&sample->ray)) {
             float d = dot(lightN, normalize(sample->ray.direction));
             d *= sign(d);
-            float pdf = (sample->ray.maxt * sample->ray.maxt) / (d * xScale * yScale * 4.);
-            sample->ray.maxt -= RAY_BIAS*10;
-            return pdf;
+            pdf = (sample->ray.maxt * sample->ray.maxt) / (d * xScale * yScale * 4.);
         }
-        return 0.f;
+        sample->ray.maxt -= RAY_BIAS*10;
+        return pdf;
     }
     
     bool SquareLight::visible( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain ){

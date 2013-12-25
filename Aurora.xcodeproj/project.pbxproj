@@ -187,8 +187,8 @@
 		2389C1CC17549C93004F1F7F /* embreeAccelerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embreeAccelerator.h; sourceTree = "<group>"; };
 		2389C1CD17549C93004F1F7F /* embreeMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embreeMesh.h; sourceTree = "<group>"; };
 		2389C1CE17549C93004F1F7F /* geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry.h; sourceTree = "<group>"; };
-		2389C1CF17549C93004F1F7F /* infiniteAreaLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = infiniteAreaLight.cpp; sourceTree = "<group>"; };
-		2389C1D017549C93004F1F7F /* infiniteAreaLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = infiniteAreaLight.h; sourceTree = "<group>"; };
+		2389C1CF17549C93004F1F7F /* infiniteAreaLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = infiniteAreaLight.cpp; path = ../geometry/infiniteAreaLight.cpp; sourceTree = "<group>"; };
+		2389C1D017549C93004F1F7F /* infiniteAreaLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = infiniteAreaLight.h; path = ../geometry/infiniteAreaLight.h; sourceTree = "<group>"; };
 		2389C1D317549C93004F1F7F /* objParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = objParser.cpp; sourceTree = "<group>"; };
 		2389C1D417549C93004F1F7F /* objParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = objParser.h; sourceTree = "<group>"; };
 		2389C1D517549C93004F1F7F /* objTriangleMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = objTriangleMesh.cpp; sourceTree = "<group>"; };
@@ -472,8 +472,6 @@
 				236D6811175F18D300802617 /* accelerationStructure.h */,
 				2389C1CD17549C93004F1F7F /* embreeMesh.h */,
 				2389C1CE17549C93004F1F7F /* geometry.h */,
-				2389C1CF17549C93004F1F7F /* infiniteAreaLight.cpp */,
-				2389C1D017549C93004F1F7F /* infiniteAreaLight.h */,
 				2389C1D317549C93004F1F7F /* objParser.cpp */,
 				2389C1D417549C93004F1F7F /* objParser.h */,
 				2389C1D517549C93004F1F7F /* objTriangleMesh.cpp */,
@@ -496,9 +494,11 @@
 		2389C1E317549C93004F1F7F /* lights */ = {
 			isa = PBXGroup;
 			children = (
+				2389C1CF17549C93004F1F7F /* infiniteAreaLight.cpp */,
+				2389C1D017549C93004F1F7F /* infiniteAreaLight.h */,
+				2389C1E617549C93004F1F7F /* lights.h */,
 				2389C1E417549C93004F1F7F /* light.cpp */,
 				2389C1E517549C93004F1F7F /* light.h */,
-				2389C1E617549C93004F1F7F /* lights.h */,
 				2389C1E717549C93004F1F7F /* squareLight.cpp */,
 				2389C1E817549C93004F1F7F /* squareLight.h */,
 			);

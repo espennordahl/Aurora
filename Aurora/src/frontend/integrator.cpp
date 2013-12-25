@@ -149,6 +149,116 @@ void Integrator::updateLocalGeometry(const Sample3D &sample, Integrator::LocalGe
     }
 }
 
+Integrator::IntegrationResult Integrator::integrateCameraSampleBiDirectional(Sample3D sample, int numSamples){
+    
+    Integrator::IntegrationResult result = IntegrationResult();
+    result.alpha = 0;
+    result.color = Color(0.f);
+    result.raycount = 0;
+
+    Intersection firstIsect;
+            // find first camera intersection
+    if (m_render_environment->accelerationStructure->intersect(&sample.ray, &firstIsect)) {
+
+        for (int i=0; i < numSamples; ++i) {
+            result.alpha = 1.f;
+            Color Lo = Color(0.f);
+            LocalGeometry lg;
+
+            AttributeState *attrs = &m_render_environment->attributeState[firstIsect.attributesIndex];
+
+            updateLocalGeometry(sample, &lg, &firstIsect, attrs);
+            
+                // emmision
+            Lo += attrs->emmision;
+            
+                // init brdf
+            BrdfState brdf_state = attrs->material->getBrdf(lg.Vn, lg.Nn, firstIsect.shdGeo, false);
+            Brdf *brdf = brdf_state.brdf;
+            bxdfParameters *brdfParameters = brdf_state.parameters;
+            
+                // sample direct lighting
+            int numLights = (int)m_render_environment->lights.size();
+            Integrator::IntegrationResult directResult = IntegrationResult();
+            directResult.alpha = 0;
+            directResult.color = Color(0.f);
+            directResult.raycount = 0;
+
+            Light* light = m_render_environment->lights[rand() % numLights];
+            
+            if (brdf->m_brdfType == MatteBrdf) {
+                directResult = integrateDirectLight(lg, light, brdf, brdfParameters);
+            } else if (brdf->m_brdfType == SpecBrdf){
+                directResult = integrateDirectMIS(lg, light, brdf, brdfParameters);
+            } else {
+                assert(brdf->m_brdfType == ConstantBrdf || brdf->m_brdfType == MirrorBrdf);
+            }
+            
+            directResult.color *= (float)numLights;
+            
+//            Lo += directResult.color;
+            
+            if (brdf->m_brdfType != ConstantBrdf && brdf->m_brdfType != MirrorBrdf) {
+                    // generate a light sample
+                Sample3D lightSample = light->generateSample();
+                Intersection lightIsect;
+                if (m_render_environment->accelerationStructure->intersect(&lightSample.ray, &lightIsect)) {
+                        // connect it to the camera intersection
+                    Vector connectionDir = lightIsect.hitP - firstIsect.hitP; // from camera hit to light hit
+                    Vector Cn = normalize(connectionDir);
+                    Ray connectionRay = Ray(Cn, firstIsect.hitP, RAY_BIAS, connectionDir.length() - RAY_BIAS*2.);
+                    
+                    IntegrationResult lightResult;
+                    lightResult.color = Color(0.);
+                    
+                    float cos_theta = dot(Cn, lg.Nn);
+                    if (cos_theta > 0.001 && !m_render_environment->accelerationStructure->intersectBinary(&connectionRay)) {
+                            // compute pathThroughput
+                        float G = connectionDir.lengthSquared();
+                        float pathPdf = brdf->pdf(Cn, lg.Vn, lg.Nn, brdfParameters) * G;
+                        Color pathThroughput = brdf->evalSampleWorld(Cn, lg.Vn, lg.Nn, brdfParameters) * cos_theta;
+                        if (pathPdf > 0.001) {
+                                // compute contribution
+                            AttributeState *attrs = &m_render_environment->attributeState[lightIsect.attributesIndex];
+                            
+                            updateLocalGeometry(lightSample, &lg, &lightIsect, attrs);
+                            
+                                // emmision
+                            lightResult.color += attrs->emmision * pathThroughput;
+                            
+                                // init brdf
+                            brdf_state = attrs->material->getBrdf(lg.Vn, lg.Nn, lightIsect.shdGeo, false);
+                            brdf = brdf_state.brdf;
+                            delete brdfParameters;
+                            bxdfParameters *brdfParameters = brdf_state.parameters;
+                            cos_theta = max(dot(-Cn, lg.Nn), 0.f);
+                            
+                            Color brdfEval = brdf->evalSampleWorld(-Cn, lg.Vn, lg.Nn, brdfParameters);
+                            //float brdfPdf = brdf->pdf(-Cn, lg.Vn, lg.Nn, brdfParameters);
+                            
+    //                        lightSample.ray.origin = lg.P;
+    //                        lightSample.ray.direction = -lightSample.ray.direction;
+    //                        lightSample.pdf = light->pdf(&lightSample, lg.Nn, brdf->m_integrationDomain);
+    //                        lightSample.ray.maxt = 1000000;
+                            lightResult.color += (brdfEval * lightSample.color * pathThroughput * cos_theta) / (lightSample.pdf * pathPdf);
+
+                            delete brdfParameters;
+                        } else {
+                            delete brdfParameters;
+                        }
+                    }
+                    
+                    Lo += lightResult.color * (float)numLights;
+                }
+            }
+            
+            result.color += Lo / numSamples;
+        }
+    }
+    
+    return result;
+}
+
 Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample, int numSamples){
 
     Integrator::IntegrationResult result = IntegrationResult();
@@ -202,7 +312,9 @@ Integrator::IntegrationResult Integrator::integrateCameraSample(Sample3D sample,
                     Integrator::IntegrationResult directIntegration = integrateDirect(lg, currentBrdf, brdf_parameters);
 
                     result.raycount += directIntegration.raycount;
-                    Lo += directIntegration.color * pathThroughput;
+                    if (trueBounces == 1) {
+                        Lo += directIntegration.color * pathThroughput;
+                    }
                 }
 
                     // sample brdf for the next bounce

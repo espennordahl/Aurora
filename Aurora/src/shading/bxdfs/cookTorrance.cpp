@@ -41,7 +41,14 @@ inline float ctD(float roughness, float cosalpha, float tanalpha){
     const float rough2 = max(0.001f, roughness * roughness);
     const float exp = expf( -(tanalpha * tanalpha) / rough2);
     const float divisor = rough2 * M_PI * powf(cosalpha, 3.f);
-    return exp / divisor;
+    float D = exp / divisor;
+    
+    if (isnan(D)) {
+        D = 0.f;
+    }
+    assert(D >= 0.);
+
+    return D;
 }
 
 Sample3D CookTorrance::getSample(const Vector &Vn, const Vector &Nn, bxdfParameters *parameters) const{
@@ -109,10 +116,6 @@ float CookTorrance::pdf(const Vector &Ln, const Vector &Vn, const Vector Nn, bxd
     
     float D = ctD(params->roughness, ndoth, tanf(acosf(ndoth)));
 
-    if (isnan(D)) {
-        D = 0.f;
-    }
-    assert(D >= 0.);
     return ( D ) / (4 * vdoth);
 }
 

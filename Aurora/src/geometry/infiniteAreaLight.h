@@ -20,6 +20,10 @@ namespace Aurora {
 	public:
 		InfiniteAreaLight( Transform *o2c, Transform *c2o, Transform *o2w, Transform *w2o, Transform *c2w, Transform *w2c, float exposure, Color color, std::string envmap, std::string name, RenderEnvironment *renderEnv);
 		
+        
+            // TODO!!
+        Sample3D generateSample(){ return Sample3D(); }
+        
 		Sample3D generateSample( const Point &orig, const Vector &Nn, const IntegrationDomain &integrationDomain );
 		
 		Color eval( const Sample3D &sample, const Vector &Nn ) ;
